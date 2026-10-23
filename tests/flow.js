@@ -19,13 +19,23 @@ const path = require('path');
     ok(await p.evaluate(() => Object.keys(JSON.parse(localStorage.getItem('calc-review') || '{}')).length === 1), 'wrong answer queued for review');
     await p.evaluate(sel => { const c = document.querySelector(sel); Array.from(c.querySelectorAll('.sopts button')).find(b => b.textContent === c.rpCtx.ans).click(); }, card);
     ok(await p.evaluate(sel => document.querySelector(sel).classList.contains('solved'), card), 'right answer marks solved');
-  } else {
-    await p.fill(`${card} input`, '999'); await p.click(`${card} button[type=submit]`);
-    ok(await p.evaluate(sel => document.querySelector(sel + ' .fb').classList.contains('no'), card), 'wrong numeric answer');
-    await p.fill(`${card} input`, String(info.ans)); await p.click(`${card} button[type=submit]`);
-    ok(await p.evaluate(sel => document.querySelector(sel).classList.contains('solved'), card), 'right numeric answer marks solved');
   }
-  ok((await p.textContent('#pr-score')).startsWith('1 of'), 'score updates');
+  // a numeric problem: the answer box accepts fractions and exact values
+  const num = '#prob-lim-onesided';
+  await p.fill(`${num} input`, '999'); await p.click(`${num} button[type=submit]`);
+  ok(await p.evaluate(sel => document.querySelector(sel + ' .fb').classList.contains('no'), num), 'wrong numeric answer is marked wrong');
+  await p.click(`${num} [data-act=new]`); await p.waitForTimeout(100);
+  const ans = await p.evaluate(sel => document.querySelector(sel).rpCtx.ans, num);
+  await p.fill(`${num} input`, String(ans)); await p.click(`${num} button[type=submit]`);
+  ok(await p.evaluate(sel => document.querySelector(sel).classList.contains('solved'), num), 'right numeric answer marks solved');
+  ok(await p.evaluate(() => { const c = window.__calc; return c.sameFn('3x^2+2x', '2x+3x^2') && !c.sameFn('3x^2+2x', '3x^2+2') && c.sameFn('x^2+1', 'x^2+9', { c: true }) && c.sameFn('sin(x)^2', '1-cos(x)^2'); }), 'expression answers are compared as functions');
+  ok((await p.textContent('#pr-score')).startsWith('2 of') || (await p.textContent('#pr-score')).startsWith('1 of'), 'score updates');
+  // AB / BC toggle
+  await p.click('#course-seg [data-c=AB]'); await p.waitForTimeout(200);
+  ok(await p.evaluate(() => document.body.classList.contains('is-ab') && document.querySelector('#nav a[href="#parts"]').offsetParent === null), 'AB hides BC-only modules in the menu');
+  ok(await p.evaluate(() => !document.querySelector('#pr-list .prob.bc') || document.querySelector('#pr-list .prob.bc').offsetParent === null), 'AB hides BC-only problems');
+  await p.click('#course-seg [data-c=BC]'); await p.waitForTimeout(200);
+  ok(await p.evaluate(() => document.querySelector('#nav a[href="#parts"]').offsetParent !== null), 'BC shows them again');
   // review queue
   await p.evaluate(() => location.hash = 'review'); await p.waitForTimeout(400);
   ok(await p.evaluate(() => document.querySelectorAll('#rv-list .prob').length >= 1), 'mistakes queue lists the missed problem');
@@ -35,21 +45,25 @@ const path = require('path');
   ok(await p.evaluate(() => document.querySelectorAll('#ex-list .prob').length > 0), 'exam set built');
   await p.click('#ex-submit'); await p.waitForTimeout(300);
   ok(await p.evaluate(() => !document.querySelector('#ex-result').hidden), 'exam graded');
-  // quiz and done button
-  await p.evaluate(() => location.hash = 'vsepr'); await p.waitForTimeout(500);
-  await p.evaluate(() => document.querySelectorAll('#v-vsepr .quiz .opts button')[3].click()); await p.waitForTimeout(300);
-  ok(await p.evaluate(() => JSON.parse(localStorage.getItem('calc-done') || '{}').vsepr === 1), 'right quiz answer marks the module done');
-  // worked example steps
-  await p.evaluate(() => { const b = document.querySelector('#v-vsepr [data-next]'); b.click(); b.click(); });
-  ok(await p.evaluate(() => document.querySelectorAll('#v-vsepr .exsteps li:not([hidden])').length === 2), 'worked example reveals one step per click');
+  // quizzes and done flag
+  await p.evaluate(() => location.hash = 'limits'); await p.waitForTimeout(500);
+  await p.evaluate(() => { const q = document.querySelectorAll('#v-limits .quiz'); q.forEach(z => z.querySelectorAll('.opts button')[+z.dataset.correct].click()); }); await p.waitForTimeout(300);
+  ok(await p.evaluate(() => JSON.parse(localStorage.getItem('calc-done') || '{}').limits === 1), 'right quiz answers mark the module done');
+  await p.evaluate(() => { const b = document.querySelector('#v-limits [data-next]'); b.click(); b.click(); });
+  ok(await p.evaluate(() => document.querySelectorAll('#v-limits .exsteps li:not([hidden])').length === 2), 'worked example reveals one step per click');
+  // the lab responds to a Set-it-up button and the zoom slider
+  await p.evaluate(() => document.querySelector('#v-limits [data-show]').click()); await p.waitForTimeout(300);
+  ok(await p.evaluate(() => document.querySelector('#lm-lim').textContent.includes('2')), 'Set it up for me drives the limit lab');
+  // countdown
+  ok((await p.textContent('#ap-count')).includes('May 10, 2027'), 'countdown shows the AP Calculus exam date');
   // theme + search + drawer + report
   await p.click('#theme-btn'); ok(await p.evaluate(() => document.documentElement.getAttribute('data-theme') === 'light'), 'theme button cycles');
-  await p.keyboard.press('/'); await p.waitForTimeout(300); await p.keyboard.type('vsepr'); await p.waitForTimeout(200);
-  ok(await p.evaluate(() => document.querySelectorAll('#cmd-list li[data-id]').length >= 1), 'search finds VSEPR'); await p.keyboard.press('Escape'); await p.waitForTimeout(400);
-  await p.click('#fs-btn'); await p.click('#fs-tabs [data-tab=pt]'); await p.click('#pt-grid button[data-z="26"]');
-  ok((await p.textContent('#pt-info')).includes('Iron') && (await p.textContent('#pt-info')).includes('[Ar] 4s² 3d⁶'), 'periodic table shows iron with its configuration');
+  await p.keyboard.press('/'); await p.waitForTimeout(300); await p.keyboard.type('chain'); await p.waitForTimeout(200);
+  ok(await p.evaluate(() => document.querySelectorAll('#cmd-list li[data-id]').length >= 1), 'search finds the chain rule'); await p.keyboard.press('Escape'); await p.waitForTimeout(400);
+  await p.click('#fs-btn'); await p.click('#fs-tabs [data-tab=ser]');
+  ok((await p.textContent('#fs-ser')).includes('Lagrange error bound'), 'reference drawer shows the series sheet');
   await p.click('#fs-close'); await p.waitForTimeout(400);
-  await p.evaluate(() => document.querySelector('[data-report="vsepr"]').click()); await p.waitForTimeout(300);
+  await p.evaluate(() => document.querySelector('[data-report="limits"]').click()); await p.waitForTimeout(300);
   ok(await p.evaluate(() => document.getElementById('rp').open), 'report dialog opens');
   console.log(bad ? bad + ' failure(s)' : 'all flows passed'); await b.close(); process.exit(bad ? 1 : 0);
 })();

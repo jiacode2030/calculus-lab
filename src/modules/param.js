@@ -13,7 +13,7 @@
       if(L>1e-6){const ux=dx/L,uy=-dy/L;ctx.save();clip(ctx,P);ctx.strokeStyle=alpha(T.hot,.7);ctx.lineWidth=1.8;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(px-ux*400,py-uy*400);ctx.lineTo(px+ux*400,py+uy*400);ctx.stroke();ctx.restore();arrow(ctx,px,py,px+ux*46,py+uy*46,T.cv,3);}
       dot(ctx,px,py,7,T.hot,T.surface);}});
   function upd(){const A=C[k],dx=A.dx(t0),dy=A.dy(t0),zero=v=>Math.abs(v)<1e-3;setText('pm-xy',`(${fmt(A.x(t0),3)}, ${fmt(A.y(t0),3)})`);setText('pm-v',`(${fmt(dx,3)}, ${fmt(dy,3)})`);
-    const sl=zero(dx)?NaN:dy/dx;setText('pm-sl',zero(dx)?(zero(dy)?'undefined (cusp: both zero)':'undefined (vertical tangent)'):fmt(sl,4));
+    const sl=zero(dx)?NaN:dy/dx;setText('pm-sl',zero(dx)?(zero(dy)?'not defined (cusp: both zero)':'not defined (vertical tangent)'):fmt(sl,4));
     setText('pm-d2',zero(dx)?'—':fmt(D(t=>A.dy(t)/A.dx(t),t0,2e-3)/dx,4));setText('pm-note',zero(dx)&&zero(dy)?'dx/dt = dy/dt = 0: a cusp':zero(dx)?'vertical tangent':zero(dy)?'horizontal tangent':'oblique');sim.render();}
   function setT(){const A=C[k],el=$('#pm-t');el.min=A.tr[0];el.max=A.tr[1];el.value=A.tr[2];t0=A.tr[2];}
   bindRange('pm-t',v=>nz(v),v=>{t0=v;upd();});segBind('pm-fn','k',v=>{k=v;setT();upd();});setT();upd();drawers.param=()=>sim.render();

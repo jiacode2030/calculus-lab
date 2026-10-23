@@ -121,7 +121,7 @@ function view3d(cv,o){
           x.strokeStyle=col;x.lineWidth=w;x.stroke();x.strokeStyle=shade(col,1.25);x.lineWidth=w*.32;x.beginPath();x.moveTo(A[0]-w*.18,A[1]-w*.2);x.lineTo(B[0]-w*.18,B[1]-w*.2);x.stroke();x.restore();});},
       disk(c,R,col,n=48,stroke){S.poly(Array.from({length:n},(_,i)=>{const a=i/n*Math.PI*2;return [c[0]+R*Math.cos(a),c[1]+R*Math.sin(a),c[2]];}),col,stroke);},
 
-      /* chemistry primitives: atoms, two-tone bonds, translucent lobes (meshes) */
+      /* 3D primitives: lines, meshes (not used by the calculus modules) */
       atom(p,rad,col,al=1){const C=P(p);if(!C)return;const R=Math.max(2,rad*C[3]);push(C[2],x=>{x.save();x.globalAlpha=al;x.beginPath();x.arc(C[0],C[1],R,0,7);x.fillStyle=col;x.fill();
           const g=x.createRadialGradient(C[0]-R*.35,C[1]-R*.4,R*.05,C[0],C[1],R*1.02);g.addColorStop(0,'rgba(255,255,255,.75)');g.addColorStop(.35,'rgba(255,255,255,0)');g.addColorStop(1,'rgba(0,0,0,.38)');
           x.fillStyle=g;x.fill();x.lineWidth=1;x.strokeStyle='rgba(0,0,0,.35)';x.stroke();x.restore();});},

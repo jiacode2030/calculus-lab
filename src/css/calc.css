@@ -243,3 +243,4 @@ body.is-ab .bc,body.is-ab .bcx{display:none!important}
 body.is-ab .prob.bc{display:none!important}
 .eqgrid .eqn{flex-wrap:wrap;white-space:normal}.eqgrid .eqn small{text-align:right}
 .readout strong{white-space:normal;overflow-wrap:anywhere;font-size:clamp(13px,1.6vw,17px);line-height:1.3}
+body.is-ab .mitem.bc,body.is-ab .frq.bc,body.is-ab tr.bc{display:none!important}

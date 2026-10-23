@@ -1,5 +1,5 @@
 // Stress-tests every practice-problem generator: many samples each, flags NaN/undefined/Infinity text,
-// non-finite or absurd answers, bad choice indexes, duplicate choices, wrong units and impossible chemistry
+// non-finite or absurd answers, bad choice indexes, duplicate choices, wrong units
 // (negative concentrations, pH outside 0-14 for ordinary problems). node tests/audit.js  [N=400]
 const { chromium } = require(require('child_process').execSync('npm root -g').toString().trim() + '/playwright');
 const path = require('path');

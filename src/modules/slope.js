@@ -15,7 +15,7 @@
     drag:(kind,x,y)=>{setS('sf-x0',x);setS('sf-y0',y);}});
   const setS=(id,v)=>{const el=$('#'+id);el.value=clamp(Math.round(v*10)/10,-3,3);el.dispatchEvent(new Event('input',{bubbles:true}));};
   function upd(){const F=C[k].F,s=F(x0,y0);const pts=trace(1);let y1=NaN;for(const [x,y] of pts)if(x>=x0+1-1e-9){y1=y;break;}
-    setText('sf-sl',isFinite(s)?fmt(s,3):'undefined here');setText('sf-y1',isFinite(y1)?fmt(y1,3):'leaves the window');setText('sf-note',C[k].note);sim.render();}
+    setText('sf-sl',isFinite(s)?fmt(s,3):'not defined here');setText('sf-y1',isFinite(y1)?fmt(y1,3):'leaves the window');setText('sf-note',C[k].note);sim.render();}
   bindRange('sf-x0',v=>nz(v),v=>{x0=v;upd();});bindRange('sf-y0',v=>nz(v),v=>{y0=v;upd();});segBind('sf-fn','k',v=>{k=v;upd();});upd();drawers.slope=()=>sim.render();
   KEYS['sf-canvas']=['Each grey segment shows the slope there. The blue curve starts at the orange dot and follows the segments. Drag to move the dot.',[['muted','slope segments'],['cx','the solution through the start'],['hot','initial condition']]];
   TIPS['sf-x0']=()=>'The starting point picks which solution curve you follow.';

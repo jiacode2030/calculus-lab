@@ -60,7 +60,7 @@ for n in ['overview.js', 'practice.js', 'teach.js', 'review_core.js', 'exam_revi
 data_files = sorted((SRC / 'data').glob('*.js'))
 # data banks load right after the shared engine pieces, so modules can use them
 bank = '\n'.join(f'/* ===== data/{p.name} ===== */\n' + p.read_text(encoding='utf-8') for p in data_files)
-js_parts.insert(len(JS_ORDER), bank)  # data banks (periodic table, FRQs) load before the modules
+js_parts.insert(len(JS_ORDER), bank)  # data banks (FRQs, method clues) load before the modules
 tail = "if(/[?&]debug/.test(location.search))window.__calc={PROBS,FRQS,GROUPS,MODS,METHODS,fmt,sci,parseExpr,sameFn,D,D2,integ,limit,riemann};\nif(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{redraw();navSync(true);stepSync(true);});\ncurrent='';route();\n"
 js = "(function(){\n'use strict';\n" + '\n'.join(js_parts) + '\n' + tail + '})();\n'
 

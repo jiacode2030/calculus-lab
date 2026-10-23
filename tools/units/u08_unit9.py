@@ -8,7 +8,7 @@ mod('param','Parametric equations',
    seg=('pm-fn','Curve',[('el','ellipse'),('cy','cycloid'),('li','figure eight'),('pa','parabola')]),ctl=[('pm-t','Parameter t',0,12.5,.02,1)],
    out=[('pm-xy','point (x, y)','x'),('pm-v','(dx/dt, dy/dt)','a'),('pm-sl','dy/dx','v'),('pm-d2','d²y/dx²',''),('pm-note','tangent','')])],
  [('On the ellipse, find t where the tangent is horizontal. <button type="button" class="btn link" data-show=\'' + show(["click","#pm-fn [data-k=el]"],["#pm-t",1.5708]) + '\'>t = π/2</button>','' ,'At t = π/2, dy/dt = 2cos t = 0 while dx/dt = −3 sin t ≠ 0: the top of the ellipse, a horizontal tangent.'),
-  ('On the cycloid, put t at 2π. What is happening to the slope? <button type="button" class="btn link" data-show=\'' + show(["click","#pm-fn [data-k=cy]"],["#pm-t",6.2832]) + '\'>t = 2π</button>','' ,'Both dx/dt = 1 − cos t and dy/dt = sin t are 0: a cusp, where the wheel point touches down. The slope is undefined there.')],
+  ('On the cycloid, put t at 2π. What is happening to the slope? <button type="button" class="btn link" data-show=\'' + show(["click","#pm-fn [data-k=cy]"],["#pm-t",6.2832]) + '\'>t = 2π</button>','' ,'Both dx/dt = 1 − cos t and dy/dt = sin t are 0: a cusp, where the wheel point touches down. The slope is not defined there.')],
  ('For x = t² and y = t³ − 3t, find dy/dx and d²y/dx² at t = 2, and the points of horizontal tangent.',[
   '<b>Rates.</b> dx/dt = 2t, dy/dt = 3t² − 3.',
   '<b>Slope.</b> dy/dx = (3t² − 3)/(2t). At t = 2: 9/4.',

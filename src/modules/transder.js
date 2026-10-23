@@ -13,7 +13,7 @@
       if(!shown){label(ctx,'f′ is hidden: sketch it in your head, then tick the box',P.box.x+P.box.w/2,P.box.y+P.box.h/2,T.muted,'center','middle',LABEL);return;}
       segs(ctx,P,A.d,T.cv,2.8,A.xr[0]+(k==='ln'?1e-4:0),A.xr[1],A.br);const m=A.d(x0);if(isFinite(m))dot(ctx,P.X(x0),P.Y(m),6.5,T.cv,T.surface);label(ctx,'f′(x)',P.box.x+8,P.box.y+10,T.cv,'left','middle',LABEL);}});
   function clampX(){const A=F[k],el=$('#td-x');el.min=A.xr[0]<=0?(k==='ln'?.2:0):A.xr[0];el.max=Math.min(A.xr[1]-.1,6.2);if(+el.value<+el.min)el.value=el.min;x0=+el.value;}
-  function upd(){const A=F[k];setText('td-sl',fmt(D(A.f,x0),4));setText('td-fx',Math.abs(Math.cos(x0))<2e-2&&k==='tan'?'undefined (cos x = 0)':fmt(A.d(x0),4));setText('td-form',A.form);sim.render();sim2.render();}
+  function upd(){const A=F[k];setText('td-sl',fmt(D(A.f,x0),4));setText('td-fx',Math.abs(Math.cos(x0))<2e-2&&k==='tan'?'not defined (cos x = 0)':fmt(A.d(x0),4));setText('td-form',A.form);sim.render();sim2.render();}
   bindRange('td-x',v=>nz(v),v=>{x0=v;upd();});segBind('td-fn','k',v=>{k=v;clampX();upd();});$('#td-show').addEventListener('change',e=>{shown=e.target.checked;sim2.render();});
   upd();drawers.transder=()=>{sim.render();sim2.render();};
   KEYS['td-canvas']=['Slide x and watch the orange tangent. Before ticking the box, predict the shape of the slope function.',[['cx','f(x)'],['hot','tangent line'],['cv','f′(x), once shown']]];

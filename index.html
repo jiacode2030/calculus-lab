@@ -1,6 +1,6 @@
 <title>Calculus Lab</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="An interactive, intuition-first study site for AP Calculus: 3D molecules, particle simulations and randomized practice.">
+<meta name="description" content="An interactive, intuition-first study site for AP Calculus AB and BC: live graphs, step-by-step examples and randomized practice.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=STIX+Two+Text:ital@0;1&display=swap">
@@ -892,6 +892,7 @@ body.is-ab .bc,body.is-ab .bcx{display:none!important}
 body.is-ab .prob.bc{display:none!important}
 .eqgrid .eqn{flex-wrap:wrap;white-space:normal}.eqgrid .eqn small{text-align:right}
 .readout strong{white-space:normal;overflow-wrap:anywhere;font-size:clamp(13px,1.6vw,17px);line-height:1.3}
+body.is-ab .mitem.bc,body.is-ab .frq.bc,body.is-ab tr.bc{display:none!important}
 
 </style>
 
@@ -2875,7 +2876,7 @@ body.is-ab .prob.bc{display:none!important}
       </div>
       <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
         <li><p>Use the default values. What do A and B equal, and what is the check? <button type="button" class="btn link" data-show='[["#pf-a", -1], ["#pf-b", 2], ["#pf-p", 3], ["#pf-q", 1]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>(3x + 1)/((x + 1)(x − 2)) = A/(x + 1) + B/(x − 2) with A = (3(−1) + 1)/(−1 − 2) = 2/3 and B = (6 + 1)/(2 + 1) = 7/3. The two sides agree at every probe x.</p></details></li>
-        <li><p>Change the probe x. Does the equality ever fail? <button type="button" class="btn link" data-show='[["#pf-x", -3]]'>x = −3</button></p><details><summary>What you should see</summary><p>No: it is an identity, true for every x except the roots a and b where the original is undefined.</p></details></li>
+        <li><p>Change the probe x. Does the equality ever fail? <button type="button" class="btn link" data-show='[["#pf-x", -3]]'>x = −3</button></p><details><summary>What you should see</summary><p>No: it is an identity, true for every x except the roots a and b where the original is not defined.</p></details></li>
       </ol></div>
       <div class="example"><h3>Worked example</h3><p class="prob">Find ∫ (3x + 1)/((x + 1)(x − 2)) dx.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
         <div class="exbody"><ol class="exsteps">
@@ -3127,7 +3128,7 @@ body.is-ab .prob.bc{display:none!important}
       </div>
       <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
         <li><p>On the ellipse, find t where the tangent is horizontal. <button type="button" class="btn link" data-show='[["click", "#pm-fn [data-k=el]"], ["#pm-t", 1.5708]]'>t = π/2</button></p><details><summary>What you should see</summary><p>At t = π/2, dy/dt = 2cos t = 0 while dx/dt = −3 sin t ≠ 0: the top of the ellipse, a horizontal tangent.</p></details></li>
-        <li><p>On the cycloid, put t at 2π. What is happening to the slope? <button type="button" class="btn link" data-show='[["click", "#pm-fn [data-k=cy]"], ["#pm-t", 6.2832]]'>t = 2π</button></p><details><summary>What you should see</summary><p>Both dx/dt = 1 − cos t and dy/dt = sin t are 0: a cusp, where the wheel point touches down. The slope is undefined there.</p></details></li>
+        <li><p>On the cycloid, put t at 2π. What is happening to the slope? <button type="button" class="btn link" data-show='[["click", "#pm-fn [data-k=cy]"], ["#pm-t", 6.2832]]'>t = 2π</button></p><details><summary>What you should see</summary><p>Both dx/dt = 1 − cos t and dy/dt = sin t are 0: a cusp, where the wheel point touches down. The slope is not defined there.</p></details></li>
       </ol></div>
       <div class="example"><h3>Worked example</h3><p class="prob">For x = t² and y = t³ − 3t, find dy/dx and d²y/dx² at t = 2, and the points of horizontal tangent.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
         <div class="exbody"><ol class="exsteps">
@@ -3811,7 +3812,7 @@ function view3d(cv,o){
           x.strokeStyle=col;x.lineWidth=w;x.stroke();x.strokeStyle=shade(col,1.25);x.lineWidth=w*.32;x.beginPath();x.moveTo(A[0]-w*.18,A[1]-w*.2);x.lineTo(B[0]-w*.18,B[1]-w*.2);x.stroke();x.restore();});},
       disk(c,R,col,n=48,stroke){S.poly(Array.from({length:n},(_,i)=>{const a=i/n*Math.PI*2;return [c[0]+R*Math.cos(a),c[1]+R*Math.sin(a),c[2]];}),col,stroke);},
 
-      /* chemistry primitives: atoms, two-tone bonds, translucent lobes (meshes) */
+      /* 3D primitives: lines, meshes (not used by the calculus modules) */
       atom(p,rad,col,al=1){const C=P(p);if(!C)return;const R=Math.max(2,rad*C[3]);push(C[2],x=>{x.save();x.globalAlpha=al;x.beginPath();x.arc(C[0],C[1],R,0,7);x.fillStyle=col;x.fill();
           const g=x.createRadialGradient(C[0]-R*.35,C[1]-R*.4,R*.05,C[0],C[1],R*1.02);g.addColorStop(0,'rgba(255,255,255,.75)');g.addColorStop(.35,'rgba(255,255,255,0)');g.addColorStop(1,'rgba(0,0,0,.38)');
           x.fillStyle=g;x.fill();x.lineWidth=1;x.strokeStyle='rgba(0,0,0,.35)';x.stroke();x.restore();});},
@@ -4047,6 +4048,141 @@ function areaSigned(ctx,P,f,a,b,posCol,negCol,n=300,al=.35){if(b<=a)return;const
 /* integrate terms [[c,p],...] (p ≠ −1) */
 const tint=ts=>ts.map(([c,p])=>[c/(p+1),p+1]);
 
+/* ===== data/frqs.js ===== */
+/* Original free-response questions, written for this site in the style of the current AP Calculus exam.
+   Each part lists its scoring points (one checkbox per point) and a model answer. Every number was checked by calculation.
+   bc:true marks BC-only questions (hidden when "I'm taking AB" is chosen). */
+const tbl=(head,rows)=>`<div class="tablewrap" style="min-width:0"><table class="data"><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+FRQS.push(
+{id:'frq-tank',kind:'long',units:'Unit 6 · Accumulation (calculator allowed)',title:'Water flowing into a tank',
+ stem:`<p>Water flows into a tank at a rate R(t) gallons per minute, where t is in minutes. R is differentiable, and its values are given in the table.</p>${tbl(['t (min)','0','2','5','9','12'],[['R(t) (gal/min)','8','11','14','12','9']])}`,
+ parts:[
+  {label:'(a)',q:'Use a trapezoidal sum with the four subintervals in the table to approximate ∫₀¹² R(t) dt. Show the computations and give units.',points:['Sets up the trapezoids with the correct widths: (2/2)(8 + 11) + (3/2)(11 + 14) + (4/2)(14 + 12) + (3/2)(12 + 9).','Evaluates correctly: 19 + 37.5 + 52 + 31.5 = 140.','Gives units of gallons.'],answer:'(2/2)(8 + 11) + (3/2)(11 + 14) + (4/2)(14 + 12) + (3/2)(12 + 9) = 19 + 37.5 + 52 + 31.5 = 140 gallons.'},
+  {label:'(b)',q:'Using your answer from (a), find the average rate at which water flows into the tank during the 12 minutes. Include units, and explain what ∫₀¹² R(t) dt represents.',points:['Divides by the length of the interval: (1/12)(140).','Gets ≈ 11.667 gal/min and gives units.','States that the integral is the total amount of water, in gallons, that flowed in over the 12 minutes.'],answer:'Average rate = 140/12 ≈ 11.667 gallons per minute. ∫₀¹² R(t) dt is the total number of gallons that flow into the tank from t = 0 to t = 12.'},
+  {label:'(c)',q:'Is there a time t, 5 < t < 9, at which R′(t) = −1/2? Justify your answer.',points:['Computes the average rate of change on [5, 9]: (R(9) − R(5))/(9 − 5) = (12 − 14)/4 = −1/2.','Notes that R is differentiable (hence continuous) on the interval.','Concludes by the Mean Value Theorem that such a t exists.'],answer:'(R(9) − R(5))/(9 − 5) = (12 − 14)/4 = −1/2. Since R is continuous on [5, 9] and differentiable on (5, 9), the Mean Value Theorem guarantees a time t in (5, 9) with R′(t) = −1/2.'},
+  {label:'(d)',q:'The tank holds 100 gallons at t = 0 and water also drains at a constant 6 gallons per minute. Use your answer to (a) to estimate the amount of water in the tank at t = 12.',points:['Writes amount = 100 + ∫₀¹² R(t) dt − (6)(12).','Substitutes the estimate: 100 + 140 − 72.','Gets ≈ 168 gallons.'],answer:'Amount ≈ 100 + 140 − 6(12) = 168 gallons.'}]},
+{id:'frq-motion',kind:'long',units:'Unit 4 and 8 · Particle motion (calculator allowed)',title:'A particle on a line',
+ stem:'<p>A particle moves along the x-axis with velocity v(t) = t² − 6t + 8 for 0 ≤ t ≤ 6. Its position at time t = 0 is x(0) = 3.</p>',
+ parts:[
+  {label:'(a)',q:'Find the acceleration at t = 1. Is the speed of the particle increasing or decreasing at t = 1? Give a reason.',points:['Finds a(t) = v′(t) = 2t − 6, so a(1) = −4.','Finds v(1) = 3.','Concludes the speed is decreasing because v(1) and a(1) have opposite signs.'],answer:'a(t) = 2t − 6, so a(1) = −4. v(1) = 1 − 6 + 8 = 3 &gt; 0. Velocity is positive and acceleration is negative, so the speed is decreasing.'},
+  {label:'(b)',q:'At what times in 0 < t < 6 is the particle at rest? On what intervals is it moving to the left?',points:['Sets v(t) = (t − 2)(t − 4) = 0 and finds t = 2 and t = 4.','Uses the sign of v: v &lt; 0 for 2 &lt; t &lt; 4.','States the particle moves left on 2 &lt; t &lt; 4.'],answer:'v(t) = (t − 2)(t − 4) = 0 at t = 2 and t = 4. v &lt; 0 only for 2 &lt; t &lt; 4, so the particle moves to the left on (2, 4).'},
+  {label:'(c)',q:'Find the position of the particle at t = 6.',points:['Writes x(6) = x(0) + ∫₀⁶ v(t) dt.','Computes ∫₀⁶ (t² − 6t + 8) dt = [t³/3 − 3t² + 8t]₀⁶ = 12.','Gets x(6) = 3 + 12 = 15.'],answer:'x(6) = 3 + ∫₀⁶ (t² − 6t + 8) dt = 3 + (72 − 108 + 48) = 3 + 12 = 15.'},
+  {label:'(d)',q:'Find the total distance traveled by the particle from t = 0 to t = 6.',points:['Uses ∫₀⁶ |v(t)| dt, or splits the integral at t = 2 and t = 4.','Computes the three pieces: 20/3, −4/3 (absolute value 4/3), 20/3.','Gets the total 44/3 ≈ 14.667.'],answer:'∫₀² v dt = 20/3, ∫₂⁴ v dt = −4/3, ∫₄⁶ v dt = 20/3. Distance = 20/3 + 4/3 + 20/3 = 44/3 ≈ 14.667.'}]},
+{id:'frq-region',kind:'long',units:'Unit 8 · Area and volume (calculator allowed)',title:'The region between a parabola and a line',
+ stem:'<p>Let R be the region enclosed by the graphs of f(x) = 4 − x² and g(x) = x + 2.</p>',
+ parts:[
+  {label:'(a)',q:'Find the x-coordinates of the points where the graphs of f and g intersect.',points:['Sets 4 − x² = x + 2.','Solves x² + x − 2 = 0, so (x + 2)(x − 1) = 0.','Gives x = −2 and x = 1.'],answer:'4 − x² = x + 2 ⇒ x² + x − 2 = 0 ⇒ (x + 2)(x − 1) = 0 ⇒ x = −2 or x = 1.'},
+  {label:'(b)',q:'Find the area of R.',points:['Identifies f as the top curve on [−2, 1] and writes ∫₋₂¹ (f − g) dx.','Antidifferentiates ∫ (2 − x − x²) dx correctly.','Evaluates to 9/2.'],answer:'Area = ∫₋₂¹ (4 − x² − x − 2) dx = ∫₋₂¹ (2 − x − x²) dx = [2x − x²/2 − x³/3]₋₂¹ = 7/6 − (−10/3) = 9/2.'},
+  {label:'(c)',q:'Region R is revolved about the x-axis. Write an integral expression for the volume of the solid, and evaluate it.',points:['Uses washers with outer radius f(x) and inner radius g(x): π∫ [f² − g²] dx.','Sets up π∫₋₂¹ [(4 − x²)² − (x + 2)²] dx with the correct limits.','Evaluates to 108π/5 ≈ 67.858.'],answer:'V = π∫₋₂¹ [(4 − x²)² − (x + 2)²] dx = π∫₋₂¹ (12 − 4x − 9x² + x⁴) dx = π[12x − 2x² − 3x³ + x⁵/5]₋₂¹ = π(7.2 − (−14.4)) = 108π/5 ≈ 67.858.'},
+  {label:'(d)',q:'Region R is the base of a solid. For each x, the cross section perpendicular to the x-axis is a square. Find the volume of the solid.',points:['The side of the square is the vertical distance f(x) − g(x) = 2 − x − x².','Sets up ∫₋₂¹ (2 − x − x²)² dx.','Evaluates to 81/10 = 8.1.'],answer:'The side is 2 − x − x², so V = ∫₋₂¹ (2 − x − x²)² dx = ∫₋₂¹ (x⁴ + 2x³ − 3x² − 4x + 4) dx = 81/10 = 8.1.'}]},
+{id:'frq-graph',kind:'long',units:'Unit 5 · Analysis of f (no calculator)',title:'Reading a function from its derivative',
+ stem:'<p>The function f is defined on [−2, 3] with f(0) = 1 and f′(x) = (x − 2)(x + 1).</p>',
+ parts:[
+  {label:'(a)',q:'Find the x-coordinate of each local extremum of f and classify it. Justify your answer.',points:['Finds the critical points x = −1 and x = 2 from f′(x) = 0.','Determines the sign of f′: positive for x &lt; −1, negative on (−1, 2), positive for x &gt; 2.','Concludes local maximum at x = −1 (f′ changes + to −) and local minimum at x = 2 (f′ changes − to +).'],answer:'f′(x) = 0 at x = −1 and x = 2. f′ &gt; 0 on (−2, −1), f′ &lt; 0 on (−1, 2), f′ &gt; 0 on (2, 3). So f has a local maximum at x = −1 and a local minimum at x = 2.'},
+  {label:'(b)',q:'On what interval is the graph of f concave down? Find the x-coordinate of the point of inflection and justify.',points:['Computes f″(x) = 2x − 1.','Finds f″ = 0 at x = 1/2.','Concludes f″ &lt; 0 for x &lt; 1/2 (concave down) and changes sign there, so x = 1/2 is an inflection point.'],answer:'f″(x) = 2x − 1, zero at x = 1/2. f″ &lt; 0 on (−2, 1/2) and f″ &gt; 0 on (1/2, 3), so f is concave down on (−2, 1/2) and has an inflection point at x = 1/2.'},
+  {label:'(c)',q:'Find the absolute maximum and absolute minimum values of f on [−2, 3]. Justify.',points:['Finds f(x) = x³/3 − x²/2 − 2x + 1 (using f(0) = 1).','Evaluates the candidates: f(−2) = 1/3, f(−1) = 13/6, f(2) = −7/3, f(3) = −1/2.','States absolute maximum 13/6 at x = −1 and absolute minimum −7/3 at x = 2.'],answer:'f(x) = x³/3 − x²/2 − 2x + 1. f(−2) = 1/3, f(−1) = 13/6, f(2) = −7/3, f(3) = −1/2. Absolute maximum 13/6 (at x = −1); absolute minimum −7/3 (at x = 2).'},
+  {label:'(d)',q:'Write an equation for the line tangent to the graph of f at x = 0, and use it to approximate f(0.1).',points:['Finds f′(0) = −2.','Writes the tangent line y = 1 − 2x.','Approximates f(0.1) ≈ 0.8.'],answer:'f(0) = 1, f′(0) = (−2)(1) = −2, so y = 1 − 2x. f(0.1) ≈ 1 − 0.2 = 0.8.'}]},
+{id:'frq-de',kind:'short',units:'Unit 7 · Differential equations (no calculator)',title:'dy/dx = xy',
+ stem:'<p>Consider the differential equation dy/dx = xy. Let y = f(x) be the particular solution with f(0) = 2.</p>',
+ parts:[
+  {label:'(a)',q:'Use Euler\'s method with two steps of size h = 0.1, starting at x = 0, to approximate f(0.2).',points:['Step 1: slope at (0, 2) is 0, so y₁ = 2 at x = 0.1.','Step 2: slope at (0.1, 2) is 0.2, so y₂ = 2 + 0.1(0.2).','Gets f(0.2) ≈ 2.02.'],answer:'At (0, 2): dy/dx = 0, y₁ = 2 + 0.1(0) = 2. At (0.1, 2): dy/dx = 0.2, y₂ = 2 + 0.1(0.2) = 2.02. So f(0.2) ≈ 2.02.'},
+  {label:'(b)',q:'Find d²y/dx² in terms of x and y. Is your approximation in (a) an overestimate or underestimate of f(0.2)? Justify (assume y &gt; 0).',points:['Differentiates implicitly with the product rule: d²y/dx² = y + x(dy/dx).','Substitutes dy/dx = xy to get y(1 + x²).','Concludes d²y/dx² &gt; 0 for y &gt; 0, so the solution is concave up and Euler\'s method underestimates.'],answer:'d²y/dx² = y + x·dy/dx = y + x²y = y(1 + x²). For y &gt; 0 this is positive, so the solution is concave up and the tangent-line steps lie below the curve: the approximation is an underestimate.'},
+  {label:'(c)',q:'Find y = f(x) by separating variables.',points:['Separates: dy/y = x dx.','Integrates both sides: ln|y| = x²/2 + C.','Uses f(0) = 2 and gives y = 2e^(x²/2).'],answer:'dy/y = x dx ⇒ ln|y| = x²/2 + C ⇒ y = Ae^(x²/2). f(0) = 2 gives A = 2, so f(x) = 2e^(x²/2).'},
+  {label:'(d)',q:'Use your solution to find f(0.2). Does it agree with (b)?',points:['Evaluates f(0.2) = 2e^(0.02) ≈ 2.0404.','Compares with 2.02 and notes it is larger, consistent with the underestimate in (b).'],answer:'f(0.2) = 2e^(0.02) ≈ 2.0404, which is greater than the Euler estimate 2.02, as predicted in (b).'}]},
+{id:'frq-cone',kind:'short',units:'Unit 4 · Related rates (no calculator)',title:'Filling a conical tank',
+ stem:'<p>Water is poured into an inverted conical tank at a constant rate of 4 cubic feet per minute. The tank has height 6 ft and top radius 3 ft. Let h be the depth of the water and r the radius of its surface. The volume of a cone is V = (1/3)πr²h.</p>',
+ parts:[
+  {label:'(a)',q:'Express V in terms of h only.',points:['Uses similar triangles: r/h = 3/6, so r = h/2.','Substitutes: V = (1/3)π(h/2)²h.','Gets V = (π/12)h³.'],answer:'r/h = 3/6 ⇒ r = h/2. V = (1/3)π(h/2)²h = (π/12)h³.'},
+  {label:'(b)',q:'Find the rate at which the depth is rising when h = 3 ft.',points:['Differentiates with respect to t: dV/dt = (π/4)h² dh/dt.','Substitutes dV/dt = 4 and h = 3: 4 = (π/4)(9)dh/dt.','Gets dh/dt = 16/(9π) ≈ 0.566 ft/min.'],answer:'dV/dt = (π/4)h²·dh/dt, so 4 = (π/4)(9)(dh/dt) and dh/dt = 16/(9π) ≈ 0.566 ft/min.'},
+  {label:'(c)',q:'Find the rate at which the radius r of the water surface is increasing when h = 3 ft.',points:['Uses r = h/2, so dr/dt = (1/2)dh/dt.','Substitutes the value from (b).','Gets dr/dt = 8/(9π) ≈ 0.283 ft/min.'],answer:'dr/dt = (1/2)dh/dt = 8/(9π) ≈ 0.283 ft/min.'},
+  {label:'(d)',q:'How long does it take to fill the tank from empty?',points:['Finds the full volume V = (π/12)(6)³ = 18π.','Divides by the inflow rate: 18π/4.','Gets 9π/2 ≈ 14.137 minutes.'],answer:'V = (π/12)(216) = 18π ft³. Time = 18π/4 = 9π/2 ≈ 14.137 minutes.'}]},
+{id:'frq-series',kind:'long',bc:true,units:'Unit 10 · Series (BC, no calculator)',title:'A Maclaurin series for x·e^(−x²)',
+ stem:'<p>Let f(x) = x e<sup>−x²</sup>.</p>',
+ parts:[
+  {label:'(a)',q:'Write the first four nonzero terms and the general term of the Maclaurin series for f.',points:['Substitutes −x² into the series for eᵘ: 1 − x² + x⁴/2! − x⁶/3! + ….','Multiplies by x: x − x³ + x⁵/2 − x⁷/6 + ….','Gives the general term (−1)ⁿx²ⁿ⁺¹/n!.'],answer:'e<sup>u</sup> = Σ uⁿ/n!, with u = −x²: e<sup>−x²</sup> = 1 − x² + x⁴/2 − x⁶/6 + …. Multiply by x: f(x) = x − x³ + x⁵/2 − x⁷/6 + … = Σ (−1)ⁿ x²ⁿ⁺¹/n!.'},
+  {label:'(b)',q:'Use the ratio test to find the interval of convergence.',points:['Forms |aₙ₊₁/aₙ| = x²/(n + 1).','Finds the limit is 0 for every x.','Concludes the series converges for all x: (−∞, ∞).'],answer:'|aₙ₊₁/aₙ| = [|x|²ⁿ⁺³/(n + 1)!]·[n!/|x|²ⁿ⁺¹] = x²/(n + 1) → 0 &lt; 1 for every x. The interval of convergence is (−∞, ∞).'},
+  {label:'(c)',q:'Use the first three nonzero terms to approximate ∫₀^(1/2) f(x) dx. Use the alternating series error bound to bound the error.',points:['Integrates term by term: [x²/2 − x⁴/4 + x⁶/12]₀^(1/2).','Evaluates the approximation: 1/8 − 1/64 + 1/768 ≈ 0.11068.','Notes the series is alternating with decreasing terms, so the error is at most the next term, (1/2)⁸/48 ≈ 0.0000814.'],answer:'∫₀^(1/2) (x − x³ + x⁵/2) dx = 1/8 − 1/64 + 1/768 ≈ 0.11068. The integrated series alternates with decreasing terms, so |error| ≤ (1/2)⁸/48 = 1/12288 ≈ 0.0000814. (The exact value is (1 − e^(−1/4))/2 ≈ 0.11060.)'},
+  {label:'(d)',q:'Find f‴(0).',points:['Identifies the coefficient of x³ as −1.','Uses f‴(0)/3! = −1.','Gets f‴(0) = −6.'],answer:'The coefficient of x³ is −1, and it equals f‴(0)/3!, so f‴(0) = −6.'}]},
+{id:'frq-param',kind:'long',bc:true,units:'Unit 9 · Parametric motion (BC, calculator allowed)',title:'A particle in the plane',
+ stem:'<p>A particle moves in the xy-plane so that its position at time t, for 0 ≤ t ≤ 2, is (x(t), y(t)) = (t³ − 3t, t²).</p>',
+ parts:[
+  {label:'(a)',q:'Find the speed of the particle at t = 1.',points:['Finds x′(t) = 3t² − 3 and y′(t) = 2t.','Evaluates x′(1) = 0 and y′(1) = 2.','Gets speed √(0² + 2²) = 2.'],answer:'x′(t) = 3t² − 3 and y′(t) = 2t. At t = 1: (0, 2), so the speed is √(0 + 4) = 2.'},
+  {label:'(b)',q:'Find dy/dx at t = 2.',points:['Uses dy/dx = (dy/dt)/(dx/dt).','Evaluates y′(2) = 4 and x′(2) = 9.','Gets 4/9.'],answer:'dy/dx = (2t)/(3t² − 3). At t = 2: 4/9.'},
+  {label:'(c)',q:'At what time t, 0 &lt; t &lt; 2, does the particle have a vertical tangent? Give the point.',points:['Sets x′(t) = 0 with y′(t) ≠ 0.','Solves 3t² − 3 = 0 to get t = 1.','Gives the point (−2, 1).'],answer:'x′(t) = 3t² − 3 = 0 gives t = 1 (and y′(1) = 2 ≠ 0). At t = 1 the position is (1 − 3, 1) = (−2, 1).'},
+  {label:'(d)',q:'Find the distance traveled by the particle from t = 0 to t = 2.',points:['Writes ∫₀² √((3t² − 3)² + (2t)²) dt.','Evaluates with a calculator.','Gets ≈ 7.605.'],answer:'Distance = ∫₀² √((3t² − 3)² + (2t)²) dt ≈ 7.605.'}]},
+{id:'frq-polar',kind:'short',bc:true,units:'Unit 9 · Polar area (BC, no calculator)',title:'Inside one polar curve and outside another',
+ stem:'<p>Let R be the region that lies inside the graph of r = 3 cos θ and outside the graph of r = 1 + cos θ.</p>',
+ parts:[
+  {label:'(a)',q:'Find the values of θ where the two curves intersect (for −π/2 ≤ θ ≤ π/2).',points:['Sets 3 cos θ = 1 + cos θ.','Solves cos θ = 1/2.','Gives θ = ±π/3.'],answer:'3 cos θ = 1 + cos θ ⇒ cos θ = 1/2 ⇒ θ = −π/3 and θ = π/3.'},
+  {label:'(b)',q:'Write an integral expression for the area of R.',points:['Uses (1/2)∫ (r_outer² − r_inner²) dθ with r_outer = 3 cos θ and r_inner = 1 + cos θ.','Uses limits from −π/3 to π/3 (or doubles ∫₀^(π/3)).','Gets (1/2)∫₋π/3^(π/3) [(3 cos θ)² − (1 + cos θ)²] dθ.'],answer:'Area = (1/2)∫<sub>−π/3</sub><sup>π/3</sup> [(3 cos θ)² − (1 + cos θ)²] dθ.'},
+  {label:'(c)',q:'Find the area of R.',points:['Simplifies the integrand with the double-angle identity: 8cos²θ − 1 − 2cos θ = 3 + 4cos 2θ − 2cos θ.','Antidifferentiates correctly: 3θ + 2 sin 2θ − 2 sin θ.','Evaluates to π.'],answer:'By symmetry Area = ∫₀^(π/3) (8cos²θ − 1 − 2cos θ) dθ = ∫₀^(π/3) (3 + 4cos 2θ − 2cos θ) dθ = [3θ + 2 sin 2θ − 2 sin θ]₀^(π/3) = π + √3 − √3 = π.'},
+  {label:'(d)',q:'Find dy/dx for r = 3 cos θ at θ = π/3.',points:['Uses dy/dx = (r′ sin θ + r cos θ)/(r′ cos θ − r sin θ) with r′ = −3 sin θ.','Evaluates r = 3/2, r′ = −3√3/2 at θ = π/3.','Gets dy/dx = (−9/4 + 3/4)/(−3√3/4 − 3√3/4) = (−3/2)/(−3√3/2) = 1/√3.'],answer:'r = 3/2, r′ = −(3√3)/2 at θ = π/3. dy/dx = [(−3√3/2)(√3/2) + (3/2)(1/2)] / [(−3√3/2)(1/2) − (3/2)(√3/2)] = (−9/4 + 3/4)/(−3√3/4 − 3√3/4) = (−3/2)/(−3√3/2) = 1/√3.'}]}
+);
+
+/* ===== data/methods.js ===== */
+/* Clue table and "which method?" items for the Which-method trainer. A third entry / bc:true marks BC-only rows. */
+METHODS.clues.push(
+ ['Limit gives 0/0 at the point','Factor and cancel, rationalize with a conjugate, combine fractions, or L\'Hôpital\'s rule'],
+ ['Limit as x → ±∞ of a rational function','Compare degrees of top and bottom (or divide by the highest power)'],
+ ['"Find the slope at a point", "rate of change at an instant"','A derivative evaluated at that point'],
+ ['A function inside another: sin(3x), (x² + 1)⁵, e^(x²)','Chain rule'],
+ ['Two functions multiplied or divided, both containing x','Product rule or quotient rule'],
+ ['Equation mixing x and y, such as x² + y² = 25; "find dy/dx"','Implicit differentiation'],
+ ['Two quantities change with time and an equation links them','Related rates: differentiate with respect to t, then substitute'],
+ ['"Estimate", "approximate" a value near a known point','Tangent-line approximation (linearization)'],
+ ['"Where is f increasing / decreasing / has a maximum"','Sign chart of f′; first derivative test'],
+ ['"Where is f concave up / down", "inflection point"','Sign of f″ and where it changes'],
+ ['"Absolute maximum on [a, b]"','Candidates test: critical points and endpoints'],
+ ['"Largest area / least cost / shortest distance"','Optimization: constraint, one variable, f′ = 0, justify'],
+ ['"Must there be a point where…" with f continuous or differentiable','Intermediate Value Theorem, or Mean Value Theorem'],
+ ['Total accumulated amount from a rate; "net change"','Definite integral of the rate (FTC)'],
+ ['Rate given only in a table','Riemann sum or trapezoid estimate'],
+ ['Derivative of ∫ₐ^g(x) f(t) dt','FTC Part 1 with the chain rule: f(g(x))·g′(x)'],
+ ['Integral where an inside function\'s derivative also appears','u-substitution'],
+ ['Area between two curves','∫ (top − bottom) dx, split at crossings'],
+ ['Region spun around an axis','Disc or washer: π∫ (R² − r²) dx, radii from the axis'],
+ ['Solid with known cross sections','V = ∫ A(x) dx with A from the base length'],
+ ['dy/dx given in terms of x and y; "particular solution"','Separation of variables, then the initial condition'],
+ ['"Particle", velocity v(t), "total distance"','∫ |v| dt for distance; ∫ v dt for displacement; signs of v and a for speeding up'],
+ ['Product of x and eˣ, sin x, or ln x',  'Integration by parts (LIATE)',true],
+ ['Fraction of polynomials with a factorable denominator',  'Partial fractions (after long division if needed)',true],
+ ['Limits of integration at ∞, or integrand blows up',  'Improper integral: replace by a limit',true],
+ ['x(t) and y(t) given','dy/dx = (dy/dt)/(dx/dt); speed √(x′² + y′²)',true],
+ ['r = f(θ); "area enclosed"','½∫ r² dθ over the right interval of θ',true],
+ ['Series with n! or aⁿ in the terms','Ratio test',true],
+ ['Series that behaves like 1/nᵖ','Limit comparison with a p-series',true],
+ ['Series with alternating signs','Alternating series test; error ≤ first omitted term',true],
+ ['"Approximate f(x) by a polynomial", error','Taylor polynomial and the Lagrange error bound',true]);
+(function(){
+  const T={sub:'Direct substitution',alg:'Algebra first (factor, conjugate, common denominator), then substitute',lhop:'L\'Hôpital\'s rule',pow:'Power and sum rules',prod:'Product rule',quot:'Quotient rule',chain:'Chain rule',impl:'Implicit differentiation',
+    rel:'Related rates: differentiate an equation in t',lin:'Tangent-line approximation',mvt:'Mean Value Theorem',ivt:'Intermediate Value Theorem',crit:'Sign chart of f′ (first derivative test)',conc:'Sign of f″ (concavity)',cand:'Candidates test on a closed interval',opt:'Optimization (constraint, one variable, f′ = 0)',
+    ftc:'FTC: evaluate an antiderivative at the limits',ftc1:'FTC Part 1 with the chain rule',usub:'u-substitution',rsum:'Riemann or trapezoid sum',area:'Area between curves (top − bottom)',disc:'Washer method',cross:'Cross sections: integrate A(x)',sep:'Separation of variables',slope:'Read the slope field',
+    parts:'Integration by parts',pf:'Partial fractions',impr:'Improper integral (a limit)',par:'dy/dx = (dy/dt)/(dx/dt)',pol:'Polar area ½∫ r² dθ',ratio:'Ratio test',comp:'Comparison with a p-series',alt:'Alternating series test',tay:'Taylor polynomial and Lagrange bound',geom:'Geometric series formula',
+    avg:'Average value (1/(b − a))∫ f dx',dist:'∫ |v| dt'};
+  const add=(q,right,wrong,explain,miss,bc)=>{const opts=[right,...wrong];const order=[0,1,2,3].sort(()=>Math.random()-.5);const shuffled=order.map(i=>opts[i]);METHODS.items.push({q,opts:shuffled,correct:shuffled.indexOf(right),explain,miss,bc});};
+  add('Find lim<sub>x→3</sub> (x² − 9)/(x − 3).',T.alg,[T.lhop+' is overkill, but unnecessary here: first try plain substitution',T.ftc,T.ratio].map((x,i)=>i===0?T.sub:x),'It is 0/0, so factor: (x − 3)(x + 3)/(x − 3) = x + 3.');
+  add('Differentiate f(x) = x² sin(3x).',T.prod,[T.chain+' alone',T.quot,T.usub],'The outermost operation is a product; the chain rule then appears inside sin(3x).');
+  add('Find dy/dx on the curve x² + xy + y² = 7.',T.impl,[T.chain+' on x only',T.sep,T.rsum],'y cannot be isolated easily: differentiate both sides, treating y as a function of x.');
+  add('A 13 ft ladder slides down a wall; the foot moves out at 2 ft/s. How fast does the top fall when the foot is 5 ft out?',T.rel,[T.opt,T.lin,T.ftc1],'Two quantities linked by x² + y² = 169 and both changing in time: related rates.');
+  add('Estimate √16.2 without a calculator.',T.lin,[T.mvt,T.rsum,T.ivt],'Use the tangent line to √x at x = 16, a nearby easy value.');
+  add('Find the absolute minimum of f(x) = x³ − 6x² on [0, 5].',T.cand,[T.mvt,T.ivt,T.conc],'A closed interval: compare f at the critical points and at both endpoints.');
+  add('Find the dimensions of the rectangle of largest area with perimeter 80.',T.opt,[T.crit+' only',T.rsum,T.mvt],'Constraint (perimeter) lets you write the area in one variable; then A′ = 0 and justify.');
+  add('Water flow rates are given in a table at uneven times. Estimate the total volume.',T.rsum,[T.ftc,T.mvt,T.avg],'Only data points are known, so use a trapezoid or Riemann sum with the table\'s subintervals.');
+  add('Find d/dx ∫<sub>1</sub><sup>x²</sup> sin(t²) dt.',T.ftc1,[T.usub,T.parts,T.prod],'Upper limit x²: replace t by x² and multiply by (x²)′ = 2x.');
+  add('Evaluate ∫ x cos(x²) dx.',T.usub,[T.parts,T.pf,T.sep],'The derivative of the inside x² (up to a constant) is present: u = x².');
+  add('Find the area enclosed by y = x and y = x².',T.area,[T.disc,T.cross,T.avg],'Intersections, then ∫ (top − bottom) dx.');
+  add('The region under y = √x on [0, 4] is revolved about the x-axis. Find the volume.',T.disc,[T.area,T.cross,T.avg],'Slices perpendicular to the axis are discs of radius √x.');
+  add('Solve dy/dx = 2xy with y(0) = 3.',T.sep,[T.slope,T.usub+' on y only',T.parts],'All y\'s on one side, all x\'s on the other, integrate, use the initial condition.');
+  add('A particle\'s velocity changes sign. Find the total distance traveled from t = 0 to t = 5.',T.dist,[T.ftc+' of v only',T.avg,T.lin],'Distance counts all movement; split where v changes sign and add absolute values.');
+  add('Find ∫ x e<sup>x</sup> dx.',T.parts,[T.usub,T.pf,T.sep],'A product of x and eˣ; differentiating x makes it simpler: u = x, dv = eˣ dx.',undefined,true);
+  add('Find ∫ (3x + 1)/((x − 1)(x + 2)) dx.',T.pf,[T.usub,T.parts,T.impr],'A fraction of polynomials with distinct linear factors: split into A/(x − 1) + B/(x + 2).',undefined,true);
+  add('Decide whether Σ n!/3<sup>n</sup> converges.',T.ratio,[T.comp,T.alt,T.geom],'Factorials in the terms: the ratio test (L = ∞, so it diverges).',undefined,true);
+  add('Decide whether Σ (n + 1)/(n³ + 5) converges.',T.comp,[T.ratio+' (it gives L = 1)',T.alt,T.geom],'The terms behave like 1/n², a convergent p-series: limit comparison.',undefined,true);
+  add('Estimate the error in using the first four terms of 1 − 1/2 + 1/3 − 1/4 + … to approximate its sum.',T.alt,[T.ratio,T.tay,T.comp],'An alternating series with decreasing terms: error ≤ the first omitted term, 1/5.',undefined,true);
+  add('Find the slope dy/dx at t = 2 for x = t³ − t, y = t² + 1.',T.par,[T.impl,T.chain+' only',T.pol],'Both coordinates depend on t: (dy/dt)/(dx/dt) = 4/11.',undefined,true);
+  add('Find the area inside r = 2 + 2cos θ.',T.pol,[T.area,T.par,T.disc],'Polar area is (1/2)∫ r² dθ over [0, 2π].',undefined,true);
+  add('Approximate sin(0.3) with an error less than 10⁻⁴ using a polynomial.',T.tay,[T.lin+' only',T.ratio,T.geom],'Use the Maclaurin polynomial and the Lagrange bound to choose the degree.',undefined,true);
+})();
 
 /* ===== modules/functions.js ===== */
 /* ---------------- Functions & transformations ---------------- */
@@ -4104,7 +4240,7 @@ const tint=ts=>ts.map(([c,p])=>[c/(p+1),p+1]);
     ctx.strokeStyle=T.hot;ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(X(th),gy-gh-6);ctx.lineTo(X(th),gy+gh+6);ctx.stroke();ctx.setLineDash([]);
     ['π/2','π','3π/2','2π'].forEach((s,i)=>label(ctx,s,X((i+1)*Math.PI/2),gy+gh+16,T.muted,'center','middle',MONO));label(ctx,'θ (radians)',gx+gw,gy-gh-10,T.muted,'right','middle',MONO);}});
   const line2=(ctx,x1,y1,x2,y2,c,w)=>{ctx.strokeStyle=c;ctx.lineWidth=w;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();};
-  bindRange('te-ang',v=>fmt(v,3)+' rad',v=>{th=v;setText('te-sin',fmt(Math.sin(v),4));setText('te-cos',fmt(Math.cos(v),4));setText('te-tan',Math.abs(Math.cos(v))<1e-3?'undefined (cos θ = 0)':fmt(Math.tan(v),4));setText('te-deg',fmt(v*180/Math.PI,1)+'°');sim.render();});
+  bindRange('te-ang',v=>fmt(v,3)+' rad',v=>{th=v;setText('te-sin',fmt(Math.sin(v),4));setText('te-cos',fmt(Math.cos(v),4));setText('te-tan',Math.abs(Math.cos(v))<1e-3?'not defined (cos θ = 0)':fmt(Math.tan(v),4));setText('te-deg',fmt(v*180/Math.PI,1)+'°');sim.render();});
   /* exp and log */
   let bb=Math.E;
   const sim2=glab('te-canvas2',{view:()=>({xr:[-3,6],yr:[-3,6]}),draw(ctx,P){const lb=Math.log(bb);curveD(ctx,P,x=>Math.pow(bb,x),-3,6,T.cx,2.8,300);curveD(ctx,P,x=>x>0?Math.log(x)/lb:NaN,1e-6,6,T.ca,2.8,300);
@@ -4465,7 +4601,7 @@ const lmN=v=>v===null?'does not exist':String(v).replace('-','−');
       if(!shown){label(ctx,'f′ is hidden: sketch it in your head, then tick the box',P.box.x+P.box.w/2,P.box.y+P.box.h/2,T.muted,'center','middle',LABEL);return;}
       segs(ctx,P,A.d,T.cv,2.8,A.xr[0]+(k==='ln'?1e-4:0),A.xr[1],A.br);const m=A.d(x0);if(isFinite(m))dot(ctx,P.X(x0),P.Y(m),6.5,T.cv,T.surface);label(ctx,'f′(x)',P.box.x+8,P.box.y+10,T.cv,'left','middle',LABEL);}});
   function clampX(){const A=F[k],el=$('#td-x');el.min=A.xr[0]<=0?(k==='ln'?.2:0):A.xr[0];el.max=Math.min(A.xr[1]-.1,6.2);if(+el.value<+el.min)el.value=el.min;x0=+el.value;}
-  function upd(){const A=F[k];setText('td-sl',fmt(D(A.f,x0),4));setText('td-fx',Math.abs(Math.cos(x0))<2e-2&&k==='tan'?'undefined (cos x = 0)':fmt(A.d(x0),4));setText('td-form',A.form);sim.render();sim2.render();}
+  function upd(){const A=F[k];setText('td-sl',fmt(D(A.f,x0),4));setText('td-fx',Math.abs(Math.cos(x0))<2e-2&&k==='tan'?'not defined (cos x = 0)':fmt(A.d(x0),4));setText('td-form',A.form);sim.render();sim2.render();}
   bindRange('td-x',v=>nz(v),v=>{x0=v;upd();});segBind('td-fn','k',v=>{k=v;clampX();upd();});$('#td-show').addEventListener('change',e=>{shown=e.target.checked;sim2.render();});
   upd();drawers.transder=()=>{sim.render();sim2.render();};
   KEYS['td-canvas']=['Slide x and watch the orange tangent. Before ticking the box, predict the shape of the slope function.',[['cx','f(x)'],['hot','tangent line'],['cv','f′(x), once shown']]];
@@ -5131,7 +5267,7 @@ const lmN=v=>v===null?'does not exist':String(v).replace('-','−');
     drag:(kind,x,y)=>{setS('sf-x0',x);setS('sf-y0',y);}});
   const setS=(id,v)=>{const el=$('#'+id);el.value=clamp(Math.round(v*10)/10,-3,3);el.dispatchEvent(new Event('input',{bubbles:true}));};
   function upd(){const F=C[k].F,s=F(x0,y0);const pts=trace(1);let y1=NaN;for(const [x,y] of pts)if(x>=x0+1-1e-9){y1=y;break;}
-    setText('sf-sl',isFinite(s)?fmt(s,3):'undefined here');setText('sf-y1',isFinite(y1)?fmt(y1,3):'leaves the window');setText('sf-note',C[k].note);sim.render();}
+    setText('sf-sl',isFinite(s)?fmt(s,3):'not defined here');setText('sf-y1',isFinite(y1)?fmt(y1,3):'leaves the window');setText('sf-note',C[k].note);sim.render();}
   bindRange('sf-x0',v=>nz(v),v=>{x0=v;upd();});bindRange('sf-y0',v=>nz(v),v=>{y0=v;upd();});segBind('sf-fn','k',v=>{k=v;upd();});upd();drawers.slope=()=>sim.render();
   KEYS['sf-canvas']=['Each grey segment shows the slope there. The blue curve starts at the orange dot and follows the segments. Drag to move the dot.',[['muted','slope segments'],['cx','the solution through the start'],['hot','initial condition']]];
   TIPS['sf-x0']=()=>'The starting point picks which solution curve you follow.';
@@ -5508,7 +5644,7 @@ const lmN=v=>v===null?'does not exist':String(v).replace('-','−');
       if(L>1e-6){const ux=dx/L,uy=-dy/L;ctx.save();clip(ctx,P);ctx.strokeStyle=alpha(T.hot,.7);ctx.lineWidth=1.8;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(px-ux*400,py-uy*400);ctx.lineTo(px+ux*400,py+uy*400);ctx.stroke();ctx.restore();arrow(ctx,px,py,px+ux*46,py+uy*46,T.cv,3);}
       dot(ctx,px,py,7,T.hot,T.surface);}});
   function upd(){const A=C[k],dx=A.dx(t0),dy=A.dy(t0),zero=v=>Math.abs(v)<1e-3;setText('pm-xy',`(${fmt(A.x(t0),3)}, ${fmt(A.y(t0),3)})`);setText('pm-v',`(${fmt(dx,3)}, ${fmt(dy,3)})`);
-    const sl=zero(dx)?NaN:dy/dx;setText('pm-sl',zero(dx)?(zero(dy)?'undefined (cusp: both zero)':'undefined (vertical tangent)'):fmt(sl,4));
+    const sl=zero(dx)?NaN:dy/dx;setText('pm-sl',zero(dx)?(zero(dy)?'not defined (cusp: both zero)':'not defined (vertical tangent)'):fmt(sl,4));
     setText('pm-d2',zero(dx)?'—':fmt(D(t=>A.dy(t)/A.dx(t),t0,2e-3)/dx,4));setText('pm-note',zero(dx)&&zero(dy)?'dx/dt = dy/dt = 0: a cusp':zero(dx)?'vertical tangent':zero(dy)?'horizontal tangent':'oblique');sim.render();}
   function setT(){const A=C[k],el=$('#pm-t');el.min=A.tr[0];el.max=A.tr[1];el.value=A.tr[2];t0=A.tr[2];}
   bindRange('pm-t',v=>nz(v),v=>{t0=v;upd();});segBind('pm-fn','k',v=>{k=v;setT();upd();});setT();upd();drawers.param=()=>sim.render();
@@ -5934,10 +6070,10 @@ function probCard(p,o={}){
 
 /* ---------------- "Which tool?" trainer ---------------- */
 (function methods(){const tb=$('#mt-table'),host=$('#mt-items');if(!tb)return;
-  tb.innerHTML=METHODS.clues.map(([c,t])=>`<tr><td>${c}</td><td>${t}</td></tr>`).join('');
-  host.innerHTML=METHODS.items.map((it,i)=>`<div class="mitem" data-correct="${it.correct}" data-opts="${JSON.stringify(it.opts).replace(/"/g,'&quot;')}" data-explain="${it.explain.replace(/"/g,'&quot;')}"${it.miss?` data-miss="${it.miss.replace(/"/g,'&quot;')}"`:''}><p>${i+1}. ${it.q}</p><div class="sopts"></div><p class="fb" aria-live="polite"></p></div>`).join('');
+  tb.innerHTML=METHODS.clues.map(([c,t,bc])=>`<tr${bc?' class="bc"':''}><td>${c}${bc?' <span class="bcbadge">BC</span>':''}</td><td>${t}</td></tr>`).join('');
+  host.innerHTML=METHODS.items.map((it,i)=>`<div class="mitem${it.bc?' bc':''}" data-correct="${it.correct}" data-opts="${JSON.stringify(it.opts).replace(/"/g,'&quot;')}" data-explain="${it.explain.replace(/"/g,'&quot;')}"${it.miss?` data-miss="${it.miss.replace(/"/g,'&quot;')}"`:''}><p>${i+1}. ${it.q}</p><div class="sopts"></div><p class="fb" aria-live="polite"></p></div>`).join('');
   if(!METHODS.items.length){$('#v-methods .tablewrap').hidden=true;$('#v-methods .sorter').hidden=true;$('#v-methods .wrap').insertAdjacentHTML('beforeend','<div class="note"><b>Coming with the rest of the modules</b>The clue table and the picking practice are built from every unit, so they appear as modules are added.</div>');return;}
-  const items=$$('.mitem');if(!items.length)return;let right=0;const sc=()=>setText('mt-score',`${right} of ${items.length} right so far.`);
+  const items=$$('.mitem');if(!items.length)return;let right=0;const nv=()=>items.filter(i=>!(COURSE()==='AB'&&i.classList.contains('bc'))).length;const sc=()=>setText('mt-score',`${right} of ${nv()} right so far.`);document.addEventListener('coursechange',sc);
   items.forEach(it=>{const box=$('.sopts',it),fb=$('.fb',it),c=+it.dataset.correct,opts=JSON.parse(it.dataset.opts);let done=false;
     opts.forEach((o,i)=>{const b=document.createElement('button');b.type='button';b.textContent=o;b.addEventListener('click',()=>{$$('button',box).forEach(x=>x.classList.remove('right','wrong'));
       if(i===c){b.classList.add('right');fb.textContent='Yes. '+it.dataset.explain;if(!done){done=true;right++;sc();}}else{b.classList.add('wrong');fb.textContent=it.dataset.miss||'Not the best first tool. What is the question asking for, and what is it giving you?';}});box.appendChild(b);});});sc();})();
@@ -5947,15 +6083,15 @@ function probCard(p,o={}){
   const host=$('#frq-list');if(!host)return;const saved=store('calc-frq')||{};
   if(!FRQS.length){host.innerHTML='<div class="note"><b>Coming with the rest of the modules</b>Original free-response questions are written unit by unit, so they appear as modules are added.</div>';$('#frq-reset').hidden=true;return;}
   host.innerHTML=FRQS.map(q=>{const total=q.parts.reduce((a,p)=>a+p.points.length,0);
-    return `<article class="frq" id="${q.id}" data-total="${total}"><div class="fh"><div class="row"><span class="tag ap">${q.kind==='long'?'Long question':'Short question'}</span><span class="tag">${q.units}</span></div><span class="score" id="${q.id}-score">0 / ${total}</span></div>
+    return `<article class="frq${q.bc?' bc':''}" id="${q.id}" data-total="${total}"><div class="fh"><div class="row"><span class="tag ap">${q.kind==='long'?'Long question':'Short question'}</span><span class="tag">${q.units}</span>${q.bc?'<span class="bcbadge" style="margin:0">BC</span>':''}</div><span class="score" id="${q.id}-score">0 / ${total}</span></div>
       <h3>${q.title}</h3><div class="stem">${q.stem}</div>
       ${q.parts.map((p,i)=>`<div class="part"><p><b>${p.label}</b> ${p.q}</p>
         <details><summary>Show the scoring guide</summary><div class="rub">${p.points.map((t,k)=>`<label class="pt"><input type="checkbox" data-frq id="${q.id}-${i}-${k}"><span>${t}</span></label>`).join('')}<div class="sol">${p.answer}</div></div></details></div>`).join('')}</article>`;}).join('');
   const boxes=$$('input[data-frq]',host);
   boxes.forEach(b=>{b.checked=!!saved[b.id];b.addEventListener('change',()=>{const s2=store('calc-frq')||{};s2[b.id]=b.checked;store('calc-frq',s2);tally();});});
-  function tally(){let all=0,max=0;$$('.frq',host).forEach(q=>{const n=$$('input[data-frq]',q).filter(b=>b.checked).length,t=+q.dataset.total;all+=n;max+=t;setText(q.id+'-score',`${n} / ${t}`);});
+  function tally(){let all=0,max=0;$$('.frq',host).filter(q=>!(COURSE()==='AB'&&q.classList.contains('bc'))).forEach(q=>{const n=$$('input[data-frq]',q).filter(b=>b.checked).length,t=+q.dataset.total;all+=n;max+=t;setText(q.id+'-score',`${n} / ${t}`);});
     setText('frq-total',`${all} of ${max} points`);const m=$('#frq-meter');if(m)m.style.width=(max?100*all/max:0)+'%';}
-  $('#frq-reset').addEventListener('click',()=>{boxes.forEach(b=>b.checked=false);store('calc-frq',{});tally();});
+  document.addEventListener('coursechange',tally);$('#frq-reset').addEventListener('click',()=>{boxes.forEach(b=>b.checked=false);store('calc-frq',{});tally();});
   tally();
 })();
 

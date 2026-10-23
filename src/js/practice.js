@@ -45,10 +45,10 @@ function probCard(p,o={}){
 
 /* ---------------- "Which tool?" trainer ---------------- */
 (function methods(){const tb=$('#mt-table'),host=$('#mt-items');if(!tb)return;
-  tb.innerHTML=METHODS.clues.map(([c,t])=>`<tr><td>${c}</td><td>${t}</td></tr>`).join('');
-  host.innerHTML=METHODS.items.map((it,i)=>`<div class="mitem" data-correct="${it.correct}" data-opts="${JSON.stringify(it.opts).replace(/"/g,'&quot;')}" data-explain="${it.explain.replace(/"/g,'&quot;')}"${it.miss?` data-miss="${it.miss.replace(/"/g,'&quot;')}"`:''}><p>${i+1}. ${it.q}</p><div class="sopts"></div><p class="fb" aria-live="polite"></p></div>`).join('');
+  tb.innerHTML=METHODS.clues.map(([c,t,bc])=>`<tr${bc?' class="bc"':''}><td>${c}${bc?' <span class="bcbadge">BC</span>':''}</td><td>${t}</td></tr>`).join('');
+  host.innerHTML=METHODS.items.map((it,i)=>`<div class="mitem${it.bc?' bc':''}" data-correct="${it.correct}" data-opts="${JSON.stringify(it.opts).replace(/"/g,'&quot;')}" data-explain="${it.explain.replace(/"/g,'&quot;')}"${it.miss?` data-miss="${it.miss.replace(/"/g,'&quot;')}"`:''}><p>${i+1}. ${it.q}</p><div class="sopts"></div><p class="fb" aria-live="polite"></p></div>`).join('');
   if(!METHODS.items.length){$('#v-methods .tablewrap').hidden=true;$('#v-methods .sorter').hidden=true;$('#v-methods .wrap').insertAdjacentHTML('beforeend','<div class="note"><b>Coming with the rest of the modules</b>The clue table and the picking practice are built from every unit, so they appear as modules are added.</div>');return;}
-  const items=$$('.mitem');if(!items.length)return;let right=0;const sc=()=>setText('mt-score',`${right} of ${items.length} right so far.`);
+  const items=$$('.mitem');if(!items.length)return;let right=0;const nv=()=>items.filter(i=>!(COURSE()==='AB'&&i.classList.contains('bc'))).length;const sc=()=>setText('mt-score',`${right} of ${nv()} right so far.`);document.addEventListener('coursechange',sc);
   items.forEach(it=>{const box=$('.sopts',it),fb=$('.fb',it),c=+it.dataset.correct,opts=JSON.parse(it.dataset.opts);let done=false;
     opts.forEach((o,i)=>{const b=document.createElement('button');b.type='button';b.textContent=o;b.addEventListener('click',()=>{$$('button',box).forEach(x=>x.classList.remove('right','wrong'));
       if(i===c){b.classList.add('right');fb.textContent='Yes. '+it.dataset.explain;if(!done){done=true;right++;sc();}}else{b.classList.add('wrong');fb.textContent=it.dataset.miss||'Not the best first tool. What is the question asking for, and what is it giving you?';}});box.appendChild(b);});});sc();})();
@@ -58,14 +58,14 @@ function probCard(p,o={}){
   const host=$('#frq-list');if(!host)return;const saved=store('calc-frq')||{};
   if(!FRQS.length){host.innerHTML='<div class="note"><b>Coming with the rest of the modules</b>Original free-response questions are written unit by unit, so they appear as modules are added.</div>';$('#frq-reset').hidden=true;return;}
   host.innerHTML=FRQS.map(q=>{const total=q.parts.reduce((a,p)=>a+p.points.length,0);
-    return `<article class="frq" id="${q.id}" data-total="${total}"><div class="fh"><div class="row"><span class="tag ap">${q.kind==='long'?'Long question':'Short question'}</span><span class="tag">${q.units}</span></div><span class="score" id="${q.id}-score">0 / ${total}</span></div>
+    return `<article class="frq${q.bc?' bc':''}" id="${q.id}" data-total="${total}"><div class="fh"><div class="row"><span class="tag ap">${q.kind==='long'?'Long question':'Short question'}</span><span class="tag">${q.units}</span>${q.bc?'<span class="bcbadge" style="margin:0">BC</span>':''}</div><span class="score" id="${q.id}-score">0 / ${total}</span></div>
       <h3>${q.title}</h3><div class="stem">${q.stem}</div>
       ${q.parts.map((p,i)=>`<div class="part"><p><b>${p.label}</b> ${p.q}</p>
         <details><summary>Show the scoring guide</summary><div class="rub">${p.points.map((t,k)=>`<label class="pt"><input type="checkbox" data-frq id="${q.id}-${i}-${k}"><span>${t}</span></label>`).join('')}<div class="sol">${p.answer}</div></div></details></div>`).join('')}</article>`;}).join('');
   const boxes=$$('input[data-frq]',host);
   boxes.forEach(b=>{b.checked=!!saved[b.id];b.addEventListener('change',()=>{const s2=store('calc-frq')||{};s2[b.id]=b.checked;store('calc-frq',s2);tally();});});
-  function tally(){let all=0,max=0;$$('.frq',host).forEach(q=>{const n=$$('input[data-frq]',q).filter(b=>b.checked).length,t=+q.dataset.total;all+=n;max+=t;setText(q.id+'-score',`${n} / ${t}`);});
+  function tally(){let all=0,max=0;$$('.frq',host).filter(q=>!(COURSE()==='AB'&&q.classList.contains('bc'))).forEach(q=>{const n=$$('input[data-frq]',q).filter(b=>b.checked).length,t=+q.dataset.total;all+=n;max+=t;setText(q.id+'-score',`${n} / ${t}`);});
     setText('frq-total',`${all} of ${max} points`);const m=$('#frq-meter');if(m)m.style.width=(max?100*all/max:0)+'%';}
-  $('#frq-reset').addEventListener('click',()=>{boxes.forEach(b=>b.checked=false);store('calc-frq',{});tally();});
+  document.addEventListener('coursechange',tally);$('#frq-reset').addEventListener('click',()=>{boxes.forEach(b=>b.checked=false);store('calc-frq',{});tally();});
   tally();
 })();

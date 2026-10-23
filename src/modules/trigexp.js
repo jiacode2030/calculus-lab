@@ -15,7 +15,7 @@
     ctx.strokeStyle=T.hot;ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(X(th),gy-gh-6);ctx.lineTo(X(th),gy+gh+6);ctx.stroke();ctx.setLineDash([]);
     ['π/2','π','3π/2','2π'].forEach((s,i)=>label(ctx,s,X((i+1)*Math.PI/2),gy+gh+16,T.muted,'center','middle',MONO));label(ctx,'θ (radians)',gx+gw,gy-gh-10,T.muted,'right','middle',MONO);}});
   const line2=(ctx,x1,y1,x2,y2,c,w)=>{ctx.strokeStyle=c;ctx.lineWidth=w;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();};
-  bindRange('te-ang',v=>fmt(v,3)+' rad',v=>{th=v;setText('te-sin',fmt(Math.sin(v),4));setText('te-cos',fmt(Math.cos(v),4));setText('te-tan',Math.abs(Math.cos(v))<1e-3?'undefined (cos θ = 0)':fmt(Math.tan(v),4));setText('te-deg',fmt(v*180/Math.PI,1)+'°');sim.render();});
+  bindRange('te-ang',v=>fmt(v,3)+' rad',v=>{th=v;setText('te-sin',fmt(Math.sin(v),4));setText('te-cos',fmt(Math.cos(v),4));setText('te-tan',Math.abs(Math.cos(v))<1e-3?'not defined (cos θ = 0)':fmt(Math.tan(v),4));setText('te-deg',fmt(v*180/Math.PI,1)+'°');sim.render();});
   /* exp and log */
   let bb=Math.E;
   const sim2=glab('te-canvas2',{view:()=>({xr:[-3,6],yr:[-3,6]}),draw(ctx,P){const lb=Math.log(bb);curveD(ctx,P,x=>Math.pow(bb,x),-3,6,T.cx,2.8,300);curveD(ctx,P,x=>x>0?Math.log(x)/lb:NaN,1e-6,6,T.ca,2.8,300);

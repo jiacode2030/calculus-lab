@@ -29,7 +29,7 @@ mod('partial','Partial fractions & long division',
    ctl=[('pf-a','a (first root)',-3,0,1,-1),('pf-b','b (second root)',1,3,1,2),('pf-p','p',-4,4,1,3),('pf-q','q',-4,4,1,1),('pf-x','Probe x',-4,5,.05,3.5)],
    pre='<p class="small" id="pf-form" style="margin:0"></p>',out=[('pf-ca','A','x'),('pf-cb','B','a'),('pf-chk','f(x) at the probe vs A/(x−a) + B/(x−b)','v')])],
  [('Use the default values. What do A and B equal, and what is the check? <button type="button" class="btn link" data-show=\'' + show(["#pf-a",-1],["#pf-b",2],["#pf-p",3],["#pf-q",1]) + '\'>Set it up for me</button>','' ,'(3x + 1)/((x + 1)(x − 2)) = A/(x + 1) + B/(x − 2) with A = (3(−1) + 1)/(−1 − 2) = 2/3 and B = (6 + 1)/(2 + 1) = 7/3. The two sides agree at every probe x.'),
-  ('Change the probe x. Does the equality ever fail? <button type="button" class="btn link" data-show=\'' + show(["#pf-x",-3]) + '\'>x = −3</button>','' ,'No: it is an identity, true for every x except the roots a and b where the original is undefined.')],
+  ('Change the probe x. Does the equality ever fail? <button type="button" class="btn link" data-show=\'' + show(["#pf-x",-3]) + '\'>x = −3</button>','' ,'No: it is an identity, true for every x except the roots a and b where the original is not defined.')],
  ('Find ∫ (3x + 1)/((x + 1)(x − 2)) dx.',[
   '<b>Decompose.</b> (3x + 1)/((x + 1)(x − 2)) = A/(x + 1) + B/(x − 2).',
   '<b>Clear denominators.</b> 3x + 1 = A(x − 2) + B(x + 1).',
