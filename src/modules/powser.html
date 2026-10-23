@@ -1,0 +1,50 @@
+  <section class="view bc" id="v-powser" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 10 · BC</span><span class="tag">BC only</span></div>
+        <h1>Power series: radius & interval of convergence</h1>
+        <p class="lede">A power series is an infinite polynomial. It converges for x near its center, and the radius tells you how near.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>A <b>power series</b> centered at c is Σ aₙ(x − c)ⁿ. It is a polynomial with infinitely many terms, so for each x it either converges or diverges. The set of x where it converges is an interval centered at c: the <b>interval of convergence</b>, with <b>radius R</b> (the series converges for |x − c| &lt; R and diverges for |x − c| &gt; R).</p>
+        <p>Find R with the <b>ratio test</b> on |aₙ₊₁(x − c)ⁿ⁺¹ / aₙ(x − c)ⁿ| &lt; 1, then <b>test the endpoints</b> x = c ± R separately (the ratio test fails there, so use p-series, alternating, or nth-term). The radius can be 0 (only x = c) or ∞ (all x). Inside the radius, you may differentiate and integrate term by term, and the radius does not change.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>series of numbers</dd><dt>So we didn't need</dt><dd>series with a variable</dd><dt>Now</dt><dd>functions as infinite polynomials, and Taylor series</dd><dt>So we need</dt><dd>power series, radius and interval of convergence</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>Σ aₙ(x − c)ⁿ</span><small>power series centered at c</small></div><div class="eqn"><span>R: |x − c| < R converges, > R diverges</span><small>radius of convergence</small></div><div class="eqn"><span>endpoints: test separately</span><small>x = c ± R</small></div></div>
+      <div class="lab" id="pw-lab">
+        <div class="labbar"><span class="title">Where does it converge?</span></div>
+        <div class="ctl"><span class="lbl">Series</span><div class="seg" id="pw-fn" role="group" aria-label="Series"><button type="button" data-k="a" aria-pressed="true">Σ xⁿ</button><button type="button" data-k="b" aria-pressed="false">Σ xⁿ/n</button><button type="button" data-k="c" aria-pressed="false">Σ xⁿ/n²</button><button type="button" data-k="d" aria-pressed="false">Σ xⁿ/n!</button><button type="button" data-k="e" aria-pressed="false">Σ n! xⁿ</button></div></div>
+        <canvas id="pw-canvas" aria-label="Partial sums of the chosen power series at the probe x, plotted against the number of terms, and the interval of convergence on a number line."></canvas>
+        <div class="controls"><div class="ctl"><label for="pw-x"><span>Probe x</span> <output id="pw-x-out"></output></label><input type="range" id="pw-x" min="-3" max="3" step="0.05" value="0.5"></div></div>
+        <div class="readout"><div><span>radius R</span><strong class="x" id="pw-R">—</strong></div><div><span>interval of convergence</span><strong class="v" id="pw-int">—</strong></div><div><span>at the probe x the series</span><strong class="" id="pw-st">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose Σ xⁿ/n. At x = 1 and x = −1 what happens? <button type="button" class="btn link" data-show='[["click", "#pw-fn [data-k=b]"], ["#pw-x", 1]]'>x = 1</button></p><details><summary>What you should see</summary><p>At x = 1 it is the harmonic series (diverges); at x = −1 it is the alternating harmonic series (converges). So the interval is [−1, 1): the endpoints must be tested separately.</p></details></li>
+        <li><p>Choose Σ n! xⁿ. For which x does it converge? <button type="button" class="btn link" data-show='[["click", "#pw-fn [data-k=e]"], ["#pw-x", 0.3]]'>x = 0.3</button></p><details><summary>What you should see</summary><p>Only at x = 0: the terms n!xⁿ blow up for any x ≠ 0 (R = 0). Compare Σ xⁿ/n!, which converges for every x (R = ∞).</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find the radius and interval of convergence of Σ<sub>n=1</sub><sup>∞</sup> (x − 2)ⁿ/(n·3ⁿ).</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Ratio test.</b> |aₙ₊₁/aₙ| = |x − 2|·n/(3(n + 1)) → |x − 2|/3.</li>
+          <li hidden><b>Converges when</b> |x − 2|/3 &lt; 1, i.e. |x − 2| &lt; 3. So R = 3, center 2, open interval (−1, 5).</li>
+          <li hidden><b>Endpoint x = 5.</b> Σ 3ⁿ/(n·3ⁿ) = Σ 1/n: harmonic, diverges.</li>
+          <li hidden><b>Endpoint x = −1.</b> Σ (−3)ⁿ/(n·3ⁿ) = Σ (−1)ⁿ/n: alternating harmonic, converges.</li>
+          <li hidden><b>Answer.</b> R = <b>3</b>; interval of convergence <b>[−1, 5)</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Forgetting to test the endpoints.</li>
+        <li>Stopping at |x − c| &lt; R and writing the interval as closed.</li>
+        <li>Confusing the radius with the interval (R = 3 has length 6).</li>
+        <li>Using the ratio test at the endpoints (it gives L = 1: inconclusive).</li>
+        <li>Forgetting the center: the interval is centered at c, not at 0.</li>
+      </ul></div>
+      <div class="prose"><h2>Term-by-term calculus</h2>
+        <p>Inside the radius, differentiate and integrate a power series term by term, and the radius stays the same. At the endpoints convergence may change. For example, from 1/(1 − x) = Σ xⁿ (|x| &lt; 1) you get 1/(1 − x)² = Σ n xⁿ⁻¹ and −ln(1 − x) = Σ xⁿ/n.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="R = 1. At x = ±1 it is Σ 1/n² (p = 2, converges) and the alternating version (converges), so both endpoints are included.">
+        <p class="q">Check yourself: Σ xⁿ/n² has interval of convergence</p>
+        <div class="opts"><button type="button">[−1, 1]</button><button type="button">(−1, 1)</button><button type="button">[−1, 1)</button><button type="button">(−1, 1]</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

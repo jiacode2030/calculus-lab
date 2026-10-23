@@ -1,0 +1,49 @@
+  <section class="view bc" id="v-polar" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 9 · BC</span><span class="tag">BC only</span></div>
+        <h1>Polar curves & area</h1>
+        <p class="lede">Describe a point by its distance r from the origin and its angle θ. Flowers, spirals and hearts have simple polar equations.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>A point has polar coordinates <span class="m">(r, θ)</span> and rectangular coordinates <span class="m">x = r cos θ, y = r sin θ</span>. A <b>polar curve</b> r = f(θ) draws a point at distance f(θ) in direction θ as θ sweeps. The cardioid r = 1 + cos θ, the rose r = 2 cos 2θ and the spiral r = θ are all simple in polar form and awkward in rectangular form.</p>
+        <p>The <b>area</b> swept out is made of thin sectors (pizza slices): a sector of angle dθ and radius r has area ½r² dθ, so <span class="m">A = ½ ∫<sub>α</sub><sup>β</sup> r² dθ</span>. The slope is found as for a parametric curve (x = r cos θ, y = r sin θ), giving <span class="m">dy/dx = (r′ sin θ + r cos θ)/(r′ cos θ − r sin θ)</span>.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>every point had (x, y) coordinates</dd><dt>So we didn't need</dt><dd>a coordinate system built from distance and angle</dd><dt>Now</dt><dd>roses, cardioids and orbits</dd><dt>So we need</dt><dd>polar coordinates, curves and area</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>x = r cos θ, y = r sin θ</span><small>conversion</small></div><div class="eqn"><span>A = ½ ∫ r² dθ</span><small>area of a polar region</small></div><div class="eqn"><span>dy/dx = (r′ sin θ + r cos θ)/(r′ cos θ − r sin θ)</span><small>slope</small></div></div>
+      <div class="lab" id="po-lab">
+        <div class="labbar"><span class="title">Sweep out the curve and its area</span></div>
+        <div class="ctl"><span class="lbl">Curve</span><div class="seg" id="po-fn" role="group" aria-label="Curve"><button type="button" data-k="ca" aria-pressed="true">cardioid r = 1 + cos θ</button><button type="button" data-k="ro" aria-pressed="false">rose r = 2 cos 2θ</button><button type="button" data-k="li" aria-pressed="false">limaçon r = 1 + 2 cos θ</button><button type="button" data-k="ci" aria-pressed="false">circle r = 2 sin θ</button></div></div>
+        <canvas id="po-canvas" aria-label="A polar curve with a point at angle theta and the sector swept so far shaded."></canvas>
+        <div class="controls"><div class="ctl"><label for="po-th"><span>Angle θ</span> <output id="po-th-out"></output></label><input type="range" id="po-th" min="0" max="6.2832" step="0.02" value="1.2"></div></div>
+        <div class="readout"><div><span>(r, θ)</span><strong class="x" id="po-rt">—</strong></div><div><span>(x, y)</span><strong class="a" id="po-xy">—</strong></div><div><span>area swept so far</span><strong class="v" id="po-ar">—</strong></div><div><span>total area over [0, 2π]</span><strong class="" id="po-tot">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>On the cardioid, sweep θ from 0 to π. What fraction of the total area is swept? <button type="button" class="btn link" data-show='[["click", "#po-fn [data-k=ca]"], ["#po-th", 3.1416]]'>θ = π</button></p><details><summary>What you should see</summary><p>Half: by symmetry across the x-axis, the upper half of the cardioid is half the area, 3π/4 of 3π/2.</p></details></li>
+        <li><p>On the rose r = 2 cos 2θ, where is r negative? <button type="button" class="btn link" data-show='[["click", "#po-fn [data-k=ro]"], ["#po-th", 1.2]]'>θ = 1.2</button></p><details><summary>What you should see</summary><p>When cos 2θ &lt; 0, for π/4 &lt; θ &lt; 3π/4: the point is plotted in the opposite direction, which draws the other petals.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find the area enclosed by the cardioid r = 1 + cos θ.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Formula.</b> A = ½ ∫<sub>0</sub><sup>2π</sup> r² dθ = ½ ∫<sub>0</sub><sup>2π</sup> (1 + cos θ)² dθ.</li>
+          <li hidden><b>Expand.</b> (1 + cos θ)² = 1 + 2 cos θ + cos²θ = 3/2 + 2 cos θ + (1/2)cos 2θ.</li>
+          <li hidden><b>Integrate.</b> ∫<sub>0</sub><sup>2π</sup> (3/2 + 2 cos θ + (1/2)cos 2θ) dθ = (3/2)(2π) = 3π (the cosines integrate to 0).</li>
+          <li hidden><b>Answer.</b> A = (1/2)(3π) = <b>3π/2</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Forgetting the ½ in the area formula.</li>
+        <li>Using ∫ r dθ instead of ∫ r² dθ.</li>
+        <li>Using the wrong interval for θ so that the curve is traced twice or only partly.</li>
+        <li>Mixing up (r, θ) and (x, y) in conversions.</li>
+        <li>Treating a negative r as an error: it simply plots the point on the opposite side.</li>
+      </ul></div>
+      <div class="prose"><h2>Finding limits</h2>
+        <p>To get the right θ limits, find where r = 0 (the curve returns to the origin) for one petal or loop, or use symmetry. Between two curves r₁ and r₂ (r₁ outer): A = ½ ∫ (r₁² − r₂²) dθ.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="½ ∫ 4 dθ over 2π = 4π, the area of a circle of radius 2.">
+        <p class="q">Check yourself: The area enclosed by the circle r = 2 (θ from 0 to 2π) is</p>
+        <div class="opts"><button type="button">4π</button><button type="button">2π</button><button type="button">π</button><button type="button">8π</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

@@ -1,0 +1,49 @@
+  <section class="view bc" id="v-altser" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 10 · BC</span><span class="tag">BC only</span></div>
+        <h1>Alternating series & error bounds</h1>
+        <p class="lede">Terms that alternate in sign can converge even when the unsigned series does not, and you get a neat built-in error bound.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>An <b>alternating series</b> Σ (−1)ⁿ⁺¹ bₙ (with bₙ &gt; 0) converges if the terms <b>decrease</b> (bₙ₊₁ ≤ bₙ) and <b>go to 0</b>. That is the alternating series test. The partial sums swing back and forth, each overshooting the true sum less than before.</p>
+        <p>That gives the <b>alternating series error bound</b>: stopping after N terms, the error is at most the first omitted term, <span class="m">|S − S_N| ≤ b_{N+1}</span>, and the true sum lies between S_N and S_{N+1}. Then separate the cases: Σ|aₙ| converges ⇒ <b>absolutely convergent</b> (and so convergent). If Σ aₙ converges but Σ|aₙ| diverges, it is <b>conditionally convergent</b>: the alternating harmonic series 1 − 1/2 + 1/3 − … is the classic example.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>all terms positive</dd><dt>So we didn't need</dt><dd>signs that alternate</dd><dt>Now</dt><dd>the alternating harmonic series and Taylor series error</dd><dt>So we need</dt><dd>the alternating series test and error bound</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>Σ (−1)ⁿ⁺¹ bₙ converges if bₙ decreasing → 0</span><small>alternating series test</small></div><div class="eqn"><span>|S − S_N| ≤ b_{N+1}</span><small>error bound</small></div><div class="eqn"><span>Σ|aₙ| converges ⇒ absolute; else conditional if Σ aₙ converges</span><small></small></div></div>
+      <div class="lab" id="at-lab">
+        <div class="labbar"><span class="title">Partial sums that swing</span></div>
+        <canvas id="at-canvas" aria-label="Partial sums of an alternating series plotted against N, zigzagging toward the true sum, with the error band around it."></canvas>
+        <div class="controls"><div class="ctl"><label for="at-p"><span>p in (−1)ⁿ⁺¹/nᵖ</span> <output id="at-p-out"></output></label><input type="range" id="at-p" min="0.2" max="2.5" step="0.1" value="1"></div><div class="ctl"><label for="at-n"><span>Terms N</span> <output id="at-n-out"></output></label><input type="range" id="at-n" min="1" max="30" step="1" value="8"></div></div>
+        <div class="readout"><div><span>S_N</span><strong class="x" id="at-s">—</strong></div><div><span>the sum S (estimated)</span><strong class="v" id="at-sum">—</strong></div><div><span>error bound b(N+1)</span><strong class="a" id="at-err">—</strong></div><div><span>Σ (−1)ⁿ⁺¹/nᵖ is</span><strong class="" id="at-ver">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Set p = 1 (alternating harmonic series), N = 8. Where is the true sum, and how far off is S₈? <button type="button" class="btn link" data-show='[["#at-p", 1], ["#at-n", 8]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The sum is ln 2 ≈ 0.693. S₈ ≈ 0.635, and the bound is 1/9 ≈ 0.111; the real error is 0.058, within the bound.</p></details></li>
+        <li><p>Set p = 0.5 and then 2. What changes about the type of convergence? <button type="button" class="btn link" data-show='[["#at-p", 0.5]]'>p = 0.5</button></p><details><summary>What you should see</summary><p>For 0 < p ≤ 1 it converges only because of the alternating signs (conditional). For p > 1 even the absolute values converge (absolute convergence).</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">How many terms of Σ (−1)ⁿ⁺¹/n² guarantee an error less than 0.01? Is the series absolutely convergent?</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Check the test.</b> bₙ = 1/n² is decreasing and → 0, so the series converges.</li>
+          <li hidden><b>Error bound.</b> |S − S_N| ≤ b_{N+1} = 1/(N + 1)².</li>
+          <li hidden><b>Require less than 0.01.</b> 1/(N + 1)² &lt; 0.01 ⇒ (N + 1)² &gt; 100 ⇒ N + 1 &gt; 10 ⇒ N ≥ 10.</li>
+          <li hidden><b>Absolute?</b> Σ 1/n² is a convergent p-series (p = 2), so the series converges absolutely.</li>
+          <li hidden><b>Answer.</b> <b>N = 10</b> terms; <b>absolutely</b> convergent.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Skipping the decreasing condition in the alternating series test.</li>
+        <li>Using b_N instead of b_{N+1} for the error bound.</li>
+        <li>Thinking every convergent alternating series converges absolutely.</li>
+        <li>Applying the error bound to a non-alternating series.</li>
+        <li>Counting the number of terms off by one: S_N has N terms and the bound is the (N + 1)th term.</li>
+      </ul></div>
+      <div class="prose"><h2>Absolute vs conditional</h2>
+        <p>Absolute convergence is the strongest kind: rearranging terms cannot change the sum. A conditionally convergent series like 1 − 1/2 + 1/3 − … is fragile: its terms can be rearranged to sum to any number (Riemann). In the course, you need to classify a series as absolutely convergent, conditionally convergent or divergent.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Terms decrease to 0 (so it converges), but Σ 1/√n is a divergent p-series (p = 1/2).">
+        <p class="q">Check yourself: Σ (−1)ⁿ/√n</p>
+        <div class="opts"><button type="button">converges conditionally</button><button type="button">converges absolutely</button><button type="button">diverges</button><button type="button">converges to 0</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

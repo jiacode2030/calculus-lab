@@ -1,0 +1,51 @@
+  <section class="view bc" id="v-vector" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 9 · BC</span><span class="tag">BC only</span></div>
+        <h1>Vector-valued functions & motion</h1>
+        <p class="lede">A particle moving in the plane has a position vector, a velocity vector and an acceleration vector. Each is the derivative of the one before.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Write the position as <span class="m">r(t) = ⟨x(t), y(t)⟩</span>. Then the <b>velocity</b> is <span class="m">v(t) = ⟨x′(t), y′(t)⟩</span> (tangent to the path) and the <b>acceleration</b> is <span class="m">a(t) = ⟨x″(t), y″(t)⟩</span>. The <b>speed</b> is |v| = √(x′² + y′²), and the distance traveled from t = a to t = b is <span class="m">∫ |v| dt</span>.</p>
+        <p>Integrate component by component to go backwards: position = initial position + ∫ velocity. The particle speeds up when the acceleration has a positive component along the velocity (v · a &gt; 0) and slows down when v · a &lt; 0. Uniform circular motion has constant speed but nonzero acceleration (pointing to the center): the velocity direction keeps changing.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>motion on a line, one number for position</dd><dt>So we didn't need</dt><dd>motion in the plane with two components</dd><dt>Now</dt><dd>projectiles, orbits and any path</dd><dt>So we need</dt><dd>vector-valued functions and planar motion</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>v = r′ = ⟨x′, y′⟩ · a = v′</span><small>velocity, acceleration</small></div><div class="eqn"><span>speed = √(x′² + y′²)</span><small>|v|</small></div><div class="eqn"><span>distance = ∫ |v| dt</span><small>speeding up if v · a > 0</small></div></div>
+      <div class="lab" id="vc-lab">
+        <div class="labbar"><span class="title">Position, velocity, acceleration</span></div>
+        <div class="ctl"><span class="lbl">Motion</span><div class="seg" id="vc-fn" role="group" aria-label="Motion"><button type="button" data-k="ci" aria-pressed="true">circle</button><button type="button" data-k="pr" aria-pressed="false">projectile</button><button type="button" data-k="sp" aria-pressed="false">spiral</button></div></div>
+        <div class="row"><button type="button" class="btn" id="vc-play">Play</button></div>
+        <canvas id="vc-canvas" aria-label="A particle moving along a path in the plane, with its velocity vector (green) and acceleration vector (pink)."></canvas>
+        <div class="controls"><div class="ctl"><label for="vc-t"><span>Time t</span> <output id="vc-t-out"></output></label><input type="range" id="vc-t" min="0" max="6.3" step="0.02" value="1"></div></div>
+        <div class="readout"><div><span>position</span><strong class="x" id="vc-r">—</strong></div><div><span>velocity v and speed</span><strong class="v" id="vc-vel">—</strong></div><div><span>acceleration a</span><strong class="a" id="vc-acc">—</strong></div><div><span>speed is</span><strong class="" id="vc-state">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>On circle motion, compare the speed at different t. Is it constant? What about acceleration? <button type="button" class="btn link" data-show='[["click", "#vc-fn [data-k=ci]"], ["#vc-t", 2]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The speed is constant (2), but the acceleration is not zero and points to the center: the particle is always turning. Velocity changes direction even when speed does not.</p></details></li>
+        <li><p>On the projectile, find when the acceleration changes. <button type="button" class="btn link" data-show='[["click", "#vc-fn [data-k=pr]"], ["#vc-t", 1.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>It never changes: a = ⟨0, −2⟩ at every t (gravity). The vertical velocity decreases, then the particle falls.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">A particle has r(t) = ⟨t², t³ − 3t⟩. Find its velocity, speed and acceleration at t = 2.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Velocity.</b> v(t) = ⟨2t, 3t² − 3⟩, so v(2) = ⟨4, 9⟩.</li>
+          <li hidden><b>Speed.</b> |v(2)| = √(16 + 81) = √97 ≈ 9.849.</li>
+          <li hidden><b>Acceleration.</b> a(t) = ⟨2, 6t⟩, so a(2) = ⟨2, 12⟩.</li>
+          <li hidden><b>Speeding up?</b> v · a = 4(2) + 9(12) = 116 &gt; 0: yes.</li>
+          <li hidden><b>Answer.</b> v = <b>⟨4, 9⟩</b>, speed <b>√97</b>, a = <b>⟨2, 12⟩</b>; speeding up.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Forgetting that speed is a magnitude (square root of the sum of squares).</li>
+        <li>Saying the particle is not accelerating because its speed is constant.</li>
+        <li>Differentiating only x or only y: both components.</li>
+        <li>Using the position vector for velocity.</li>
+        <li>Confusing the path (a curve) with the position function (a point moving on it).</li>
+      </ul></div>
+      <div class="prose"><h2>Components</h2>
+        <p>Everything works component by component. The x and y motions are independent in a projectile: constant horizontal velocity, constant downward acceleration. For uniform circular motion r(t) = ⟨R cos ωt, R sin ωt⟩, the speed is Rω and the acceleration has size Rω², directed inward.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="v = ⟨3, 4⟩, so |v| = √(9 + 16) = 5.">
+        <p class="q">Check yourself: r(t) = ⟨3t, 4t⟩. The speed is</p>
+        <div class="opts"><button type="button">5</button><button type="button">7</button><button type="button">25</button><button type="button">12</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

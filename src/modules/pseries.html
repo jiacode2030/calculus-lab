@@ -1,0 +1,49 @@
+  <section class="view bc" id="v-pseries" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 10 · BC</span><span class="tag">BC only</span></div>
+        <h1>p-series & the integral test</h1>
+        <p class="lede">Compare a sum with an area. If the area under the curve is finite, so is the sum, and vice versa.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>The <b>p-series</b> Σ 1/nᵖ converges if p &gt; 1 and diverges if p ≤ 1. For p = 1 this is the <b>harmonic series</b> 1 + 1/2 + 1/3 + …, which diverges, very slowly: it takes about 12,000 terms to pass 10.</p>
+        <p>The reason is the <b>integral test</b>: if f is positive, continuous and decreasing, Σ f(n) and ∫₁^∞ f(x) dx either both converge or both diverge. The terms are the heights of rectangles under (or over) the curve, so the sum is squeezed between ∫₁^{N+1} f and f(1) + ∫₁^N f. The same picture bounds the <b>tail</b> of a convergent series: Σ_{n&gt;N} f(n) ≤ ∫_N^∞ f.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>we compared a sum with itself</dd><dt>So we didn't need</dt><dd>a comparison between a sum and an integral</dd><dt>Now</dt><dd>harmonic and p-series, which every other test refers to</dd><dt>So we need</dt><dd>the p-series test and the integral test</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>Σ 1/nᵖ converges iff p &gt; 1</span><small>p-series</small></div><div class="eqn"><span>∫₁^∞ f converges ⇔ Σ f(n) converges</span><small>integral test (f positive, decreasing)</small></div><div class="eqn"><span>tail ≤ ∫_N^∞ f(x) dx</span><small>bound on the remainder</small></div></div>
+      <div class="lab" id="ps-lab">
+        <div class="labbar"><span class="title">Rectangles under a curve</span></div>
+        <canvas id="ps-canvas" aria-label="The curve one over x to the p with rectangles of width 1 whose heights are the terms, and partial sums compared with the integral."></canvas>
+        <div class="controls"><div class="ctl"><label for="ps-p"><span>p</span> <output id="ps-p-out"></output></label><input type="range" id="ps-p" min="0.4" max="3" step="0.05" value="2"></div><div class="ctl"><label for="ps-n"><span>Terms N</span> <output id="ps-n-out"></output></label><input type="range" id="ps-n" min="1" max="40" step="1" value="10"></div></div>
+        <div class="readout"><div><span>partial sum S_N</span><strong class="x" id="ps-sum">—</strong></div><div><span>∫ from 1 to N of 1/xᵖ</span><strong class="v" id="ps-int">—</strong></div><div><span>Σ 1/nᵖ</span><strong class="" id="ps-ver">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Set p = 2 and N = 40. How big can the sum get? <button type="button" class="btn link" data-show='[["#ps-p", 2], ["#ps-n", 40]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Never more than 1 + ∫₁^∞ 1/x² = 2 (the sum is actually π²/6 ≈ 1.645). The rectangles are under the curve, so the sum is bounded by the area.</p></details></li>
+        <li><p>Set p = 1. Does the sum level off? <button type="button" class="btn link" data-show='[["#ps-p", 1], ["#ps-n", 40]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>No: S_N ≥ ∫₁^{N+1} dx/x = ln(N + 1), which grows without bound. The harmonic series diverges, but slowly.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Use the integral test to decide Σ<sub>n=1</sub><sup>∞</sup> 1/(n² + 1), and bound the tail after N = 10 terms of Σ 1/n².</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Check the conditions.</b> f(x) = 1/(x² + 1) is positive, continuous and decreasing for x ≥ 1.</li>
+          <li hidden><b>Integral.</b> ∫<sub>1</sub><sup>∞</sup> dx/(x² + 1) = lim [arctan x]<sub>1</sub><sup>b</sup> = π/2 − π/4 = π/4, finite.</li>
+          <li hidden><b>Conclude.</b> The series converges.</li>
+          <li hidden><b>Tail bound.</b> Σ<sub>n&gt;10</sub> 1/n² ≤ ∫<sub>10</sub><sup>∞</sup> dx/x² = 1/10.</li>
+          <li hidden><b>Answer.</b> Converges; the remainder after 10 terms is at most <b>0.1</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Using the integral test without checking positive, continuous, decreasing.</li>
+        <li>Thinking the integral equals the sum. They only share convergence (the sum is a different number).</li>
+        <li>Believing 1/n converges because its terms go to 0.</li>
+        <li>Mixing up p-series (p &gt; 1) with the p-integral near 0 (p &lt; 1).</li>
+        <li>Forgetting the first terms of the sum when estimating: S ≈ S_N + tail.</li>
+      </ul></div>
+      <div class="prose"><h2>Comparing the tests</h2>
+        <p>The p-series test is the integral test done once and for all for 1/nᵖ. The comparison tests (next module) use p-series as the benchmark: most rational-looking series behave like a p-series.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="p-series with p = 1.5 &gt; 1.">
+        <p class="q">Check yourself: Σ 1/n<sup>1.5</sup></p>
+        <div class="opts"><button type="button">converges (p = 1.5 > 1)</button><button type="button">diverges (p ≤ 1)</button><button type="button">converges to 1.5</button><button type="button">diverges by the nth-term test</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

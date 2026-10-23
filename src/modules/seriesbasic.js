@@ -1,0 +1,29 @@
+/* ---------------- Series, geometric series & the nth-term test ---------------- */
+(function seriesbasic(){
+  const cv=$('#sb-canvas');if(!cv)return;
+  let a=2,r=.5,N=10;
+  const S=k=>Math.abs(r-1)<1e-9?a*k:a*(1-Math.pow(r,k))/(1-r);
+  const conv=()=>Math.abs(r)<1&&true||a===0;
+  const sim=glab('sb-canvas',{view:()=>{let lo=0,hi=0;for(let k=1;k<=30;k++){const v=S(k);lo=Math.min(lo,v);hi=Math.max(hi,v);}if(Math.abs(r)<1){const L=a/(1-r);lo=Math.min(lo,L);hi=Math.max(hi,L);}const cap=Math.max(Math.abs(a)*12+10,10);lo=Math.max(lo,-cap);hi=Math.min(hi,cap);const p=(hi-lo)*.12+.3;return {xr:[0,31],yr:[lo-p,hi+p],xlabel:'N'};},
+    draw(ctx,P){if(Math.abs(r)<1)hline(ctx,P,a/(1-r),T.hot,[6,4]);ctx.save();clip(ctx,P);ctx.strokeStyle=alpha(T.cx,.45);ctx.lineWidth=1.6;ctx.beginPath();for(let k=1;k<=30;k++){const x=P.X(k),y=P.Y(S(k));k>1?ctx.lineTo(x,y):ctx.moveTo(x,y);}ctx.stroke();ctx.restore();
+      for(let k=1;k<=30;k++)dot(ctx,P.X(k),P.Y(S(k)),k===N?7:4,k<=N?T.cx:alpha(T.cx,.4),k===N?T.surface:null);}});
+  function upd(){const lim=Math.abs(r)<1||a===0;setText('sb-s',fmt(S(N),5));setText('sb-lim',Math.abs(r)<1?fmt(a/(1-r),5):a===0?'0':'not valid: |r| ≥ 1');setText('sb-ver',a===0?'is all zeros: converges to 0':Math.abs(r)<1?'converges (|r| < 1)':'diverges (|r| ≥ 1: the terms do not go to 0)');sim.render();}
+  bindRange('sb-a',v=>nz(v),v=>{a=v;upd();});bindRange('sb-r',v=>nz(v),v=>{r=v;upd();});bindRange('sb-n',v=>String(v),v=>{N=v;upd();});upd();drawers.seriesbasic=()=>sim.render();
+  KEYS['sb-canvas']=['Each dot is a partial sum S_N. If they settle, the dashed orange line shows the limit a/(1 − r).',[['cx','partial sums S_N'],['hot','the sum a/(1 − r)']]];
+  TIPS['sb-r']=el=>{const q=+el.value;return Math.abs(q)<1?`|r| = ${fmt(Math.abs(q),2)} < 1: the terms shrink geometrically and the sums settle.`:'|r| ≥ 1: the terms do not shrink to 0, so the series cannot converge.';};
+  GLOSS['partial sum']='The sum of the first N terms of a series: S_N = a₁ + … + a_N.';GLOSS['geometric series']='Σ a rⁿ: each term is r times the previous. Converges to a/(1 − r) when |r| < 1.';GLOSS['converges']='A series converges if its partial sums approach a finite number.';
+  TT.seriesbasic='Ask students to predict, before moving the slider, whether the partial sums settle, and why r = −0.8 still converges.';
+})();
+(function(){
+  PROBS.push({id:'sb-geom',topic:'seriesbasic',title:'Sum a geometric series',gen(){const a=ri(1,9),num=ri(1,4),den=num+ri(1,5),sg=pick([1,-1]),r=sg*num/den,start=pick([0,1]),ans=start===0?a/(1-r):(a*r)/(1-r);
+    const g=gcd(num,den),rt=`${sg<0?'−':''}${num/g}/${den/g}`;
+    return {q:`Find the sum of the geometric series ${start===0?`Σ<sub>n=0</sub><sup>∞</sup> ${a}(${rt})<sup>n</sup>`:`Σ<sub>n=1</sub><sup>∞</sup> ${a}(${rt})<sup>n</sup>`}. Give a fraction or decimal.`,ans,unit:'',tol:.004,chk:(()=>{let s=0;for(let n=start;n<400;n++)s+=a*Math.pow(r,n);return s;})(),hint:start===0?'a/(1 − r), with a the first term (n = 0).':'The first term is a·r (at n = 1). Sum = first term/(1 − r).',sol:`${start===0?`a/(1 − r) = ${a}/(1 − (${rt}))`:`first term = ${a}·(${rt}) = ${fmt(a*r,4)}, sum = ${fmt(a*r,4)}/(1 − (${rt}))`} = <b>${fmt(ans,4)}</b>.`};}});
+  PROBS.push({id:'sb-nth',topic:'seriesbasic',title:'nth-term test',gen(){const R=[['Σ n/(n + 1)','diverges (terms → 1)'],['Σ 1/n','the nth-term test is inconclusive (it actually diverges)'],['Σ (−1)ⁿ','diverges (terms do not → 0)'],['Σ 1/n²','the nth-term test is inconclusive (it actually converges)'],['Σ (2n² + 1)/(n² + 5)','diverges (terms → 2)'],['Σ cos(1/n)','diverges (terms → 1)']],[ex,ans]=pick(R),m=mcq(ans,R.map(r=>r[1]));
+    return {q:`What does the nth-term test say about ${ex}?`,choices:m.choices,ans:m.ans,hint:'If aₙ does not go to 0 the series diverges. If aₙ → 0 the test tells you nothing.',sol:`<b>${ans}</b>.`};}});
+  PROBS.push({id:'sb-rep',topic:'seriesbasic',title:'Repeating decimal as a fraction',gen(){const len=pick([1,2]),d=len===1?ri(1,8):ri(10,98),den=len===1?9:99,g=gcd(d,den),ans=d/den;
+    return {q:`Write the repeating decimal 0.${String(d).padStart(len,'0').repeat(3)}… as a fraction, using a geometric series. Give a fraction or decimal.`,ans,unit:'',tol:.001,show:`${d/g}/${den/g}`,chk:d/den,hint:`0.${String(d).padStart(len,'0')}… = ${d}/10<sup>${len}</sup> + ${d}/10<sup>${2*len}</sup> + …: first term ${d}/${Math.pow(10,len)}, ratio 1/${Math.pow(10,len)}.`,sol:`Sum = (${d}/${Math.pow(10,len)})/(1 − 1/${Math.pow(10,len)}) = ${d}/${den} = <b>${d/g}/${den/g}</b>.`};}});
+  PROBS.push({id:'sb-partial',topic:'seriesbasic',title:'A partial sum',gen(){const a=ri(1,5),r=pick([2,3,.5,-2]),N=ri(3,6),ans=a*(1-Math.pow(r,N))/(1-r);
+    return {q:`Find the partial sum S<sub>${N}</sub> (the first ${N} terms) of the series ${a} + ${fmt(a*r,3)} + ${fmt(a*r*r,3)} + … . Give a decimal.`.replace(/\+ −/g,'−'),ans,unit:'',tol:.004,chk:(()=>{let s=0,t=a;for(let i=0;i<N;i++){s+=t;t*=r;}return s;})(),hint:'Geometric: S_N = a(1 − rᴺ)/(1 − r), or just add the first terms.',sol:`S<sub>${N}</sub> = ${a}(1 − (${nz(r)})<sup>${N}</sup>)/(1 − ${nz(r)}) = <b>${fmt(ans,3)}</b>.`};}});
+  PROBS.push({id:'sb-type',topic:'seriesbasic',title:'Converge or diverge?',gen(){const R=[['Σ<sub>n=0</sub><sup>∞</sup> (3/4)<sup>n</sup>','converges'],['Σ<sub>n=0</sub><sup>∞</sup> (5/4)<sup>n</sup>','diverges'],['Σ<sub>n=0</sub><sup>∞</sup> (−1/2)<sup>n</sup>','converges'],['Σ<sub>n=0</sub><sup>∞</sup> (−3/2)<sup>n</sup>','diverges'],['Σ<sub>n=1</sub><sup>∞</sup> 2·(0.9)<sup>n</sup>','converges'],['Σ<sub>n=1</sub><sup>∞</sup> 5·1<sup>n</sup>','diverges']],[ex,ans]=pick(R),m=mcq(ans,['converges','diverges']);
+    return {q:`Does ${ex} converge or diverge?`,choices:m.choices,ans:m.ans,hint:'Geometric series: converges iff |r| < 1.',sol:`<b>${ans}</b> (geometric: compare |r| with 1).`};}});
+})();

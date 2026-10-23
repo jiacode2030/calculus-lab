@@ -1,0 +1,49 @@
+  <section class="view bc" id="v-seriesbasic" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 10 · BC</span><span class="tag">BC only</span></div>
+        <h1>Series, geometric series & the nth-term test</h1>
+        <p class="lede">Can you add infinitely many numbers and get a finite answer? Sometimes yes: it depends on whether the terms shrink fast enough.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>An <b>infinite series</b> Σ aₙ is the limit of its <b>partial sums</b> S_N = a₁ + … + a_N. If S_N approaches a number S, the series <b>converges</b> to S; otherwise it <b>diverges</b>. Think of walking toward a wall: half the distance, then half of what remains, and so on. The steps add up to the whole distance: 1/2 + 1/4 + 1/8 + … = 1.</p>
+        <p>The <b>geometric series</b> Σ a rⁿ is the model: it converges exactly when |r| &lt; 1, and then the sum from n = 0 is <span class="m">a/(1 − r)</span> (first term over one minus the ratio). The <b>nth-term test</b> is a quick check for divergence: if aₙ does not go to 0, the series diverges. (The converse is false: 1/n → 0 yet Σ 1/n diverges.)</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>a sum had finitely many terms</dd><dt>So we didn't need</dt><dd>infinitely many terms, defined as a limit of partial sums</dd><dt>Now</dt><dd>every later topic in Unit 10</dd><dt>So we need</dt><dd>series, convergence and the geometric series</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>S_N = a₁ + … + a_N · Σ aₙ = lim S_N</span><small>partial sums</small></div><div class="eqn"><span>Σ a rⁿ = a/(1 − r), |r| &lt; 1</span><small>geometric series</small></div><div class="eqn"><span>aₙ ↛ 0 ⇒ Σ aₙ diverges</span><small>nth-term test</small></div></div>
+      <div class="lab" id="sb-lab">
+        <div class="labbar"><span class="title">Partial sums of a geometric series</span></div>
+        <canvas id="sb-canvas" aria-label="Partial sums of a geometric series plotted against the number of terms, with a dashed line at the limit when it exists."></canvas>
+        <div class="controls"><div class="ctl"><label for="sb-a"><span>First term a</span> <output id="sb-a-out"></output></label><input type="range" id="sb-a" min="-4" max="4" step="0.5" value="2"></div><div class="ctl"><label for="sb-r"><span>Ratio r</span> <output id="sb-r-out"></output></label><input type="range" id="sb-r" min="-1.6" max="1.6" step="0.05" value="0.5"></div><div class="ctl"><label for="sb-n"><span>Number of terms N</span> <output id="sb-n-out"></output></label><input type="range" id="sb-n" min="1" max="30" step="1" value="10"></div></div>
+        <div class="readout"><div><span>partial sum S_N</span><strong class="x" id="sb-s">—</strong></div><div><span>a/(1 − r), if |r| < 1</span><strong class="v" id="sb-lim">—</strong></div><div><span>the series</span><strong class="" id="sb-ver">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Set r = 0.5, a = 2. What do the partial sums approach? <button type="button" class="btn link" data-show='[["#sb-a", 2], ["#sb-r", 0.5], ["#sb-n", 30]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Toward 2/(1 − 0.5) = 4. After 30 terms the sum is within about 10⁻⁸ of it.</p></details></li>
+        <li><p>Set r = −0.8. What happens, and what about r = 1.2? <button type="button" class="btn link" data-show='[["#sb-r", -0.8], ["#sb-n", 30]]'>r = −0.8</button></p><details><summary>What you should see</summary><p>With r = −0.8 the sums zigzag toward a/(1 + 0.8) = 1.11 (converges, |r| < 1). With r = 1.2 the terms grow, so the sums run away: diverges.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find 3 + 1 + 1/3 + 1/9 + …, and decide about Σ n/(n + 1).</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Identify.</b> First term a = 3, ratio r = 1/3: geometric.</li>
+          <li hidden><b>Check |r| &lt; 1.</b> 1/3 is between −1 and 1, so it converges.</li>
+          <li hidden><b>Sum.</b> a/(1 − r) = 3/(1 − 1/3) = 3/(2/3) = 9/2.</li>
+          <li hidden><b>The other series.</b> aₙ = n/(n + 1) → 1 ≠ 0, so by the nth-term test Σ n/(n + 1) diverges.</li>
+          <li hidden><b>Answer.</b> The geometric series converges to <b>9/2</b>; the second one <b>diverges</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Using a/(1 − r) when |r| ≥ 1.</li>
+        <li>Starting at the wrong n: a/(1 − r) assumes the first term is a (starting n = 0). For Σ from n = 1 use a₁/(1 − r).</li>
+        <li>Concluding a series converges because aₙ → 0 (the nth-term test can only prove divergence).</li>
+        <li>Confusing the sequence aₙ with the series Σ aₙ.</li>
+        <li>Forgetting that r is the ratio of consecutive terms.</li>
+      </ul></div>
+      <div class="prose"><h2>Repeating decimals</h2>
+        <p>A repeating decimal is a geometric series: 0.777… = 7/10 + 7/100 + … = (7/10)/(1 − 1/10) = 7/9. And 0.2323… = 23/99.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="a/(1 − r) = 5/(1 − 2/3) = 15.">
+        <p class="q">Check yourself: Σ<sub>n=0</sub><sup>∞</sup> 5(2/3)<sup>n</sup> =</p>
+        <div class="opts"><button type="button">15</button><button type="button">10</button><button type="button">5</button><button type="button">diverges</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

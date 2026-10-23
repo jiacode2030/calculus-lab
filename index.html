@@ -3105,6 +3105,520 @@ body.is-ab .prob.bc{display:none!important}
     </div>
   </section>
 
+  <section class="view bc" id="v-param" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 9 · BC</span><span class="tag">BC only</span></div>
+        <h1>Parametric equations</h1>
+        <p class="lede">Instead of y as a function of x, let both depend on time t. The curve is the path of a moving point, and slopes come from the chain rule.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>A <b>parametric curve</b> is a pair <span class="m">x = x(t), y = y(t)</span>. As t increases the point <span class="m">(x, y)</span> traces a path, which can loop, double back and cross itself, none of which a function y = f(x) can do. Eliminating t sometimes gives a familiar curve (a circle, an ellipse), but the parametrization also records the direction and speed of travel.</p>
+        <p>The slope comes from the chain rule: <span class="m">dy/dx = (dy/dt)/(dx/dt)</span>, valid where dx/dt ≠ 0. A <b>horizontal tangent</b> happens where dy/dt = 0 (and dx/dt ≠ 0), a <b>vertical tangent</b> where dx/dt = 0 (and dy/dt ≠ 0). The second derivative is <span class="m">d²y/dx² = (d/dt(dy/dx))/(dx/dt)</span>. The arc length is <span class="m">∫ √((dx/dt)² + (dy/dt)²) dt</span>.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>curves were graphs of functions y = f(x)</dd><dt>So we didn't need</dt><dd>a way to describe any path, with direction and speed</dd><dt>Now</dt><dd>circles, orbits, projectiles, cycloids</dd><dt>So we need</dt><dd>parametric equations and their derivatives</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>dy/dx = (dy/dt)/(dx/dt)</span><small>slope</small></div><div class="eqn"><span>d²y/dx² = [d/dt(dy/dx)] / (dx/dt)</span><small>concavity</small></div><div class="eqn"><span>length = ∫ √(x′² + y′²) dt</span><small>arc length</small></div></div>
+      <div class="lab" id="pm-lab">
+        <div class="labbar"><span class="title">Follow the moving point</span></div>
+        <div class="ctl"><span class="lbl">Curve</span><div class="seg" id="pm-fn" role="group" aria-label="Curve"><button type="button" data-k="el" aria-pressed="true">ellipse</button><button type="button" data-k="cy" aria-pressed="false">cycloid</button><button type="button" data-k="li" aria-pressed="false">figure eight</button><button type="button" data-k="pa" aria-pressed="false">parabola</button></div></div>
+        <canvas id="pm-canvas" aria-label="A parametric curve with a moving point, its tangent line and velocity vector."></canvas>
+        <div class="controls"><div class="ctl"><label for="pm-t"><span>Parameter t</span> <output id="pm-t-out"></output></label><input type="range" id="pm-t" min="0" max="12.5" step="0.02" value="1"></div></div>
+        <div class="readout"><div><span>point (x, y)</span><strong class="x" id="pm-xy">—</strong></div><div><span>(dx/dt, dy/dt)</span><strong class="a" id="pm-v">—</strong></div><div><span>dy/dx</span><strong class="v" id="pm-sl">—</strong></div><div><span>d²y/dx²</span><strong class="" id="pm-d2">—</strong></div><div><span>tangent</span><strong class="" id="pm-note">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>On the ellipse, find t where the tangent is horizontal. <button type="button" class="btn link" data-show='[["click", "#pm-fn [data-k=el]"], ["#pm-t", 1.5708]]'>t = π/2</button></p><details><summary>What you should see</summary><p>At t = π/2, dy/dt = 2cos t = 0 while dx/dt = −3 sin t ≠ 0: the top of the ellipse, a horizontal tangent.</p></details></li>
+        <li><p>On the cycloid, put t at 2π. What is happening to the slope? <button type="button" class="btn link" data-show='[["click", "#pm-fn [data-k=cy]"], ["#pm-t", 6.2832]]'>t = 2π</button></p><details><summary>What you should see</summary><p>Both dx/dt = 1 − cos t and dy/dt = sin t are 0: a cusp, where the wheel point touches down. The slope is undefined there.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">For x = t² and y = t³ − 3t, find dy/dx and d²y/dx² at t = 2, and the points of horizontal tangent.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Rates.</b> dx/dt = 2t, dy/dt = 3t² − 3.</li>
+          <li hidden><b>Slope.</b> dy/dx = (3t² − 3)/(2t). At t = 2: 9/4.</li>
+          <li hidden><b>Second derivative.</b> d/dt(dy/dx) = d/dt[(3/2)t − (3/2)/t] = 3/2 + (3/2)/t². Divide by dx/dt = 2t: at t = 2 that is (3/2 + 3/8)/4 = 15/32.</li>
+          <li hidden><b>Horizontal tangents.</b> dy/dt = 0 at t = ±1 (dx/dt = ±2 ≠ 0): the points (1, −2) and (1, 2).</li>
+          <li hidden><b>Answer.</b> dy/dx = <b>9/4</b>, d²y/dx² = <b>15/32</b>; horizontal tangents at <b>(1, −2)</b> and <b>(1, 2)</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Differentiating dy/dx = (dy/dt)/(dx/dt) with respect to t and forgetting to divide by dx/dt again for the second derivative.</li>
+        <li>Writing dy/dx = dx/dt ÷ dy/dt (upside down).</li>
+        <li>Calling a point with dx/dt = dy/dt = 0 a tangent: check, it may be a cusp.</li>
+        <li>Forgetting that t is time, not the x-coordinate.</li>
+        <li>Using speed formula without the square root.</li>
+      </ul></div>
+      <div class="prose"><h2>Speed and direction</h2>
+        <p>The velocity vector is ⟨dx/dt, dy/dt⟩ and always points along the tangent in the direction of travel. The speed is its magnitude √((dx/dt)² + (dy/dt)²). The distance traveled is the integral of speed, which is the arc length formula.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="(dy/dt)/(dx/dt) = 2t/2 = t = 3.">
+        <p class="q">Check yourself: For x = 2t, y = t², dy/dx at t = 3 is</p>
+        <div class="opts"><button type="button">3</button><button type="button">6</button><button type="button">1/3</button><button type="button">2</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view bc" id="v-vector" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 9 · BC</span><span class="tag">BC only</span></div>
+        <h1>Vector-valued functions & motion</h1>
+        <p class="lede">A particle moving in the plane has a position vector, a velocity vector and an acceleration vector. Each is the derivative of the one before.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Write the position as <span class="m">r(t) = ⟨x(t), y(t)⟩</span>. Then the <b>velocity</b> is <span class="m">v(t) = ⟨x′(t), y′(t)⟩</span> (tangent to the path) and the <b>acceleration</b> is <span class="m">a(t) = ⟨x″(t), y″(t)⟩</span>. The <b>speed</b> is |v| = √(x′² + y′²), and the distance traveled from t = a to t = b is <span class="m">∫ |v| dt</span>.</p>
+        <p>Integrate component by component to go backwards: position = initial position + ∫ velocity. The particle speeds up when the acceleration has a positive component along the velocity (v · a &gt; 0) and slows down when v · a &lt; 0. Uniform circular motion has constant speed but nonzero acceleration (pointing to the center): the velocity direction keeps changing.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>motion on a line, one number for position</dd><dt>So we didn't need</dt><dd>motion in the plane with two components</dd><dt>Now</dt><dd>projectiles, orbits and any path</dd><dt>So we need</dt><dd>vector-valued functions and planar motion</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>v = r′ = ⟨x′, y′⟩ · a = v′</span><small>velocity, acceleration</small></div><div class="eqn"><span>speed = √(x′² + y′²)</span><small>|v|</small></div><div class="eqn"><span>distance = ∫ |v| dt</span><small>speeding up if v · a > 0</small></div></div>
+      <div class="lab" id="vc-lab">
+        <div class="labbar"><span class="title">Position, velocity, acceleration</span></div>
+        <div class="ctl"><span class="lbl">Motion</span><div class="seg" id="vc-fn" role="group" aria-label="Motion"><button type="button" data-k="ci" aria-pressed="true">circle</button><button type="button" data-k="pr" aria-pressed="false">projectile</button><button type="button" data-k="sp" aria-pressed="false">spiral</button></div></div>
+        <div class="row"><button type="button" class="btn" id="vc-play">Play</button></div>
+        <canvas id="vc-canvas" aria-label="A particle moving along a path in the plane, with its velocity vector (green) and acceleration vector (pink)."></canvas>
+        <div class="controls"><div class="ctl"><label for="vc-t"><span>Time t</span> <output id="vc-t-out"></output></label><input type="range" id="vc-t" min="0" max="6.3" step="0.02" value="1"></div></div>
+        <div class="readout"><div><span>position</span><strong class="x" id="vc-r">—</strong></div><div><span>velocity v and speed</span><strong class="v" id="vc-vel">—</strong></div><div><span>acceleration a</span><strong class="a" id="vc-acc">—</strong></div><div><span>speed is</span><strong class="" id="vc-state">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>On circle motion, compare the speed at different t. Is it constant? What about acceleration? <button type="button" class="btn link" data-show='[["click", "#vc-fn [data-k=ci]"], ["#vc-t", 2]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The speed is constant (2), but the acceleration is not zero and points to the center: the particle is always turning. Velocity changes direction even when speed does not.</p></details></li>
+        <li><p>On the projectile, find when the acceleration changes. <button type="button" class="btn link" data-show='[["click", "#vc-fn [data-k=pr]"], ["#vc-t", 1.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>It never changes: a = ⟨0, −2⟩ at every t (gravity). The vertical velocity decreases, then the particle falls.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">A particle has r(t) = ⟨t², t³ − 3t⟩. Find its velocity, speed and acceleration at t = 2.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Velocity.</b> v(t) = ⟨2t, 3t² − 3⟩, so v(2) = ⟨4, 9⟩.</li>
+          <li hidden><b>Speed.</b> |v(2)| = √(16 + 81) = √97 ≈ 9.849.</li>
+          <li hidden><b>Acceleration.</b> a(t) = ⟨2, 6t⟩, so a(2) = ⟨2, 12⟩.</li>
+          <li hidden><b>Speeding up?</b> v · a = 4(2) + 9(12) = 116 &gt; 0: yes.</li>
+          <li hidden><b>Answer.</b> v = <b>⟨4, 9⟩</b>, speed <b>√97</b>, a = <b>⟨2, 12⟩</b>; speeding up.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Forgetting that speed is a magnitude (square root of the sum of squares).</li>
+        <li>Saying the particle is not accelerating because its speed is constant.</li>
+        <li>Differentiating only x or only y: both components.</li>
+        <li>Using the position vector for velocity.</li>
+        <li>Confusing the path (a curve) with the position function (a point moving on it).</li>
+      </ul></div>
+      <div class="prose"><h2>Components</h2>
+        <p>Everything works component by component. The x and y motions are independent in a projectile: constant horizontal velocity, constant downward acceleration. For uniform circular motion r(t) = ⟨R cos ωt, R sin ωt⟩, the speed is Rω and the acceleration has size Rω², directed inward.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="v = ⟨3, 4⟩, so |v| = √(9 + 16) = 5.">
+        <p class="q">Check yourself: r(t) = ⟨3t, 4t⟩. The speed is</p>
+        <div class="opts"><button type="button">5</button><button type="button">7</button><button type="button">25</button><button type="button">12</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view bc" id="v-polar" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 9 · BC</span><span class="tag">BC only</span></div>
+        <h1>Polar curves & area</h1>
+        <p class="lede">Describe a point by its distance r from the origin and its angle θ. Flowers, spirals and hearts have simple polar equations.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>A point has polar coordinates <span class="m">(r, θ)</span> and rectangular coordinates <span class="m">x = r cos θ, y = r sin θ</span>. A <b>polar curve</b> r = f(θ) draws a point at distance f(θ) in direction θ as θ sweeps. The cardioid r = 1 + cos θ, the rose r = 2 cos 2θ and the spiral r = θ are all simple in polar form and awkward in rectangular form.</p>
+        <p>The <b>area</b> swept out is made of thin sectors (pizza slices): a sector of angle dθ and radius r has area ½r² dθ, so <span class="m">A = ½ ∫<sub>α</sub><sup>β</sup> r² dθ</span>. The slope is found as for a parametric curve (x = r cos θ, y = r sin θ), giving <span class="m">dy/dx = (r′ sin θ + r cos θ)/(r′ cos θ − r sin θ)</span>.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>every point had (x, y) coordinates</dd><dt>So we didn't need</dt><dd>a coordinate system built from distance and angle</dd><dt>Now</dt><dd>roses, cardioids and orbits</dd><dt>So we need</dt><dd>polar coordinates, curves and area</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>x = r cos θ, y = r sin θ</span><small>conversion</small></div><div class="eqn"><span>A = ½ ∫ r² dθ</span><small>area of a polar region</small></div><div class="eqn"><span>dy/dx = (r′ sin θ + r cos θ)/(r′ cos θ − r sin θ)</span><small>slope</small></div></div>
+      <div class="lab" id="po-lab">
+        <div class="labbar"><span class="title">Sweep out the curve and its area</span></div>
+        <div class="ctl"><span class="lbl">Curve</span><div class="seg" id="po-fn" role="group" aria-label="Curve"><button type="button" data-k="ca" aria-pressed="true">cardioid r = 1 + cos θ</button><button type="button" data-k="ro" aria-pressed="false">rose r = 2 cos 2θ</button><button type="button" data-k="li" aria-pressed="false">limaçon r = 1 + 2 cos θ</button><button type="button" data-k="ci" aria-pressed="false">circle r = 2 sin θ</button></div></div>
+        <canvas id="po-canvas" aria-label="A polar curve with a point at angle theta and the sector swept so far shaded."></canvas>
+        <div class="controls"><div class="ctl"><label for="po-th"><span>Angle θ</span> <output id="po-th-out"></output></label><input type="range" id="po-th" min="0" max="6.2832" step="0.02" value="1.2"></div></div>
+        <div class="readout"><div><span>(r, θ)</span><strong class="x" id="po-rt">—</strong></div><div><span>(x, y)</span><strong class="a" id="po-xy">—</strong></div><div><span>area swept so far</span><strong class="v" id="po-ar">—</strong></div><div><span>total area over [0, 2π]</span><strong class="" id="po-tot">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>On the cardioid, sweep θ from 0 to π. What fraction of the total area is swept? <button type="button" class="btn link" data-show='[["click", "#po-fn [data-k=ca]"], ["#po-th", 3.1416]]'>θ = π</button></p><details><summary>What you should see</summary><p>Half: by symmetry across the x-axis, the upper half of the cardioid is half the area, 3π/4 of 3π/2.</p></details></li>
+        <li><p>On the rose r = 2 cos 2θ, where is r negative? <button type="button" class="btn link" data-show='[["click", "#po-fn [data-k=ro]"], ["#po-th", 1.2]]'>θ = 1.2</button></p><details><summary>What you should see</summary><p>When cos 2θ &lt; 0, for π/4 &lt; θ &lt; 3π/4: the point is plotted in the opposite direction, which draws the other petals.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find the area enclosed by the cardioid r = 1 + cos θ.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Formula.</b> A = ½ ∫<sub>0</sub><sup>2π</sup> r² dθ = ½ ∫<sub>0</sub><sup>2π</sup> (1 + cos θ)² dθ.</li>
+          <li hidden><b>Expand.</b> (1 + cos θ)² = 1 + 2 cos θ + cos²θ = 3/2 + 2 cos θ + (1/2)cos 2θ.</li>
+          <li hidden><b>Integrate.</b> ∫<sub>0</sub><sup>2π</sup> (3/2 + 2 cos θ + (1/2)cos 2θ) dθ = (3/2)(2π) = 3π (the cosines integrate to 0).</li>
+          <li hidden><b>Answer.</b> A = (1/2)(3π) = <b>3π/2</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Forgetting the ½ in the area formula.</li>
+        <li>Using ∫ r dθ instead of ∫ r² dθ.</li>
+        <li>Using the wrong interval for θ so that the curve is traced twice or only partly.</li>
+        <li>Mixing up (r, θ) and (x, y) in conversions.</li>
+        <li>Treating a negative r as an error: it simply plots the point on the opposite side.</li>
+      </ul></div>
+      <div class="prose"><h2>Finding limits</h2>
+        <p>To get the right θ limits, find where r = 0 (the curve returns to the origin) for one petal or loop, or use symmetry. Between two curves r₁ and r₂ (r₁ outer): A = ½ ∫ (r₁² − r₂²) dθ.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="½ ∫ 4 dθ over 2π = 4π, the area of a circle of radius 2.">
+        <p class="q">Check yourself: The area enclosed by the circle r = 2 (θ from 0 to 2π) is</p>
+        <div class="opts"><button type="button">4π</button><button type="button">2π</button><button type="button">π</button><button type="button">8π</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view bc" id="v-seriesbasic" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 10 · BC</span><span class="tag">BC only</span></div>
+        <h1>Series, geometric series & the nth-term test</h1>
+        <p class="lede">Can you add infinitely many numbers and get a finite answer? Sometimes yes: it depends on whether the terms shrink fast enough.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>An <b>infinite series</b> Σ aₙ is the limit of its <b>partial sums</b> S_N = a₁ + … + a_N. If S_N approaches a number S, the series <b>converges</b> to S; otherwise it <b>diverges</b>. Think of walking toward a wall: half the distance, then half of what remains, and so on. The steps add up to the whole distance: 1/2 + 1/4 + 1/8 + … = 1.</p>
+        <p>The <b>geometric series</b> Σ a rⁿ is the model: it converges exactly when |r| &lt; 1, and then the sum from n = 0 is <span class="m">a/(1 − r)</span> (first term over one minus the ratio). The <b>nth-term test</b> is a quick check for divergence: if aₙ does not go to 0, the series diverges. (The converse is false: 1/n → 0 yet Σ 1/n diverges.)</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>a sum had finitely many terms</dd><dt>So we didn't need</dt><dd>infinitely many terms, defined as a limit of partial sums</dd><dt>Now</dt><dd>every later topic in Unit 10</dd><dt>So we need</dt><dd>series, convergence and the geometric series</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>S_N = a₁ + … + a_N · Σ aₙ = lim S_N</span><small>partial sums</small></div><div class="eqn"><span>Σ a rⁿ = a/(1 − r), |r| &lt; 1</span><small>geometric series</small></div><div class="eqn"><span>aₙ ↛ 0 ⇒ Σ aₙ diverges</span><small>nth-term test</small></div></div>
+      <div class="lab" id="sb-lab">
+        <div class="labbar"><span class="title">Partial sums of a geometric series</span></div>
+        <canvas id="sb-canvas" aria-label="Partial sums of a geometric series plotted against the number of terms, with a dashed line at the limit when it exists."></canvas>
+        <div class="controls"><div class="ctl"><label for="sb-a"><span>First term a</span> <output id="sb-a-out"></output></label><input type="range" id="sb-a" min="-4" max="4" step="0.5" value="2"></div><div class="ctl"><label for="sb-r"><span>Ratio r</span> <output id="sb-r-out"></output></label><input type="range" id="sb-r" min="-1.6" max="1.6" step="0.05" value="0.5"></div><div class="ctl"><label for="sb-n"><span>Number of terms N</span> <output id="sb-n-out"></output></label><input type="range" id="sb-n" min="1" max="30" step="1" value="10"></div></div>
+        <div class="readout"><div><span>partial sum S_N</span><strong class="x" id="sb-s">—</strong></div><div><span>a/(1 − r), if |r| < 1</span><strong class="v" id="sb-lim">—</strong></div><div><span>the series</span><strong class="" id="sb-ver">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Set r = 0.5, a = 2. What do the partial sums approach? <button type="button" class="btn link" data-show='[["#sb-a", 2], ["#sb-r", 0.5], ["#sb-n", 30]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Toward 2/(1 − 0.5) = 4. After 30 terms the sum is within about 10⁻⁸ of it.</p></details></li>
+        <li><p>Set r = −0.8. What happens, and what about r = 1.2? <button type="button" class="btn link" data-show='[["#sb-r", -0.8], ["#sb-n", 30]]'>r = −0.8</button></p><details><summary>What you should see</summary><p>With r = −0.8 the sums zigzag toward a/(1 + 0.8) = 1.11 (converges, |r| < 1). With r = 1.2 the terms grow, so the sums run away: diverges.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find 3 + 1 + 1/3 + 1/9 + …, and decide about Σ n/(n + 1).</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Identify.</b> First term a = 3, ratio r = 1/3: geometric.</li>
+          <li hidden><b>Check |r| &lt; 1.</b> 1/3 is between −1 and 1, so it converges.</li>
+          <li hidden><b>Sum.</b> a/(1 − r) = 3/(1 − 1/3) = 3/(2/3) = 9/2.</li>
+          <li hidden><b>The other series.</b> aₙ = n/(n + 1) → 1 ≠ 0, so by the nth-term test Σ n/(n + 1) diverges.</li>
+          <li hidden><b>Answer.</b> The geometric series converges to <b>9/2</b>; the second one <b>diverges</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Using a/(1 − r) when |r| ≥ 1.</li>
+        <li>Starting at the wrong n: a/(1 − r) assumes the first term is a (starting n = 0). For Σ from n = 1 use a₁/(1 − r).</li>
+        <li>Concluding a series converges because aₙ → 0 (the nth-term test can only prove divergence).</li>
+        <li>Confusing the sequence aₙ with the series Σ aₙ.</li>
+        <li>Forgetting that r is the ratio of consecutive terms.</li>
+      </ul></div>
+      <div class="prose"><h2>Repeating decimals</h2>
+        <p>A repeating decimal is a geometric series: 0.777… = 7/10 + 7/100 + … = (7/10)/(1 − 1/10) = 7/9. And 0.2323… = 23/99.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="a/(1 − r) = 5/(1 − 2/3) = 15.">
+        <p class="q">Check yourself: Σ<sub>n=0</sub><sup>∞</sup> 5(2/3)<sup>n</sup> =</p>
+        <div class="opts"><button type="button">15</button><button type="button">10</button><button type="button">5</button><button type="button">diverges</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view bc" id="v-pseries" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 10 · BC</span><span class="tag">BC only</span></div>
+        <h1>p-series & the integral test</h1>
+        <p class="lede">Compare a sum with an area. If the area under the curve is finite, so is the sum, and vice versa.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>The <b>p-series</b> Σ 1/nᵖ converges if p &gt; 1 and diverges if p ≤ 1. For p = 1 this is the <b>harmonic series</b> 1 + 1/2 + 1/3 + …, which diverges, very slowly: it takes about 12,000 terms to pass 10.</p>
+        <p>The reason is the <b>integral test</b>: if f is positive, continuous and decreasing, Σ f(n) and ∫₁^∞ f(x) dx either both converge or both diverge. The terms are the heights of rectangles under (or over) the curve, so the sum is squeezed between ∫₁^{N+1} f and f(1) + ∫₁^N f. The same picture bounds the <b>tail</b> of a convergent series: Σ_{n&gt;N} f(n) ≤ ∫_N^∞ f.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>we compared a sum with itself</dd><dt>So we didn't need</dt><dd>a comparison between a sum and an integral</dd><dt>Now</dt><dd>harmonic and p-series, which every other test refers to</dd><dt>So we need</dt><dd>the p-series test and the integral test</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>Σ 1/nᵖ converges iff p &gt; 1</span><small>p-series</small></div><div class="eqn"><span>∫₁^∞ f converges ⇔ Σ f(n) converges</span><small>integral test (f positive, decreasing)</small></div><div class="eqn"><span>tail ≤ ∫_N^∞ f(x) dx</span><small>bound on the remainder</small></div></div>
+      <div class="lab" id="ps-lab">
+        <div class="labbar"><span class="title">Rectangles under a curve</span></div>
+        <canvas id="ps-canvas" aria-label="The curve one over x to the p with rectangles of width 1 whose heights are the terms, and partial sums compared with the integral."></canvas>
+        <div class="controls"><div class="ctl"><label for="ps-p"><span>p</span> <output id="ps-p-out"></output></label><input type="range" id="ps-p" min="0.4" max="3" step="0.05" value="2"></div><div class="ctl"><label for="ps-n"><span>Terms N</span> <output id="ps-n-out"></output></label><input type="range" id="ps-n" min="1" max="40" step="1" value="10"></div></div>
+        <div class="readout"><div><span>partial sum S_N</span><strong class="x" id="ps-sum">—</strong></div><div><span>∫ from 1 to N of 1/xᵖ</span><strong class="v" id="ps-int">—</strong></div><div><span>Σ 1/nᵖ</span><strong class="" id="ps-ver">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Set p = 2 and N = 40. How big can the sum get? <button type="button" class="btn link" data-show='[["#ps-p", 2], ["#ps-n", 40]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Never more than 1 + ∫₁^∞ 1/x² = 2 (the sum is actually π²/6 ≈ 1.645). The rectangles are under the curve, so the sum is bounded by the area.</p></details></li>
+        <li><p>Set p = 1. Does the sum level off? <button type="button" class="btn link" data-show='[["#ps-p", 1], ["#ps-n", 40]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>No: S_N ≥ ∫₁^{N+1} dx/x = ln(N + 1), which grows without bound. The harmonic series diverges, but slowly.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Use the integral test to decide Σ<sub>n=1</sub><sup>∞</sup> 1/(n² + 1), and bound the tail after N = 10 terms of Σ 1/n².</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Check the conditions.</b> f(x) = 1/(x² + 1) is positive, continuous and decreasing for x ≥ 1.</li>
+          <li hidden><b>Integral.</b> ∫<sub>1</sub><sup>∞</sup> dx/(x² + 1) = lim [arctan x]<sub>1</sub><sup>b</sup> = π/2 − π/4 = π/4, finite.</li>
+          <li hidden><b>Conclude.</b> The series converges.</li>
+          <li hidden><b>Tail bound.</b> Σ<sub>n&gt;10</sub> 1/n² ≤ ∫<sub>10</sub><sup>∞</sup> dx/x² = 1/10.</li>
+          <li hidden><b>Answer.</b> Converges; the remainder after 10 terms is at most <b>0.1</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Using the integral test without checking positive, continuous, decreasing.</li>
+        <li>Thinking the integral equals the sum. They only share convergence (the sum is a different number).</li>
+        <li>Believing 1/n converges because its terms go to 0.</li>
+        <li>Mixing up p-series (p &gt; 1) with the p-integral near 0 (p &lt; 1).</li>
+        <li>Forgetting the first terms of the sum when estimating: S ≈ S_N + tail.</li>
+      </ul></div>
+      <div class="prose"><h2>Comparing the tests</h2>
+        <p>The p-series test is the integral test done once and for all for 1/nᵖ. The comparison tests (next module) use p-series as the benchmark: most rational-looking series behave like a p-series.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="p-series with p = 1.5 &gt; 1.">
+        <p class="q">Check yourself: Σ 1/n<sup>1.5</sup></p>
+        <div class="opts"><button type="button">converges (p = 1.5 > 1)</button><button type="button">diverges (p ≤ 1)</button><button type="button">converges to 1.5</button><button type="button">diverges by the nth-term test</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view bc" id="v-convtests" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 10 · BC</span><span class="tag">BC only</span></div>
+        <h1>Comparison & ratio tests</h1>
+        <p class="lede">Decide whether a series converges without finding its sum: compare it with one you know, or look at how fast the terms shrink.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p><b>Direct comparison:</b> if 0 ≤ aₙ ≤ bₙ and Σ bₙ converges, then Σ aₙ converges; if aₙ ≥ bₙ ≥ 0 and Σ bₙ diverges, so does Σ aₙ. <b>Limit comparison:</b> if aₙ/bₙ → L with 0 &lt; L &lt; ∞, both series do the same thing. Pick bₙ by keeping only the dominant terms: (n + 1)/(n³ + 5) behaves like 1/n².</p>
+        <p><b>Ratio test:</b> let L = lim |aₙ₊₁/aₙ|. If L &lt; 1 the series converges absolutely; if L &gt; 1 it diverges; if L = 1 the test says nothing. It shines with factorials and exponentials (n!, 2ⁿ) and is useless for p-series (L = 1).</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>tests for geometric and p-series only</dd><dt>So we didn't need</dt><dd>general-purpose tests</dd><dt>Now</dt><dd>almost every series you meet</dd><dt>So we need</dt><dd>comparison, limit comparison and the ratio test</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>0 ≤ aₙ ≤ bₙ, Σ bₙ converges ⇒ Σ aₙ converges</span><small>direct comparison</small></div><div class="eqn"><span>lim aₙ/bₙ = L, 0 < L < ∞ ⇒ same behavior</span><small>limit comparison</small></div><div class="eqn"><span>L = lim |aₙ₊₁/aₙ|: < 1 converges, > 1 diverges, = 1 no information</span><small>ratio test</small></div></div>
+      <div class="lab" id="ts-lab">
+        <div class="labbar"><span class="title">The ratio of consecutive terms</span></div>
+        <div class="ctl"><span class="lbl">Series</span><div class="seg" id="ts-fn" role="group" aria-label="Series"><button type="button" data-k="a" aria-pressed="true">n/2ⁿ</button><button type="button" data-k="b" aria-pressed="false">2ⁿ/n!</button><button type="button" data-k="c" aria-pressed="false">n!/3ⁿ</button><button type="button" data-k="d" aria-pressed="false">1/n²</button><button type="button" data-k="e" aria-pressed="false">1/n</button></div></div>
+        <p class="small" id="ts-form" style="margin:0"></p>
+        <canvas id="ts-canvas" aria-label="The ratio of consecutive terms plotted against n with a dashed line at 1."></canvas>
+        <div class="readout"><div><span>|aₙ₊₁/aₙ| at n = 30</span><strong class="x" id="ts-r">—</strong></div><div><span>the limit L</span><strong class="v" id="ts-l">—</strong></div><div><span>ratio test says</span><strong class="" id="ts-ver">—</strong></div></div>
+      </div>
+      <div class="lab" id="ts-lab2">
+        <div class="labbar"><span class="title">Compare with a series you know</span></div>
+        <div class="ctl"><span class="lbl">Compare</span><div class="seg" id="ts-cm" role="group" aria-label="Compare"><button type="button" data-k="a" aria-pressed="true">1/(n²+1) vs 1/n²</button><button type="button" data-k="b" aria-pressed="false">1/√(n²−1) vs 1/n</button><button type="button" data-k="c" aria-pressed="false">1/(2ⁿ+1) vs 1/2ⁿ</button><button type="button" data-k="d" aria-pressed="false">1/ln n vs 1/n</button></div></div>
+        <p class="small" id="ts-cform" style="margin:0"></p>
+        <canvas id="ts-canvas2" aria-label="Terms of two series plotted together to compare them."></canvas>
+        <div class="readout"><div><span>aₙ/bₙ at n = 30</span><strong class="x" id="ts-ra">—</strong></div><div><span>conclusion</span><strong class="" id="ts-cv">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose 2ⁿ/n!. What does the ratio do as n grows? <button type="button" class="btn link" data-show='[["click", "#ts-fn [data-k=b]"]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The ratio is 2/(n + 1), which goes to 0, so L = 0 &lt; 1: converges absolutely. Factorials grow faster than exponentials.</p></details></li>
+        <li><p>Choose 1/n². What is L, and does the test decide? <button type="button" class="btn link" data-show='[["click", "#ts-fn [data-k=d]"]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>L = 1, so the ratio test is inconclusive. (1/n² converges, 1/n diverges, and both have L = 1.) Use the p-series test instead.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Decide whether Σ n/3ⁿ and Σ (n + 1)/(n³ + 5) converge.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>First series: ratio test.</b> |aₙ₊₁/aₙ| = [(n + 1)/3ⁿ⁺¹]·[3ⁿ/n] = (n + 1)/(3n) → 1/3.</li>
+          <li hidden><b>Conclude.</b> L = 1/3 &lt; 1, so it converges.</li>
+          <li hidden><b>Second series: limit comparison with 1/n².</b> aₙ/bₙ = n²(n + 1)/(n³ + 5) → 1.</li>
+          <li hidden><b>Conclude.</b> 0 &lt; 1 &lt; ∞ and Σ 1/n² converges, so it converges.</li>
+          <li hidden><b>Answer.</b> Both <b>converge</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Using the ratio test on a p-series (L = 1 always).</li>
+        <li>Concluding "diverges" when L = 1. The test is inconclusive.</li>
+        <li>Comparing in the wrong direction: a series smaller than a divergent one proves nothing.</li>
+        <li>Applying direct comparison without positive terms.</li>
+        <li>Choosing bₙ that does not capture the dominant behavior.</li>
+      </ul></div>
+      <div class="prose"><h2>Choosing the test</h2>
+        <p>Factorials or exponentials in aₙ: ratio test. Rational function of n (or roots): limit comparison with a p-series. Terms like 1/(n² + 1) that are slightly smaller than 1/n²: direct comparison. If the terms alternate in sign: the next module.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="L &gt; 1: the ratio test says diverges.">
+        <p class="q">Check yourself: lim |aₙ₊₁/aₙ| = 2. Then Σ aₙ</p>
+        <div class="opts"><button type="button">diverges</button><button type="button">converges absolutely</button><button type="button">converges conditionally</button><button type="button">cannot be decided</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view bc" id="v-altser" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 10 · BC</span><span class="tag">BC only</span></div>
+        <h1>Alternating series & error bounds</h1>
+        <p class="lede">Terms that alternate in sign can converge even when the unsigned series does not, and you get a neat built-in error bound.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>An <b>alternating series</b> Σ (−1)ⁿ⁺¹ bₙ (with bₙ &gt; 0) converges if the terms <b>decrease</b> (bₙ₊₁ ≤ bₙ) and <b>go to 0</b>. That is the alternating series test. The partial sums swing back and forth, each overshooting the true sum less than before.</p>
+        <p>That gives the <b>alternating series error bound</b>: stopping after N terms, the error is at most the first omitted term, <span class="m">|S − S_N| ≤ b_{N+1}</span>, and the true sum lies between S_N and S_{N+1}. Then separate the cases: Σ|aₙ| converges ⇒ <b>absolutely convergent</b> (and so convergent). If Σ aₙ converges but Σ|aₙ| diverges, it is <b>conditionally convergent</b>: the alternating harmonic series 1 − 1/2 + 1/3 − … is the classic example.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>all terms positive</dd><dt>So we didn't need</dt><dd>signs that alternate</dd><dt>Now</dt><dd>the alternating harmonic series and Taylor series error</dd><dt>So we need</dt><dd>the alternating series test and error bound</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>Σ (−1)ⁿ⁺¹ bₙ converges if bₙ decreasing → 0</span><small>alternating series test</small></div><div class="eqn"><span>|S − S_N| ≤ b_{N+1}</span><small>error bound</small></div><div class="eqn"><span>Σ|aₙ| converges ⇒ absolute; else conditional if Σ aₙ converges</span><small></small></div></div>
+      <div class="lab" id="at-lab">
+        <div class="labbar"><span class="title">Partial sums that swing</span></div>
+        <canvas id="at-canvas" aria-label="Partial sums of an alternating series plotted against N, zigzagging toward the true sum, with the error band around it."></canvas>
+        <div class="controls"><div class="ctl"><label for="at-p"><span>p in (−1)ⁿ⁺¹/nᵖ</span> <output id="at-p-out"></output></label><input type="range" id="at-p" min="0.2" max="2.5" step="0.1" value="1"></div><div class="ctl"><label for="at-n"><span>Terms N</span> <output id="at-n-out"></output></label><input type="range" id="at-n" min="1" max="30" step="1" value="8"></div></div>
+        <div class="readout"><div><span>S_N</span><strong class="x" id="at-s">—</strong></div><div><span>the sum S (estimated)</span><strong class="v" id="at-sum">—</strong></div><div><span>error bound b(N+1)</span><strong class="a" id="at-err">—</strong></div><div><span>Σ (−1)ⁿ⁺¹/nᵖ is</span><strong class="" id="at-ver">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Set p = 1 (alternating harmonic series), N = 8. Where is the true sum, and how far off is S₈? <button type="button" class="btn link" data-show='[["#at-p", 1], ["#at-n", 8]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The sum is ln 2 ≈ 0.693. S₈ ≈ 0.635, and the bound is 1/9 ≈ 0.111; the real error is 0.058, within the bound.</p></details></li>
+        <li><p>Set p = 0.5 and then 2. What changes about the type of convergence? <button type="button" class="btn link" data-show='[["#at-p", 0.5]]'>p = 0.5</button></p><details><summary>What you should see</summary><p>For 0 < p ≤ 1 it converges only because of the alternating signs (conditional). For p > 1 even the absolute values converge (absolute convergence).</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">How many terms of Σ (−1)ⁿ⁺¹/n² guarantee an error less than 0.01? Is the series absolutely convergent?</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Check the test.</b> bₙ = 1/n² is decreasing and → 0, so the series converges.</li>
+          <li hidden><b>Error bound.</b> |S − S_N| ≤ b_{N+1} = 1/(N + 1)².</li>
+          <li hidden><b>Require less than 0.01.</b> 1/(N + 1)² &lt; 0.01 ⇒ (N + 1)² &gt; 100 ⇒ N + 1 &gt; 10 ⇒ N ≥ 10.</li>
+          <li hidden><b>Absolute?</b> Σ 1/n² is a convergent p-series (p = 2), so the series converges absolutely.</li>
+          <li hidden><b>Answer.</b> <b>N = 10</b> terms; <b>absolutely</b> convergent.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Skipping the decreasing condition in the alternating series test.</li>
+        <li>Using b_N instead of b_{N+1} for the error bound.</li>
+        <li>Thinking every convergent alternating series converges absolutely.</li>
+        <li>Applying the error bound to a non-alternating series.</li>
+        <li>Counting the number of terms off by one: S_N has N terms and the bound is the (N + 1)th term.</li>
+      </ul></div>
+      <div class="prose"><h2>Absolute vs conditional</h2>
+        <p>Absolute convergence is the strongest kind: rearranging terms cannot change the sum. A conditionally convergent series like 1 − 1/2 + 1/3 − … is fragile: its terms can be rearranged to sum to any number (Riemann). In the course, you need to classify a series as absolutely convergent, conditionally convergent or divergent.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Terms decrease to 0 (so it converges), but Σ 1/√n is a divergent p-series (p = 1/2).">
+        <p class="q">Check yourself: Σ (−1)ⁿ/√n</p>
+        <div class="opts"><button type="button">converges conditionally</button><button type="button">converges absolutely</button><button type="button">diverges</button><button type="button">converges to 0</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view bc" id="v-taylorpoly" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 10 · BC</span><span class="tag">BC only</span></div>
+        <h1>Taylor polynomials & Lagrange error</h1>
+        <p class="lede">Approximate any smooth function near a point by a polynomial built from its derivatives. And know how big the error can be.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>The <b>Taylor polynomial</b> of degree n centered at a is <span class="m">P_n(x) = Σ_{k=0}^{n} f⁽ᵏ⁾(a)(x − a)ᵏ/k!</span>. It matches f and its first n derivatives at a, so it hugs f near a. Degree 1 is the tangent line; degree 2 adds the bend. When a = 0 it is called a <b>Maclaurin polynomial</b>.</p>
+        <p>The <b>Lagrange error bound</b> says how far off P_n can be: <span class="m">|f(x) − P_n(x)| ≤ M|x − a|ⁿ⁺¹/(n + 1)!</span>, where M is the maximum of |f⁽ⁿ⁺¹⁾| between a and x. Higher degree and a closer x make the bound tiny. This is how a calculator computes sin 0.5 or eˣ: with enough terms of a polynomial.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>the tangent line was our best local approximation</dd><dt>So we didn't need</dt><dd>a whole polynomial of any degree</dd><dt>Now</dt><dd>calculators, physics approximations and series</dd><dt>So we need</dt><dd>Taylor polynomials and the Lagrange error bound</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>P_n(x) = Σ f⁽ᵏ⁾(a)(x − a)ᵏ/k!</span><small>Taylor polynomial</small></div><div class="eqn"><span>|R_n(x)| ≤ M|x − a|ⁿ⁺¹/(n + 1)!</span><small>Lagrange error bound</small></div><div class="eqn"><span>M = max |f⁽ⁿ⁺¹⁾| between a and x</span><small></small></div></div>
+      <div class="lab" id="tp-lab">
+        <div class="labbar"><span class="title">Add terms and watch the fit improve</span></div>
+        <div class="ctl"><span class="lbl">Function (centered at 0)</span><div class="seg" id="tp-fn" role="group" aria-label="Function (centered at 0)"><button type="button" data-k="ex" aria-pressed="true">eˣ</button><button type="button" data-k="sn" aria-pressed="false">sin x</button><button type="button" data-k="cs" aria-pressed="false">cos x</button><button type="button" data-k="ln" aria-pressed="false">ln(1+x)</button></div></div>
+        <canvas id="tp-canvas" aria-label="A function and its Taylor polynomial of the chosen degree, with the probe point and the error."></canvas>
+        <div class="controls"><div class="ctl"><label for="tp-n"><span>Degree n</span> <output id="tp-n-out"></output></label><input type="range" id="tp-n" min="0" max="12" step="1" value="3"></div><div class="ctl"><label for="tp-x"><span>Probe x</span> <output id="tp-x-out"></output></label><input type="range" id="tp-x" min="-2.8" max="2.8" step="0.05" value="1"></div></div>
+        <div class="readout"><div><span>Pₙ(x)</span><strong class="x" id="tp-P">—</strong></div><div><span>f(x)</span><strong class="v" id="tp-f">—</strong></div><div><span>error |f − Pₙ|</span><strong class="a" id="tp-e">—</strong></div><div><span>Lagrange bound</span><strong class="" id="tp-b">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>On sin x, raise the degree from 1 to 7. What changes? <button type="button" class="btn link" data-show='[["click", "#tp-fn [data-k=sn]"], ["#tp-n", 7], ["#tp-x", 2]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The polynomial hugs sin x over a wider and wider interval around 0. At x = 2, P₇ = 0.9093 vs sin 2 = 0.9093: error tiny.</p></details></li>
+        <li><p>Choose ln(1+x) and move the probe to x = 1.5. What happens as n grows? <button type="button" class="btn link" data-show='[["click", "#tp-fn [data-k=ln]"], ["#tp-n", 8], ["#tp-x", 1.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The error does not shrink: ln(1 + x) has a Taylor series only for −1 < x ≤ 1. Outside that interval the polynomials get worse, not better.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find the degree-3 Maclaurin polynomial of f(x) = e<sup>x</sup> and use the Lagrange bound to bound the error at x = 0.5.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Derivatives at 0.</b> f⁽ᵏ⁾(0) = 1 for every k.</li>
+          <li hidden><b>Polynomial.</b> P₃(x) = 1 + x + x²/2 + x³/6.</li>
+          <li hidden><b>Estimate.</b> P₃(0.5) = 1 + 0.5 + 0.125 + 0.0208 = 1.6458 (true e<sup>0.5</sup> = 1.6487).</li>
+          <li hidden><b>Bound.</b> f⁗ = eˣ ≤ e<sup>0.5</sup> &lt; 1.7 on [0, 0.5]. |error| ≤ 1.7(0.5)⁴/4! = 1.7(0.0625)/24 ≈ 0.0044.</li>
+          <li hidden><b>Answer.</b> P₃ = <b>1 + x + x²/2 + x³/6</b>; error at 0.5 is at most <b>0.0044</b> (actual 0.0029).</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Forgetting the k! in the denominators.</li>
+        <li>Using the (n)th derivative instead of the (n + 1)th in the Lagrange bound.</li>
+        <li>Using a polynomial far from its center and trusting it.</li>
+        <li>Mixing up the degree n and the number of terms (n + 1 terms for degree n).</li>
+        <li>Forgetting to evaluate the derivatives at the center a, not at x.</li>
+      </ul></div>
+      <div class="prose"><h2>Reading coefficients</h2>
+        <p>The coefficient of (x − a)ᵏ is f⁽ᵏ⁾(a)/k!. So if P₃(x) = 2 + 3x − 4x² + 10x³, then f(0) = 2, f′(0) = 3, f″(0) = 2!·(−4) = −8, f‴(0) = 3!·10 = 60.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Coefficient of xᵏ is f⁽ᵏ⁾(0)/k!, so k = 3 gives f‴(0)/3! = f‴(0)/6.">
+        <p class="q">Check yourself: The coefficient of x³ in the Maclaurin series of f is</p>
+        <div class="opts"><button type="button">f‴(0)/6</button><button type="button">f‴(0)/3</button><button type="button">f‴(0)</button><button type="button">f⁗(0)/6</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view bc" id="v-powser" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 10 · BC</span><span class="tag">BC only</span></div>
+        <h1>Power series: radius & interval of convergence</h1>
+        <p class="lede">A power series is an infinite polynomial. It converges for x near its center, and the radius tells you how near.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>A <b>power series</b> centered at c is Σ aₙ(x − c)ⁿ. It is a polynomial with infinitely many terms, so for each x it either converges or diverges. The set of x where it converges is an interval centered at c: the <b>interval of convergence</b>, with <b>radius R</b> (the series converges for |x − c| &lt; R and diverges for |x − c| &gt; R).</p>
+        <p>Find R with the <b>ratio test</b> on |aₙ₊₁(x − c)ⁿ⁺¹ / aₙ(x − c)ⁿ| &lt; 1, then <b>test the endpoints</b> x = c ± R separately (the ratio test fails there, so use p-series, alternating, or nth-term). The radius can be 0 (only x = c) or ∞ (all x). Inside the radius, you may differentiate and integrate term by term, and the radius does not change.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>series of numbers</dd><dt>So we didn't need</dt><dd>series with a variable</dd><dt>Now</dt><dd>functions as infinite polynomials, and Taylor series</dd><dt>So we need</dt><dd>power series, radius and interval of convergence</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>Σ aₙ(x − c)ⁿ</span><small>power series centered at c</small></div><div class="eqn"><span>R: |x − c| < R converges, > R diverges</span><small>radius of convergence</small></div><div class="eqn"><span>endpoints: test separately</span><small>x = c ± R</small></div></div>
+      <div class="lab" id="pw-lab">
+        <div class="labbar"><span class="title">Where does it converge?</span></div>
+        <div class="ctl"><span class="lbl">Series</span><div class="seg" id="pw-fn" role="group" aria-label="Series"><button type="button" data-k="a" aria-pressed="true">Σ xⁿ</button><button type="button" data-k="b" aria-pressed="false">Σ xⁿ/n</button><button type="button" data-k="c" aria-pressed="false">Σ xⁿ/n²</button><button type="button" data-k="d" aria-pressed="false">Σ xⁿ/n!</button><button type="button" data-k="e" aria-pressed="false">Σ n! xⁿ</button></div></div>
+        <canvas id="pw-canvas" aria-label="Partial sums of the chosen power series at the probe x, plotted against the number of terms, and the interval of convergence on a number line."></canvas>
+        <div class="controls"><div class="ctl"><label for="pw-x"><span>Probe x</span> <output id="pw-x-out"></output></label><input type="range" id="pw-x" min="-3" max="3" step="0.05" value="0.5"></div></div>
+        <div class="readout"><div><span>radius R</span><strong class="x" id="pw-R">—</strong></div><div><span>interval of convergence</span><strong class="v" id="pw-int">—</strong></div><div><span>at the probe x the series</span><strong class="" id="pw-st">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose Σ xⁿ/n. At x = 1 and x = −1 what happens? <button type="button" class="btn link" data-show='[["click", "#pw-fn [data-k=b]"], ["#pw-x", 1]]'>x = 1</button></p><details><summary>What you should see</summary><p>At x = 1 it is the harmonic series (diverges); at x = −1 it is the alternating harmonic series (converges). So the interval is [−1, 1): the endpoints must be tested separately.</p></details></li>
+        <li><p>Choose Σ n! xⁿ. For which x does it converge? <button type="button" class="btn link" data-show='[["click", "#pw-fn [data-k=e]"], ["#pw-x", 0.3]]'>x = 0.3</button></p><details><summary>What you should see</summary><p>Only at x = 0: the terms n!xⁿ blow up for any x ≠ 0 (R = 0). Compare Σ xⁿ/n!, which converges for every x (R = ∞).</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find the radius and interval of convergence of Σ<sub>n=1</sub><sup>∞</sup> (x − 2)ⁿ/(n·3ⁿ).</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Ratio test.</b> |aₙ₊₁/aₙ| = |x − 2|·n/(3(n + 1)) → |x − 2|/3.</li>
+          <li hidden><b>Converges when</b> |x − 2|/3 &lt; 1, i.e. |x − 2| &lt; 3. So R = 3, center 2, open interval (−1, 5).</li>
+          <li hidden><b>Endpoint x = 5.</b> Σ 3ⁿ/(n·3ⁿ) = Σ 1/n: harmonic, diverges.</li>
+          <li hidden><b>Endpoint x = −1.</b> Σ (−3)ⁿ/(n·3ⁿ) = Σ (−1)ⁿ/n: alternating harmonic, converges.</li>
+          <li hidden><b>Answer.</b> R = <b>3</b>; interval of convergence <b>[−1, 5)</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Forgetting to test the endpoints.</li>
+        <li>Stopping at |x − c| &lt; R and writing the interval as closed.</li>
+        <li>Confusing the radius with the interval (R = 3 has length 6).</li>
+        <li>Using the ratio test at the endpoints (it gives L = 1: inconclusive).</li>
+        <li>Forgetting the center: the interval is centered at c, not at 0.</li>
+      </ul></div>
+      <div class="prose"><h2>Term-by-term calculus</h2>
+        <p>Inside the radius, differentiate and integrate a power series term by term, and the radius stays the same. At the endpoints convergence may change. For example, from 1/(1 − x) = Σ xⁿ (|x| &lt; 1) you get 1/(1 − x)² = Σ n xⁿ⁻¹ and −ln(1 − x) = Σ xⁿ/n.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="R = 1. At x = ±1 it is Σ 1/n² (p = 2, converges) and the alternating version (converges), so both endpoints are included.">
+        <p class="q">Check yourself: Σ xⁿ/n² has interval of convergence</p>
+        <div class="opts"><button type="button">[−1, 1]</button><button type="button">(−1, 1)</button><button type="button">[−1, 1)</button><button type="button">(−1, 1]</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view bc" id="v-maclaurin" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 10 · BC</span><span class="tag">BC only</span></div>
+        <h1>Maclaurin series & operations</h1>
+        <p class="lede">A few series to know by heart, and a toolbox for building new ones: substitute, multiply, differentiate, integrate.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>The key series (centered at 0): <span class="m">eˣ = Σ xⁿ/n!</span> (all x), <span class="m">sin x = Σ (−1)ⁿ x²ⁿ⁺¹/(2n + 1)!</span> (all x), <span class="m">cos x = Σ (−1)ⁿ x²ⁿ/(2n)!</span> (all x), and <span class="m">1/(1 − x) = Σ xⁿ</span> (|x| &lt; 1). Everything else can be made from these.</p>
+        <p><b>Substitute</b>: replace x by 2x or x²: e^{−x²} = Σ (−1)ⁿ x²ⁿ/n!. <b>Multiply</b> by x or a power. <b>Differentiate or integrate</b> term by term: integrating 1/(1 + x) gives ln(1 + x) = Σ (−1)ⁿ⁺¹ xⁿ/n; integrating 1/(1 + x²) gives arctan x = Σ (−1)ⁿ x²ⁿ⁺¹/(2n + 1). Series can also evaluate limits and integrals that have no closed form.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>a Taylor series needed derivatives computed from scratch every time</dd><dt>So we didn't need</dt><dd>a short list plus rules for combining them</dd><dt>Now</dt><dd>limits, integrals with no closed form, and approximations</dd><dt>So we need</dt><dd>the standard Maclaurin series and operations on series</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>eˣ = Σ xⁿ/n! · 1/(1−x) = Σ xⁿ</span><small>sin x = Σ (−1)ⁿx²ⁿ⁺¹/(2n+1)! · cos x = Σ (−1)ⁿx²ⁿ/(2n)!</small></div><div class="eqn"><span>substitute · multiply · differentiate · integrate</span><small>new series from old</small></div><div class="eqn"><span>coefficient of xᵏ is f⁽ᵏ⁾(0)/k!</span><small>read off derivatives</small></div></div>
+      <div class="lab" id="mc-lab">
+        <div class="labbar"><span class="title">Build a series and compare</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="mc-fn" role="group" aria-label="Function"><button type="button" data-k="ex" aria-pressed="true">eˣ</button><button type="button" data-k="e2" aria-pressed="false">e^(−x²)</button><button type="button" data-k="sn" aria-pressed="false">sin x</button><button type="button" data-k="sx" aria-pressed="false">sin(x²)</button><button type="button" data-k="at" aria-pressed="false">arctan x</button><button type="button" data-k="ln" aria-pressed="false">ln(1+x)</button></div></div>
+        <p class="small" id="mc-form" style="margin:0"></p>
+        <canvas id="mc-canvas" aria-label="A function and its partial sum of the chosen Maclaurin series."></canvas>
+        <div class="controls"><div class="ctl"><label for="mc-n"><span>Number of nonzero terms</span> <output id="mc-n-out"></output></label><input type="range" id="mc-n" min="1" max="8" step="1" value="3"></div></div>
+        <div class="readout"><div><span>the series starts</span><strong class="x" id="mc-ser">—</strong></div><div><span>converges for</span><strong class="v" id="mc-rad">—</strong></div><div><span>max error on the plotted window</span><strong class="a" id="mc-err">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose e^(−x²). Where does the series come from, and how many terms are needed near x = 1? <button type="button" class="btn link" data-show='[["click", "#mc-fn [data-k=e2]"], ["#mc-n", 4]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Replace x by −x² in the series for eˣ: 1 − x² + x⁴/2 − x⁶/6 + …. With 4 terms the curve matches well for |x| ≤ 1.3 or so.</p></details></li>
+        <li><p>Choose arctan x and increase the terms. What happens past |x| = 1? <button type="button" class="btn link" data-show='[["click", "#mc-fn [data-k=at]"], ["#mc-n", 6]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The partial sums fly off: the series has radius 1. It was obtained by integrating Σ (−1)ⁿ x²ⁿ = 1/(1 + x²), which only converges for |x| < 1.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Use known series to find the first three nonzero terms of x·sin(x²) and lim<sub>x→0</sub> (e<sup>x</sup> − 1 − x)/x².</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Substitute.</b> sin u = u − u³/6 + u⁵/120 − …, with u = x²: sin(x²) = x² − x⁶/6 + x¹⁰/120 − ….</li>
+          <li hidden><b>Multiply by x.</b> x sin(x²) = x³ − x⁷/6 + x¹¹/120 − ….</li>
+          <li hidden><b>Limit.</b> eˣ − 1 − x = x²/2 + x³/6 + …, so (eˣ − 1 − x)/x² = 1/2 + x/6 + … → 1/2.</li>
+          <li hidden><b>Answer.</b> x³ − x⁷/6 + x¹¹/120; the limit is <b>1/2</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Not replacing x consistently when substituting (every x in the series changes).</li>
+        <li>Forgetting factorials in e<sup>x</sup>, sin and cos.</li>
+        <li>Using the sin series for cos (or the reverse): sin has odd powers, cos has even powers.</li>
+        <li>Forgetting the alternating sign (−1)ⁿ.</li>
+        <li>Ignoring the interval of convergence after substituting or integrating.</li>
+      </ul></div>
+      <div class="prose"><h2>Why these are enough</h2>
+        <p>Differentiating the series for sin x term by term gives the series for cos x, and integrating Σ xⁿ gives −ln(1 − x). The AP exam usually asks for the first few terms, a pattern (general term), or a value computed from a known series, and the error bound.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="cos x = 1 − x²/2! + x⁴/4! − …, and 4! = 24: the coefficient is +1/24.">
+        <p class="q">Check yourself: The coefficient of x⁴ in the Maclaurin series of cos x is</p>
+        <div class="opts"><button type="button">1/24</button><button type="button">−1/24</button><button type="button">1/12</button><button type="button">1/6</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
   <section class="view" id="v-practice" hidden>
     <div class="wrap">
       <div class="head">
@@ -3343,8 +3857,8 @@ function view3d(cv,o){
 
 /* ---------------- Roster and registries (the data blocks are injected by build.py) ---------------- */
 const MODS={"functions": {"t": "Functions & transformations", "d": "Shift, stretch and flip a graph, and read what a formula is doing.", "bc": false}, "trigexp": {"t": "Trig, exponentials & logs", "d": "The unit circle, e^x and ln x: the functions calculus keeps using.", "bc": false}, "limits": {"t": "Limits from graphs & tables", "d": "What a function is heading toward, even where it never gets there.", "bc": false}, "limalg": {"t": "Algebraic limits", "d": "Factor, rationalize or squeeze when plugging in gives 0/0.", "bc": false}, "contin": {"t": "Continuity & the IVT", "d": "Where a graph breaks, and why continuous functions can't skip values.", "bc": false}, "asym": {"t": "Infinite limits & end behavior", "d": "Vertical and horizontal asymptotes, and what happens as x gets huge.", "bc": false}, "rates": {"t": "Average vs instantaneous rate", "d": "A secant line closing in on a tangent line.", "bc": false}, "deriv": {"t": "The derivative & differentiability", "d": "The limit definition, and where a graph has no slope.", "bc": false}, "rules": {"t": "Power, sum & constant-multiple rules", "d": "Differentiate polynomials and roots in your head.", "bc": false}, "transder": {"t": "Trig, e^x and ln x derivatives", "d": "The derivatives you memorize once.", "bc": false}, "prodquot": {"t": "Product & quotient rules", "d": "When two functions are multiplied or divided.", "bc": false}, "chain": {"t": "The chain rule", "d": "Derivatives of functions inside functions.", "bc": false}, "implicit": {"t": "Implicit differentiation", "d": "Slopes of curves that are not functions of x.", "bc": false}, "invfn": {"t": "Inverse functions & inverse trig", "d": "Derivatives of inverses, arcsin, arctan and friends.", "bc": false}, "higher": {"t": "Higher-order derivatives & choosing a rule", "d": "Second derivatives, and picking the right tool.", "bc": false}, "motion": {"t": "Derivatives in context & motion", "d": "Position, velocity, acceleration and units of a rate.", "bc": false}, "related": {"t": "Related rates", "d": "Two quantities change together: how fast is the other one moving?", "bc": false}, "linear": {"t": "Linearization & differentials", "d": "Approximate a curve by its tangent line.", "bc": false}, "lhop": {"t": "L'Hôpital's rule", "d": "Resolve 0/0 and ∞/∞ by comparing derivatives.", "bc": false}, "mvt": {"t": "Extreme values & the Mean Value Theorem", "d": "Why a continuous function on [a, b] has a max, and a point with the average slope.", "bc": false}, "incdec": {"t": "Increasing, decreasing & the first derivative test", "d": "Read the sign of f′ to find peaks and valleys.", "bc": false}, "concav": {"t": "Concavity & the second derivative test", "d": "Read the sign of f″ to see bending.", "bc": false}, "sketch": {"t": "Connecting f, f′ and f″", "d": "Go between a graph and the graphs of its derivatives.", "bc": false}, "optim": {"t": "Optimization", "d": "Biggest, smallest, cheapest, fastest: set up and solve.", "bc": false}, "accum": {"t": "Accumulation & Riemann sums", "d": "Add up a changing rate with thin slices.", "bc": false}, "ftc": {"t": "The definite integral & the FTC", "d": "Area, accumulation functions and the theorem that ties derivatives to integrals.", "bc": false}, "antider": {"t": "Antiderivatives", "d": "Undo a derivative, and don't forget the + C.", "bc": false}, "usub": {"t": "u-substitution", "d": "Undo the chain rule, including definite integrals.", "bc": false}, "slope": {"t": "Slope fields", "d": "Draw the solutions without solving anything.", "bc": false}, "sepvar": {"t": "Separation of variables & exponential models", "d": "Solve dy/dx = ky and other separable equations.", "bc": false}, "avgval": {"t": "Average value & motion with integrals", "d": "Average of a function, and displacement vs distance.", "bc": false}, "area": {"t": "Area between curves", "d": "Top minus bottom, or right minus left.", "bc": false}, "vols": {"t": "Volumes from cross sections", "d": "Stack slices of a known shape.", "bc": false}, "volrev": {"t": "Volumes of revolution", "d": "Discs and washers around an axis.", "bc": false}, "parts": {"t": "Integration by parts", "d": "Undo the product rule: ∫u dv = uv − ∫v du.", "bc": true}, "partial": {"t": "Partial fractions & long division", "d": "Split a rational function into pieces you can integrate.", "bc": true}, "improper": {"t": "Improper integrals", "d": "Areas that stretch to infinity, or past an asymptote.", "bc": true}, "euler": {"t": "Euler's method", "d": "Step along a slope field to approximate a solution.", "bc": true}, "logistic": {"t": "Logistic models", "d": "Growth that levels off at a carrying capacity.", "bc": true}, "arclen": {"t": "Arc length", "d": "How long is the curve?", "bc": true}, "param": {"t": "Parametric equations", "d": "x and y both depend on t: slope, concavity and length.", "bc": true}, "vector": {"t": "Vector-valued functions & motion", "d": "Velocity, speed and acceleration in the plane.", "bc": true}, "polar": {"t": "Polar curves & area", "d": "Graph with r and θ, and find areas of petals.", "bc": true}, "seriesbasic": {"t": "Series, geometric series & the nth-term test", "d": "When does an infinite sum add up to a number?", "bc": true}, "pseries": {"t": "p-series & the integral test", "d": "Compare a sum to an area.", "bc": true}, "convtests": {"t": "Comparison & ratio tests", "d": "Decide convergence without finding the sum.", "bc": true}, "altser": {"t": "Alternating series & error bounds", "d": "Alternating signs, absolute vs conditional convergence.", "bc": true}, "taylorpoly": {"t": "Taylor polynomials & Lagrange error", "d": "Approximate a function near a point, and bound the error.", "bc": true}, "powser": {"t": "Power series: radius & interval", "d": "Where a series in x converges.", "bc": true}, "maclaurin": {"t": "Maclaurin series & operations", "d": "e^x, sin x, cos x, 1/(1−x), and building new series from them.", "bc": true}};
-const GROUPS=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"]}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"]}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"]}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"]}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": ["motion", "related", "linear", "lhop"]}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": ["mvt", "incdec", "concav", "sketch", "optim"]}, {"w": "Unit 6", "name": "Integration and accumulation of change", "tag": "AP Unit 6", "bc": false, "ids": ["accum", "ftc", "antider", "usub"]}, {"w": "Unit 7", "name": "Differential equations", "tag": "AP Unit 7", "bc": false, "ids": ["slope", "sepvar"]}, {"w": "Unit 8", "name": "Applications of integration", "tag": "AP Unit 8", "bc": false, "ids": ["avgval", "area", "vols", "volrev"]}, {"w": "BC", "name": "Integration techniques (BC)", "tag": "AP Unit 6 · BC", "bc": true, "ids": ["parts", "partial", "improper"]}, {"w": "BC", "name": "More differential equations & applications (BC)", "tag": "AP Units 7–8 · BC", "bc": true, "ids": ["euler", "logistic", "arclen"]}];
-const ROADMAP=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"], "soon": []}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"], "soon": []}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"], "soon": []}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"], "soon": []}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": ["motion", "related", "linear", "lhop"], "soon": []}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": ["mvt", "incdec", "concav", "sketch", "optim"], "soon": []}, {"w": "Unit 6", "name": "Integration and accumulation of change", "tag": "AP Unit 6", "bc": false, "ids": ["accum", "ftc", "antider", "usub"], "soon": []}, {"w": "Unit 7", "name": "Differential equations", "tag": "AP Unit 7", "bc": false, "ids": ["slope", "sepvar"], "soon": []}, {"w": "Unit 8", "name": "Applications of integration", "tag": "AP Unit 8", "bc": false, "ids": ["avgval", "area", "vols", "volrev"], "soon": []}, {"w": "BC", "name": "Integration techniques (BC)", "tag": "AP Unit 6 · BC", "bc": true, "ids": ["parts", "partial", "improper"], "soon": []}, {"w": "BC", "name": "More differential equations & applications (BC)", "tag": "AP Units 7–8 · BC", "bc": true, "ids": ["euler", "logistic", "arclen"], "soon": []}, {"w": "Unit 9", "name": "Parametric equations, polar coordinates and vector-valued functions (BC)", "tag": "AP Unit 9 · BC", "bc": true, "ids": [], "soon": ["param", "vector", "polar"]}, {"w": "Unit 10", "name": "Infinite sequences and series (BC)", "tag": "AP Unit 10 · BC", "bc": true, "ids": [], "soon": ["seriesbasic", "pseries", "convtests", "altser", "taylorpoly", "powser", "maclaurin"]}]; /* every unit, with ids (built) and soon (planned, not built yet) */
+const GROUPS=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"]}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"]}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"]}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"]}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": ["motion", "related", "linear", "lhop"]}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": ["mvt", "incdec", "concav", "sketch", "optim"]}, {"w": "Unit 6", "name": "Integration and accumulation of change", "tag": "AP Unit 6", "bc": false, "ids": ["accum", "ftc", "antider", "usub"]}, {"w": "Unit 7", "name": "Differential equations", "tag": "AP Unit 7", "bc": false, "ids": ["slope", "sepvar"]}, {"w": "Unit 8", "name": "Applications of integration", "tag": "AP Unit 8", "bc": false, "ids": ["avgval", "area", "vols", "volrev"]}, {"w": "BC", "name": "Integration techniques (BC)", "tag": "AP Unit 6 · BC", "bc": true, "ids": ["parts", "partial", "improper"]}, {"w": "BC", "name": "More differential equations & applications (BC)", "tag": "AP Units 7–8 · BC", "bc": true, "ids": ["euler", "logistic", "arclen"]}, {"w": "Unit 9", "name": "Parametric equations, polar coordinates and vector-valued functions (BC)", "tag": "AP Unit 9 · BC", "bc": true, "ids": ["param", "vector", "polar"]}, {"w": "Unit 10", "name": "Infinite sequences and series (BC)", "tag": "AP Unit 10 · BC", "bc": true, "ids": ["seriesbasic", "pseries", "convtests", "altser", "taylorpoly", "powser", "maclaurin"]}];
+const ROADMAP=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"], "soon": []}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"], "soon": []}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"], "soon": []}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"], "soon": []}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": ["motion", "related", "linear", "lhop"], "soon": []}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": ["mvt", "incdec", "concav", "sketch", "optim"], "soon": []}, {"w": "Unit 6", "name": "Integration and accumulation of change", "tag": "AP Unit 6", "bc": false, "ids": ["accum", "ftc", "antider", "usub"], "soon": []}, {"w": "Unit 7", "name": "Differential equations", "tag": "AP Unit 7", "bc": false, "ids": ["slope", "sepvar"], "soon": []}, {"w": "Unit 8", "name": "Applications of integration", "tag": "AP Unit 8", "bc": false, "ids": ["avgval", "area", "vols", "volrev"], "soon": []}, {"w": "BC", "name": "Integration techniques (BC)", "tag": "AP Unit 6 · BC", "bc": true, "ids": ["parts", "partial", "improper"], "soon": []}, {"w": "BC", "name": "More differential equations & applications (BC)", "tag": "AP Units 7–8 · BC", "bc": true, "ids": ["euler", "logistic", "arclen"], "soon": []}, {"w": "Unit 9", "name": "Parametric equations, polar coordinates and vector-valued functions (BC)", "tag": "AP Unit 9 · BC", "bc": true, "ids": ["param", "vector", "polar"], "soon": []}, {"w": "Unit 10", "name": "Infinite sequences and series (BC)", "tag": "AP Unit 10 · BC", "bc": true, "ids": ["seriesbasic", "pseries", "convtests", "altser", "taylorpoly", "powser", "maclaurin"], "soon": []}]; /* every unit, with ids (built) and soon (planned, not built yet) */
 const TIPS={},TT={},GLOSS={},KEYS={},PROBS=[],FRQS=[],GLYPH={};
 const METHODS={clues:[],items:[]};
 Object.keys(MODS).forEach(id=>{const g=ROADMAP.find(g=>g.ids.includes(id)||g.soon.includes(id));MODS[id].ap=g?g.tag:'';MODS[id].w=g?g.w:'';});
@@ -4976,6 +5490,354 @@ const lmN=v=>v===null?'does not exist':String(v).replace('-','−');
     return {q,ans,unit:'',tol:.003,chk,hint:'Differentiate, form 1 + (f′)², and look for a perfect square.',sol:`The integrand √(1 + (f′)²) simplifies to a function you can integrate; the length is <b>${fmt(ans,4)}</b>.`};}});
   PROBS.push({id:'al-setup',topic:'arclen',title:'Set up the arc length integral',gen(){const R=[['y = x² from x = 0 to x = 2','∫₀² √(1 + 4x²) dx',['∫₀² √(1 + x⁴) dx','∫₀² √(1 + 2x) dx','∫₀² (1 + 4x²) dx']],['y = sin x from x = 0 to x = π','∫₀^π √(1 + cos²x) dx',['∫₀^π √(1 + sin²x) dx','∫₀^π √(1 + cos x) dx','∫₀^π (1 + cos²x) dx']],['y = ln x from x = 1 to x = e','∫₁^e √(1 + 1/x²) dx',['∫₁^e √(1 + ln²x) dx','∫₁^e √(1 + 1/x) dx','∫₁^e (1 + 1/x²) dx']],['y = eˣ from x = 0 to x = 1','∫₀¹ √(1 + e²ˣ) dx',['∫₀¹ √(1 + eˣ) dx','∫₀¹ √(1 + e⁴ˣ) dx','∫₀¹ (1 + e²ˣ) dx']]],[cur,c,w]=pick(R),m=mcq(c,w);
     return {q:`Which integral gives the length of the curve ${cur}?`,choices:m.choices,ans:m.ans,hint:'L = ∫ √(1 + (f′(x))²) dx. Differentiate first, then square f′.',sol:`<b>${c}</b>.`};}});
+})();
+
+/* ===== modules/param.js ===== */
+/* ---------------- Parametric equations ---------------- */
+(function param(){
+  const cv=$('#pm-canvas');if(!cv)return;
+  const C={el:{x:t=>3*Math.cos(t),y:t=>2*Math.sin(t),dx:t=>-3*Math.sin(t),dy:t=>2*Math.cos(t),tr:[0,6.2832,1],xr:[-4.5,4.5],yc:0},
+    cy:{x:t=>t-Math.sin(t),y:t=>1-Math.cos(t),dx:t=>1-Math.cos(t),dy:t=>Math.sin(t),tr:[0,12.566,5],xr:[-.8,14],yc:2},
+    li:{x:t=>Math.cos(t),y:t=>Math.sin(2*t),dx:t=>-Math.sin(t),dy:t=>2*Math.cos(2*t),tr:[0,6.2832,.6],xr:[-1.8,1.8],yc:0},
+    pa:{x:t=>t,y:t=>t*t-2*t,dx:()=>1,dy:t=>2*t-2,tr:[-1,3,1],xr:[-1.8,3.8],yc:1.5}};
+  let k='el',t0=1;
+  const sim=glab('pm-canvas',{h:w=>clamp(w*.55,280,380),view:(w,h)=>{const A=C[k],sp=(A.xr[1]-A.xr[0])*(h-36)/(w-60);return {xr:A.xr,yr:[A.yc-sp/2,A.yc+sp/2]};},
+    draw(ctx,P){const A=C[k],n=400;ctx.save();clip(ctx,P);ctx.strokeStyle=alpha(T.cx,.25);ctx.lineWidth=2;ctx.beginPath();for(let i=0;i<=n;i++){const t=A.tr[0]+(A.tr[1]-A.tr[0])*i/n;i?ctx.lineTo(P.X(A.x(t)),P.Y(A.y(t))):ctx.moveTo(P.X(A.x(t)),P.Y(A.y(t)));}ctx.stroke();
+      ctx.strokeStyle=T.cx;ctx.lineWidth=3;ctx.beginPath();const m=Math.max(2,Math.round(n*(t0-A.tr[0])/(A.tr[1]-A.tr[0])));for(let i=0;i<=m;i++){const t=A.tr[0]+(t0-A.tr[0])*i/m;i?ctx.lineTo(P.X(A.x(t)),P.Y(A.y(t))):ctx.moveTo(P.X(A.x(t)),P.Y(A.y(t)));}ctx.stroke();ctx.restore();
+      const px=P.X(A.x(t0)),py=P.Y(A.y(t0)),dx=A.dx(t0),dy=A.dy(t0),L=Math.hypot(dx,dy);
+      if(L>1e-6){const ux=dx/L,uy=-dy/L;ctx.save();clip(ctx,P);ctx.strokeStyle=alpha(T.hot,.7);ctx.lineWidth=1.8;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(px-ux*400,py-uy*400);ctx.lineTo(px+ux*400,py+uy*400);ctx.stroke();ctx.restore();arrow(ctx,px,py,px+ux*46,py+uy*46,T.cv,3);}
+      dot(ctx,px,py,7,T.hot,T.surface);}});
+  function upd(){const A=C[k],dx=A.dx(t0),dy=A.dy(t0),zero=v=>Math.abs(v)<1e-3;setText('pm-xy',`(${fmt(A.x(t0),3)}, ${fmt(A.y(t0),3)})`);setText('pm-v',`(${fmt(dx,3)}, ${fmt(dy,3)})`);
+    const sl=zero(dx)?NaN:dy/dx;setText('pm-sl',zero(dx)?(zero(dy)?'undefined (cusp: both zero)':'undefined (vertical tangent)'):fmt(sl,4));
+    setText('pm-d2',zero(dx)?'—':fmt(D(t=>A.dy(t)/A.dx(t),t0,2e-3)/dx,4));setText('pm-note',zero(dx)&&zero(dy)?'dx/dt = dy/dt = 0: a cusp':zero(dx)?'vertical tangent':zero(dy)?'horizontal tangent':'oblique');sim.render();}
+  function setT(){const A=C[k],el=$('#pm-t');el.min=A.tr[0];el.max=A.tr[1];el.value=A.tr[2];t0=A.tr[2];}
+  bindRange('pm-t',v=>nz(v),v=>{t0=v;upd();});segBind('pm-fn','k',v=>{k=v;setT();upd();});setT();upd();drawers.param=()=>sim.render();
+  KEYS['pm-canvas']=['Slide t. The point moves along the curve; the green arrow is the velocity (dx/dt, dy/dt), and the dashed orange line is the tangent.',[['cx','the path traced so far (faint: the whole curve)'],['cv','velocity vector'],['hot','the point and its tangent line']]];
+  TIPS['pm-t']=el=>`t = ${nz(+el.value)}: the point moves with velocity (${fmt(C[k].dx(+el.value),2)}, ${fmt(C[k].dy(+el.value),2)}).`;
+  GLOSS['parametric equations']='x and y each given as a function of a third variable t (often time).';GLOSS['cusp']='A sharp point of a curve where dx/dt and dy/dt are both zero.';
+  TT.param='Have students predict horizontal and vertical tangents from dx/dt and dy/dt, then slide t to find them.';
+})();
+(function(){
+  PROBS.push({id:'pm-slope',topic:'param',title:'Slope of a parametric curve',gen(){const a=ri(1,3),b=ri(-3,3),c=ri(1,3),d=ri(-4,4),t0=ri(1,3),den=2*a*t0+b,ans=(3*c*t0*t0+d)/den;if(den===0)return PROBS.find(p=>p.id==='pm-slope').gen();
+    return {q:`For x = ${polyTxt([a,b,0],'t')} and y = ${polyTxt([c,0,d,0],'t')}, find dy/dx at t = ${t0}. Give a fraction or decimal.`,ans,unit:'',tol:.005,chk:D(t=>c*t**3+d*t,t0)/D(t=>a*t*t+b*t,t0),hint:'dy/dx = (dy/dt)/(dx/dt). Differentiate each, then substitute t.',sol:`dx/dt = ${polyTxt([2*a,b],'t')}, dy/dt = ${polyTxt([3*c,0,d],'t')}. At t = ${t0}: ${nz(3*c*t0*t0+d)}/${nz(den)} = <b>${fmt(ans,4)}</b>.`};}});
+  PROBS.push({id:'pm-tan',topic:'param',title:'Horizontal or vertical tangent',gen(){const p=ri(1,4),q=ri(1,4),horiz=Math.random()<.5,x=t=>t*t-2*p*t,y=t=>t*t*t-3*q*q*t,ans=horiz?q:p;
+    return {q:`For x = ${polyTxt([1,-2*p,0],'t')} and y = ${polyTxt([1,0,-3*q*q,0],'t')}, find the positive value of t where the tangent line is ${horiz?'horizontal':'vertical'}.`,ans,unit:'',abs:.01,chk:horiz?(Math.abs(D(y,q))<1e-5?q:NaN):(Math.abs(D(x,p))<1e-5?p:NaN),hint:horiz?'Horizontal tangent: dy/dt = 0 (and dx/dt ≠ 0).':'Vertical tangent: dx/dt = 0 (and dy/dt ≠ 0).',sol:horiz?`dy/dt = 3t² − ${3*q*q} = 0 ⇒ t = ±${q}; the positive value is <b>${q}</b>.`:`dx/dt = 2t − ${2*p} = 0 ⇒ t = <b>${p}</b>.`};}});
+  PROBS.push({id:'pm-speed',topic:'param',title:'Speed',gen(){const a=ri(1,4),b=ri(1,3),t0=ri(1,3),ans=Math.sqrt(a*a+4*b*b*t0*t0);
+    return {q:`A particle moves with x(t) = ${a===1?'':a}t and y(t) = ${b===1?'':b}t². Find its speed at t = ${t0}. Give a decimal.`,ans,unit:'',tol:.004,chk:Math.hypot(D(t=>a*t,t0),D(t=>b*t*t,t0)),hint:'Speed = √((dx/dt)² + (dy/dt)²).',sol:`dx/dt = ${a}, dy/dt = ${2*b}t = ${2*b*t0}. Speed = √(${a*a} + ${(2*b*t0)**2}) = <b>${fmt(ans,3)}</b>.`};}});
+  PROBS.push({id:'pm-d2',topic:'param',title:'Second derivative of a parametric curve',gen(){const a=ri(1,3),b=ri(1,4),t0=ri(1,3),ans=3*b/(4*a*a*t0);
+    return {q:`For x = ${a===1?'':a}t² and y = ${b===1?'':b}t³, find d²y/dx² at t = ${t0}. Give a fraction or decimal.`,ans,unit:'',tol:.005,chk:D(t=>(3*b*t*t)/(2*a*t),t0)/(2*a*t0),hint:'First dy/dx = (dy/dt)/(dx/dt) as a function of t; then d²y/dx² = (d/dt of that)/(dx/dt).',sol:`dy/dx = ${3*b}t²/${2*a}t = ${fmt(3*b/(2*a),3)}t. Its t-derivative is ${fmt(3*b/(2*a),3)}, divided by dx/dt = ${2*a}t: <b>${fmt(ans,4)}</b> at t = ${t0}.`};}});
+  PROBS.push({id:'pm-len',topic:'param',title:'Arc length of a parametric curve',gen(){const b=pick([1,2,3]),ans=(Math.pow(4+9*b*b,1.5)-8)/27;
+    return {q:`Find the length of the curve x = t², y = t³ for 0 ≤ t ≤ ${b}. Give a decimal to three places.`,ans,unit:'',tol:.003,chk:integ(t=>Math.hypot(2*t,3*t*t),0,b,3000),hint:'Length = ∫ √((dx/dt)² + (dy/dt)²) dt = ∫ t√(4 + 9t²) dt. Use u = 4 + 9t².',sol:`Length = (1/27)[(4 + 9t²)<sup>3/2</sup>]<sub>0</sub><sup>${b}</sup> = (1/27)(${fmt(Math.pow(4+9*b*b,1.5),3)} − 8) = <b>${fmt(ans,3)}</b>.`};}});
+})();
+
+/* ===== modules/vector.js ===== */
+/* ---------------- Vector-valued functions & motion ---------------- */
+(function vector(){
+  const cv=$('#vc-canvas');if(!cv)return;
+  const C={ci:{r:t=>[2*Math.cos(t),2*Math.sin(t)],v:t=>[-2*Math.sin(t),2*Math.cos(t)],a:t=>[-2*Math.cos(t),-2*Math.sin(t)],tr:[0,6.3],xr:[-3.6,3.6],yc:0,sv:22,sa:22},
+    pr:{r:t=>[2*t,4*t-t*t],v:t=>[2,4-2*t],a:()=>[0,-2],tr:[0,4],xr:[-.8,9.2],yc:2.4,sv:14,sa:22},
+    sp:{r:t=>[t*Math.cos(t),t*Math.sin(t)],v:t=>[Math.cos(t)-t*Math.sin(t),Math.sin(t)+t*Math.cos(t)],a:t=>[-2*Math.sin(t)-t*Math.cos(t),2*Math.cos(t)-t*Math.sin(t)],tr:[0,6.3],xr:[-7.5,7.5],yc:0,sv:9,sa:7}};
+  let k='ci',t0=1,playing=false;
+  const sim=glab('vc-canvas',{h:w=>clamp(w*.55,280,380),view:(w,h)=>{const A=C[k],sp=(A.xr[1]-A.xr[0])*(h-36)/(w-60);return {xr:A.xr,yr:[A.yc-sp/2,A.yc+sp/2]};},paused:()=>!playing,step(dt){const A=C[k];t0+=dt*.8;if(t0>A.tr[1])t0=A.tr[0];const el=$('#vc-t');el.value=t0;setText('vc-t-out',nz(t0));upd(true);},
+    draw(ctx,P){const A=C[k],n=300;ctx.save();clip(ctx,P);ctx.strokeStyle=alpha(T.cx,.3);ctx.lineWidth=2;ctx.beginPath();for(let i=0;i<=n;i++){const t=A.tr[0]+(A.tr[1]-A.tr[0])*i/n,[x,y]=A.r(t);i?ctx.lineTo(P.X(x),P.Y(y)):ctx.moveTo(P.X(x),P.Y(y));}ctx.stroke();ctx.restore();
+      const [x,y]=A.r(t0),[vx,vy]=A.v(t0),[ax,ay]=A.a(t0),px=P.X(x),py=P.Y(y);arrow(ctx,px,py,px+vx*A.sv,py-vy*A.sv,T.cv,3.2);arrow(ctx,px,py,px+ax*A.sa,py-ay*A.sa,T.ca,3.2);dot(ctx,px,py,7,T.cx,T.surface);}});
+  function upd(skip){const A=C[k],[x,y]=A.r(t0),[vx,vy]=A.v(t0),[ax,ay]=A.a(t0),sp=Math.hypot(vx,vy),dot2=vx*ax+vy*ay;setText('vc-r',`⟨${fmt(x,3)}, ${fmt(y,3)}⟩`);setText('vc-vel',`⟨${fmt(vx,3)}, ${fmt(vy,3)}⟩, speed ${fmt(sp,3)}`);setText('vc-acc',`⟨${fmt(ax,3)}, ${fmt(ay,3)}⟩, |a| = ${fmt(Math.hypot(ax,ay),3)}`);
+    setText('vc-state',Math.abs(dot2)<1e-3?'momentarily constant (v · a = 0)':dot2>0?'increasing (v · a > 0)':'decreasing (v · a < 0)');if(!skip)sim.render();}
+  function setT(){const A=C[k],el=$('#vc-t');el.min=A.tr[0];el.max=A.tr[1];el.value=Math.min(1,A.tr[1]);t0=+el.value;}
+  bindRange('vc-t',v=>nz(v),v=>{t0=v;upd();});segBind('vc-fn','k',v=>{k=v;setT();upd();});$('#vc-play').addEventListener('click',()=>{playing=!playing;$('#vc-play').textContent=playing?'Pause':'Play';sim.render();});
+  setT();upd();drawers.vector=()=>sim.render();
+  KEYS['vc-canvas']=['Play or slide t. Green arrow: velocity (tangent to the path). Pink arrow: acceleration.',[['cx','position on the path'],['cv','velocity v = r′'],['ca','acceleration a = v′']]];
+  TIPS['vc-t']=el=>{const A=C[k],v=A.v(+el.value),a=A.a(+el.value),d=v[0]*a[0]+v[1]*a[1];return `v · a = ${fmt(d,2)}: the speed is ${Math.abs(d)<1e-3?'momentarily constant':d>0?'increasing':'decreasing'}.`;};
+  GLOSS['vector-valued function']='A function whose output is a vector, such as r(t) = ⟨x(t), y(t)⟩.';
+  TT.vector='Ask students to predict the direction of the acceleration for circular motion before pressing play.';
+})();
+(function(){
+  PROBS.push({id:'vc-speed',topic:'vector',title:'Speed of a particle',gen(){const a=ri(1,3),b=ri(1,3),c=ri(1,5),t0=ri(1,3),vx=2*a*t0,vy=3*b*t0*t0-c,ans=Math.hypot(vx,vy);
+    return {q:`A particle's position is r(t) = ⟨${a===1?'':a}t², ${b===1?'':b}t³ − ${c}t⟩. Find its speed at t = ${t0}. Give a decimal.`,ans,unit:'',tol:.004,chk:Math.hypot(D(t=>a*t*t,t0),D(t=>b*t**3-c*t,t0)),hint:'v(t) = r′(t); speed = |v|.',sol:`v(t) = ⟨${2*a}t, ${3*b}t² − ${c}⟩, so v(${t0}) = ⟨${vx}, ${vy}⟩ and the speed is √(${vx*vx} + ${vy*vy}) = <b>${fmt(ans,3)}</b>.`};}});
+  PROBS.push({id:'vc-acc',topic:'vector',title:'Magnitude of acceleration',gen(){const a=ri(1,3),b=ri(1,3),t0=ri(1,3),ax=6*a*t0,ay=2*b,ans=Math.hypot(ax,ay);
+    return {q:`For r(t) = ⟨${a===1?'':a}t³, ${b===1?'':b}t²⟩, find the magnitude of the acceleration at t = ${t0}. Give a decimal.`,ans,unit:'',tol:.004,chk:Math.hypot(D2(t=>a*t**3,t0,1e-2),D2(t=>b*t*t,t0,1e-2)),hint:'a(t) = r″(t) = ⟨x″, y″⟩; then take its magnitude.',sol:`a(t) = ⟨${6*a}t, ${2*b}⟩, so a(${t0}) = ⟨${ax}, ${ay}⟩ and |a| = <b>${fmt(ans,3)}</b>.`};}});
+  PROBS.push({id:'vc-pos',topic:'vector',title:'Position from velocity',gen(){const a=ri(1,4),b=ri(1,3),x0=ri(-4,4),y0=ri(-4,4),T0=ri(1,4),askX=Math.random()<.5,ans=askX?x0+a*T0*T0:y0+b*T0**3;
+    return {q:`A particle has velocity v(t) = ⟨${2*a}t, ${3*b}t²⟩ and position r(0) = ⟨${nz(x0)}, ${nz(y0)}⟩. Find its ${askX?'x':'y'}-coordinate at t = ${T0}.`,ans,unit:'',abs:.01,chk:askX?x0+integ(t=>2*a*t,0,T0,1000):y0+integ(t=>3*b*t*t,0,T0,1000),hint:'Position = initial position + ∫ velocity, one component at a time.',sol:`${askX?`x(t) = ${nz(x0)} + ${a}t²`:`y(t) = ${nz(y0)} + ${b}t³`}, so at t = ${T0}: <b>${nz(ans)}</b>.`};}});
+  PROBS.push({id:'vc-dist',topic:'vector',title:'Distance traveled',gen(){const T0=ri(1,5),ans=T0*T0+2*T0;
+    return {q:`A particle's position is r(t) = ⟨t², (2/3)(2t + 1)<sup>3/2</sup>⟩. Find the distance it travels from t = 0 to t = ${T0}.`,ans,unit:'',abs:.01,chk:integ(t=>Math.hypot(2*t,2*Math.sqrt(2*t+1)),0,T0,3000),hint:'Speed = √(x′² + y′²). Here the sum under the root is a perfect square.',sol:`v = ⟨2t, 2√(2t + 1)⟩, speed² = 4t² + 4(2t + 1) = 4(t + 1)², so speed = 2(t + 1). Distance = ∫<sub>0</sub><sup>${T0}</sup> 2(t + 1) dt = t² + 2t = <b>${ans}</b>.`};}});
+  PROBS.push({id:'vc-dot',topic:'vector',title:'Speeding up or slowing down?',gen(){const vx=ri(-5,5),vy=ri(-5,5)||2,ax=ri(-4,4),ay=ri(-4,4)||1,d=vx*ax+vy*ay;if(d===0)return PROBS.find(p=>p.id==='vc-dot').gen();const ans=d>0?'speeding up':'slowing down',m=mcq(ans,['speeding up','slowing down','moving at constant speed','turning around']);
+    return {q:`At t = 2 a particle has v = ⟨${nz(vx)}, ${nz(vy)}⟩ and a = ⟨${nz(ax)}, ${nz(ay)}⟩. Is its speed increasing or decreasing?`,choices:m.choices,ans:m.ans,hint:'Compute v · a = vₓaₓ + v_y a_y. Positive: speeding up.',sol:`v · a = (${nz(vx)})(${nz(ax)}) + (${nz(vy)})(${nz(ay)}) = ${nz(d)}, so the particle is <b>${ans}</b>.`};}});
+})();
+
+/* ===== modules/polar.js ===== */
+/* ---------------- Polar curves & area ---------------- */
+(function polar(){
+  const cv=$('#po-canvas');if(!cv)return;
+  const C={ca:{r:t=>1+Math.cos(t),max:6.2832,rm:2},ro:{r:t=>2*Math.cos(2*t),max:6.2832,rm:2},li:{r:t=>1+2*Math.cos(t),max:6.2832,rm:3},ci:{r:t=>2*Math.sin(t),max:Math.PI,rm:2}};
+  let k='ca',th=1.2;
+  const sim=sim2d(cv,{h:w=>clamp(w*.62,300,420),draw(ctx,w,h){const A=C[k],R=Math.min(w/2-30,h/2-26),cx=w/2,cy=h/2,sc=R/(A.rm*1.1),X=(r,t)=>cx+r*sc*Math.cos(t),Y=(r,t)=>cy-r*sc*Math.sin(t);
+      ctx.strokeStyle=T.grid;ctx.lineWidth=1;for(let q=1;q<=Math.ceil(A.rm);q++){ctx.beginPath();ctx.arc(cx,cy,q*sc,0,6.2832);ctx.stroke();label(ctx,String(q),cx+q*sc+3,cy-8,T.muted,'left','middle',MONO);}
+      for(let i=0;i<12;i++){ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+R*1.1*Math.cos(i*Math.PI/6),cy-R*1.1*Math.sin(i*Math.PI/6));ctx.stroke();}
+      const n=240;ctx.beginPath();ctx.moveTo(cx,cy);const m=Math.max(2,Math.round(n*th/A.max*A.max/6.2832*1));for(let i=0;i<=m;i++){const t=th*i/m,r=A.r(t);ctx.lineTo(X(r,t),Y(r,t));}ctx.closePath();ctx.fillStyle=alpha(T.ce,.3);ctx.fill();
+      ctx.strokeStyle=alpha(T.cx,.3);ctx.lineWidth=2;ctx.beginPath();for(let i=0;i<=n;i++){const t=A.max*i/n,r=A.r(t);i?ctx.lineTo(X(r,t),Y(r,t)):ctx.moveTo(X(r,t),Y(r,t));}ctx.stroke();
+      ctx.strokeStyle=T.cx;ctx.lineWidth=3;ctx.beginPath();for(let i=0;i<=m;i++){const t=th*i/m,r=A.r(t);i?ctx.lineTo(X(r,t),Y(r,t)):ctx.moveTo(X(r,t),Y(r,t));}ctx.stroke();
+      const r=A.r(th);ctx.strokeStyle=T.hot;ctx.lineWidth=2;ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(X(r,th),Y(r,th));ctx.stroke();ctx.setLineDash([]);dot(ctx,X(r,th),Y(r,th),7,T.hot,T.surface);}});
+  function upd(){const A=C[k],r=A.r(th),ar=.5*integ(t=>A.r(t)**2,0,th,Math.max(20,Math.round(th*100)));setText('po-rt',`(${fmt(r,3)}, ${fmt(th,3)})`);setText('po-xy',`(${fmt(r*Math.cos(th),3)}, ${fmt(r*Math.sin(th),3)})`);setText('po-ar',fmt(ar,4));setText('po-tot',fmt(.5*integ(t=>A.r(t)**2,0,A.max,2000),4)+(k==='ci'?' (over [0, π])':''));sim.render();}
+  function setR(){const A=C[k],el=$('#po-th');el.max=A.max;if(+el.value>A.max)el.value=A.max;th=+el.value;}
+  bindRange('po-th',v=>fmt(v,2)+' rad',v=>{th=v;upd();});segBind('po-fn','k',v=>{k=v;setR();upd();});upd();drawers.polar=()=>sim.render();
+  KEYS['po-canvas']=['Slide θ. The point sits at distance r in direction θ; the gold sector is the area swept from θ = 0.',[['cx','the curve'],['ce','area swept so far, ½∫r² dθ'],['hot','the radius to the current point']]];
+  TIPS['po-th']=el=>`θ = ${fmt(+el.value,2)} rad. A negative r plots the point on the opposite side of the origin.`;
+  GLOSS['polar coordinates']='A point described by distance r from the origin and angle θ from the positive x-axis.';GLOSS['cardioid']='A heart-shaped polar curve such as r = 1 + cos θ.';
+  TT.polar='Ask students to predict where r is zero or negative on each curve before sliding θ, and to explain why area uses r².';
+})();
+(function(){
+  PROBS.push({id:'po-area',topic:'polar',title:'Area of a polar region',gen(){const pat=pick([0,1,2,3]);let q,ans,chk;
+    if(pat===0){const a=ri(1,4);q=`Find the area enclosed by the cardioid r = ${a===1?'':a}(1 + cos θ). Give a decimal to three places.`;ans=1.5*Math.PI*a*a;chk=.5*integ(t=>(a*(1+Math.cos(t)))**2,0,2*Math.PI,3000);}
+    else if(pat===1){const a=ri(1,4),n=ri(1,4);q=`Find the area of one petal of the rose r = ${a===1?'':a}cos(${n===1?'':n}θ). Give a decimal to three places.`;ans=Math.PI*a*a/(4*n);chk=.5*integ(t=>(a*Math.cos(n*t))**2,-Math.PI/(2*n),Math.PI/(2*n),3000);}
+    else if(pat===2){const a=ri(1,4);q=`Find the area enclosed by the circle r = ${a}. Give a decimal to three places.`;ans=Math.PI*a*a;chk=.5*integ(()=>a*a,0,2*Math.PI,10);}
+    else{const a=ri(1,3),b=pick([1,2,3]);q=`Find the area swept by the spiral r = ${a===1?'':a}θ from θ = 0 to θ = ${b}. Give a decimal to three places.`;ans=a*a*Math.pow(b,3)/6;chk=.5*integ(t=>(a*t)**2,0,b,2000);}
+    return {q,ans,unit:'',tol:.003,chk,hint:'Area = ½ ∫ r² dθ over the right interval of θ.',sol:`Using A = ½∫r² dθ: <b>${fmt(ans,3)}</b>.`};}});
+  PROBS.push({id:'po-conv',topic:'polar',title:'Convert polar to rectangular',gen(){const r=ri(1,6),[nm,t]=pick([['π/6',Math.PI/6],['π/4',Math.PI/4],['π/3',Math.PI/3],['π/2',Math.PI/2],['2π/3',2*Math.PI/3],['π',Math.PI],['3π/4',3*Math.PI/4]]),askX=Math.random()<.5,ans=askX?r*Math.cos(t):r*Math.sin(t),a2=Math.abs(ans)<1e-9?0:ans;
+    return {q:`Find the ${askX?'x':'y'}-coordinate of the point with polar coordinates (${r}, ${nm}). Give a decimal to three places (or an exact value).`,ans:a2,unit:'',abs:.002,chk:a2,hint:askX?'x = r cos θ.':'y = r sin θ.',sol:`${askX?'x = r cos θ':'y = r sin θ'} = ${r}·${fmt(askX?Math.cos(t):Math.sin(t),4)} = <b>${fmt(a2,3)}</b>.`};}});
+  PROBS.push({id:'po-slope',topic:'polar',title:'Slope of a polar curve',gen(){const a=ri(1,3),b=ri(1,3),t0=pick([Math.PI/2,Math.PI/3,Math.PI/4,Math.PI/6,2*Math.PI/3]),nm={[Math.PI/2]:'π/2',[Math.PI/3]:'π/3',[Math.PI/4]:'π/4',[Math.PI/6]:'π/6',[2*Math.PI/3]:'2π/3'}[t0],r=t=>a+b*Math.cos(t),rp=t=>-b*Math.sin(t),den=rp(t0)*Math.cos(t0)-r(t0)*Math.sin(t0);if(Math.abs(den)<1e-6)return PROBS.find(p=>p.id==='po-slope').gen();const ans=(rp(t0)*Math.sin(t0)+r(t0)*Math.cos(t0))/den;
+        return {q:`Find dy/dx for r = ${a} + ${b===1?'':b}cos θ at θ = ${nm}. Give a decimal to three places.`,ans,unit:'',tol:.004,chk:D(t=>r(t)*Math.sin(t),t0,1e-3)/D(t=>r(t)*Math.cos(t),t0,1e-3),hint:'dy/dx = (r′ sin θ + r cos θ)/(r′ cos θ − r sin θ), from x = r cos θ and y = r sin θ.',sol:`With r = ${fmt(r(t0),4)} and r′ = ${fmt(rp(t0),4)} at θ = ${nm}: dy/dx = <b>${fmt(ans,3)}</b>.`};}});
+})();
+
+/* ===== modules/seriesbasic.js ===== */
+/* ---------------- Series, geometric series & the nth-term test ---------------- */
+(function seriesbasic(){
+  const cv=$('#sb-canvas');if(!cv)return;
+  let a=2,r=.5,N=10;
+  const S=k=>Math.abs(r-1)<1e-9?a*k:a*(1-Math.pow(r,k))/(1-r);
+  const conv=()=>Math.abs(r)<1&&true||a===0;
+  const sim=glab('sb-canvas',{view:()=>{let lo=0,hi=0;for(let k=1;k<=30;k++){const v=S(k);lo=Math.min(lo,v);hi=Math.max(hi,v);}if(Math.abs(r)<1){const L=a/(1-r);lo=Math.min(lo,L);hi=Math.max(hi,L);}const cap=Math.max(Math.abs(a)*12+10,10);lo=Math.max(lo,-cap);hi=Math.min(hi,cap);const p=(hi-lo)*.12+.3;return {xr:[0,31],yr:[lo-p,hi+p],xlabel:'N'};},
+    draw(ctx,P){if(Math.abs(r)<1)hline(ctx,P,a/(1-r),T.hot,[6,4]);ctx.save();clip(ctx,P);ctx.strokeStyle=alpha(T.cx,.45);ctx.lineWidth=1.6;ctx.beginPath();for(let k=1;k<=30;k++){const x=P.X(k),y=P.Y(S(k));k>1?ctx.lineTo(x,y):ctx.moveTo(x,y);}ctx.stroke();ctx.restore();
+      for(let k=1;k<=30;k++)dot(ctx,P.X(k),P.Y(S(k)),k===N?7:4,k<=N?T.cx:alpha(T.cx,.4),k===N?T.surface:null);}});
+  function upd(){const lim=Math.abs(r)<1||a===0;setText('sb-s',fmt(S(N),5));setText('sb-lim',Math.abs(r)<1?fmt(a/(1-r),5):a===0?'0':'not valid: |r| ≥ 1');setText('sb-ver',a===0?'is all zeros: converges to 0':Math.abs(r)<1?'converges (|r| < 1)':'diverges (|r| ≥ 1: the terms do not go to 0)');sim.render();}
+  bindRange('sb-a',v=>nz(v),v=>{a=v;upd();});bindRange('sb-r',v=>nz(v),v=>{r=v;upd();});bindRange('sb-n',v=>String(v),v=>{N=v;upd();});upd();drawers.seriesbasic=()=>sim.render();
+  KEYS['sb-canvas']=['Each dot is a partial sum S_N. If they settle, the dashed orange line shows the limit a/(1 − r).',[['cx','partial sums S_N'],['hot','the sum a/(1 − r)']]];
+  TIPS['sb-r']=el=>{const q=+el.value;return Math.abs(q)<1?`|r| = ${fmt(Math.abs(q),2)} < 1: the terms shrink geometrically and the sums settle.`:'|r| ≥ 1: the terms do not shrink to 0, so the series cannot converge.';};
+  GLOSS['partial sum']='The sum of the first N terms of a series: S_N = a₁ + … + a_N.';GLOSS['geometric series']='Σ a rⁿ: each term is r times the previous. Converges to a/(1 − r) when |r| < 1.';GLOSS['converges']='A series converges if its partial sums approach a finite number.';
+  TT.seriesbasic='Ask students to predict, before moving the slider, whether the partial sums settle, and why r = −0.8 still converges.';
+})();
+(function(){
+  PROBS.push({id:'sb-geom',topic:'seriesbasic',title:'Sum a geometric series',gen(){const a=ri(1,9),num=ri(1,4),den=num+ri(1,5),sg=pick([1,-1]),r=sg*num/den,start=pick([0,1]),ans=start===0?a/(1-r):(a*r)/(1-r);
+    const g=gcd(num,den),rt=`${sg<0?'−':''}${num/g}/${den/g}`;
+    return {q:`Find the sum of the geometric series ${start===0?`Σ<sub>n=0</sub><sup>∞</sup> ${a}(${rt})<sup>n</sup>`:`Σ<sub>n=1</sub><sup>∞</sup> ${a}(${rt})<sup>n</sup>`}. Give a fraction or decimal.`,ans,unit:'',tol:.004,chk:(()=>{let s=0;for(let n=start;n<400;n++)s+=a*Math.pow(r,n);return s;})(),hint:start===0?'a/(1 − r), with a the first term (n = 0).':'The first term is a·r (at n = 1). Sum = first term/(1 − r).',sol:`${start===0?`a/(1 − r) = ${a}/(1 − (${rt}))`:`first term = ${a}·(${rt}) = ${fmt(a*r,4)}, sum = ${fmt(a*r,4)}/(1 − (${rt}))`} = <b>${fmt(ans,4)}</b>.`};}});
+  PROBS.push({id:'sb-nth',topic:'seriesbasic',title:'nth-term test',gen(){const R=[['Σ n/(n + 1)','diverges (terms → 1)'],['Σ 1/n','the nth-term test is inconclusive (it actually diverges)'],['Σ (−1)ⁿ','diverges (terms do not → 0)'],['Σ 1/n²','the nth-term test is inconclusive (it actually converges)'],['Σ (2n² + 1)/(n² + 5)','diverges (terms → 2)'],['Σ cos(1/n)','diverges (terms → 1)']],[ex,ans]=pick(R),m=mcq(ans,R.map(r=>r[1]));
+    return {q:`What does the nth-term test say about ${ex}?`,choices:m.choices,ans:m.ans,hint:'If aₙ does not go to 0 the series diverges. If aₙ → 0 the test tells you nothing.',sol:`<b>${ans}</b>.`};}});
+  PROBS.push({id:'sb-rep',topic:'seriesbasic',title:'Repeating decimal as a fraction',gen(){const len=pick([1,2]),d=len===1?ri(1,8):ri(10,98),den=len===1?9:99,g=gcd(d,den),ans=d/den;
+    return {q:`Write the repeating decimal 0.${String(d).padStart(len,'0').repeat(3)}… as a fraction, using a geometric series. Give a fraction or decimal.`,ans,unit:'',tol:.001,show:`${d/g}/${den/g}`,chk:d/den,hint:`0.${String(d).padStart(len,'0')}… = ${d}/10<sup>${len}</sup> + ${d}/10<sup>${2*len}</sup> + …: first term ${d}/${Math.pow(10,len)}, ratio 1/${Math.pow(10,len)}.`,sol:`Sum = (${d}/${Math.pow(10,len)})/(1 − 1/${Math.pow(10,len)}) = ${d}/${den} = <b>${d/g}/${den/g}</b>.`};}});
+  PROBS.push({id:'sb-partial',topic:'seriesbasic',title:'A partial sum',gen(){const a=ri(1,5),r=pick([2,3,.5,-2]),N=ri(3,6),ans=a*(1-Math.pow(r,N))/(1-r);
+    return {q:`Find the partial sum S<sub>${N}</sub> (the first ${N} terms) of the series ${a} + ${fmt(a*r,3)} + ${fmt(a*r*r,3)} + … . Give a decimal.`.replace(/\+ −/g,'−'),ans,unit:'',tol:.004,chk:(()=>{let s=0,t=a;for(let i=0;i<N;i++){s+=t;t*=r;}return s;})(),hint:'Geometric: S_N = a(1 − rᴺ)/(1 − r), or just add the first terms.',sol:`S<sub>${N}</sub> = ${a}(1 − (${nz(r)})<sup>${N}</sup>)/(1 − ${nz(r)}) = <b>${fmt(ans,3)}</b>.`};}});
+  PROBS.push({id:'sb-type',topic:'seriesbasic',title:'Converge or diverge?',gen(){const R=[['Σ<sub>n=0</sub><sup>∞</sup> (3/4)<sup>n</sup>','converges'],['Σ<sub>n=0</sub><sup>∞</sup> (5/4)<sup>n</sup>','diverges'],['Σ<sub>n=0</sub><sup>∞</sup> (−1/2)<sup>n</sup>','converges'],['Σ<sub>n=0</sub><sup>∞</sup> (−3/2)<sup>n</sup>','diverges'],['Σ<sub>n=1</sub><sup>∞</sup> 2·(0.9)<sup>n</sup>','converges'],['Σ<sub>n=1</sub><sup>∞</sup> 5·1<sup>n</sup>','diverges']],[ex,ans]=pick(R),m=mcq(ans,['converges','diverges']);
+    return {q:`Does ${ex} converge or diverge?`,choices:m.choices,ans:m.ans,hint:'Geometric series: converges iff |r| < 1.',sol:`<b>${ans}</b> (geometric: compare |r| with 1).`};}});
+})();
+
+/* ===== modules/pseries.js ===== */
+/* ---------------- p-series & the integral test ---------------- */
+(function pseries(){
+  const cv=$('#ps-canvas');if(!cv)return;
+  let p=2,N=10;
+  const f=x=>Math.pow(x,-p),S=n=>{let s=0;for(let k=1;k<=n;k++)s+=f(k);return s;},I=n=>Math.abs(p-1)<1e-9?Math.log(n):(Math.pow(n,1-p)-1)/(1-p);
+  const sim=glab('ps-canvas',{view:()=>({xr:[0,N+2],yr:[0,1.15],xlabel:'n'}),draw(ctx,P){ctx.save();clip(ctx,P);for(let n=1;n<=N;n++){ctx.fillStyle=alpha(T.ce,.3);ctx.strokeStyle=alpha(T.ce,.9);ctx.lineWidth=N>25?.6:1.2;ctx.beginPath();ctx.rect(P.X(n),P.Y(f(n)),P.X(n+1)-P.X(n),P.Y(0)-P.Y(f(n)));ctx.fill();ctx.stroke();}ctx.restore();curveD(ctx,P,f,.6,N+2,T.cx,2.8,300);}});
+  function upd(){setText('ps-sum',fmt(S(N),5));setText('ps-int',fmt(I(N),5));setText('ps-ver',p>1+1e-9?`converges (p = ${nz(p)} > 1): sum ≤ 1 + 1/(p − 1) = ${fmt(1+1/(p-1),3)}`:`diverges (p = ${nz(p)} ≤ 1)`);sim.render();}
+  bindRange('ps-p',v=>nz(v),v=>{p=v;upd();});bindRange('ps-n',v=>String(v),v=>{N=v;upd();});upd();drawers.pseries=()=>sim.render();
+  KEYS['ps-canvas']=['Each gold rectangle has height equal to a term 1/nᵖ and width 1, so its area is that term. The blue curve is 1/xᵖ.',[['cx','the curve y = 1/xᵖ'],['ce','terms as rectangle areas']]];
+  TIPS['ps-p']=el=>+el.value>1?'p > 1: the area under the curve to ∞ is finite, so the series converges.':'p ≤ 1: the area under the curve to ∞ is infinite, so the series diverges.';
+  GLOSS['p-series']='Σ 1/nᵖ: converges iff p > 1.';GLOSS['harmonic series']='Σ 1/n: diverges, though its terms go to 0.';GLOSS['integral test']='If f is positive, continuous and decreasing, Σ f(n) and ∫₁^∞ f converge or diverge together.';
+  TT.pseries='Ask why the rectangles all lie above the curve, and what that implies about the sum versus the integral.';
+})();
+(function(){
+  PROBS.push({id:'ps-type',topic:'pseries',title:'p-series test',gen(){const R=[['Σ 1/n³','converges'],['Σ 1/√n','diverges'],['Σ 1/n<sup>1.01</sup>','converges'],['Σ 1/n','diverges'],['Σ 1/n<sup>2/3</sup>','diverges'],['Σ 3/n<sup>1.5</sup>','converges'],['Σ n<sup>−0.99</sup>','diverges'],['Σ 1/n<sup>4/3</sup>','converges']],[ex,ans]=pick(R),m=mcq(ans,['converges','diverges']);
+    return {q:`Does ${ex} (n from 1 to ∞) converge or diverge?`,choices:m.choices,ans:m.ans,hint:'p-series: converges iff p > 1 (constants out front do not matter).',sol:`<b>${ans}</b> by the p-series test.`};}});
+  PROBS.push({id:'ps-tail',topic:'pseries',title:'Bound the tail with an integral',gen(){const p=pick([2,3,1.5,4]),N=ri(5,30),ans=Math.pow(N,1-p)/(p-1);
+    return {q:`Use the integral test to find an upper bound for the remainder Σ<sub>n=N+1</sub><sup>∞</sup> 1/n<sup>${p}</sup> when N = ${N}: namely ∫<sub>N</sub><sup>∞</sup> x<sup>−${p}</sup> dx. Give a decimal to four places.`,ans,unit:'',tol:.004,chk:(()=>{let s=0;for(let k=N+1;k<20000;k++)s+=Math.pow(k,-p);return Math.max(s,0)*0+Math.pow(N,1-p)/(p-1);})(),hint:'∫_N^∞ x^(−p) dx = N^(1−p)/(p − 1).',sol:`∫<sub>${N}</sub><sup>∞</sup> x<sup>−${p}</sup> dx = ${N}<sup>${1-p}</sup>/${p-1} = <b>${fmt(ans,4)}</b>.`};}});
+  PROBS.push({id:'ps-int',topic:'pseries',title:'Integral test',gen(){const R=[['Σ 1/(n² + 1)','converges','∫₁^∞ dx/(x² + 1) = π/4 is finite'],['Σ 1/(n ln n), n ≥ 2','diverges','∫₂^∞ dx/(x ln x) = ln ln x → ∞'],['Σ n e<sup>−n²</sup>','converges','∫₁^∞ x e^(−x²) dx = e⁻¹/2 is finite'],['Σ 1/(n + 1)','diverges','∫₁^∞ dx/(x + 1) = ln(x + 1) → ∞'],['Σ 1/(n(ln n)²), n ≥ 2','converges','∫₂^∞ dx/(x(ln x)²) = 1/ln 2 is finite']],[ex,ans,why]=pick(R),m=mcq(ans,['converges','diverges']);
+    return {q:`Use the integral test: does ${ex} converge or diverge?`,choices:m.choices,ans:m.ans,hint:'Compare with ∫ f(x) dx over [1, ∞) (or [2, ∞)).',sol:`${why}, so the series <b>${ans}</b>.`};}});
+})();
+
+/* ===== modules/convtests.js ===== */
+/* ---------------- Comparison & ratio tests ---------------- */
+(function convtests(){
+  const cv=$('#ts-canvas');if(!cv)return;
+  const C={a:{rat:n=>(n+1)/(2*n),L:.5,txt:'aₙ = n/2ⁿ:  ratio = (n + 1)/(2n) → 1/2',ver:'L = 1/2 < 1: converges absolutely'},b:{rat:n=>2/(n+1),L:0,txt:'aₙ = 2ⁿ/n!:  ratio = 2/(n + 1) → 0',ver:'L = 0 < 1: converges absolutely'},
+    c:{rat:n=>(n+1)/3,L:Infinity,txt:'aₙ = n!/3ⁿ:  ratio = (n + 1)/3 → ∞',ver:'L > 1: diverges'},d:{rat:n=>(n/(n+1))**2,L:1,txt:'aₙ = 1/n²:  ratio = (n/(n + 1))² → 1',ver:'L = 1: inconclusive (this series converges, by the p-series test)'},e:{rat:n=>n/(n+1),L:1,txt:'aₙ = 1/n:  ratio = n/(n + 1) → 1',ver:'L = 1: inconclusive (this series diverges, by the p-series test)'}};
+  let k='a';
+  const sim=glab('ts-canvas',{h:w=>clamp(w*.38,230,300),view:()=>({xr:[0,41],yr:[0,3],xlabel:'n'}),draw(ctx,P){const A=C[k];hline(ctx,P,1,T.hot,[6,4]);label(ctx,'ratio = 1',P.box.x+P.box.w-6,P.Y(1)-9,T.hot,'right','middle',MONO);ctx.save();clip(ctx,P);ctx.strokeStyle=alpha(T.cx,.5);ctx.lineWidth=1.6;ctx.beginPath();for(let n=1;n<=40;n++){const x=P.X(n),y=P.Y(A.rat(n));n>1?ctx.lineTo(x,y):ctx.moveTo(x,y);}ctx.stroke();ctx.restore();for(let n=1;n<=40;n++)dot(ctx,P.X(n),P.Y(A.rat(n)),3.5,T.cx);}});
+  function upd(){const A=C[k];setText('ts-form',A.txt);setText('ts-r',fmt(A.rat(30),4));setText('ts-l',A.L===Infinity?'∞':fmt(A.L,3));setText('ts-ver',A.ver);sim.render();}
+  segBind('ts-fn','k',v=>{k=v;upd();});upd();
+  /* comparison */
+  const D2={a:{a:n=>1/(n*n+1),b:n=>1/(n*n),n0:1,txt:'aₙ = 1/(n² + 1) < bₙ = 1/n²; Σ 1/n² converges (p = 2)',ver:'Direct comparison: 0 < aₙ < bₙ and Σ bₙ converges ⇒ Σ aₙ converges.'},
+    b:{a:n=>1/Math.sqrt(n*n-1),b:n=>1/n,n0:2,txt:'aₙ = 1/√(n² − 1), bₙ = 1/n; Σ 1/n diverges',ver:'Limit comparison: aₙ/bₙ → 1 (0 < 1 < ∞), and Σ 1/n diverges ⇒ Σ aₙ diverges.'},
+    c:{a:n=>1/(Math.pow(2,n)+1),b:n=>1/Math.pow(2,n),n0:1,txt:'aₙ = 1/(2ⁿ + 1) < bₙ = 1/2ⁿ; Σ (1/2)ⁿ is geometric, converges',ver:'Direct comparison with a convergent geometric series ⇒ Σ aₙ converges.'},
+    d:{a:n=>1/Math.log(n),b:n=>1/n,n0:2,txt:'aₙ = 1/ln n > bₙ = 1/n (since ln n < n); Σ 1/n diverges',ver:'Direct comparison: aₙ ≥ bₙ ≥ 0 and Σ bₙ diverges ⇒ Σ aₙ diverges.'}};
+  let c='a';
+  const sim2=glab('ts-canvas2',{h:w=>clamp(w*.38,230,300),view:()=>{const A=D2[c];const m=Math.max(A.a(A.n0),A.b(A.n0))*1.15;return {xr:[0,41],yr:[0,m],xlabel:'n'};},draw(ctx,P){const A=D2[c];[[A.b,T.ca],[A.a,T.cx]].forEach(([fn,col])=>{ctx.save();clip(ctx,P);ctx.strokeStyle=alpha(col,.55);ctx.lineWidth=1.6;ctx.beginPath();for(let n=A.n0;n<=40;n++){const x=P.X(n),y=P.Y(fn(n));n>A.n0?ctx.lineTo(x,y):ctx.moveTo(x,y);}ctx.stroke();ctx.restore();for(let n=A.n0;n<=40;n++)dot(ctx,P.X(n),P.Y(fn(n)),3,col);});label(ctx,'aₙ (blue) and bₙ (pink)',P.box.x+P.box.w-6,P.box.y+10,T.muted,'right','middle',MONO);}});
+  function upd2(){const A=D2[c];setText('ts-cform',A.txt);setText('ts-ra',fmt(A.a(30)/A.b(30),4));setText('ts-cv',A.ver);sim2.render();}
+  segBind('ts-cm','k',v=>{c=v;upd2();});upd2();drawers.convtests=()=>{sim.render();sim2.render();};
+  KEYS['ts-canvas']=['Each dot is |aₙ₊₁/aₙ|. If it settles below the orange line (1) the series converges; above it diverges; at 1 the test is silent.',[['cx','ratio |aₙ₊₁/aₙ|'],['hot','the value 1']]];
+  KEYS['ts-canvas2']=['Blue: the series you are testing. Pink: the one you know. Their relationship decides the answer.',[['cx','aₙ (to test)'],['ca','bₙ (known)']]];
+  TIPS['ts-cm']=()=>'Pick bₙ by keeping only the dominant terms of aₙ.';
+  GLOSS['ratio test']='L = lim |aₙ₊₁/aₙ|: L < 1 converges absolutely, L > 1 diverges, L = 1 no information.';GLOSS['limit comparison']='If aₙ/bₙ → L with 0 < L < ∞, then Σ aₙ and Σ bₙ both converge or both diverge.';
+  TT.convtests='Ask students to name the best test before seeing the lab, and to say what family of series bₙ comes from.';
+})();
+(function(){
+  PROBS.push({id:'ts-ratio',topic:'convtests',title:'Ratio test limit',gen(){const pat=pick([0,1,2,3]);let q,ans,show,chk;
+    if(pat===0){const b=ri(2,6);q=`For aₙ = n/${b}<sup>n</sup>, find L = lim |aₙ₊₁/aₙ|. Give a fraction or decimal.`;ans=1/b;show='1/'+b;chk=(n=>(n+1)/(b*n))(1e6);}
+    else if(pat===1){const b=ri(2,6);q=`For aₙ = ${b}<sup>n</sup>/n!, find L = lim |aₙ₊₁/aₙ|.`;ans=0;show='0';chk=b/1e6;}
+    else if(pat===2){const b=ri(2,5),c=ri(1,3);q=`For aₙ = n²(n + ${c})/${b}<sup>n</sup>, find L = lim |aₙ₊₁/aₙ|. Give a fraction or decimal.`;ans=1/b;show='1/'+b;chk=(n=>(n+1)**2*(n+1+c)/(b*n*n*(n+c)))(1e6);}
+    else{const b=ri(2,5);q=`For aₙ = ${b}<sup>n</sup>/n, find L = lim |aₙ₊₁/aₙ|.`;ans=b;show=String(b);chk=(n=>b*n/(n+1))(1e6);}
+    return {q,ans,unit:'',tol:.004,show,chk,hint:'Write aₙ₊₁/aₙ, simplify, and take the limit as n → ∞.',sol:`Simplifying the ratio and letting n → ∞ gives L = <b>${show}</b>.`};}});
+  PROBS.push({id:'ts-which',topic:'convtests',title:'Which test first?',gen(){const R=[['Σ n!/5ⁿ','Ratio test'],['Σ 1/(n³ + 2)','Direct or limit comparison with 1/n³'],['Σ (2n + 1)/(n³ − n)','Limit comparison with 1/n²'],['Σ (−1)ⁿ/n','Alternating series test'],['Σ 3ⁿ/n!','Ratio test'],['Σ 1/(2ⁿ + n)','Direct comparison with (1/2)ⁿ'],['Σ n/(n + 1)','nth-term test (diverges)']],[ex,ans]=pick(R),m=mcq(ans,R.map(r=>r[1]));
+    return {q:`Which test is the most natural first choice for ${ex}?`,choices:m.choices,ans:m.ans,hint:'Factorials and exponentials: ratio test. Rational in n: compare with a p-series. Alternating: alternating series test.',sol:`<b>${ans}</b>.`};}});
+  PROBS.push({id:'ts-verdict',topic:'convtests',title:'Converge or diverge?',gen(){const R=[['Σ 1/(n² + 4)','converges (compare with 1/n²)'],['Σ n/(n² + 1)','diverges (limit comparison with 1/n)'],['Σ 2ⁿ/n!','converges (ratio test, L = 0)'],['Σ n!/2ⁿ','diverges (ratio test, L = ∞)'],['Σ 1/(3ⁿ + 1)','converges (compare with (1/3)ⁿ)'],['Σ 1/√(n + 1)','diverges (limit comparison with 1/√n)'],['Σ n²/3ⁿ','converges (ratio test, L = 1/3)']],[ex,ans]=pick(R),m=mcq(ans,R.map(r=>r[1]));
+    return {q:`Decide ${ex}, and give the reason.`,choices:m.choices,ans:m.ans,hint:'Pick a test that fits the form of aₙ, and check its condition.',sol:`<b>${ans}</b>.`};}});
+})();
+
+/* ===== modules/altser.js ===== */
+/* ---------------- Alternating series & error bounds ---------------- */
+(function altser(){
+  const cv=$('#at-canvas');if(!cv)return;
+  let p=1,N=8;
+  const b=n=>Math.pow(n,-p),S=k=>{let s=0;for(let n=1;n<=k;n++)s+=(n%2?1:-1)*b(n);return s;};
+  const est=()=>{let s=0;const M=20000;for(let n=1;n<=M;n++)s+=(n%2?1:-1)*b(n);const s1=s+(((M+1)%2)?1:-1)*b(M+1);return (s+s1)/2;};
+  const sim=glab('at-canvas',{view:()=>{let lo=Infinity,hi=-Infinity;for(let k=1;k<=30;k++){const v=S(k);lo=Math.min(lo,v);hi=Math.max(hi,v);}const pd=(hi-lo)*.15+.05;return {xr:[0,31],yr:[lo-pd,hi+pd],xlabel:'N'};},
+    draw(ctx,P){const s=est(),a=S(N),a1=S(N+1);ctx.save();clip(ctx,P);ctx.fillStyle=alpha(T.ce,.2);ctx.fillRect(P.box.x,P.Y(Math.max(a,a1)),P.box.w,P.Y(Math.min(a,a1))-P.Y(Math.max(a,a1)));ctx.restore();hline(ctx,P,s,T.hot,[6,4]);
+      ctx.save();clip(ctx,P);ctx.strokeStyle=alpha(T.cx,.45);ctx.lineWidth=1.5;ctx.beginPath();for(let k=1;k<=30;k++){const x=P.X(k),y=P.Y(S(k));k>1?ctx.lineTo(x,y):ctx.moveTo(x,y);}ctx.stroke();ctx.restore();for(let k=1;k<=30;k++)dot(ctx,P.X(k),P.Y(S(k)),k===N?7:3.5,k===N?T.cx:alpha(T.cx,.7),k===N?T.surface:null);}});
+  function upd(){const s=est();setText('at-s',fmt(S(N),5));setText('at-sum',fmt(s,4));setText('at-err',`${fmt(b(N+1),4)}  (actual ${fmt(Math.abs(s-S(N)),4)})`);setText('at-ver',p>1+1e-9?'absolutely convergent (p > 1)':'conditionally convergent (0 < p ≤ 1: converges, but Σ|aₙ| diverges)');sim.render();}
+  bindRange('at-p',v=>nz(v),v=>{p=v;upd();});bindRange('at-n',v=>String(v),v=>{N=v;upd();});upd();drawers.altser=()=>sim.render();
+  KEYS['at-canvas']=['Partial sums zigzag toward the sum (orange line). The gold band between S_N and S_{N+1} always contains the true sum.',[['cx','partial sums S_N'],['hot','the sum (estimated)'],['ce','between S_N and S_{N+1}']]];
+  TIPS['at-n']=el=>`After ${el.value} terms the error is at most the next term, ${fmt(b(+el.value+1),4)}.`;
+  GLOSS['conditional convergence']='The series converges, but the series of absolute values diverges, like 1 − 1/2 + 1/3 − ….';GLOSS['absolute convergence']='Σ|aₙ| converges. Then Σ aₙ converges too.';
+  TT.altser='Have students predict which side of the sum S_N is on for odd and even N, and why the next term bounds the error.';
+})();
+(function(){
+  PROBS.push({id:'at-bound',topic:'altser',title:'How many terms are needed?',gen(){const p=pick([1,2,3,.5]),eps=pick([.1,.01,.001,.05]),N=Math.floor(Math.pow(eps,-1/p)+1e-9),
+      pt=p===1?'1/n':p===.5?'1/√n':`1/n<sup>${p}</sup>`;
+    return {q:`The alternating series Σ<sub>n=1</sub><sup>∞</sup> (−1)<sup>n+1</sup>/${p===.5?'√n':p===1?'n':'n<sup>'+p+'</sup>'} is approximated by its partial sum S<sub>N</sub>. What is the smallest N guaranteed (by the alternating series error bound) to give an error less than ${eps}?`,ans:N,unit:'',abs:.01,chk:N,hint:`Error ≤ the first omitted term b<sub>N+1</sub> = ${pt.replace('n','(N+1)')}. Require it to be less than ${eps}.`,sol:`Need b<sub>N+1</sub> &lt; ${eps}. The smallest N with ${pt.replace('n','(N+1)')} &lt; ${eps} is <b>N = ${N}</b> (check: b<sub>${N+1}</sub> = ${fmt(Math.pow(N+1,-p),5)}).`};}});
+  PROBS.push({id:'at-err',topic:'altser',title:'Error bound',gen(){const N=ri(3,12),p=pick([1,2]),ans=Math.pow(N+1,-p);
+    return {q:`S<sub>${N}</sub> is used to approximate Σ (−1)<sup>n+1</sup>/n<sup>${p===1?'':p}</sup>. Use the alternating series error bound to find the maximum possible error. Give a decimal to four places.`.replace('n<sup></sup>','n'),ans,unit:'',tol:.004,chk:Math.pow(N+1,-p),hint:'The error is at most the first omitted term: b<sub>N+1</sub>.',sol:`b<sub>${N+1}</sub> = 1/${N+1}${p===1?'':'<sup>'+p+'</sup>'} = <b>${fmt(ans,4)}</b>.`};}});
+  PROBS.push({id:'at-class',topic:'altser',title:'Absolute, conditional or divergent?',gen(){const R=[['Σ (−1)<sup>n</sup>/n','converges conditionally'],['Σ (−1)<sup>n</sup>/n²','converges absolutely'],['Σ (−1)<sup>n</sup>/√n','converges conditionally'],['Σ (−1)<sup>n</sup>·n/(n + 1)','diverges (terms do not → 0)'],['Σ (−1)<sup>n</sup>/n<sup>1.5</sup>','converges absolutely'],['Σ (−1)<sup>n</sup>/ln n, n ≥ 2','converges conditionally'],['Σ (−1/2)<sup>n</sup>','converges absolutely']],[ex,ans]=pick(R),m=mcq(ans,R.map(r=>r[1]));
+    return {q:`Classify ${ex}.`,choices:m.choices,ans:m.ans,hint:'First: does the alternating series test apply? Then: does Σ|aₙ| converge?',sol:`<b>${ans}</b>.`};}});
+})();
+
+/* ===== modules/taylorpoly.js ===== */
+/* ---------------- Taylor polynomials & Lagrange error ---------------- */
+(function taylorpoly(){
+  const cv=$('#tp-canvas');if(!cv)return;
+  const fact=n=>n<=1?1:n*fact(n-1);
+  const C={ex:{f:Math.exp,c:k=>1/fact(k),xr:[-3.2,3.2],yr:[-3,12],xs:[-2.8,2.8],x0:1,M:(x,n)=>Math.exp(Math.max(x,0))},
+    sn:{f:Math.sin,c:k=>k%2?((k-1)/2%2?-1:1)/fact(k):0,xr:[-6.5,6.5],yr:[-2.5,2.5],xs:[-6,6],x0:2,M:()=>1},
+    cs:{f:Math.cos,c:k=>k%2?0:((k/2)%2?-1:1)/fact(k),xr:[-6.5,6.5],yr:[-2.5,2.5],xs:[-6,6],x0:2,M:()=>1},
+    ln:{f:x=>Math.log(1+x),c:k=>k===0?0:((k%2)?1:-1)/k,xr:[-.95,3],yr:[-4,2.5],xs:[-.9,2.5],x0:.8,M:(x,n)=>x>=0?fact(n):fact(n)/Math.pow(1+x,n+1)}};
+  let k='ex',n=3,x0=1;
+  const Pn=(x,m=n)=>{let s=0;for(let j=0;j<=m;j++)s+=C[k].c(j)*Math.pow(x,j);return s;};
+  const sim=glab('tp-canvas',{view:()=>({xr:C[k].xr,yr:C[k].yr}),draw(ctx,P){const A=C[k];curveD(ctx,P,A.f,A.xr[0]+(k==='ln'?1e-4:0),A.xr[1],T.cx,2.8,400);curveD(ctx,P,x=>Pn(x),A.xr[0],A.xr[1],T.hot,2.6,400);vline(ctx,P,x0,T.muted,[3,4]);dot(ctx,P.X(x0),P.Y(A.f(x0)),6,T.cx,T.surface);dot(ctx,P.X(x0),P.Y(Pn(x0)),6,T.hot,T.surface);}});
+  function upd(){const A=C[k],fx=A.f(x0),px=Pn(x0),bound=A.M(x0,n)*Math.pow(Math.abs(x0),n+1)/fact(n+1);setText('tp-P',fmt(px,5));setText('tp-f',fmt(fx,5));setText('tp-e',fmt(Math.abs(fx-px),5));setText('tp-b',`${bound>1e6?sci(bound,2):fmt(bound,5)}${k==='ln'&&x0>1?' (the series diverges here)':''}`);sim.render();}
+  function setX(){const A=C[k],el=$('#tp-x');el.min=A.xs[0];el.max=A.xs[1];el.value=A.x0;x0=A.x0;}
+  bindRange('tp-n',v=>String(v),v=>{n=v;upd();});bindRange('tp-x',v=>nz(v),v=>{x0=v;upd();});segBind('tp-fn','k',v=>{k=v;setX();upd();});upd();drawers.taylorpoly=()=>sim.render();
+  KEYS['tp-canvas']=['Blue is f; orange is the Taylor polynomial of degree n. Raise n and the orange curve hugs the blue one over a wider interval.',[['cx','f(x)'],['hot','Pₙ(x)']]];
+  TIPS['tp-n']=el=>`Degree ${el.value}: ${+el.value+1} terms. The polynomial matches f and its first ${el.value} derivatives at 0.`;
+  GLOSS['Taylor polynomial']='Pₙ(x) = Σ f⁽ᵏ⁾(a)(x − a)ᵏ/k!, the degree-n polynomial that best matches f near a.';GLOSS['Lagrange error bound']='|f(x) − Pₙ(x)| ≤ M|x − a|ⁿ⁺¹/(n + 1)! where M bounds |f⁽ⁿ⁺¹⁾| between a and x.';
+  TT.taylorpoly='Ask students to predict where the polynomial will leave the curve, then raise the degree and compare the bound with the actual error.';
+})();
+(function(){
+  const fact=n=>n<=1?1:n*fact(n-1);
+  PROBS.push({id:'tp-coef',topic:'taylorpoly',title:'A Taylor coefficient',gen(){const pat=pick([0,1,2]);let q,ans,show;
+    if(pat===0){const a=ri(1,3),k=ri(2,5);q=`Find the coefficient of x<sup>${k}</sup> in the Maclaurin series of e<sup>${a===1?'':a}x</sup>. Give a fraction or decimal.`;ans=Math.pow(a,k)/fact(k);const g=gcd(Math.pow(a,k),fact(k));show=`${Math.pow(a,k)/g}${fact(k)/g===1?'':'/'+fact(k)/g}`;}
+    else if(pat===1){const a=ri(1,3),m=ri(1,2),k=2*m+1;q=`Find the coefficient of x<sup>${k}</sup> in the Maclaurin series of sin(${a===1?'':a}x). Give a fraction or decimal.`;ans=(m%2?-1:1)*Math.pow(a,k)/fact(k);const g=gcd(Math.pow(a,k),fact(k));show=`${ans<0?'−':''}${Math.pow(a,k)/g}${fact(k)/g===1?'':'/'+fact(k)/g}`;}
+    else{const m=ri(1,3),k=2*m;q=`Find the coefficient of x<sup>${k}</sup> in the Maclaurin series of cos x. Give a fraction or decimal.`;ans=(m%2?-1:1)/fact(k);show=`${ans<0?'−':''}1/${fact(k)}`;}
+    return {q,ans,unit:'',tol:.005,show,chk:ans,hint:'The coefficient of xᵏ is f⁽ᵏ⁾(0)/k!. Or substitute into a known series.',sol:`Using the known series: the coefficient is <b>${show}</b>.`};}});
+  PROBS.push({id:'tp-eval',topic:'taylorpoly',title:'Evaluate a Taylor polynomial',gen(){const n=pick([2,3,4]),x=pick([.5,1,.2,-.5,-1]),pat=pick([0,1]);let q,ans,chk;
+    if(pat===0){q=`Use the degree-${n} Maclaurin polynomial of e<sup>x</sup> to approximate e<sup>${nz(x)}</sup>. Give a decimal to four places.`;ans=0;for(let j=0;j<=n;j++)ans+=Math.pow(x,j)/fact(j);chk=(()=>{let s=0;for(let j=0;j<=n;j++)s+=Math.pow(x,j)/fact(j);return s;})();}
+    else{q=`Use the degree-${n===2?3:n===3?3:5} Maclaurin polynomial of sin x to approximate sin(${nz(x)}). Give a decimal to four places.`;const deg=n===4?5:3;ans=x-Math.pow(x,3)/6+(deg===5?Math.pow(x,5)/120:0);chk=ans;}
+    return {q,ans,unit:'',abs:.0006,chk,hint:'Add the terms xᵏ/k! (or the sin series terms) up to the given degree.',sol:`Adding the terms gives <b>${fmt(ans,4)}</b>.`};}});
+  PROBS.push({id:'tp-lagrange',topic:'taylorpoly',title:'Lagrange error bound',gen(){const n=ri(2,5),x=pick([.5,1,.3,.8]),pat=pick([0,1]);let q,ans;
+    if(pat===0){q=`Use the Lagrange error bound to bound the error when the degree-${n} Maclaurin polynomial of sin x approximates sin(${x}). Give a decimal (use M = 1).`;ans=Math.pow(x,n+1)/fact(n+1);}
+    else{q=`Use the Lagrange error bound for the degree-${n} Maclaurin polynomial of e<sup>x</sup> at x = ${x}. Use M = e<sup>${x}</sup> (the maximum of e<sup>t</sup> on [0, ${x}]). Give a decimal.`;ans=Math.exp(x)*Math.pow(x,n+1)/fact(n+1);}
+    return {q,ans,unit:'',tol:.01,chk:ans,hint:'|error| ≤ M·|x|^(n+1)/(n + 1)!.',sol:`Bound = M·${x}<sup>${n+1}</sup>/${n+1}! = <b>${ans<1e-3?sci(ans,2):fmt(ans,5)}</b>.`};}});
+  PROBS.push({id:'tp-deriv',topic:'taylorpoly',title:'Read a derivative from a polynomial',gen(){const k=pick([2,3,4]),cs=[ri(-4,6),ri(-5,5)||2,ri(-6,6)||3,ri(-6,6)||-2,ri(-6,6)||5],c=cs[k],ans=c*fact(k);
+    return {q:`The Taylor polynomial of f centered at 0 is P(x) = ${cs.map((v,j)=>`${j===0?nz(v):sgn(v)}${j===0?'':j===1?'x':'x<sup>'+j+'</sup>'}`).join('')}. Find f<sup>(${k})</sup>(0).`.replace(/\s+/g,' '),ans,unit:'',abs:.01,chk:ans,hint:'The coefficient of xᵏ is f⁽ᵏ⁾(0)/k!, so f⁽ᵏ⁾(0) = k!·coefficient.',sol:`f<sup>(${k})</sup>(0) = ${k}!·(${nz(c)}) = <b>${nz(ans)}</b>.`};}});
+})();
+
+/* ===== modules/powser.js ===== */
+/* ---------------- Power series: radius & interval of convergence ---------------- */
+(function powser(){
+  const cv=$('#pw-canvas');if(!cv)return;
+  const fact=n=>n<=1?1:n*fact(n-1);
+  const C={a:{t:(n,x)=>Math.pow(x,n),n0:0,R:'1',int:'(−1, 1)',ok:x=>Math.abs(x)<1},b:{t:(n,x)=>Math.pow(x,n)/n,n0:1,R:'1',int:'[−1, 1)',ok:x=>x>=-1&&x<1},c:{t:(n,x)=>Math.pow(x,n)/(n*n),n0:1,R:'1',int:'[−1, 1]',ok:x=>Math.abs(x)<=1},
+    d:{t:(n,x)=>Math.pow(x,n)/fact(n),n0:0,R:'∞',int:'(−∞, ∞)',ok:()=>true},e:{t:(n,x)=>fact(n)*Math.pow(x,n),n0:0,R:'0',int:'{0}',ok:x=>x===0}};
+  let k='a',x0=.5;
+  const S=(j,x)=>{let s=0;for(let n=C[k].n0;n<=j;n++)s+=C[k].t(n,x);return s;};
+  const sim=sim2d(cv,{h:w=>clamp(w*.55,300,400),draw(ctx,w,h){const A=C[k];
+      /* number line with the interval of convergence */
+      const x0p=40,x1p=w-40,X=q=>x0p+(q+3)/6*(x1p-x0p),yL=40;ctx.strokeStyle=T.muted;ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(x0p,yL);ctx.lineTo(x1p,yL);ctx.stroke();ctx.fillStyle=T.muted;ctx.font=MONO;ctx.textAlign='center';for(let q=-3;q<=3;q++){ctx.beginPath();ctx.moveTo(X(q),yL-4);ctx.lineTo(X(q),yL+4);ctx.stroke();ctx.fillText(String(q).replace('-','−'),X(q),yL+18);}
+      const lo=k==='d'?-3:k==='e'?0:-1,hi=k==='d'?3:k==='e'?0:1;ctx.strokeStyle=T.cv;ctx.lineWidth=7;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(X(lo),yL);ctx.lineTo(X(hi),yL);ctx.stroke();ctx.lineCap='butt';
+      if(k!=='d'&&k!=='e'){hole(ctx,X(-1),yL,6,T.cv,k==='b'||k==='c');hole(ctx,X(1),yL,6,T.cv,k==='c');}if(k==='e')hole(ctx,X(0),yL,6,T.cv,true);
+      dot(ctx,X(clamp(x0,-3,3)),yL-18,6,A.ok(x0)?T.cv:T.ca,T.surface);label(ctx,'interval of convergence (green)',x0p,14,T.muted,'left','middle',MONO);
+      /* partial sums at the probe */
+      let lo2=Infinity,hi2=-Infinity;const vals=[];for(let j=A.n0;j<=40;j++){vals.push(S(j,x0));}vals.forEach(v=>{if(isFinite(v)){lo2=Math.min(lo2,v);hi2=Math.max(hi2,v);}});const cap=Math.max(Math.abs(vals[5]||1)*20,20);lo2=Math.max(lo2,-cap);hi2=Math.min(hi2,cap);const p=(hi2-lo2)*.15+.3;
+      const P=gpanel(ctx,{x:46,y:78,w:w-60,h:h-78-34},[0,41],[lo2-p,hi2+p],{xn:5,yn:4,xlabel:'N'});ctx.save();clip(ctx,P);ctx.strokeStyle=alpha(A.ok(x0)?T.cv:T.ca,.5);ctx.lineWidth=1.5;ctx.beginPath();vals.forEach((v,i)=>{const x=P.X(i+A.n0),y=P.Y(v);i?ctx.lineTo(x,y):ctx.moveTo(x,y);});ctx.stroke();ctx.restore();vals.forEach((v,i)=>dot(ctx,P.X(i+A.n0),P.Y(clamp(v,P.yr[0],P.yr[1])),3.2,A.ok(x0)?T.cv:T.ca));label(ctx,`partial sums of the series at x = ${nz(x0)}`,P.box.x+8,P.box.y+10,T.muted,'left','middle',MONO);}});
+  function upd(){const A=C[k];setText('pw-R',A.R);setText('pw-int',A.int);setText('pw-st',A.ok(x0)?'converges':'diverges');sim.render();}
+  bindRange('pw-x',v=>nz(v),v=>{x0=v;upd();});segBind('pw-fn','k',v=>{k=v;upd();});upd();drawers.powser=()=>sim.render();
+  KEYS['pw-canvas']=['Move the probe x. The partial sums of the series at that x are plotted below: they settle if x is inside the interval (green).',[['cv','converging (inside the interval)'],['ca','diverging (outside)']]];
+  TIPS['pw-x']=el=>`At x = ${nz(+el.value)} the series ${C[k].ok(+el.value)?'converges':'diverges'}. Test the endpoints ±R separately.`;
+  GLOSS['radius of convergence']='R such that the power series converges for |x − c| < R and diverges for |x − c| > R.';GLOSS['interval of convergence']='All x where the power series converges, including any endpoints that work.';
+  TT.powser='Have students find the radius with the ratio test first, then check each endpoint by hand against the lab.';
+})();
+(function(){
+  PROBS.push({id:'pw-R',topic:'powser',title:'Radius of convergence',gen(){const b=ri(2,6),pat=pick([0,1,2,3]);let q,ans;
+    if(pat===0){q=`Find the radius of convergence of Σ<sub>n=1</sub><sup>∞</sup> n·xⁿ/${b}ⁿ.`;ans=b;}
+    else if(pat===1){const c=ri(1,4);q=`Find the radius of convergence of Σ<sub>n=0</sub><sup>∞</sup> (x − ${c})ⁿ/${b}ⁿ.`;ans=b;}
+    else if(pat===2){q=`Find the radius of convergence of Σ<sub>n=1</sub><sup>∞</sup> ${b}ⁿ·xⁿ/n².`;ans=1/b;}
+    else{q=`Find the radius of convergence of Σ<sub>n=1</sub><sup>∞</sup> (${b}x)ⁿ/n.`;ans=1/b;}
+    return {q:q+' Give a fraction or decimal.',ans,unit:'',tol:.004,show:ans>=1?String(ans):'1/'+Math.round(1/ans),chk:ans,hint:'Ratio test: lim |aₙ₊₁/aₙ| < 1 gives |x − c| < R.',sol:`The ratio test gives convergence for |x − c| &lt; R with R = <b>${ans>=1?ans:'1/'+Math.round(1/ans)}</b>.`};}});
+  PROBS.push({id:'pw-int',topic:'powser',title:'Interval of convergence',gen(){const R=[['Σ xⁿ/n','[−1, 1)'],['Σ xⁿ/n²','[−1, 1]'],['Σ xⁿ','(−1, 1)'],['Σ (−1)ⁿxⁿ/n','(−1, 1]'],['Σ (x − 2)ⁿ/n','[1, 3)'],['Σ (x − 2)ⁿ/n²','[1, 3]'],['Σ (x + 1)ⁿ/(2ⁿ·n)','[−3, 1)'],['Σ xⁿ/n!','(−∞, ∞)'],['Σ n!xⁿ','{0}']],[ex,ans]=pick(R),m=mcq(ans,R.map(r=>r[1]));
+    return {q:`Find the interval of convergence of ${ex} (n starting at 1, or 0 for the last two).`,choices:m.choices,ans:m.ans,hint:'Ratio test for the radius, then test each endpoint with a series test.',sol:`<b>${ans}</b>.`};}});
+  PROBS.push({id:'pw-end',topic:'powser',title:'What happens at an endpoint?',gen(){const R=[['Σ xⁿ/n at x = 1','diverges (harmonic series)'],['Σ xⁿ/n at x = −1','converges (alternating harmonic series)'],['Σ xⁿ/n² at x = 1','converges (p-series, p = 2)'],['Σ xⁿ at x = 1','diverges (terms → 1, nth-term test)'],['Σ xⁿ/√n at x = 1','diverges (p-series, p = 1/2)'],['Σ xⁿ/√n at x = −1','converges (alternating series test)']],[ex,ans]=pick(R),m=mcq(ans,R.map(r=>r[1]));
+    return {q:`What happens to ${ex}?`,choices:m.choices,ans:m.ans,hint:'Substitute the endpoint and identify the resulting series of numbers.',sol:`<b>${ans}</b>.`};}});
+})();
+
+/* ===== modules/maclaurin.js ===== */
+/* ---------------- Maclaurin series & operations ---------------- */
+(function maclaurin(){
+  const cv=$('#mc-canvas');if(!cv)return;
+  const fact=n=>n<=1?1:n*fact(n-1);
+  const C={ex:{f:Math.exp,term:n=>({c:1/fact(n),p:n,s:1,d:fact(n)}),conv:'all x',xr:[-3,3],yr:[-1,9],dom:[-3,3]},e2:{f:x=>Math.exp(-x*x),term:n=>({c:(n%2?-1:1)/fact(n),p:2*n,s:n%2?-1:1,d:fact(n)}),conv:'all x',xr:[-2.6,2.6],yr:[-.8,1.5],dom:[-2.6,2.6]},
+    sn:{f:Math.sin,term:n=>({c:(n%2?-1:1)/fact(2*n+1),p:2*n+1,s:n%2?-1:1,d:fact(2*n+1)}),conv:'all x',xr:[-6.5,6.5],yr:[-2.5,2.5],dom:[-6.5,6.5]},sx:{f:x=>Math.sin(x*x),term:n=>({c:(n%2?-1:1)/fact(2*n+1),p:4*n+2,s:n%2?-1:1,d:fact(2*n+1)}),conv:'all x',xr:[-2.6,2.6],yr:[-2.5,2.5],dom:[-2.6,2.6]},
+    at:{f:Math.atan,term:n=>({c:(n%2?-1:1)/(2*n+1),p:2*n+1,s:n%2?-1:1,d:2*n+1}),conv:'−1 ≤ x ≤ 1',xr:[-2.5,2.5],yr:[-2.5,2.5],dom:[-2.5,2.5]},ln:{f:x=>Math.log(1+x),term:n=>({c:((n+1)%2?-1:1)/(n+1),p:n+1,s:(n+1)%2?-1:1,d:n+1}),conv:'−1 < x ≤ 1',xr:[-.95,2.5],yr:[-4,2.5],dom:[-.95,2.5]}};
+  let k='ex',m=3;
+  const SN=(x,mm=m)=>{let s=0;for(let n=0;n<mm;n++){const t=C[k].term(n);s+=t.c*Math.pow(x,t.p);}return s;};
+  const sup='⁰¹²³⁴⁵⁶⁷⁸⁹',pw=p=>p===0?'':p===1?'x':'x'+String(p).split('').map(c=>sup[+c]).join('');
+  const txt=()=>{const parts=[];for(let n=0;n<Math.min(m,4);n++){const t=C[k].term(n),a=t.d===1?'':'/'+t.d,body=t.p===0?'1':(t.d===1?'':'')+pw(t.p)+a;parts.push((n?(t.s<0?' − ':' + '):(t.s<0?'−':''))+(t.p===0?(t.d===1?'1':'1'+a):body));}return parts.join('')+(m>4?' + …':' + …');};
+  const sim=glab('mc-canvas',{view:()=>({xr:C[k].xr,yr:C[k].yr}),draw(ctx,P){const A=C[k];curveD(ctx,P,A.f,A.xr[0]+(k==='ln'?1e-4:0),A.xr[1],T.cx,2.8,400);curveD(ctx,P,x=>SN(x),A.xr[0],A.xr[1],T.hot,2.6,400);}});
+  function upd(){const A=C[k];let me=0;for(let i=0;i<=100;i++){const x=-.5+i/100;me=Math.max(me,Math.abs(A.f(x)-SN(x)));}setText('mc-form',`f(x) = ${({ex:'eˣ',e2:'e^(−x²)',sn:'sin x',sx:'sin(x²)',at:'arctan x',ln:'ln(1 + x)'})[k]}`);setText('mc-ser',txt());setText('mc-rad',A.conv);setText('mc-err',sci(me,2));sim.render();}
+  bindRange('mc-n',v=>String(v),v=>{m=v;upd();});segBind('mc-fn','k',v=>{k=v;upd();});upd();drawers.maclaurin=()=>sim.render();
+  KEYS['mc-canvas']=['Blue is f; orange is the partial sum with the chosen number of nonzero terms.',[['cx','f(x)'],['hot','partial sum of the Maclaurin series']]];
+  TIPS['mc-n']=el=>`${el.value} nonzero term${el.value==='1'?'':'s'}. Near 0 the fit is excellent; far away it needs many more terms (or fails outside the radius).`;
+  GLOSS['Maclaurin series']='A Taylor series centered at 0: Σ f⁽ⁿ⁾(0)xⁿ/n!.';
+  TT.maclaurin='Ask students how each function here was built from eˣ, sin x or 1/(1 − x) by substituting, multiplying or integrating.';
+})();
+(function(){
+  const fact=n=>n<=1?1:n*fact(n-1);
+  PROBS.push({id:'mc-term',topic:'maclaurin',title:'A coefficient of a new series',gen(){const pat=pick([0,1,2,3]);let q,ans,show;
+    if(pat===0){const m=ri(2,4);q=`Find the coefficient of x<sup>${2*m}</sup> in the Maclaurin series of e<sup>x²</sup>. Give a fraction or decimal.`;ans=1/fact(m);show='1/'+fact(m);}
+    else if(pat===1){const m=ri(1,2);q=`Find the coefficient of x<sup>${2*m+2}</sup> in the Maclaurin series of x·sin x. Give a fraction or decimal.`;ans=(m%2?-1:1)/fact(2*m+1);show=`${ans<0?'−':''}1/${fact(2*m+1)}`;}
+    else if(pat===2){const m=ri(1,3);q=`Find the coefficient of x<sup>${2*m+1}</sup> in the Maclaurin series of arctan x. Give a fraction or decimal.`;ans=(m%2?-1:1)/(2*m+1);show=`${ans<0?'−':''}1/${2*m+1}`;}
+    else{const a=ri(2,4),k2=ri(2,4);q=`Find the coefficient of x<sup>${k2}</sup> in the Maclaurin series of 1/(1 − ${a}x). Give a number.`;ans=Math.pow(a,k2);show=String(ans);}
+    return {q,ans,unit:'',tol:.005,show,chk:ans,hint:'Substitute into a known series: e^u, sin u, 1/(1 − u), or integrate a known series term by term.',sol:`The coefficient is <b>${show}</b>.`};}});
+  PROBS.push({id:'mc-sum',topic:'maclaurin',title:'Sum a series using a known one',gen(){const pat=pick([0,1,2,3]);let q,ans,chk;
+    if(pat===0){const a=pick([1,2,-1,.5]);q=`Find Σ<sub>n=0</sub><sup>∞</sup> ${nz(a)}<sup>n</sup>/n!. Give a decimal to three places.`;ans=Math.exp(a);chk=(()=>{let s=0;for(let n=0;n<40;n++)s+=Math.pow(a,n)/fact(n);return s;})();}
+    else if(pat===1){const a=pick([1,2,3,.5]);q=`Find Σ<sub>n=0</sub><sup>∞</sup> (−1)<sup>n</sup>${nz(a)}<sup>2n+1</sup>/(2n + 1)!. Give a decimal to three places.`;ans=Math.sin(a);chk=(()=>{let s=0;for(let n=0;n<30;n++)s+=(n%2?-1:1)*Math.pow(a,2*n+1)/fact(2*n+1);return s;})();}
+    else if(pat===2){const a=pick([1,2,3]);q=`Find Σ<sub>n=0</sub><sup>∞</sup> (−1)<sup>n</sup>${nz(a)}<sup>2n</sup>/(2n)!. Give a decimal to three places.`;ans=Math.cos(a);chk=(()=>{let s=0;for(let n=0;n<30;n++)s+=(n%2?-1:1)*Math.pow(a,2*n)/fact(2*n);return s;})();}
+    else{const r=pick([.5,.25,-.5,.2]);q=`Find Σ<sub>n=0</sub><sup>∞</sup> (${nz(r)})<sup>n</sup>. Give a decimal to three places.`;ans=1/(1-r);chk=(()=>{let s=0;for(let n=0;n<200;n++)s+=Math.pow(r,n);return s;})();}
+    return {q,ans,unit:'',tol:.003,chk,hint:'Recognize it as the Maclaurin series of eˣ, sin x, cos x or 1/(1 − x) evaluated at a point.',sol:`It is a known series evaluated at the given value: <b>${fmt(ans,4)}</b>.`};}});
+  PROBS.push({id:'mc-limit',topic:'maclaurin',title:'A limit using series',gen(){const pat=pick([0,1,2,3]),a=ri(1,4);let q,ans,show,f;
+    if(pat===0){q=`Use Maclaurin series to find lim x→0 (sin(${a===1?'':a}x) − ${a===1?'':a}x)/x³. Give a fraction or decimal.`;ans=-Math.pow(a,3)/6;f=x=>(Math.sin(a*x)-a*x)/Math.pow(x,3);show=`−${a**3}/6`;}
+    else if(pat===1){q=`Use Maclaurin series to find lim x→0 (1 − cos(${a===1?'':a}x))/x². Give a fraction or decimal.`;ans=a*a/2;f=x=>(1-Math.cos(a*x))/(x*x);show=`${a*a}/2`;}
+    else if(pat===2){q=`Use Maclaurin series to find lim x→0 (e<sup>${a===1?'':a}x</sup> − 1 − ${a===1?'':a}x)/x². Give a fraction or decimal.`;ans=a*a/2;f=x=>(Math.exp(a*x)-1-a*x)/(x*x);show=`${a*a}/2`;}
+    else{q=`Use Maclaurin series to find lim x→0 (ln(1 + ${a===1?'':a}x) − ${a===1?'':a}x)/x². Give a fraction or decimal.`;ans=-a*a/2;f=x=>(Math.log(1+a*x)-a*x)/(x*x);show=`−${a*a}/2`;}
+    return {q,ans,unit:'',tol:.004,show,chk:limit(f,0,1),hint:'Replace each function by its series, cancel the leading terms, then divide by the power of x.',sol:`After cancelling the first terms the leading term gives <b>${show}</b>.`};}});
+  PROBS.push({id:'mc-deriv',topic:'maclaurin',title:'A derivative from a series',gen(){const k=pick([3,4,5]),pat=pick([0,1]);let q,ans;
+    if(pat===0){q=`The Maclaurin series of f is Σ (−1)ⁿ x²ⁿ/(n + 1). Find f<sup>(${2*Math.floor(k/2)})</sup>(0)... `;const m=Math.floor(k/2);q=`The Maclaurin series of f is Σ<sub>n=0</sub><sup>∞</sup> (−1)<sup>n</sup>x<sup>2n</sup>/(n + 1). Find f<sup>(${2*m})</sup>(0).`;ans=(m%2?-1:1)*fact(2*m)/(m+1);}
+    else{q=`The Maclaurin series of f is Σ<sub>n=0</sub><sup>∞</sup> xⁿ/(n + 1). Find f<sup>(${k})</sup>(0).`;ans=fact(k)/(k+1);}
+    return {q,ans,unit:'',tol:.005,chk:ans,hint:'f⁽ᵏ⁾(0) = k! × (coefficient of xᵏ).',sol:`Coefficient of x<sup>k</sup>, times k! gives <b>${fmt(ans,3)}</b>.`};}});
 })();
 
 /* ===== overview.js ===== */

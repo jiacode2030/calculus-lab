@@ -1,0 +1,50 @@
+  <section class="view bc" id="v-maclaurin" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 10 · BC</span><span class="tag">BC only</span></div>
+        <h1>Maclaurin series & operations</h1>
+        <p class="lede">A few series to know by heart, and a toolbox for building new ones: substitute, multiply, differentiate, integrate.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>The key series (centered at 0): <span class="m">eˣ = Σ xⁿ/n!</span> (all x), <span class="m">sin x = Σ (−1)ⁿ x²ⁿ⁺¹/(2n + 1)!</span> (all x), <span class="m">cos x = Σ (−1)ⁿ x²ⁿ/(2n)!</span> (all x), and <span class="m">1/(1 − x) = Σ xⁿ</span> (|x| &lt; 1). Everything else can be made from these.</p>
+        <p><b>Substitute</b>: replace x by 2x or x²: e^{−x²} = Σ (−1)ⁿ x²ⁿ/n!. <b>Multiply</b> by x or a power. <b>Differentiate or integrate</b> term by term: integrating 1/(1 + x) gives ln(1 + x) = Σ (−1)ⁿ⁺¹ xⁿ/n; integrating 1/(1 + x²) gives arctan x = Σ (−1)ⁿ x²ⁿ⁺¹/(2n + 1). Series can also evaluate limits and integrals that have no closed form.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>a Taylor series needed derivatives computed from scratch every time</dd><dt>So we didn't need</dt><dd>a short list plus rules for combining them</dd><dt>Now</dt><dd>limits, integrals with no closed form, and approximations</dd><dt>So we need</dt><dd>the standard Maclaurin series and operations on series</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>eˣ = Σ xⁿ/n! · 1/(1−x) = Σ xⁿ</span><small>sin x = Σ (−1)ⁿx²ⁿ⁺¹/(2n+1)! · cos x = Σ (−1)ⁿx²ⁿ/(2n)!</small></div><div class="eqn"><span>substitute · multiply · differentiate · integrate</span><small>new series from old</small></div><div class="eqn"><span>coefficient of xᵏ is f⁽ᵏ⁾(0)/k!</span><small>read off derivatives</small></div></div>
+      <div class="lab" id="mc-lab">
+        <div class="labbar"><span class="title">Build a series and compare</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="mc-fn" role="group" aria-label="Function"><button type="button" data-k="ex" aria-pressed="true">eˣ</button><button type="button" data-k="e2" aria-pressed="false">e^(−x²)</button><button type="button" data-k="sn" aria-pressed="false">sin x</button><button type="button" data-k="sx" aria-pressed="false">sin(x²)</button><button type="button" data-k="at" aria-pressed="false">arctan x</button><button type="button" data-k="ln" aria-pressed="false">ln(1+x)</button></div></div>
+        <p class="small" id="mc-form" style="margin:0"></p>
+        <canvas id="mc-canvas" aria-label="A function and its partial sum of the chosen Maclaurin series."></canvas>
+        <div class="controls"><div class="ctl"><label for="mc-n"><span>Number of nonzero terms</span> <output id="mc-n-out"></output></label><input type="range" id="mc-n" min="1" max="8" step="1" value="3"></div></div>
+        <div class="readout"><div><span>the series starts</span><strong class="x" id="mc-ser">—</strong></div><div><span>converges for</span><strong class="v" id="mc-rad">—</strong></div><div><span>max error on the plotted window</span><strong class="a" id="mc-err">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose e^(−x²). Where does the series come from, and how many terms are needed near x = 1? <button type="button" class="btn link" data-show='[["click", "#mc-fn [data-k=e2]"], ["#mc-n", 4]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Replace x by −x² in the series for eˣ: 1 − x² + x⁴/2 − x⁶/6 + …. With 4 terms the curve matches well for |x| ≤ 1.3 or so.</p></details></li>
+        <li><p>Choose arctan x and increase the terms. What happens past |x| = 1? <button type="button" class="btn link" data-show='[["click", "#mc-fn [data-k=at]"], ["#mc-n", 6]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The partial sums fly off: the series has radius 1. It was obtained by integrating Σ (−1)ⁿ x²ⁿ = 1/(1 + x²), which only converges for |x| < 1.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Use known series to find the first three nonzero terms of x·sin(x²) and lim<sub>x→0</sub> (e<sup>x</sup> − 1 − x)/x².</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Substitute.</b> sin u = u − u³/6 + u⁵/120 − …, with u = x²: sin(x²) = x² − x⁶/6 + x¹⁰/120 − ….</li>
+          <li hidden><b>Multiply by x.</b> x sin(x²) = x³ − x⁷/6 + x¹¹/120 − ….</li>
+          <li hidden><b>Limit.</b> eˣ − 1 − x = x²/2 + x³/6 + …, so (eˣ − 1 − x)/x² = 1/2 + x/6 + … → 1/2.</li>
+          <li hidden><b>Answer.</b> x³ − x⁷/6 + x¹¹/120; the limit is <b>1/2</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Not replacing x consistently when substituting (every x in the series changes).</li>
+        <li>Forgetting factorials in e<sup>x</sup>, sin and cos.</li>
+        <li>Using the sin series for cos (or the reverse): sin has odd powers, cos has even powers.</li>
+        <li>Forgetting the alternating sign (−1)ⁿ.</li>
+        <li>Ignoring the interval of convergence after substituting or integrating.</li>
+      </ul></div>
+      <div class="prose"><h2>Why these are enough</h2>
+        <p>Differentiating the series for sin x term by term gives the series for cos x, and integrating Σ xⁿ gives −ln(1 − x). The AP exam usually asks for the first few terms, a pattern (general term), or a value computed from a known series, and the error bound.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="cos x = 1 − x²/2! + x⁴/4! − …, and 4! = 24: the coefficient is +1/24.">
+        <p class="q">Check yourself: The coefficient of x⁴ in the Maclaurin series of cos x is</p>
+        <div class="opts"><button type="button">1/24</button><button type="button">−1/24</button><button type="button">1/12</button><button type="button">1/6</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
