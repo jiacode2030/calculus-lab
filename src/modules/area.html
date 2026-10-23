@@ -1,0 +1,49 @@
+  <section class="view" id="v-area" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 8</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Area between curves</h1>
+        <p class="lede">The region between two curves is made of thin slices. Top minus bottom, added up, gives the area.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Slice the region into vertical strips. Each has width dx and height <b>(top − bottom)</b>, so the area is <span class="m">∫<sub>a</sub><sup>b</sup> (f(x) − g(x)) dx</span> where f ≥ g. Find the limits by solving f(x) = g(x). If the curves cross, split the integral at each crossing so the height is always top minus bottom (never negative).</p>
+        <p>Sometimes horizontal slices are easier: width dy and length <b>(right − left)</b>, giving <span class="m">∫<sub>c</sub><sup>d</sup> (x<sub>right</sub> − x<sub>left</sub>) dy</span>. Use them when the region is bounded by curves that are easy to write as x = h(y), or when top/bottom switch.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>the integral of f was the area under f</dd><dt>So we didn't need</dt><dd>the area between two curves</dd><dt>Now</dt><dd>the area enclosed by curves, the first step to volumes</dd><dt>So we need</dt><dd>area between curves, with vertical or horizontal slices</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>A = ∫ (top − bottom) dx</span><small>vertical slices</small></div><div class="eqn"><span>A = ∫ (right − left) dy</span><small>horizontal slices</small></div><div class="eqn"><span>limits: where the curves meet</span><small>solve f(x) = g(x)</small></div></div>
+      <div class="lab" id="ar-lab">
+        <div class="labbar"><span class="title">Slice the region</span></div>
+        <div class="ctl"><span class="lbl">Curves</span><div class="seg" id="ar-fn" role="group" aria-label="Curves"><button type="button" data-k="a" aria-pressed="true">y = x and y = x²</button><button type="button" data-k="b" aria-pressed="false">y = √x and y = x²</button><button type="button" data-k="c" aria-pressed="false">y = x³ and y = x</button><button type="button" data-k="d" aria-pressed="false">sin x and cos x</button></div></div>
+        <canvas id="ar-canvas" aria-label="The region between two curves shaded, with vertical rectangles of height top minus bottom."></canvas>
+        <div class="controls"><div class="ctl"><label for="ar-n"><span>Slices n</span> <output id="ar-n-out"></output></label><input type="range" id="ar-n" min="0" max="40" step="1" value="8"></div></div>
+        <div class="readout"><div><span>intersections</span><strong class="x" id="ar-lim">—</strong></div><div><span>exact area</span><strong class="v" id="ar-exact">—</strong></div><div><span>sum of the slices</span><strong class="a" id="ar-sum">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose √x and x² and slice with n = 8. How close is the sum to the exact area? <button type="button" class="btn link" data-show='[["click", "#ar-fn [data-k=b]"], ["#ar-n", 8]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Close, a little off: the sum is a midpoint estimate. The exact area is 1/3. More slices give a better answer.</p></details></li>
+        <li><p>Choose y = x³ and y = x. Which is on top, and why must you split the integral? <button type="button" class="btn link" data-show='[["click", "#ar-fn [data-k=c]"], ["#ar-n", 0]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>On (0, 1) the line y = x is on top; on (−1, 0) the cubic is. The curves cross at x = 0, so top and bottom swap there. Splitting (or using symmetry) keeps every height positive.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find the area enclosed by y = x and y = x².</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Intersections.</b> x = x² ⇒ x = 0 or 1.</li>
+          <li hidden><b>Top and bottom.</b> On (0, 1), x ≥ x², so top = x, bottom = x².</li>
+          <li hidden><b>Integrate.</b> ∫<sub>0</sub><sup>1</sup> (x − x²) dx = [x²/2 − x³/3]<sub>0</sub><sup>1</sup>.</li>
+          <li hidden><b>Answer.</b> 1/2 − 1/3 = <b>1/6</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Subtracting in the wrong order, giving a negative area. Use top − bottom.</li>
+        <li>Using the wrong limits: find intersections by setting the functions equal.</li>
+        <li>Not splitting at crossings when top and bottom switch.</li>
+        <li>Integrating x² − x as if it were the area under one curve minus a number.</li>
+        <li>Using dx slices when horizontal slices would avoid splitting.</li>
+      </ul></div>
+      <div class="prose"><h2>Vertical or horizontal?</h2>
+        <p>Vertical slices (dx): integrand top − bottom as a function of x. Horizontal slices (dy): integrand right − left as a function of y, so you must write each boundary as x = h(y). Choose the one where the boundary does not change formulas partway through.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="On [−2, 2] the line y = 4 is on top, so integrate top − bottom = 4 − x².">
+        <p class="q">Check yourself: The area between y = 4 and y = x² from x = −2 to 2 is</p>
+        <div class="opts"><button type="button">∫<sub>−2</sub><sup>2</sup> (4 − x²) dx</button><button type="button">∫<sub>−2</sub><sup>2</sup> (x² − 4) dx</button><button type="button">∫<sub>0</sub><sup>4</sup> (4 − x²) dx</button><button type="button">∫<sub>−2</sub><sup>2</sup> 4x² dx</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

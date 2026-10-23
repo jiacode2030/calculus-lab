@@ -1,0 +1,50 @@
+  <section class="view" id="v-volrev" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 8</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Volumes of revolution</h1>
+        <p class="lede">Spin a region around an axis and it sweeps out a solid. Each slice is a disc (or a ring, called a washer), and its area is π × radius².</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Slice the solid perpendicular to the axis of revolution. A slice through a region that touches the axis is a <b>disc</b> of radius R(x), area πR². If the region has a gap between it and the axis, the slice is a <b>washer</b>: outer radius R, inner radius r, area <span class="m">π(R² − r²)</span>. The volume is <span class="m">V = π ∫<sub>a</sub><sup>b</sup> (R(x)² − r(x)²) dx</span>.</p>
+        <p>Radii are distances from the axis. If you revolve around <span class="m">y = c</span>, then R = (top − c) and r = (bottom − c). Square <i>the distance</i>, not the function: (f − g)² is not R² − r².</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>cross sections of any known shape</dd><dt>So we didn't need</dt><dd>a particular family: all slices are circles or rings</dd><dt>Now</dt><dd>tanks, domes, bottles and every spun shape</dd><dt>So we need</dt><dd>the disc and washer methods</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>V = π ∫ R² dx</span><small>disc</small></div><div class="eqn"><span>V = π ∫ (R² − r²) dx</span><small>washer, R outer, r inner</small></div><div class="eqn"><span>R = distance from the axis</span><small>axis y = c: R = f − c</small></div></div>
+      <div class="lab" id="vr-lab">
+        <div class="labbar"><span class="title">Spin the region</span></div>
+        <div class="ctl"><span class="lbl">Region and axis</span><div class="seg" id="vr-fn" role="group" aria-label="Region and axis"><button type="button" data-k="a" aria-pressed="true">y = √x, about the x-axis, [0, 4]</button><button type="button" data-k="b" aria-pressed="false">between y = √x and y = x², about the x-axis</button><button type="button" data-k="c" aria-pressed="false">y = √x about y = −1, [0, 4]</button></div></div>
+        <canvas id="vr-canvas" aria-label="The region and its mirror image across the axis of revolution, with slices drawn as vertical segments, and an end view of the washer at a chosen x."></canvas>
+        <div class="controls"><div class="ctl"><label for="vr-x"><span>Slice at x</span> <output id="vr-x-out"></output></label><input type="range" id="vr-x" min="0.05" max="3.9" step="0.05" value="1"></div></div>
+        <div class="readout"><div><span>outer radius R</span><strong class="x" id="vr-ro">—</strong></div><div><span>inner radius r</span><strong class="a" id="vr-ri">—</strong></div><div><span>volume</span><strong class="v" id="vr-V">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose the first region. What shape is each slice, and what is its radius at x = 1? <button type="button" class="btn link" data-show='[["click", "#vr-fn [data-k=a]"], ["#vr-x", 1]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>A disc with radius √1 = 1, area π. V = π∫₀⁴ x dx = 8π.</p></details></li>
+        <li><p>Choose the region between √x and x². What is the slice now? <button type="button" class="btn link" data-show='[["click", "#vr-fn [data-k=b]"], ["#vr-x", 0.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>A washer: outer radius √x, inner radius x². V = π∫₀¹ (x − x⁴) dx = 3π/10.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find the volume when the region under y = √x on [0, 4] is revolved about the x-axis, then about y = −1.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>About the x-axis (discs).</b> R = √x, so V = π ∫<sub>0</sub><sup>4</sup> x dx = π(8) = 8π.</li>
+          <li hidden><b>About y = −1 (washers).</b> The axis is 1 unit below the x-axis: R = √x + 1, r = 1 (the x-axis is 1 above the axis).</li>
+          <li hidden><b>Set up.</b> V = π ∫<sub>0</sub><sup>4</sup> [(√x + 1)² − 1²] dx = π ∫<sub>0</sub><sup>4</sup> (x + 2√x) dx.</li>
+          <li hidden><b>Integrate.</b> π [x²/2 + (4/3)x<sup>3/2</sup>]<sub>0</sub><sup>4</sup> = π(8 + 32/3).</li>
+          <li hidden><b>Answer.</b> About x-axis: <b>8π</b>. About y = −1: <b>56π/3</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Squaring the difference of functions: (f − g)² is not f² − g².</li>
+        <li>Forgetting π.</li>
+        <li>Measuring radii from the x-axis when the axis of revolution is a different line.</li>
+        <li>Using a disc when there is a gap (it should be a washer).</li>
+        <li>Mixing up outer and inner radius.</li>
+      </ul></div>
+      <div class="prose"><h2>Which method?</h2>
+        <p>If the slices perpendicular to the axis are full circles, use discs. If they have a hole, use washers. In AB you slice perpendicular to the axis of revolution (discs and washers); the shell method is not part of the course.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Discs of radius R = x: π R² = πx².">
+        <p class="q">Check yourself: Revolving the region under y = x on [0, 2] about the x-axis gives volume</p>
+        <div class="opts"><button type="button">π ∫₀² x² dx</button><button type="button">π ∫₀² x dx</button><button type="button">2π ∫₀² x dx</button><button type="button">∫₀² x² dx</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

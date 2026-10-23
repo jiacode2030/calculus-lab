@@ -1,0 +1,57 @@
+  <section class="view" id="v-avgval" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 8</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Average value & motion with integrals</h1>
+        <p class="lede">The average of a function over an interval is the height of a rectangle with the same area. And for a moving particle, integrals tell you how far it went and how far it ended up.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>The <b>average value</b> of f on [a, b] is <span class="m">f<sub>avg</sub> = (1/(b − a)) ∫<sub>a</sub><sup>b</sup> f(x) dx</span>: total accumulation divided by the length of the interval. A continuous function actually <i>equals</i> its average somewhere (the Mean Value Theorem for integrals).</p>
+        <p>For a particle with velocity v(t): <b>displacement</b> (net change in position) is <span class="m">∫ v dt</span>, while <b>total distance</b> traveled is <span class="m">∫ |v| dt</span>. If v changes sign the two differ. And position is <span class="m">s(T) = s(0) + ∫<sub>0</sub><sup>T</sup> v dt</span>.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>an average was a sum over a count</dd><dt>So we didn't need</dt><dd>an average over a continuous interval</dd><dt>Now</dt><dd>average temperature, average velocity, and displacement vs distance</dd><dt>So we need</dt><dd>the average value of a function</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>f<sub>avg</sub> = (1/(b−a)) ∫<sub>a</sub><sup>b</sup> f dx</span><small>average value</small></div><div class="eqn"><span>displacement = ∫ v dt · distance = ∫ |v| dt</span><small>particle motion</small></div><div class="eqn"><span>s(T) = s(0) + ∫₀ᵀ v dt</span><small>position</small></div></div>
+      <div class="lab" id="av-lab">
+        <div class="labbar"><span class="title">The rectangle with the same area</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="av-fn" role="group" aria-label="Function"><button type="button" data-k="a" aria-pressed="true">x²</button><button type="button" data-k="b" aria-pressed="false">sin x</button><button type="button" data-k="c" aria-pressed="false">eˣ</button><button type="button" data-k="d" aria-pressed="false">4x − x²</button></div></div>
+        <canvas id="av-canvas" aria-label="A function on an interval with a horizontal line at its average value and a rectangle of equal area."></canvas>
+        <div class="controls"><div class="ctl"><label for="av-a"><span>a</span> <output id="av-a-out"></output></label><input type="range" id="av-a" min="0" max="2" step="0.1" value="0"></div><div class="ctl"><label for="av-b"><span>b</span> <output id="av-b-out"></output></label><input type="range" id="av-b" min="2.5" max="5" step="0.1" value="3"></div></div>
+        <div class="readout"><div><span>∫ f dx</span><strong class="x" id="av-int">—</strong></div><div><span>average value</span><strong class="v" id="av-avg">—</strong></div><div><span>where f equals its average</span><strong class="a" id="av-c">—</strong></div></div>
+      </div>
+      <div class="lab" id="av-lab2">
+        <div class="labbar"><span class="title">Displacement vs distance</span></div>
+        <p class="small" style="margin:0">v(t) = t² − 4t + 3 (m/s), starting position s(0) = 2 m.</p>
+        <canvas id="av-canvas2" aria-label="A velocity graph with the area up to time T shaded, positive and negative, and readouts of displacement, distance and position."></canvas>
+        <div class="controls"><div class="ctl"><label for="av-T"><span>T</span> <output id="av-T-out"></output></label><input type="range" id="av-T" min="0.1" max="5" step="0.05" value="4"></div></div>
+        <div class="readout"><div><span>displacement ∫₀ᵀ v dt</span><strong class="x" id="av-disp">—</strong></div><div><span>total distance ∫₀ᵀ |v| dt</span><strong class="a" id="av-dist">—</strong></div><div><span>position s(T)</span><strong class="v" id="av-pos">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>On x² over [0, 3], find the average value and where f equals it. <button type="button" class="btn link" data-show='[["click", "#av-fn [data-k=a]"], ["#av-a", 0], ["#av-b", 3]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>∫₀³ x² dx = 9, so the average is 3. x² = 3 at x = √3 ≈ 1.73: the green dot where the curve crosses the average line.</p></details></li>
+        <li><p>Set T = 3 on the motion graph. Compare displacement and distance. <button type="button" class="btn link" data-show='[["#av-T", 3]]'>T = 3</button></p><details><summary>What you should see</summary><p>Displacement is 0 (the signed areas cancel): the particle ends where it started, s(3) = 2 m. But the distance is 4/3 + 4/3 = 8/3 m: it went forward, then back. Distance counts both trips.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find the average value of f(x) = x² on [0, 3], and the displacement and distance for v(t) = t² − 4t + 3 on [0, 3].</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Average value.</b> (1/3) ∫<sub>0</sub><sup>3</sup> x² dx = (1/3)(9) = 3.</li>
+          <li hidden><b>Displacement.</b> ∫<sub>0</sub><sup>3</sup> (t² − 4t + 3) dt = [t³/3 − 2t² + 3t]<sub>0</sub><sup>3</sup> = 9 − 18 + 9 = 0.</li>
+          <li hidden><b>Sign of v.</b> v = (t − 1)(t − 3): positive on [0, 1), negative on (1, 3).</li>
+          <li hidden><b>Distance.</b> ∫<sub>0</sub><sup>1</sup> v dt = 4/3, and ∫<sub>1</sub><sup>3</sup> v dt = −4/3. Distance = 4/3 + 4/3 = 8/3.</li>
+          <li hidden><b>Answer.</b> Average value <b>3</b>; displacement <b>0</b>; total distance <b>8/3 m</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Dividing by the wrong thing: divide by b − a, not by b or by 2.</li>
+        <li>Using ∫ v instead of ∫ |v| for distance.</li>
+        <li>Forgetting the starting position when finding position.</li>
+        <li>Averaging endpoint values (f(a) + f(b))/2 instead of integrating.</li>
+        <li>Not splitting the integral where v changes sign.</li>
+      </ul></div>
+      <div class="prose"><h2>Units</h2>
+        <p>Average value has the units of f. Displacement and distance have the units of v × t. If f is a rate, ∫ f is a total amount; dividing by the interval length gives the average rate.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="(1/2)∫₁³ 2x dx = (1/2)(9 − 1) = 4.">
+        <p class="q">Check yourself: The average value of f(x) = 2x on [1, 3] is</p>
+        <div class="opts"><button type="button">4</button><button type="button">2</button><button type="button">8</button><button type="button">3</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

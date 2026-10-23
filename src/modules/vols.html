@@ -1,0 +1,50 @@
+  <section class="view" id="v-vols" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 8</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Volumes from cross sections</h1>
+        <p class="lede">Stack thin slices of a known shape along an axis, and add up their volumes. A slice with area A(x) and thickness dx has volume A(x) dx.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>A solid is built on a base region in the xy-plane. Cut it by planes perpendicular to the x-axis: each cut is a shape (a square, a semicircle, an equilateral triangle, a rectangle) whose size depends on the <b>base length s(x) = top − bottom</b>. Compute its area A(x), and the volume is <span class="m">V = ∫<sub>a</sub><sup>b</sup> A(x) dx</span>.</p>
+        <p>Areas to know, with s the base length: <b>square</b> A = s²; <b>semicircle</b> A = (π/8)s² (the diameter is s); <b>equilateral triangle</b> A = (√3/4)s²; <b>rectangle of height h</b> A = h·s; <b>isosceles right triangle with leg s</b> A = s²/2. The hard part is only getting s(x) right.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>integrals measured area in the plane</dd><dt>So we didn't need</dt><dd>a volume as an integral of areas</dd><dt>Now</dt><dd>solids that are not made by rotation</dd><dt>So we need</dt><dd>volumes of solids with known cross sections</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>V = ∫ A(x) dx</span><small>volume from cross sections</small></div><div class="eqn"><span>square: A = s² · semicircle: A = πs²/8</span><small>s = top − bottom</small></div><div class="eqn"><span>equilateral triangle: A = (√3/4)s²</span><small></small></div></div>
+      <div class="lab" id="vo-lab">
+        <div class="labbar"><span class="title">Stack the slices</span></div>
+        <div class="ctl"><span class="lbl">Cross-section shape</span><div class="seg" id="vo-sh" role="group" aria-label="Cross-section shape"><button type="button" data-k="sq" aria-pressed="true">Squares</button><button type="button" data-k="se" aria-pressed="false">Semicircles</button><button type="button" data-k="tr" aria-pressed="false">Equilateral triangles</button></div></div>
+        <p class="small" style="margin:0">Base: the region between y = x² and y = x on [0, 1], so the base length is s(x) = x − x².</p>
+        <canvas id="vo-canvas" aria-label="Left: the base region with a vertical line at x and the base length s. Right: the area of the cross section at each x, with the volume as the shaded area."></canvas>
+        <div class="controls"><div class="ctl"><label for="vo-x"><span>Position x</span> <output id="vo-x-out"></output></label><input type="range" id="vo-x" min="0.05" max="0.95" step="0.01" value="0.5"></div></div>
+        <div class="readout"><div><span>base length s(x)</span><strong class="x" id="vo-s">—</strong></div><div><span>area A(x) of the slice</span><strong class="v" id="vo-A">—</strong></div><div><span>volume V = ∫ A dx</span><strong class="a" id="vo-V">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose squares. Where is the slice largest? <button type="button" class="btn link" data-show='[["click", "#vo-sh [data-k=sq]"], ["#vo-x", 0.5]]'>x = 0.5</button></p><details><summary>What you should see</summary><p>At x = 0.5: s = 0.25 is the longest base, so the square slice is largest there. V = ∫(x − x²)² dx = 1/30.</p></details></li>
+        <li><p>Switch to semicircles. How does the volume compare with squares? <button type="button" class="btn link" data-show='[["click", "#vo-sh [data-k=se]"]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>π/8 ≈ 0.39 of the square volume: a semicircle with diameter s covers π/8 of the square of side s.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">The base of a solid is the region between y = x² and y = x. Cross sections perpendicular to the x-axis are squares. Find the volume.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Base length.</b> s(x) = x − x² on [0, 1].</li>
+          <li hidden><b>Area of a square slice.</b> A(x) = s² = (x − x²)² = x² − 2x³ + x⁴.</li>
+          <li hidden><b>Integrate.</b> V = ∫<sub>0</sub><sup>1</sup> (x² − 2x³ + x⁴) dx = 1/3 − 1/2 + 1/5.</li>
+          <li hidden><b>Answer.</b> <b>1/30</b> ≈ 0.0333.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Using the wrong base length: it is top − bottom, not just one function.</li>
+        <li>Squaring after integrating instead of before: A(x) must be squared first.</li>
+        <li>Using the radius instead of the diameter for a semicircle (the diameter is s).</li>
+        <li>Forgetting the constant in the area formula (π/8, √3/4).</li>
+        <li>Mixing dx and dy slices: the slice direction decides which variable you integrate.</li>
+      </ul></div>
+      <div class="prose"><h2>Derivations of the area formulas</h2>
+        <p>Semicircle with diameter s: radius s/2, area (1/2)π(s/2)² = πs²/8. Equilateral triangle with side s: area (1/2)·s·(√3/2)s = (√3/4)s². Square: s². Keep these in your head: they are the whole difficulty in most cross-section problems.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Radius s/2, area half of π(s/2)² = πs²/8.">
+        <p class="q">Check yourself: A semicircular cross section has diameter s(x). Its area is</p>
+        <div class="opts"><button type="button">πs²/8</button><button type="button">πs²/4</button><button type="button">πs²/2</button><button type="button">s²</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

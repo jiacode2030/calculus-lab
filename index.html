@@ -2489,6 +2489,318 @@ body.is-ab .prob.bc{display:none!important}
     </div>
   </section>
 
+  <section class="view" id="v-slope" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 7</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Slope fields</h1>
+        <p class="lede">A differential equation tells you the slope at every point. A slope field draws those slopes, and the solutions are the curves that follow them.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>A <b>differential equation</b> like <span class="m">dy/dx = x − y</span> gives the slope of a solution at every point (x, y) without telling you the solution. A <b>slope field</b> draws a tiny line segment of the right slope at a grid of points. A solution curve is one that is tangent to the segments everywhere it passes, like a leaf drifting on a current.</p>
+        <p>Read the field: if the right side depends only on x, segments in each vertical column are parallel; if only on y, segments in each row are parallel; slopes are zero where the right side is zero. Choose a starting point and you can trace the one solution through it. An initial condition like y(0) = 1 picks that curve.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>a derivative was computed from a known function</dd><dt>So we didn't need</dt><dd>a rule for the slope, and a function to find</dd><dt>Now</dt><dd>population growth, cooling, mixing and every model written as a rate</dd><dt>So we need</dt><dd>differential equations and slope fields</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>dy/dx = F(x, y)</span><small>slope at (x, y)</small></div><div class="eqn"><span>y(x₀) = y₀</span><small>initial condition picks the curve</small></div><div class="eqn"><span>a solution is tangent to the field</span><small>everywhere</small></div></div>
+      <div class="lab" id="sf-lab">
+        <div class="labbar"><span class="title">Trace a solution</span></div>
+        <div class="ctl"><span class="lbl">Differential equation</span><div class="seg" id="sf-fn" role="group" aria-label="Differential equation"><button type="button" data-k="a" aria-pressed="true">dy/dx = x</button><button type="button" data-k="b" aria-pressed="false">dy/dx = y</button><button type="button" data-k="c" aria-pressed="false">dy/dx = x − y</button><button type="button" data-k="d" aria-pressed="false">dy/dx = −x/y</button><button type="button" data-k="e" aria-pressed="false">dy/dx = 0.5y(1 − y/4)</button></div></div>
+        <p class="small" style="margin:0">Drag on the graph to move the starting point, or use the sliders.</p>
+        <canvas id="sf-canvas" aria-label="A slope field with a solution curve through a chosen starting point."></canvas>
+        <div class="controls"><div class="ctl"><label for="sf-x0"><span>Start x₀</span> <output id="sf-x0-out"></output></label><input type="range" id="sf-x0" min="-3" max="3" step="0.1" value="0"></div><div class="ctl"><label for="sf-y0"><span>Start y₀</span> <output id="sf-y0-out"></output></label><input type="range" id="sf-y0" min="-3" max="3" step="0.1" value="1"></div></div>
+        <div class="readout"><div><span>slope at the start</span><strong class="x" id="sf-sl">—</strong></div><div><span>solution value 1 unit to the right</span><strong class="v" id="sf-y1">—</strong></div><div><span>what to notice</span><strong class="" id="sf-note">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose dy/dx = x. What do the solutions look like, and why are the segments in each column parallel? <button type="button" class="btn link" data-show='[["click", "#sf-fn [data-k=a]"]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Parabolas y = x²/2 + C. The slope depends only on x, so every point in a vertical column has the same slope.</p></details></li>
+        <li><p>Choose dy/dx = y and start at y₀ = 1, then at y₀ = −1. What happens? <button type="button" class="btn link" data-show='[["click", "#sf-fn [data-k=b]"], ["#sf-y0", 1], ["#sf-x0", 0]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Solutions y = Ce^x grow away from the x-axis in both directions: y = 0 is a solution but an unstable one. Segments are parallel along each row (slope depends only on y).</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">For dy/dx = x − y with y(0) = 1, find the slope at the start and use the tangent line to estimate y(0.2).</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Slope at (0, 1).</b> dy/dx = 0 − 1 = −1.</li>
+          <li hidden><b>Tangent line.</b> y ≈ 1 + (−1)(x − 0).</li>
+          <li hidden><b>Estimate.</b> y(0.2) ≈ 1 − 0.2 = 0.8.</li>
+          <li hidden><b>Answer.</b> About <b>0.8</b>. (This is one step of Euler's method, a BC topic: use the new point to find a new slope.)</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Reading a slope field as the graph of the solution. The segments show slope only.</li>
+        <li>Mixing up "depends only on x" (parallel in columns) with "depends only on y" (parallel in rows).</li>
+        <li>Forgetting that two different solutions never cross (for a smooth equation).</li>
+        <li>Using the slope formula at the wrong point.</li>
+        <li>Believing the field determines one curve. You need an initial condition.</li>
+      </ul></div>
+      <div class="prose"><h2>Equilibrium solutions</h2>
+        <p>Where dy/dx = 0 for all x along a horizontal line y = c, that line is a solution (an equilibrium). In dy/dx = y it is y = 0. In the last case of the lab, y = 0 and y = 4 are equilibria, and solutions between them level off at 4.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="dy/dx = 1 − 1 = 0 there, so the segments are flat.">
+        <p class="q">Check yourself: In a slope field for dy/dx = y² − 1, the segments along y = 1 are</p>
+        <div class="opts"><button type="button">horizontal</button><button type="button">vertical</button><button type="button">rising</button><button type="button">falling</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-sepvar" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 7</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Separation of variables & exponential models</h1>
+        <p class="lede">For some equations you can move all the y's to one side and all the x's to the other, then integrate. The most important result: when something changes at a rate proportional to itself, it follows an exponential.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p><b>Separate</b>: for <span class="m">dy/dx = f(x)·g(y)</span>, write <span class="m">dy / g(y) = f(x) dx</span>, integrate both sides, and put the constant C on the x side (once). Then use the initial condition to find C, and solve for y if possible. Skipping the +C before using the starting value is the classic error.</p>
+        <p>The model <span class="m">dy/dt = k y</span> says the rate is proportional to the amount. Separating gives <span class="m">y = y₀ e<sup>kt</sup></span>. With k &gt; 0 it is exponential growth (population, money at continuous interest); with k &lt; 0 it is decay (radioactive material, with half-life ln 2 / |k|). Newton's law of cooling, <span class="m">dT/dt = −k(T − T<sub>a</sub>)</span>, is the same thing for the difference T − T<sub>a</sub>.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>a slope field showed the shape of solutions</dd><dt>So we didn't need</dt><dd>a way to find the exact solution</dd><dt>Now</dt><dd>growth and decay, cooling, and any separable equation</dd><dt>So we need</dt><dd>separation of variables and exponential models</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>dy/dt = k y ⇒ y = y₀ e<sup>kt</sup></span><small>proportional growth or decay</small></div><div class="eqn"><span>∫ dy/g(y) = ∫ f(x) dx + C</span><small>separate, then integrate</small></div><div class="eqn"><span>half-life = ln 2 / |k|</span><small>doubling time = ln 2 / k</small></div></div>
+      <div class="lab" id="sv-lab">
+        <div class="labbar"><span class="title">Rate proportional to the amount</span></div>
+        <div class="ctl"><span class="lbl">Model</span><div class="seg" id="sv-fn" role="group" aria-label="Model"><button type="button" data-k="gr" aria-pressed="true">dy/dt = k y</button><button type="button" data-k="co" aria-pressed="false">cooling: dT/dt = −k(T − Tₐ)</button></div></div>
+        <canvas id="sv-canvas" aria-label="A graph of a quantity over time following the chosen differential equation, with its tangent line at a chosen time."></canvas>
+        <div class="controls"><div class="ctl"><label for="sv-k"><span>k</span> <output id="sv-k-out"></output></label><input type="range" id="sv-k" min="-1" max="1" step="0.05" value="0.3"></div><div class="ctl"><label for="sv-y0"><span>Start value</span> <output id="sv-y0-out"></output></label><input type="range" id="sv-y0" min="0.5" max="10" step="0.5" value="2"></div><div class="ctl"><label for="sv-ta"><span>Room temperature Tₐ (cooling only)</span> <output id="sv-ta-out"></output></label><input type="range" id="sv-ta" min="0" max="8" step="0.5" value="1"></div><div class="ctl"><label for="sv-t"><span>Time t</span> <output id="sv-t-out"></output></label><input type="range" id="sv-t" min="0" max="10" step="0.1" value="3"></div></div>
+        <div class="readout"><div><span>value at time t</span><strong class="x" id="sv-y">—</strong></div><div><span>rate dy/dt there</span><strong class="v" id="sv-dy">—</strong></div><div><span>doubling time or half-life</span><strong class="a" id="sv-key">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Set k = 0.3 and y₀ = 2. When does the quantity double? <button type="button" class="btn link" data-show='[["click", "#sv-fn [data-k=gr]"], ["#sv-k", 0.3], ["#sv-y0", 2]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>After ln 2 / 0.3 ≈ 2.31 time units, and again after another 2.31. The doubling time does not depend on the starting value.</p></details></li>
+        <li><p>Switch to cooling with Tₐ = 1, y₀ = 6 and k = 0.4. What does T approach? <button type="button" class="btn link" data-show='[["click", "#sv-fn [data-k=co]"], ["#sv-k", 0.4], ["#sv-y0", 6], ["#sv-ta", 1]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The room temperature, 1: the difference T − Tₐ decays exponentially, so T levels off at Tₐ.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Solve dy/dx = 2xy with y(0) = 3.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Separate.</b> dy/y = 2x dx (valid for y ≠ 0).</li>
+          <li hidden><b>Integrate both sides.</b> ln|y| = x² + C.</li>
+          <li hidden><b>Solve for y.</b> |y| = e<sup>C</sup> e<sup>x²</sup>, so y = A e<sup>x²</sup> with A = ± e<sup>C</sup>.</li>
+          <li hidden><b>Use y(0) = 3.</b> A·e⁰ = 3, so A = 3.</li>
+          <li hidden><b>Answer.</b> y = <b>3e<sup>x²</sup></b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Not separating completely: all y's (with dy) on one side, all x's (with dx) on the other.</li>
+        <li>Forgetting + C, or adding it on both sides.</li>
+        <li>Using the initial condition before including C.</li>
+        <li>Dividing by something that could be zero without noting the equilibrium solution.</li>
+        <li>Mixing up k signs: k &lt; 0 is decay.</li>
+      </ul></div>
+      <div class="prose"><h2>Why exponentials</h2>
+        <p>If the rate of change is proportional to the amount, a bigger amount grows faster, which makes it even bigger: that feedback is the shape of e<sup>kt</sup>. Check any proposed solution by differentiating: if y = y₀e<sup>kt</sup> then dy/dt = k·y₀e<sup>kt</sup> = k y. ✓</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="dy/dt = ky gives y = y₀e^{kt} with k = −0.2.">
+        <p class="q">Check yourself: If dy/dt = −0.2y and y(0) = 50, then y(t) =</p>
+        <div class="opts"><button type="button">50e<sup>−0.2t</sup></button><button type="button">50e<sup>0.2t</sup></button><button type="button">−0.2·50e<sup>t</sup></button><button type="button">50 − 0.2t</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-avgval" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 8</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Average value & motion with integrals</h1>
+        <p class="lede">The average of a function over an interval is the height of a rectangle with the same area. And for a moving particle, integrals tell you how far it went and how far it ended up.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>The <b>average value</b> of f on [a, b] is <span class="m">f<sub>avg</sub> = (1/(b − a)) ∫<sub>a</sub><sup>b</sup> f(x) dx</span>: total accumulation divided by the length of the interval. A continuous function actually <i>equals</i> its average somewhere (the Mean Value Theorem for integrals).</p>
+        <p>For a particle with velocity v(t): <b>displacement</b> (net change in position) is <span class="m">∫ v dt</span>, while <b>total distance</b> traveled is <span class="m">∫ |v| dt</span>. If v changes sign the two differ. And position is <span class="m">s(T) = s(0) + ∫<sub>0</sub><sup>T</sup> v dt</span>.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>an average was a sum over a count</dd><dt>So we didn't need</dt><dd>an average over a continuous interval</dd><dt>Now</dt><dd>average temperature, average velocity, and displacement vs distance</dd><dt>So we need</dt><dd>the average value of a function</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>f<sub>avg</sub> = (1/(b−a)) ∫<sub>a</sub><sup>b</sup> f dx</span><small>average value</small></div><div class="eqn"><span>displacement = ∫ v dt · distance = ∫ |v| dt</span><small>particle motion</small></div><div class="eqn"><span>s(T) = s(0) + ∫₀ᵀ v dt</span><small>position</small></div></div>
+      <div class="lab" id="av-lab">
+        <div class="labbar"><span class="title">The rectangle with the same area</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="av-fn" role="group" aria-label="Function"><button type="button" data-k="a" aria-pressed="true">x²</button><button type="button" data-k="b" aria-pressed="false">sin x</button><button type="button" data-k="c" aria-pressed="false">eˣ</button><button type="button" data-k="d" aria-pressed="false">4x − x²</button></div></div>
+        <canvas id="av-canvas" aria-label="A function on an interval with a horizontal line at its average value and a rectangle of equal area."></canvas>
+        <div class="controls"><div class="ctl"><label for="av-a"><span>a</span> <output id="av-a-out"></output></label><input type="range" id="av-a" min="0" max="2" step="0.1" value="0"></div><div class="ctl"><label for="av-b"><span>b</span> <output id="av-b-out"></output></label><input type="range" id="av-b" min="2.5" max="5" step="0.1" value="3"></div></div>
+        <div class="readout"><div><span>∫ f dx</span><strong class="x" id="av-int">—</strong></div><div><span>average value</span><strong class="v" id="av-avg">—</strong></div><div><span>where f equals its average</span><strong class="a" id="av-c">—</strong></div></div>
+      </div>
+      <div class="lab" id="av-lab2">
+        <div class="labbar"><span class="title">Displacement vs distance</span></div>
+        <p class="small" style="margin:0">v(t) = t² − 4t + 3 (m/s), starting position s(0) = 2 m.</p>
+        <canvas id="av-canvas2" aria-label="A velocity graph with the area up to time T shaded, positive and negative, and readouts of displacement, distance and position."></canvas>
+        <div class="controls"><div class="ctl"><label for="av-T"><span>T</span> <output id="av-T-out"></output></label><input type="range" id="av-T" min="0.1" max="5" step="0.05" value="4"></div></div>
+        <div class="readout"><div><span>displacement ∫₀ᵀ v dt</span><strong class="x" id="av-disp">—</strong></div><div><span>total distance ∫₀ᵀ |v| dt</span><strong class="a" id="av-dist">—</strong></div><div><span>position s(T)</span><strong class="v" id="av-pos">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>On x² over [0, 3], find the average value and where f equals it. <button type="button" class="btn link" data-show='[["click", "#av-fn [data-k=a]"], ["#av-a", 0], ["#av-b", 3]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>∫₀³ x² dx = 9, so the average is 3. x² = 3 at x = √3 ≈ 1.73: the green dot where the curve crosses the average line.</p></details></li>
+        <li><p>Set T = 3 on the motion graph. Compare displacement and distance. <button type="button" class="btn link" data-show='[["#av-T", 3]]'>T = 3</button></p><details><summary>What you should see</summary><p>Displacement is 0 (the signed areas cancel): the particle ends where it started, s(3) = 2 m. But the distance is 4/3 + 4/3 = 8/3 m: it went forward, then back. Distance counts both trips.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find the average value of f(x) = x² on [0, 3], and the displacement and distance for v(t) = t² − 4t + 3 on [0, 3].</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Average value.</b> (1/3) ∫<sub>0</sub><sup>3</sup> x² dx = (1/3)(9) = 3.</li>
+          <li hidden><b>Displacement.</b> ∫<sub>0</sub><sup>3</sup> (t² − 4t + 3) dt = [t³/3 − 2t² + 3t]<sub>0</sub><sup>3</sup> = 9 − 18 + 9 = 0.</li>
+          <li hidden><b>Sign of v.</b> v = (t − 1)(t − 3): positive on [0, 1), negative on (1, 3).</li>
+          <li hidden><b>Distance.</b> ∫<sub>0</sub><sup>1</sup> v dt = 4/3, and ∫<sub>1</sub><sup>3</sup> v dt = −4/3. Distance = 4/3 + 4/3 = 8/3.</li>
+          <li hidden><b>Answer.</b> Average value <b>3</b>; displacement <b>0</b>; total distance <b>8/3 m</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Dividing by the wrong thing: divide by b − a, not by b or by 2.</li>
+        <li>Using ∫ v instead of ∫ |v| for distance.</li>
+        <li>Forgetting the starting position when finding position.</li>
+        <li>Averaging endpoint values (f(a) + f(b))/2 instead of integrating.</li>
+        <li>Not splitting the integral where v changes sign.</li>
+      </ul></div>
+      <div class="prose"><h2>Units</h2>
+        <p>Average value has the units of f. Displacement and distance have the units of v × t. If f is a rate, ∫ f is a total amount; dividing by the interval length gives the average rate.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="(1/2)∫₁³ 2x dx = (1/2)(9 − 1) = 4.">
+        <p class="q">Check yourself: The average value of f(x) = 2x on [1, 3] is</p>
+        <div class="opts"><button type="button">4</button><button type="button">2</button><button type="button">8</button><button type="button">3</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-area" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 8</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Area between curves</h1>
+        <p class="lede">The region between two curves is made of thin slices. Top minus bottom, added up, gives the area.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Slice the region into vertical strips. Each has width dx and height <b>(top − bottom)</b>, so the area is <span class="m">∫<sub>a</sub><sup>b</sup> (f(x) − g(x)) dx</span> where f ≥ g. Find the limits by solving f(x) = g(x). If the curves cross, split the integral at each crossing so the height is always top minus bottom (never negative).</p>
+        <p>Sometimes horizontal slices are easier: width dy and length <b>(right − left)</b>, giving <span class="m">∫<sub>c</sub><sup>d</sup> (x<sub>right</sub> − x<sub>left</sub>) dy</span>. Use them when the region is bounded by curves that are easy to write as x = h(y), or when top/bottom switch.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>the integral of f was the area under f</dd><dt>So we didn't need</dt><dd>the area between two curves</dd><dt>Now</dt><dd>the area enclosed by curves, the first step to volumes</dd><dt>So we need</dt><dd>area between curves, with vertical or horizontal slices</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>A = ∫ (top − bottom) dx</span><small>vertical slices</small></div><div class="eqn"><span>A = ∫ (right − left) dy</span><small>horizontal slices</small></div><div class="eqn"><span>limits: where the curves meet</span><small>solve f(x) = g(x)</small></div></div>
+      <div class="lab" id="ar-lab">
+        <div class="labbar"><span class="title">Slice the region</span></div>
+        <div class="ctl"><span class="lbl">Curves</span><div class="seg" id="ar-fn" role="group" aria-label="Curves"><button type="button" data-k="a" aria-pressed="true">y = x and y = x²</button><button type="button" data-k="b" aria-pressed="false">y = √x and y = x²</button><button type="button" data-k="c" aria-pressed="false">y = x³ and y = x</button><button type="button" data-k="d" aria-pressed="false">sin x and cos x</button></div></div>
+        <canvas id="ar-canvas" aria-label="The region between two curves shaded, with vertical rectangles of height top minus bottom."></canvas>
+        <div class="controls"><div class="ctl"><label for="ar-n"><span>Slices n</span> <output id="ar-n-out"></output></label><input type="range" id="ar-n" min="0" max="40" step="1" value="8"></div></div>
+        <div class="readout"><div><span>intersections</span><strong class="x" id="ar-lim">—</strong></div><div><span>exact area</span><strong class="v" id="ar-exact">—</strong></div><div><span>sum of the slices</span><strong class="a" id="ar-sum">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose √x and x² and slice with n = 8. How close is the sum to the exact area? <button type="button" class="btn link" data-show='[["click", "#ar-fn [data-k=b]"], ["#ar-n", 8]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Close, a little off: the sum is a midpoint estimate. The exact area is 1/3. More slices give a better answer.</p></details></li>
+        <li><p>Choose y = x³ and y = x. Which is on top, and why must you split the integral? <button type="button" class="btn link" data-show='[["click", "#ar-fn [data-k=c]"], ["#ar-n", 0]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>On (0, 1) the line y = x is on top; on (−1, 0) the cubic is. The curves cross at x = 0, so top and bottom swap there. Splitting (or using symmetry) keeps every height positive.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find the area enclosed by y = x and y = x².</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Intersections.</b> x = x² ⇒ x = 0 or 1.</li>
+          <li hidden><b>Top and bottom.</b> On (0, 1), x ≥ x², so top = x, bottom = x².</li>
+          <li hidden><b>Integrate.</b> ∫<sub>0</sub><sup>1</sup> (x − x²) dx = [x²/2 − x³/3]<sub>0</sub><sup>1</sup>.</li>
+          <li hidden><b>Answer.</b> 1/2 − 1/3 = <b>1/6</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Subtracting in the wrong order, giving a negative area. Use top − bottom.</li>
+        <li>Using the wrong limits: find intersections by setting the functions equal.</li>
+        <li>Not splitting at crossings when top and bottom switch.</li>
+        <li>Integrating x² − x as if it were the area under one curve minus a number.</li>
+        <li>Using dx slices when horizontal slices would avoid splitting.</li>
+      </ul></div>
+      <div class="prose"><h2>Vertical or horizontal?</h2>
+        <p>Vertical slices (dx): integrand top − bottom as a function of x. Horizontal slices (dy): integrand right − left as a function of y, so you must write each boundary as x = h(y). Choose the one where the boundary does not change formulas partway through.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="On [−2, 2] the line y = 4 is on top, so integrate top − bottom = 4 − x².">
+        <p class="q">Check yourself: The area between y = 4 and y = x² from x = −2 to 2 is</p>
+        <div class="opts"><button type="button">∫<sub>−2</sub><sup>2</sup> (4 − x²) dx</button><button type="button">∫<sub>−2</sub><sup>2</sup> (x² − 4) dx</button><button type="button">∫<sub>0</sub><sup>4</sup> (4 − x²) dx</button><button type="button">∫<sub>−2</sub><sup>2</sup> 4x² dx</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-vols" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 8</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Volumes from cross sections</h1>
+        <p class="lede">Stack thin slices of a known shape along an axis, and add up their volumes. A slice with area A(x) and thickness dx has volume A(x) dx.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>A solid is built on a base region in the xy-plane. Cut it by planes perpendicular to the x-axis: each cut is a shape (a square, a semicircle, an equilateral triangle, a rectangle) whose size depends on the <b>base length s(x) = top − bottom</b>. Compute its area A(x), and the volume is <span class="m">V = ∫<sub>a</sub><sup>b</sup> A(x) dx</span>.</p>
+        <p>Areas to know, with s the base length: <b>square</b> A = s²; <b>semicircle</b> A = (π/8)s² (the diameter is s); <b>equilateral triangle</b> A = (√3/4)s²; <b>rectangle of height h</b> A = h·s; <b>isosceles right triangle with leg s</b> A = s²/2. The hard part is only getting s(x) right.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>integrals measured area in the plane</dd><dt>So we didn't need</dt><dd>a volume as an integral of areas</dd><dt>Now</dt><dd>solids that are not made by rotation</dd><dt>So we need</dt><dd>volumes of solids with known cross sections</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>V = ∫ A(x) dx</span><small>volume from cross sections</small></div><div class="eqn"><span>square: A = s² · semicircle: A = πs²/8</span><small>s = top − bottom</small></div><div class="eqn"><span>equilateral triangle: A = (√3/4)s²</span><small></small></div></div>
+      <div class="lab" id="vo-lab">
+        <div class="labbar"><span class="title">Stack the slices</span></div>
+        <div class="ctl"><span class="lbl">Cross-section shape</span><div class="seg" id="vo-sh" role="group" aria-label="Cross-section shape"><button type="button" data-k="sq" aria-pressed="true">Squares</button><button type="button" data-k="se" aria-pressed="false">Semicircles</button><button type="button" data-k="tr" aria-pressed="false">Equilateral triangles</button></div></div>
+        <p class="small" style="margin:0">Base: the region between y = x² and y = x on [0, 1], so the base length is s(x) = x − x².</p>
+        <canvas id="vo-canvas" aria-label="Left: the base region with a vertical line at x and the base length s. Right: the area of the cross section at each x, with the volume as the shaded area."></canvas>
+        <div class="controls"><div class="ctl"><label for="vo-x"><span>Position x</span> <output id="vo-x-out"></output></label><input type="range" id="vo-x" min="0.05" max="0.95" step="0.01" value="0.5"></div></div>
+        <div class="readout"><div><span>base length s(x)</span><strong class="x" id="vo-s">—</strong></div><div><span>area A(x) of the slice</span><strong class="v" id="vo-A">—</strong></div><div><span>volume V = ∫ A dx</span><strong class="a" id="vo-V">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose squares. Where is the slice largest? <button type="button" class="btn link" data-show='[["click", "#vo-sh [data-k=sq]"], ["#vo-x", 0.5]]'>x = 0.5</button></p><details><summary>What you should see</summary><p>At x = 0.5: s = 0.25 is the longest base, so the square slice is largest there. V = ∫(x − x²)² dx = 1/30.</p></details></li>
+        <li><p>Switch to semicircles. How does the volume compare with squares? <button type="button" class="btn link" data-show='[["click", "#vo-sh [data-k=se]"]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>π/8 ≈ 0.39 of the square volume: a semicircle with diameter s covers π/8 of the square of side s.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">The base of a solid is the region between y = x² and y = x. Cross sections perpendicular to the x-axis are squares. Find the volume.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Base length.</b> s(x) = x − x² on [0, 1].</li>
+          <li hidden><b>Area of a square slice.</b> A(x) = s² = (x − x²)² = x² − 2x³ + x⁴.</li>
+          <li hidden><b>Integrate.</b> V = ∫<sub>0</sub><sup>1</sup> (x² − 2x³ + x⁴) dx = 1/3 − 1/2 + 1/5.</li>
+          <li hidden><b>Answer.</b> <b>1/30</b> ≈ 0.0333.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Using the wrong base length: it is top − bottom, not just one function.</li>
+        <li>Squaring after integrating instead of before: A(x) must be squared first.</li>
+        <li>Using the radius instead of the diameter for a semicircle (the diameter is s).</li>
+        <li>Forgetting the constant in the area formula (π/8, √3/4).</li>
+        <li>Mixing dx and dy slices: the slice direction decides which variable you integrate.</li>
+      </ul></div>
+      <div class="prose"><h2>Derivations of the area formulas</h2>
+        <p>Semicircle with diameter s: radius s/2, area (1/2)π(s/2)² = πs²/8. Equilateral triangle with side s: area (1/2)·s·(√3/2)s = (√3/4)s². Square: s². Keep these in your head: they are the whole difficulty in most cross-section problems.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Radius s/2, area half of π(s/2)² = πs²/8.">
+        <p class="q">Check yourself: A semicircular cross section has diameter s(x). Its area is</p>
+        <div class="opts"><button type="button">πs²/8</button><button type="button">πs²/4</button><button type="button">πs²/2</button><button type="button">s²</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-volrev" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 8</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Volumes of revolution</h1>
+        <p class="lede">Spin a region around an axis and it sweeps out a solid. Each slice is a disc (or a ring, called a washer), and its area is π × radius².</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Slice the solid perpendicular to the axis of revolution. A slice through a region that touches the axis is a <b>disc</b> of radius R(x), area πR². If the region has a gap between it and the axis, the slice is a <b>washer</b>: outer radius R, inner radius r, area <span class="m">π(R² − r²)</span>. The volume is <span class="m">V = π ∫<sub>a</sub><sup>b</sup> (R(x)² − r(x)²) dx</span>.</p>
+        <p>Radii are distances from the axis. If you revolve around <span class="m">y = c</span>, then R = (top − c) and r = (bottom − c). Square <i>the distance</i>, not the function: (f − g)² is not R² − r².</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>cross sections of any known shape</dd><dt>So we didn't need</dt><dd>a particular family: all slices are circles or rings</dd><dt>Now</dt><dd>tanks, domes, bottles and every spun shape</dd><dt>So we need</dt><dd>the disc and washer methods</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>V = π ∫ R² dx</span><small>disc</small></div><div class="eqn"><span>V = π ∫ (R² − r²) dx</span><small>washer, R outer, r inner</small></div><div class="eqn"><span>R = distance from the axis</span><small>axis y = c: R = f − c</small></div></div>
+      <div class="lab" id="vr-lab">
+        <div class="labbar"><span class="title">Spin the region</span></div>
+        <div class="ctl"><span class="lbl">Region and axis</span><div class="seg" id="vr-fn" role="group" aria-label="Region and axis"><button type="button" data-k="a" aria-pressed="true">y = √x, about the x-axis, [0, 4]</button><button type="button" data-k="b" aria-pressed="false">between y = √x and y = x², about the x-axis</button><button type="button" data-k="c" aria-pressed="false">y = √x about y = −1, [0, 4]</button></div></div>
+        <canvas id="vr-canvas" aria-label="The region and its mirror image across the axis of revolution, with slices drawn as vertical segments, and an end view of the washer at a chosen x."></canvas>
+        <div class="controls"><div class="ctl"><label for="vr-x"><span>Slice at x</span> <output id="vr-x-out"></output></label><input type="range" id="vr-x" min="0.05" max="3.9" step="0.05" value="1"></div></div>
+        <div class="readout"><div><span>outer radius R</span><strong class="x" id="vr-ro">—</strong></div><div><span>inner radius r</span><strong class="a" id="vr-ri">—</strong></div><div><span>volume</span><strong class="v" id="vr-V">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose the first region. What shape is each slice, and what is its radius at x = 1? <button type="button" class="btn link" data-show='[["click", "#vr-fn [data-k=a]"], ["#vr-x", 1]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>A disc with radius √1 = 1, area π. V = π∫₀⁴ x dx = 8π.</p></details></li>
+        <li><p>Choose the region between √x and x². What is the slice now? <button type="button" class="btn link" data-show='[["click", "#vr-fn [data-k=b]"], ["#vr-x", 0.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>A washer: outer radius √x, inner radius x². V = π∫₀¹ (x − x⁴) dx = 3π/10.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find the volume when the region under y = √x on [0, 4] is revolved about the x-axis, then about y = −1.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>About the x-axis (discs).</b> R = √x, so V = π ∫<sub>0</sub><sup>4</sup> x dx = π(8) = 8π.</li>
+          <li hidden><b>About y = −1 (washers).</b> The axis is 1 unit below the x-axis: R = √x + 1, r = 1 (the x-axis is 1 above the axis).</li>
+          <li hidden><b>Set up.</b> V = π ∫<sub>0</sub><sup>4</sup> [(√x + 1)² − 1²] dx = π ∫<sub>0</sub><sup>4</sup> (x + 2√x) dx.</li>
+          <li hidden><b>Integrate.</b> π [x²/2 + (4/3)x<sup>3/2</sup>]<sub>0</sub><sup>4</sup> = π(8 + 32/3).</li>
+          <li hidden><b>Answer.</b> About x-axis: <b>8π</b>. About y = −1: <b>56π/3</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Squaring the difference of functions: (f − g)² is not f² − g².</li>
+        <li>Forgetting π.</li>
+        <li>Measuring radii from the x-axis when the axis of revolution is a different line.</li>
+        <li>Using a disc when there is a gap (it should be a washer).</li>
+        <li>Mixing up outer and inner radius.</li>
+      </ul></div>
+      <div class="prose"><h2>Which method?</h2>
+        <p>If the slices perpendicular to the axis are full circles, use discs. If they have a hole, use washers. In AB you slice perpendicular to the axis of revolution (discs and washers); the shell method is not part of the course.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Discs of radius R = x: π R² = πx².">
+        <p class="q">Check yourself: Revolving the region under y = x on [0, 2] about the x-axis gives volume</p>
+        <div class="opts"><button type="button">π ∫₀² x² dx</button><button type="button">π ∫₀² x dx</button><button type="button">2π ∫₀² x dx</button><button type="button">∫₀² x² dx</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
   <section class="view" id="v-practice" hidden>
     <div class="wrap">
       <div class="head">
@@ -2727,8 +3039,8 @@ function view3d(cv,o){
 
 /* ---------------- Roster and registries (the data blocks are injected by build.py) ---------------- */
 const MODS={"functions": {"t": "Functions & transformations", "d": "Shift, stretch and flip a graph, and read what a formula is doing.", "bc": false}, "trigexp": {"t": "Trig, exponentials & logs", "d": "The unit circle, e^x and ln x: the functions calculus keeps using.", "bc": false}, "limits": {"t": "Limits from graphs & tables", "d": "What a function is heading toward, even where it never gets there.", "bc": false}, "limalg": {"t": "Algebraic limits", "d": "Factor, rationalize or squeeze when plugging in gives 0/0.", "bc": false}, "contin": {"t": "Continuity & the IVT", "d": "Where a graph breaks, and why continuous functions can't skip values.", "bc": false}, "asym": {"t": "Infinite limits & end behavior", "d": "Vertical and horizontal asymptotes, and what happens as x gets huge.", "bc": false}, "rates": {"t": "Average vs instantaneous rate", "d": "A secant line closing in on a tangent line.", "bc": false}, "deriv": {"t": "The derivative & differentiability", "d": "The limit definition, and where a graph has no slope.", "bc": false}, "rules": {"t": "Power, sum & constant-multiple rules", "d": "Differentiate polynomials and roots in your head.", "bc": false}, "transder": {"t": "Trig, e^x and ln x derivatives", "d": "The derivatives you memorize once.", "bc": false}, "prodquot": {"t": "Product & quotient rules", "d": "When two functions are multiplied or divided.", "bc": false}, "chain": {"t": "The chain rule", "d": "Derivatives of functions inside functions.", "bc": false}, "implicit": {"t": "Implicit differentiation", "d": "Slopes of curves that are not functions of x.", "bc": false}, "invfn": {"t": "Inverse functions & inverse trig", "d": "Derivatives of inverses, arcsin, arctan and friends.", "bc": false}, "higher": {"t": "Higher-order derivatives & choosing a rule", "d": "Second derivatives, and picking the right tool.", "bc": false}, "motion": {"t": "Derivatives in context & motion", "d": "Position, velocity, acceleration and units of a rate.", "bc": false}, "related": {"t": "Related rates", "d": "Two quantities change together: how fast is the other one moving?", "bc": false}, "linear": {"t": "Linearization & differentials", "d": "Approximate a curve by its tangent line.", "bc": false}, "lhop": {"t": "L'Hôpital's rule", "d": "Resolve 0/0 and ∞/∞ by comparing derivatives.", "bc": false}, "mvt": {"t": "Extreme values & the Mean Value Theorem", "d": "Why a continuous function on [a, b] has a max, and a point with the average slope.", "bc": false}, "incdec": {"t": "Increasing, decreasing & the first derivative test", "d": "Read the sign of f′ to find peaks and valleys.", "bc": false}, "concav": {"t": "Concavity & the second derivative test", "d": "Read the sign of f″ to see bending.", "bc": false}, "sketch": {"t": "Connecting f, f′ and f″", "d": "Go between a graph and the graphs of its derivatives.", "bc": false}, "optim": {"t": "Optimization", "d": "Biggest, smallest, cheapest, fastest: set up and solve.", "bc": false}, "accum": {"t": "Accumulation & Riemann sums", "d": "Add up a changing rate with thin slices.", "bc": false}, "ftc": {"t": "The definite integral & the FTC", "d": "Area, accumulation functions and the theorem that ties derivatives to integrals.", "bc": false}, "antider": {"t": "Antiderivatives", "d": "Undo a derivative, and don't forget the + C.", "bc": false}, "usub": {"t": "u-substitution", "d": "Undo the chain rule, including definite integrals.", "bc": false}, "slope": {"t": "Slope fields", "d": "Draw the solutions without solving anything.", "bc": false}, "sepvar": {"t": "Separation of variables & exponential models", "d": "Solve dy/dx = ky and other separable equations.", "bc": false}, "avgval": {"t": "Average value & motion with integrals", "d": "Average of a function, and displacement vs distance.", "bc": false}, "area": {"t": "Area between curves", "d": "Top minus bottom, or right minus left.", "bc": false}, "vols": {"t": "Volumes from cross sections", "d": "Stack slices of a known shape.", "bc": false}, "volrev": {"t": "Volumes of revolution", "d": "Discs and washers around an axis.", "bc": false}, "parts": {"t": "Integration by parts", "d": "Undo the product rule: ∫u dv = uv − ∫v du.", "bc": true}, "partial": {"t": "Partial fractions & long division", "d": "Split a rational function into pieces you can integrate.", "bc": true}, "improper": {"t": "Improper integrals", "d": "Areas that stretch to infinity, or past an asymptote.", "bc": true}, "euler": {"t": "Euler's method", "d": "Step along a slope field to approximate a solution.", "bc": true}, "logistic": {"t": "Logistic models", "d": "Growth that levels off at a carrying capacity.", "bc": true}, "arclen": {"t": "Arc length", "d": "How long is the curve?", "bc": true}, "param": {"t": "Parametric equations", "d": "x and y both depend on t: slope, concavity and length.", "bc": true}, "vector": {"t": "Vector-valued functions & motion", "d": "Velocity, speed and acceleration in the plane.", "bc": true}, "polar": {"t": "Polar curves & area", "d": "Graph with r and θ, and find areas of petals.", "bc": true}, "seriesbasic": {"t": "Series, geometric series & the nth-term test", "d": "When does an infinite sum add up to a number?", "bc": true}, "pseries": {"t": "p-series & the integral test", "d": "Compare a sum to an area.", "bc": true}, "convtests": {"t": "Comparison & ratio tests", "d": "Decide convergence without finding the sum.", "bc": true}, "altser": {"t": "Alternating series & error bounds", "d": "Alternating signs, absolute vs conditional convergence.", "bc": true}, "taylorpoly": {"t": "Taylor polynomials & Lagrange error", "d": "Approximate a function near a point, and bound the error.", "bc": true}, "powser": {"t": "Power series: radius & interval", "d": "Where a series in x converges.", "bc": true}, "maclaurin": {"t": "Maclaurin series & operations", "d": "e^x, sin x, cos x, 1/(1−x), and building new series from them.", "bc": true}};
-const GROUPS=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"]}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"]}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"]}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"]}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": ["motion", "related", "linear", "lhop"]}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": ["mvt", "incdec", "concav", "sketch", "optim"]}, {"w": "Unit 6", "name": "Integration and accumulation of change", "tag": "AP Unit 6", "bc": false, "ids": ["accum", "ftc", "antider", "usub"]}];
-const ROADMAP=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"], "soon": []}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"], "soon": []}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"], "soon": []}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"], "soon": []}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": ["motion", "related", "linear", "lhop"], "soon": []}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": ["mvt", "incdec", "concav", "sketch", "optim"], "soon": []}, {"w": "Unit 6", "name": "Integration and accumulation of change", "tag": "AP Unit 6", "bc": false, "ids": ["accum", "ftc", "antider", "usub"], "soon": []}, {"w": "Unit 7", "name": "Differential equations", "tag": "AP Unit 7", "bc": false, "ids": [], "soon": ["slope", "sepvar"]}, {"w": "Unit 8", "name": "Applications of integration", "tag": "AP Unit 8", "bc": false, "ids": [], "soon": ["avgval", "area", "vols", "volrev"]}, {"w": "BC", "name": "Integration techniques (BC)", "tag": "AP Unit 6 · BC", "bc": true, "ids": [], "soon": ["parts", "partial", "improper"]}, {"w": "BC", "name": "More differential equations & applications (BC)", "tag": "AP Units 7–8 · BC", "bc": true, "ids": [], "soon": ["euler", "logistic", "arclen"]}, {"w": "Unit 9", "name": "Parametric equations, polar coordinates and vector-valued functions (BC)", "tag": "AP Unit 9 · BC", "bc": true, "ids": [], "soon": ["param", "vector", "polar"]}, {"w": "Unit 10", "name": "Infinite sequences and series (BC)", "tag": "AP Unit 10 · BC", "bc": true, "ids": [], "soon": ["seriesbasic", "pseries", "convtests", "altser", "taylorpoly", "powser", "maclaurin"]}]; /* every unit, with ids (built) and soon (planned, not built yet) */
+const GROUPS=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"]}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"]}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"]}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"]}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": ["motion", "related", "linear", "lhop"]}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": ["mvt", "incdec", "concav", "sketch", "optim"]}, {"w": "Unit 6", "name": "Integration and accumulation of change", "tag": "AP Unit 6", "bc": false, "ids": ["accum", "ftc", "antider", "usub"]}, {"w": "Unit 7", "name": "Differential equations", "tag": "AP Unit 7", "bc": false, "ids": ["slope", "sepvar"]}, {"w": "Unit 8", "name": "Applications of integration", "tag": "AP Unit 8", "bc": false, "ids": ["avgval", "area", "vols", "volrev"]}];
+const ROADMAP=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"], "soon": []}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"], "soon": []}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"], "soon": []}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"], "soon": []}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": ["motion", "related", "linear", "lhop"], "soon": []}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": ["mvt", "incdec", "concav", "sketch", "optim"], "soon": []}, {"w": "Unit 6", "name": "Integration and accumulation of change", "tag": "AP Unit 6", "bc": false, "ids": ["accum", "ftc", "antider", "usub"], "soon": []}, {"w": "Unit 7", "name": "Differential equations", "tag": "AP Unit 7", "bc": false, "ids": ["slope", "sepvar"], "soon": []}, {"w": "Unit 8", "name": "Applications of integration", "tag": "AP Unit 8", "bc": false, "ids": ["avgval", "area", "vols", "volrev"], "soon": []}, {"w": "BC", "name": "Integration techniques (BC)", "tag": "AP Unit 6 · BC", "bc": true, "ids": [], "soon": ["parts", "partial", "improper"]}, {"w": "BC", "name": "More differential equations & applications (BC)", "tag": "AP Units 7–8 · BC", "bc": true, "ids": [], "soon": ["euler", "logistic", "arclen"]}, {"w": "Unit 9", "name": "Parametric equations, polar coordinates and vector-valued functions (BC)", "tag": "AP Unit 9 · BC", "bc": true, "ids": [], "soon": ["param", "vector", "polar"]}, {"w": "Unit 10", "name": "Infinite sequences and series (BC)", "tag": "AP Unit 10 · BC", "bc": true, "ids": [], "soon": ["seriesbasic", "pseries", "convtests", "altser", "taylorpoly", "powser", "maclaurin"]}]; /* every unit, with ids (built) and soon (planned, not built yet) */
 const TIPS={},TT={},GLOSS={},KEYS={},PROBS=[],FRQS=[],GLYPH={};
 const METHODS={clues:[],items:[]};
 Object.keys(MODS).forEach(id=>{const g=ROADMAP.find(g=>g.ids.includes(id)||g.soon.includes(id));MODS[id].ap=g?g.tag:'';MODS[id].w=g?g.w:'';});
@@ -3981,6 +4293,211 @@ const lmN=v=>v===null?'does not exist':String(v).replace('-','−');
     return {q:`Find ∫ ${pretty(t.f).replace(/sin\(/g,'sin(').replace(/cos\(x\)/g,'cos x')} dx. Type your answer (the + C is optional).`,expr:t.F,c:true,chkf:t.fx,hint:'Look for an inside function whose derivative (up to a constant) is also in the integrand.',sol:`With the right substitution: <b>${pretty(t.F)} + C</b>. Check by differentiating.`};}});
   PROBS.push({id:'us-choice',topic:'usub',title:'Choose u',gen(){const R=[['x(x² + 3)<sup>5</sup>','x² + 3'],['e<sup>3x</sup>','3x'],['x²cos(x³)','x³'],['sin x · e<sup>cos x</sup>','cos x'],['(ln x)/x','ln x'],['x/√(x² + 4)','x² + 4'],['sec²x · tan<sup>3</sup>x','tan x'],['1/(x ln x)','ln x']],[ex,ans]=pick(R),m=mcq(ans,R.map(r=>r[1]));
     return {q:`Which substitution u simplifies ∫ ${ex} dx?`,choices:m.choices,ans:m.ans,hint:'Find the inside function whose derivative (up to a constant factor) also appears.',sol:`Take <b>u = ${ans}</b>; its derivative appears in the integrand.`};}});
+})();
+
+/* ===== modules/slope.js ===== */
+/* ---------------- Slope fields ---------------- */
+(function slope(){
+  const cv=$('#sf-canvas');if(!cv)return;
+  const C={a:{F:(x,y)=>x,note:'The slope depends only on x: segments in each column are parallel. Solutions are parabolas.'},b:{F:(x,y)=>y,note:'The slope depends only on y: segments in each row are parallel. Solutions are y = Ce^x.'},
+    c:{F:(x,y)=>x-y,note:'Solutions settle toward the line y = x − 1 as x grows.'},d:{F:(x,y)=>y===0?NaN:-x/y,note:'Solutions are circles x² + y² = r²: the slope is perpendicular to the radius. They are not functions near y = 0.'},
+    e:{F:(x,y)=>.5*y*(1-y/4),note:'Equilibria at y = 0 and y = 4. Solutions between them rise toward 4: logistic-style growth.'}};
+  let k='a',x0=0,y0=1;
+  const rk=(F,x,y,h)=>{const k1=F(x,y),k2=F(x+h/2,y+h/2*k1),k3=F(x+h/2,y+h/2*k2),k4=F(x+h,y+h*k3);return y+h/6*(k1+2*k2+2*k3+k4);};
+  const trace=(dir)=>{const F=C[k].F,pts=[[x0,y0]];let x=x0,y=y0;for(let i=0;i<260;i++){const h=.04*dir;const yn=rk(F,x,y,h);if(!isFinite(yn)||Math.abs(yn)>30)break;x+=h;y=yn;pts.push([x,y]);if(Math.abs(x)>4.3)break;if(k==='d'&&Math.abs(y)<.02)break;}return pts;};
+  const sim=glab('sf-canvas',{h:w=>clamp(w*.62,300,430),view:(w,h)=>{const sp=8*(h-36)/(w-60);return {xr:[-4,4],yr:[-sp/2,sp/2]};},
+    draw(ctx,P){const F=C[k].F;ctx.save();clip(ctx,P);ctx.strokeStyle=alpha(T.muted,.75);ctx.lineWidth=1.6;
+      const nx=Math.round(P.box.w/34),ny=Math.round(P.box.h/34);for(let i=0;i<=nx;i++)for(let j=0;j<=ny;j++){const x=P.xr[0]+(P.xr[1]-P.xr[0])*(i+.5)/(nx+1),y=P.yr[0]+(P.yr[1]-P.yr[0])*(j+.5)/(ny+1),s=F(x,y);if(!isFinite(s))continue;const L=Math.hypot(1,s),dx=9/L,dy=9*s/L,px=P.X(x),py=P.Y(y);ctx.beginPath();ctx.moveTo(px-dx,py+dy);ctx.lineTo(px+dx,py-dy);ctx.stroke();}ctx.restore();
+      [trace(1),trace(-1)].forEach(pts=>{ctx.save();clip(ctx,P);ctx.strokeStyle=T.cx;ctx.lineWidth=3;ctx.beginPath();pts.forEach(([x,y],i)=>i?ctx.lineTo(P.X(x),P.Y(y)):ctx.moveTo(P.X(x),P.Y(y)));ctx.stroke();ctx.restore();});
+      dot(ctx,P.X(x0),P.Y(y0),7,T.hot,T.surface);},
+    drag:(kind,x,y)=>{setS('sf-x0',x);setS('sf-y0',y);}});
+  const setS=(id,v)=>{const el=$('#'+id);el.value=clamp(Math.round(v*10)/10,-3,3);el.dispatchEvent(new Event('input',{bubbles:true}));};
+  function upd(){const F=C[k].F,s=F(x0,y0);const pts=trace(1);let y1=NaN;for(const [x,y] of pts)if(x>=x0+1-1e-9){y1=y;break;}
+    setText('sf-sl',isFinite(s)?fmt(s,3):'undefined here');setText('sf-y1',isFinite(y1)?fmt(y1,3):'leaves the window');setText('sf-note',C[k].note);sim.render();}
+  bindRange('sf-x0',v=>nz(v),v=>{x0=v;upd();});bindRange('sf-y0',v=>nz(v),v=>{y0=v;upd();});segBind('sf-fn','k',v=>{k=v;upd();});upd();drawers.slope=()=>sim.render();
+  KEYS['sf-canvas']=['Each grey segment shows the slope there. The blue curve starts at the orange dot and follows the segments. Drag to move the dot.',[['muted','slope segments'],['cx','the solution through the start'],['hot','initial condition']]];
+  TIPS['sf-x0']=()=>'The starting point picks which solution curve you follow.';
+  GLOSS['slope field']='A grid of short line segments showing dy/dx at each point; solutions are tangent to them.';GLOSS['differential equation']='An equation involving a function and its derivative, such as dy/dx = x − y.';
+  TT.slope='Ask students to sketch the solution through a point by hand, following the segments, before the lab draws it.';
+})();
+(function(){
+  const CASES=[['x',(x,y)=>x],['y',(x,y)=>y],['x + y',(x,y)=>x+y],['x − y',(x,y)=>x-y],['xy',(x,y)=>x*y],['y − x',(x,y)=>y-x],['2x',(x,y)=>2*x],['−y',(x,y)=>-y]];
+  PROBS.push({id:'sf-slope',topic:'slope',title:'Slope at a point',gen(){const a=ri(1,4),b=ri(-4,4)||2,p=ri(-3,3),q=ri(-3,3),ans=a*p+b*q;
+    return {q:`If dy/dx = ${a===1?'':a}x ${b<0?'−':'+'} ${Math.abs(b)===1?'':Math.abs(b)}y, what is the slope of the solution curve at the point (${nz(p)}, ${nz(q)})?`,ans,unit:'',abs:.01,chk:ans,hint:'Substitute x and y into the right-hand side.',sol:`dy/dx = ${a}(${nz(p)}) ${b<0?'−':'+'} ${Math.abs(b)}(${nz(q)}) = <b>${nz(ans)}</b>.`};}});
+  PROBS.push({id:'sf-match',topic:'slope',title:'Match the slope field',gen(){const idx=shuffle([0,1,2,3,4,5,6,7]).slice(0,4),[ci]=shuffle(idx),[nm,F]=CASES[ci];const pieces=[];
+    for(let x=-4;x<=4;x++)for(let y=-3;y<=3;y++){const s=F(x,y),L=Math.hypot(1,s),dx=.28/L*1,dy=.28*s/L;const m=s;if(!isFinite(s))continue;
+      // segment of slope s through (x, y), length ~0.5 in plot units (aspect-adjusted)
+      const half=.3/Math.sqrt(1+(s*.56)**2);pieces.push({f:t=>y+s*(t-x),x0:x-half,x1:x+half,color:'var(--muted)'});}
+    const svg=svgG({xr:[-4.6,4.6],yr:[-3.6,3.6],pieces,alt:'A slope field.'}),opts=idx.map(i=>`dy/dx = ${CASES[i][0]}`),m=mcq(`dy/dx = ${nm}`,opts);
+    return {q:'Which differential equation has this slope field?',fig:svg,choices:m.choices,ans:m.ans,hint:'Check the slope at a few points: along x = 0, along y = 0, and where the right side would be zero.',sol:`The slopes match dy/dx = ${nm}: check, for example, the point (2, 1) where it gives ${nz(F(2,1))}. The answer is <b>dy/dx = ${nm}</b>.`};}});
+  PROBS.push({id:'sf-tan',topic:'slope',title:'Estimate with a tangent line',gen(){const a=ri(1,3),y0=ri(1,5),dx=pick([.1,.2,.5]),ans=y0+dx*(a*0+ -a*y0+ri(0,0));
+    const slope=-a*y0;return {q:`The solution of dy/dx = −${a===1?'':a}y satisfies y(0) = ${y0}. Use the tangent line at x = 0 to estimate y(${dx}). Give a decimal.`,ans:y0+dx*slope,unit:'',abs:.005,chk:y0+dx*slope,hint:'Slope at (0, y0) is −a·y0. Then y ≈ y0 + slope·dx.',sol:`The slope at (0, ${y0}) is −${a}(${y0}) = ${nz(slope)}. So y(${dx}) ≈ ${y0} + (${nz(slope)})(${dx}) = <b>${nz(+(y0+dx*slope).toFixed(4))}</b>.`};}});
+  PROBS.push({id:'sf-eq',topic:'slope',title:'Equilibrium solutions',gen(){const r=ri(1,5),R=[[`dy/dx = y − ${r}`,`y = ${r}`],[`dy/dx = ${r}y − ${r*r}`,`y = ${r}`],[`dy/dx = y(${r} − y)`,`y = 0 and y = ${r}`],[`dy/dx = (y − ${r})(y + ${r})`,`y = ${r} and y = −${r}`]],[de,ans]=pick(R),m=mcq(ans,[`y = ${r}`,`y = 0`,`y = 0 and y = ${r}`,`y = ${r} and y = −${r}`,`y = −${r}`]);
+    return {q:`Which horizontal line(s) are solutions of ${de}?`,choices:m.choices,ans:m.ans,hint:'Equilibrium solutions are the constants y = c where dy/dx = 0.',sol:`Set the right side to 0: <b>${ans}</b>.`};}});
+})();
+
+/* ===== modules/sepvar.js ===== */
+/* ---------------- Separation of variables & exponential models ---------------- */
+(function sepvar(){
+  const cv=$('#sv-canvas');if(!cv)return;
+  let k='gr',kk=.3,y0=2,ta=1,t0=3;
+  const y=t=>k==='gr'?y0*Math.exp(kk*t):ta+(y0-ta)*Math.exp(-kk*t),dy=t=>k==='gr'?kk*y(t):-kk*(y(t)-ta);
+  const sim=glab('sv-canvas',{view:()=>{let lo=Math.min(0,y(0)),hi=y(0);for(let i=0;i<=100;i++){const v=y(10*i/100);lo=Math.min(lo,v);hi=Math.max(hi,v);}hi=Math.min(hi,Math.max(30,y0*3));const p=(hi-lo)*.1+.2;return {xr:[0,10],yr:[lo-p,hi+p],xlabel:'t'};},
+    draw(ctx,P){curveD(ctx,P,y,0,10,T.cx,2.8,300);if(k==='co')hline(ctx,P,ta,T.hot,[5,5]);const v=y(t0),m=dy(t0);line(ctx,P,t0-1.5,v-1.5*m,t0+1.5,v+1.5*m,T.hot,2.2);dot(ctx,P.X(t0),P.Y(v),6.5,T.cx,T.surface);vline(ctx,P,t0,T.muted,[3,4]);}});
+  function upd(){setText('sv-y',fmt(y(t0),4));setText('sv-dy',fmt(dy(t0),4));
+    setText('sv-key',k==='gr'?(kk>0?`doubling time ln 2 / k = ${fmt(Math.log(2)/kk,3)}`:kk<0?`half-life ln 2 / |k| = ${fmt(Math.log(2)/-kk,3)}`:'k = 0: constant'):(kk>0?`T → ${fmt(ta,1)}; the gap halves every ${fmt(Math.log(2)/kk,3)}`:'k ≤ 0: T moves away from Tₐ'));sim.render();}
+  bindRange('sv-k',v=>nz(v),v=>{kk=v;upd();});bindRange('sv-y0',v=>nz(v),v=>{y0=v;upd();});bindRange('sv-ta',v=>nz(v),v=>{ta=v;upd();});bindRange('sv-t',v=>nz(v),v=>{t0=v;upd();});segBind('sv-fn','k',v=>{k=v;upd();});upd();drawers.sepvar=()=>sim.render();
+  KEYS['sv-canvas']=['Change k and the start value. The orange tangent has slope dy/dt: it is proportional to y (or to T − Tₐ).',[['cx','the solution'],['hot','tangent at t; dashed line is the ambient temperature']]];
+  TIPS['sv-k']=el=>`k = ${nz(+el.value)}: ${+el.value>0?'growth (or cooling toward Tₐ)':+el.value<0?'decay (or heating away from Tₐ)':'no change'}.`;
+  GLOSS['half-life']='The time for a decaying quantity to fall to half: ln 2 / |k|.';GLOSS['separable']='A differential equation that can be written with all the y terms on one side and all the x terms on the other.';
+  TT.sepvar='Have students check the solution by differentiating it and substituting back into the equation.';
+})();
+(function(){
+  PROBS.push({id:'sv-exp',topic:'sepvar',title:'Exponential growth or decay',gen(){const k=pick([.1,.2,.3,.5,-.1,-.2,-.5]),y0=ri(2,40),t=ri(1,10),ans=y0*Math.exp(k*t);
+    return {q:`dy/dt = ${k<0?'−':''}${Math.abs(k)}y and y(0) = ${y0}. Find y(${t}). Give a decimal to two places.`,ans,unit:'',tol:.003,chk:y0*Math.exp(k*t),hint:'The solution of dy/dt = ky is y = y₀e^(kt).',sol:`y(t) = ${y0}e<sup>${nz(k)}t</sup>, so y(${t}) = ${y0}e<sup>${nz(+(k*t).toFixed(3))}</sup> = <b>${fmt(ans,2)}</b>.`};}});
+  const T1=[()=>{const k=ri(1,4);return {de:`dy/dx = ${k}y`,y0:`y(0) = 2`,sol:`2e^(${k}x)`,fx:x=>2*Math.exp(k*x)};},()=>({de:'dy/dx = 2xy',y0:'y(0) = 1',sol:'e^(x^2)',fx:x=>Math.exp(x*x)}),()=>({de:'dy/dx = x/y',y0:'y(0) = 3, y &gt; 0',sol:'sqrt(x^2+9)',fx:x=>Math.sqrt(x*x+9)}),()=>({de:'dy/dx = xy',y0:'y(0) = 1',sol:'e^(x^2/2)',fx:x=>Math.exp(x*x/2)}),()=>({de:'dy/dx = e^x/y',y0:'y(0) = 1, y &gt; 0',sol:'sqrt(2e^x-1)',fx:x=>Math.sqrt(2*Math.exp(x)-1)})];
+  PROBS.push({id:'sv-solve',topic:'sepvar',title:'Solve by separating variables',gen(){const t=pick(T1)();
+    return {q:`Solve the initial value problem ${t.de}, ${t.y0}. Type y as an expression in x.`,expr:t.sol,chkf:t.fx,hint:'Separate the variables, integrate both sides (one +C), then use the initial condition.',sol:`Separating and integrating, then using the condition: y = <b>${pretty(t.sol)}</b>.`};}});
+  PROBS.push({id:'sv-half',topic:'sepvar',title:'Half-life',gen(){const k=pick([.05,.1,.2,.3,.5,.7]),askT=Math.random()<.5,y0=pick([40,80,100,200]),frac0=pick([.5,.25,.1]),ans=askT?Math.log(1/frac0)/k:Math.log(2)/k;
+    return askT?{q:`A substance decays according to dy/dt = −${k}y (t in years). How many years until ${Math.round(frac0*100)}% of the original amount remains? Give a decimal to two places.`,ans,unit:'years',tol:.003,chk:-Math.log(frac0)/k,hint:'y = y₀e^(−kt). Set e^(−kt) equal to the fraction remaining and take ln.',sol:`e<sup>−${k}t</sup> = ${frac0} ⇒ t = ln(1/${frac0})/${k} = <b>${fmt(ans,2)} years</b>.`}
+      :{q:`A substance decays according to dy/dt = −${k}y (t in years). What is its half-life? Give a decimal to two places.`,ans,unit:'years',tol:.003,chk:Math.log(2)/k,hint:'Half-life = ln 2 / k.',sol:`e<sup>−${k}t</sup> = 1/2 ⇒ t = ln 2 / ${k} = <b>${fmt(ans,2)} years</b>.`};}});
+  PROBS.push({id:'sv-cool',topic:'sepvar',title:'Newton\'s law of cooling',gen(){const Ta=pick([20,22,0,70]),T0=pick([90,95,100,5,40]),k=pick([.05,.1,.2,.3]),t=pick([2,5,10]),ans=Ta+(T0-Ta)*Math.exp(-k*t);if(T0===Ta)return PROBS.find(z=>z.id==='sv-cool').gen();
+    return {q:`An object at ${T0}° is placed in surroundings at ${Ta}°. Its temperature satisfies dT/dt = −${k}(T − ${Ta}), t in minutes. Find T after ${t} minutes. Give a decimal to one place.`,ans,unit:'°',abs:.06,chk:Ta+(T0-Ta)*Math.exp(-k*t),hint:'T − Ta decays exponentially: T = Ta + (T0 − Ta)e^(−kt).',sol:`T = ${Ta} + (${T0} − ${Ta})e<sup>−${k}t</sup>. At t = ${t}: ${Ta} + ${T0-Ta}e<sup>${nz(-k*t)}</sup> = <b>${fmt(ans,1)}°</b>.`};}});
+  PROBS.push({id:'sv-model',topic:'sepvar',title:'Which model?',gen(){const R=[['The rate of growth of a bacteria population is proportional to its size','dP/dt = kP, k > 0'],['A radioactive sample loses mass at a rate proportional to the mass present','dm/dt = −km, k > 0'],['A hot drink cools at a rate proportional to the difference from room temperature','dT/dt = −k(T − Ta), k > 0'],['A tank drains at a constant rate','dV/dt = −c, c > 0'],['A population grows by 3 individuals per year','dP/dt = 3']],[tx,ans]=pick(R),m=mcq(ans,R.map(r=>r[1]));
+    return {q:`${tx}. Which differential equation models this?`,choices:m.choices,ans:m.ans,hint:'Translate "rate proportional to…" into dy/dt = k·(that quantity).',sol:`<b>${ans}</b>.`};}});
+})();
+
+/* ===== modules/avgval.js ===== */
+/* ---------------- Average value & motion with integrals ---------------- */
+(function avgval(){
+  const cv=$('#av-canvas');if(!cv)return;
+  const C={a:{f:x=>x*x,xr:[-.3,5.3],yr:[-1,26]},b:{f:Math.sin,xr:[-.3,5.3],yr:[-1.4,1.4]},c:{f:Math.exp,xr:[-.3,5.3],yr:[-5,110]},d:{f:x=>4*x-x*x,xr:[-.3,5.3],yr:[-5,5]}};
+  let k='a',a=0,b=3;
+  const sim=glab('av-canvas',{view:()=>({xr:C[k].xr,yr:C[k].yr}),draw(ctx,P){const f=C[k].f,avg=integ(f,a,b,1000)/(b-a);ctx.save();clip(ctx,P);ctx.fillStyle=alpha(T.ce,.18);ctx.fillRect(P.X(a),P.Y(Math.max(avg,0)),P.X(b)-P.X(a),Math.abs(P.Y(avg)-P.Y(0)));ctx.restore();
+      areaSigned(ctx,P,f,a,b,T.ce,T.ca,300,.2);curveD(ctx,P,f,C[k].xr[0],C[k].xr[1],T.cx,2.8,300);hline(ctx,P,avg,T.hot,[7,4]);vline(ctx,P,a,T.muted);vline(ctx,P,b,T.muted);
+      roots(x=>f(x)-avg,a+1e-6,b-1e-6).forEach(c=>dot(ctx,P.X(c),P.Y(avg),6,T.cv,T.surface));}});
+  function upd(){const f=C[k].f,I=integ(f,a,b,1000),avg=I/(b-a),cs=roots(x=>f(x)-avg,a+1e-6,b-1e-6);setText('av-int',fmt(I,4));setText('av-avg',fmt(avg,4));setText('av-c',cs.length?cs.map(c=>'x ≈ '+fmt(c,3)).join(', '):'none in the interval');sim.render();}
+  bindRange('av-a',v=>nz(v),v=>{a=v;upd();});bindRange('av-b',v=>nz(v),v=>{b=v;upd();});segBind('av-fn','k',v=>{k=v;upd();});upd();
+  /* motion */
+  const vv=t=>t*t-4*t+3;let T0=4;
+  const sim2=glab('av-canvas2',{view:()=>({xr:[0,5],yr:[-1.6,8.5],xlabel:'t'}),draw(ctx,P){areaSigned(ctx,P,vv,0,T0,T.ce,T.ca,300,.3);curveD(ctx,P,vv,0,5,T.cv,2.8,300);vline(ctx,P,T0,T.hot,[4,4]);dot(ctx,P.X(T0),P.Y(vv(T0)),6,T.cv,T.surface);label(ctx,'v(t)',P.box.x+8,P.box.y+10,T.cv,'left','middle',LABEL);}});
+  function upd2(){const F=t=>t**3/3-2*t*t+3*t,disp=F(T0),dist=integ(t=>Math.abs(vv(t)),0,T0,2000);setText('av-disp',fmt(disp,4));setText('av-dist',fmt(dist,4));setText('av-pos',fmt(2+disp,4));sim2.render();}
+  bindRange('av-T',v=>nz(v),v=>{T0=v;upd2();});upd2();drawers.avgval=()=>{sim.render();sim2.render();};
+  KEYS['av-canvas']=['Dashed orange line: the average value. The pale rectangle has the same area as the shaded region. Green dots: where f equals its average.',[['cx','f(x)'],['hot','average value'],['ce','area under f'],['cv','points where f = average']]];
+  KEYS['av-canvas2']=['Slide T. Gold area is moving forward, pink area is moving backward. Displacement subtracts them; distance adds them.',[['cv','velocity v(t)'],['ce','area where v > 0'],['ca','area where v < 0']]];
+  TIPS['av-T']=el=>{const T1=+el.value;return T1<=1?'Moving forward the whole time: displacement and distance agree.':'Part of the trip went backward (pink), so distance is larger than displacement.';};
+  GLOSS['displacement']='Net change in position: ∫ v dt. Forward and backward motion cancel.';GLOSS['total distance']='∫ |v| dt: all the ground covered, no cancelling.';
+  TT.avgval='Ask students to estimate the average from the graph, then compare with the readout; and to predict when distance will exceed displacement.';
+})();
+(function(){
+  PROBS.push({id:'av-avg',topic:'avgval',title:'Average value of a function',gen(){const a=ri(0,2),b=a+ri(2,4),fam=pick(['poly','trig','exp']);let q,ans,chk;
+    if(fam==='poly'){const A=ri(1,4),B=ri(0,6),f=x=>A*x*x+B;q=`Find the average value of f(x) = ${polyTxt([A,0,B])} on [${a}, ${b}]. Give a decimal.`;ans=(A*(b**3-a**3)/3+B*(b-a))/(b-a);chk=integ(f,a,b,2000)/(b-a);}
+    else if(fam==='trig'){const c=ri(1,5);q=`Find the average value of f(x) = ${c} sin x on [0, π]. Give a decimal to three places.`;ans=2*c/Math.PI;chk=integ(x=>c*Math.sin(x),0,Math.PI,2000)/Math.PI;}
+    else{const c=ri(1,3),b2=ri(1,3);q=`Find the average value of f(x) = ${c}e<sup>x</sup> on [0, ${b2}]. Give a decimal to three places.`;ans=c*(Math.exp(b2)-1)/b2;chk=integ(x=>c*Math.exp(x),0,b2,2000)/b2;}
+    return {q,ans,unit:'',tol:.003,chk,hint:'Average value = (1/(b − a)) ∫ f dx.',sol:`Compute the integral and divide by the interval length: <b>${fmt(ans,3)}</b>.`};}});
+  PROBS.push({id:'av-disp',topic:'avgval',title:'Displacement and distance',gen(){const p=ri(1,3),q2=ri(p+1,5),T0=q2+ri(1,2),v=t=>(t-p)*(t-q2),F=t=>t**3/3-(p+q2)/2*t*t+p*q2*t,dist=(()=>{let s=Math.abs(F(Math.min(p,T0))-F(0));if(T0>p)s+=Math.abs(F(Math.min(q2,T0))-F(p));if(T0>q2)s+=Math.abs(F(T0)-F(q2));return s;})(),askDist=Math.random()<.5,ans=askDist?dist:F(T0)-F(0);
+    return {q:`A particle's velocity is v(t) = ${polyTxt([1,-(p+q2),p*q2],'t')} m/s. Find its ${askDist?'total distance traveled':'displacement'} from t = 0 to t = ${T0}. Give a decimal.`,ans,unit:'m',tol:.003,chk:askDist?integ(t=>Math.abs(v(t)),0,T0,4000):integ(v,0,T0,2000),hint:askDist?'Distance = ∫|v| dt. Split at the times v = 0 and add the absolute values.':'Displacement = ∫ v dt, with no splitting.',sol:askDist?`v = (t − ${p})(t − ${q2}) changes sign at t = ${p} and ${q2}. Splitting and adding absolute values: <b>${fmt(ans,3)} m</b>.`:`∫<sub>0</sub><sup>${T0}</sup> v dt = <b>${fmt(ans,3)} m</b>.`};}});
+  PROBS.push({id:'av-pos',topic:'avgval',title:'Position from velocity',gen(){const s0=ri(-5,10),a=ri(1,4),b=ri(-6,6),T0=ri(1,5),ans=s0+a*T0**3/3+b*T0**2/2;
+    return {q:`A particle has velocity v(t) = ${polyTxt([a,b,0],'t')} m/s and position s(0) = ${nz(s0)} m. Find s(${T0}). Give a decimal.`,ans,unit:'m',tol:.003,chk:s0+integ(t=>a*t*t+b*t,0,T0,2000),hint:'s(T) = s(0) + ∫₀ᵀ v dt.',sol:`s(${T0}) = ${nz(s0)} + ∫<sub>0</sub><sup>${T0}</sup> v dt = <b>${fmt(ans,3)} m</b>.`};}});
+  PROBS.push({id:'av-mvt',topic:'avgval',title:'Where does f equal its average?',gen(){const b=pick([2,3,4,5,6]),ans=b/Math.sqrt(3);
+    return {q:`Let f(x) = x² on [0, ${b}]. The Mean Value Theorem for integrals says f(c) equals the average value for some c in (0, ${b}). Find c. Give a decimal.`,ans,unit:'',tol:.003,chk:Math.sqrt((b*b)/3),hint:'The average value is (1/b)∫x² dx = b²/3. Solve c² = b²/3.',sol:`Average value = b²/3 = ${fmt(b*b/3,3)}, so c² = ${fmt(b*b/3,3)} and c = <b>${fmt(ans,3)}</b>.`};}});
+})();
+
+/* ===== modules/area.js ===== */
+/* ---------------- Area between curves ---------------- */
+(function area(){
+  const cv=$('#ar-canvas');if(!cv)return;
+  const C={a:{f:x=>x,g:x=>x*x,lo:0,hi:1,xr:[-.2,1.3],yr:[-.2,1.3],lim:'x = 0 and x = 1',nf:'y = x',ng:'y = x²'},b:{f:Math.sqrt,g:x=>x*x,lo:0,hi:1,xr:[-.2,1.3],yr:[-.2,1.3],lim:'x = 0 and x = 1',nf:'y = √x',ng:'y = x²'},
+    c:{f:x=>x**3,g:x=>x,lo:-1,hi:1,xr:[-1.4,1.4],yr:[-1.4,1.4],lim:'x = −1, 0 and 1 (they cross at 0)',nf:'y = x³',ng:'y = x'},d:{f:Math.sin,g:Math.cos,lo:Math.PI/4,hi:5*Math.PI/4,xr:[0,4.2],yr:[-1.4,1.4],lim:'x = π/4 and x = 5π/4',nf:'y = sin x',ng:'y = cos x'}};
+  let k='a',n=8;
+  const sim=glab('ar-canvas',{view:()=>({xr:C[k].xr,yr:C[k].yr}),draw(ctx,P){const A=C[k],top=x=>Math.max(A.f(x),A.g(x)),bot=x=>Math.min(A.f(x),A.g(x)),N=240;
+      ctx.save();clip(ctx,P);ctx.beginPath();for(let i=0;i<=N;i++){const x=A.lo+(A.hi-A.lo)*i/N;i?ctx.lineTo(P.X(x),P.Y(top(x))):ctx.moveTo(P.X(x),P.Y(top(x)));}for(let i=N;i>=0;i--){const x=A.lo+(A.hi-A.lo)*i/N;ctx.lineTo(P.X(x),P.Y(bot(x)));}ctx.closePath();ctx.fillStyle=alpha(T.ce,.22);ctx.fill();
+      if(n>0){const h=(A.hi-A.lo)/n;ctx.strokeStyle=alpha(T.ce,.95);ctx.lineWidth=n>25?.6:1.3;for(let i=0;i<n;i++){const m=A.lo+(i+.5)*h;ctx.beginPath();ctx.rect(P.X(m-h/2),P.Y(top(m)),P.X(m+h/2)-P.X(m-h/2),P.Y(bot(m))-P.Y(top(m)));ctx.stroke();}}ctx.restore();
+      curveD(ctx,P,A.f,A.xr[0],A.xr[1],T.cx,2.8,300);curveD(ctx,P,A.g,A.xr[0],A.xr[1],T.ca,2.8,300);label(ctx,A.nf,P.box.x+8,P.box.y+10,T.cx,'left','middle',LABEL);label(ctx,A.ng,P.box.x+8,P.box.y+28,T.ca,'left','middle',LABEL);}});
+  function upd(){const A=C[k],ex=integ(x=>Math.abs(A.f(x)-A.g(x)),A.lo,A.hi,4000);let s=NaN;if(n>0){const h=(A.hi-A.lo)/n;s=0;for(let i=0;i<n;i++){const m=A.lo+(i+.5)*h;s+=Math.abs(A.f(m)-A.g(m))*h;}}
+    setText('ar-lim',A.lim);setText('ar-exact',fmt(ex,5));setText('ar-sum',n>0?fmt(s,5):'(no slices)');sim.render();}
+  bindRange('ar-n',v=>String(v),v=>{n=v;upd();});segBind('ar-fn','k',v=>{k=v;upd();});upd();drawers.area=()=>sim.render();
+  KEYS['ar-canvas']=['Gold strips have height top − bottom. More strips → the sum approaches the exact area.',[['cx','first curve'],['ca','second curve'],['ce','the region and its slices']]];
+  TIPS['ar-n']=el=>+el.value?`${el.value} strips of width ${fmt((C[k].hi-C[k].lo)/el.value,3)}, each with height top − bottom.`:'Add strips to see the area as a sum.';
+  GLOSS['top minus bottom']='The height of a vertical slice between two curves: the upper function minus the lower one.';
+  TT.area='Have students decide which curve is on top before looking, and say why the sign matters when curves cross.';
+})();
+(function(){
+  PROBS.push({id:'ar-area',topic:'area',title:'Area between a parabola and a line',gen(){let p,q;do{p=ri(-3,2);q=ri(p+1,4);}while(q-p>5);const ans=(q-p)**3/6,line=polyTxt([p+q,-p*q]);
+    return {q:`Find the area of the region enclosed by y = x² and y = ${line}. Give a fraction or decimal.`,ans,unit:'',tol:.003,show:(q-p)**3%6===0?String((q-p)**3/6):(q-p)**3+'/6',chk:integ(x=>Math.abs((p+q)*x-p*q-x*x),p,q,3000),hint:'Intersections: solve x² = the line (they are x = '+p+' and x = '+q+'). On that interval the line is on top.',sol:`Intersections at x = ${nz(p)} and x = ${q}. A = ∫ (${line} − x²) dx from ${nz(p)} to ${q} = (${q} − ${nz(p)})³/6 = <b>${(q-p)**3%6===0?(q-p)**3/6:(q-p)**3+'/6'}</b>.`};}});
+  PROBS.push({id:'ar-fn',topic:'area',title:'Area between two other curves',gen(){const fam=pick([0,1,2]);let q,ans,chk;
+    if(fam===0){const b=pick([1,2]);q=`Find the area between y = e<sup>x</sup> and y = x on [0, ${b}]. Give a decimal to three places.`;ans=Math.exp(b)-1-b*b/2;chk=integ(x=>Math.exp(x)-x,0,b,2000);}
+    else if(fam===1){q=`Find the area between y = cos x and y = sin x on [0, π/4]. Give a decimal to three places.`;ans=Math.SQRT2-1;chk=integ(x=>Math.cos(x)-Math.sin(x),0,Math.PI/4,2000);}
+    else{const b=pick([1,4,9]),r=Math.sqrt(b);q=r===1?'Find the area of the region bounded by y = √x and y = x. Give a fraction or decimal.':`Find the area of the region bounded by y = √x and y = x/${r}. Give a fraction or decimal.`;ans=Math.pow(b,1.5)/6;chk=integ(x=>Math.abs(Math.sqrt(x)-x/r),0,b,3000);}
+    return {q,ans,unit:'',tol:.004,chk,hint:'Find which function is on top, then integrate top − bottom between the limits.',sol:`Integrating top − bottom gives <b>${fmt(ans,4)}</b>.`};}});
+  PROBS.push({id:'ar-horiz',topic:'area',title:'Horizontal slices',gen(){const kk=ri(2,6),ans=kk**3/6;
+    return {q:`Using horizontal slices, find the area between x = y² and x = ${kk}y. Give a fraction or decimal.`,ans,unit:'',tol:.003,show:kk**3%6===0?String(kk**3/6):kk**3+'/6',chk:integ(y=>kk*y-y*y,0,kk,3000),hint:'Right minus left: x = '+kk+'y is on the right between the intersection points y = 0 and y = '+kk+'.',sol:`A = ∫<sub>0</sub><sup>${kk}</sup> (${kk}y − y²) dy = ${kk}·${kk}²/2 − ${kk}³/3 = <b>${kk**3%6===0?kk**3/6:kk**3+'/6'}</b>.`};}});
+  PROBS.push({id:'ar-setup',topic:'area',title:'Set up the integral',gen(){const R=[['y = √x and y = x²','∫₀¹ (√x − x²) dx',['∫₀¹ (x² − √x) dx','∫₀¹ (√x + x²) dx','∫₀¹ (√x − x²)² dx']],['y = 4 and y = x²','∫₋₂² (4 − x²) dx',['∫₋₂² (x² − 4) dx','∫₀⁴ (4 − x²) dx','∫₋₂² (4 + x²) dx']],['y = x and y = x³ in the first quadrant','∫₀¹ (x − x³) dx',['∫₀¹ (x³ − x) dx','∫₋₁¹ (x − x³) dx','∫₀¹ (x + x³) dx']],['y = eˣ, y = 1 and x = 2','∫₀² (eˣ − 1) dx',['∫₀² (1 − eˣ) dx','∫₀² eˣ dx','∫₁² (eˣ − 1) dx']]],[reg,c,w]=pick(R),m=mcq(c,w);
+    return {q:`Which integral gives the area of the region bounded by ${reg}?`,choices:m.choices,ans:m.ans,hint:'Find the intersections, decide which curve is on top, then use top − bottom.',sol:`Top minus bottom between the intersection points: <b>${c}</b>.`};}});
+})();
+
+/* ===== modules/vols.js ===== */
+/* ---------------- Volumes from cross sections ---------------- */
+(function vols(){
+  const cv=$('#vo-canvas');if(!cv)return;
+  const FAC={sq:{f:1,n:'squares'},se:{f:Math.PI/8,n:'semicircles'},tr:{f:Math.sqrt(3)/4,n:'equilateral triangles'}};
+  let sh='sq',x0=.5;
+  const s=x=>x-x*x,A=x=>FAC[sh].f*s(x)**2;
+  const sim=sim2d(cv,{h:w=>clamp(w*.42,260,340),draw(ctx,w,h){const half=Math.floor(w/2);
+      const P1=gpanel(ctx,{x:40,y:14,w:half-52,h:h-44},[0,1.05],[-.05,1.05],{xn:4,yn:4});ctx.save();clip(ctx,P1);ctx.beginPath();for(let i=0;i<=100;i++){const x=i/100;i?ctx.lineTo(P1.X(x),P1.Y(x)):ctx.moveTo(P1.X(x),P1.Y(x));}for(let i=100;i>=0;i--){const x=i/100;ctx.lineTo(P1.X(x),P1.Y(x*x));}ctx.closePath();ctx.fillStyle=alpha(T.ce,.2);ctx.fill();ctx.restore();
+      curveD(ctx,P1,x=>x,0,1,T.cx,2.6,100);curveD(ctx,P1,x=>x*x,0,1,T.ca,2.6,100);line(ctx,P1,x0,x0*x0,x0,x0,T.hot,4);label(ctx,'base region, s(x) = x − x²',P1.box.x+6,P1.box.y+10,T.muted,'left','middle',MONO);
+      const mx=0.3;const P2=gpanel(ctx,{x:half+44,y:14,w:w-half-58,h:h-44},[0,1],[0,A(.5)*1.35+1e-9],{xn:4,yn:3});areaSigned(ctx,P2,A,0,1,T.ce,T.ca,200,.3);curveD(ctx,P2,A,0,1,T.ce,2.8,200);vline(ctx,P2,x0,T.hot,[4,4]);dot(ctx,P2.X(x0),P2.Y(A(x0)),6,T.ce,T.surface);label(ctx,'A(x): area of the slice at x',P2.box.x+6,P2.box.y+10,T.ce,'left','middle',MONO);
+      /* the slice itself */
+      const side=s(x0)*250,bx=P2.box.x+P2.box.w-side-22,by=P2.box.y+P2.box.h*.5;ctx.fillStyle=alpha(T.ce,.35);ctx.strokeStyle=T.ce;ctx.lineWidth=2;ctx.beginPath();
+      if(sh==='sq')ctx.rect(bx,by-side,side,side);else if(sh==='se'){ctx.arc(bx+side/2,by,side/2,Math.PI,0);ctx.closePath();}else{ctx.moveTo(bx,by);ctx.lineTo(bx+side,by);ctx.lineTo(bx+side/2,by-side*Math.sqrt(3)/2);ctx.closePath();}ctx.fill();ctx.stroke();label(ctx,'slice, base s = '+fmt(s(x0),3),bx+side/2,by+13,T.muted,'center','middle',MONO);}});
+  function upd(){setText('vo-s',fmt(s(x0),4));setText('vo-A',fmt(A(x0),5));setText('vo-V',fmt(integ(A,0,1,800),5));sim.render();}
+  bindRange('vo-x',v=>nz(v),v=>{x0=v;upd();});segBind('vo-sh','k',v=>{sh=v;upd();});upd();drawers.vols=()=>sim.render();
+  KEYS['vo-canvas']=['Left: the base region; the orange segment is the base of the slice at x. Right: the slice area at each x; the shaded area under it is the volume.',[['cx','y = x'],['ca','y = x²'],['hot','base length s(x)'],['ce','A(x), and the volume']]];
+  TIPS['vo-x']=el=>`At x = ${nz(+el.value)} the base is s = ${fmt(s(+el.value),3)}, so the slice has area ${fmt(A(+el.value),4)}.`;
+  GLOSS['cross section']='The shape you get by cutting a solid with a plane, here perpendicular to the x-axis.';
+  TT.vols='Ask students to name the base length s(x) first, then the area formula for the shape, before writing any integral.';
+})();
+(function(){
+  const SH=[['squares',1,'s²'],['semicircles',Math.PI/8,'(π/8)s²'],['equilateral triangles',Math.sqrt(3)/4,'(√3/4)s²']];
+  PROBS.push({id:'vo-parab',topic:'vols',title:'Volume with known cross sections',gen(){const kk=ri(1,3),[nm,f,fs]=pick(SH),ans=f*kk**5/30;
+    return {q:`The base of a solid is the region between y = x² and y = ${kk===1?'':kk}x. Cross sections perpendicular to the x-axis are ${nm}. Find the volume. Give a decimal to three places.`,ans,unit:'',tol:.004,chk:integ(x=>f*(kk*x-x*x)**2,0,kk,3000),hint:`Base length s(x) = ${kk}x − x² on [0, ${kk}]. Slice area A = ${fs}. Integrate A(x).`,sol:`s = ${kk}x − x², A = ${fs}, V = ${f===1?'':f===Math.PI/8?'(π/8)':'(√3/4)'}∫<sub>0</sub><sup>${kk}</sup> (${kk}x − x²)² dx = <b>${fmt(ans,4)}</b>.`};}});
+  PROBS.push({id:'vo-sqrt',topic:'vols',title:'Cross sections on a region under a curve',gen(){const b=pick([1,4,9]),[nm,f,fs]=pick(SH),ans=f*b*b/2;
+    return {q:`The base of a solid is the region bounded by y = √x, the x-axis and x = ${b}. Cross sections perpendicular to the x-axis are ${nm}. Find the volume. Give a decimal to three places.`,ans,unit:'',tol:.004,chk:integ(x=>f*x,0,b,2000),hint:`Base length s(x) = √x, so s² = x. Slice area A = ${fs}.`,sol:`A(x) = ${f===1?'':f===Math.PI/8?'(π/8)':'(√3/4)'}x, so V = ${f===1?'':f===Math.PI/8?'(π/8)':'(√3/4)'}∫<sub>0</sub><sup>${b}</sup> x dx = <b>${fmt(ans,4)}</b>.`};}});
+  PROBS.push({id:'vo-formula',topic:'vols',title:'Area of a cross section',gen(){const [nm,f,fs]=pick(SH),R=SH.map(r=>r[2]),m=mcq(fs,R.concat(['πs²/4']));
+    return {q:`A cross section is ${nm.replace(/s$/,'')} with base (or diameter, or side) of length s. What is its area?`.replace('equilateral triangle','an equilateral triangle').replace(/^A cross section is (square|semicircle)/,'A cross section is a $1'),choices:m.choices,ans:m.ans,hint:nm==='semicircles'?'The diameter is s, so the radius is s/2.':nm==='squares'?'Side s.':'An equilateral triangle of side s has height (√3/2)s.',sol:`The area is <b>${fs}</b>.`};}});
+})();
+
+/* ===== modules/volrev.js ===== */
+/* ---------------- Volumes of revolution ---------------- */
+(function volrev(){
+  const cv=$('#vr-canvas');if(!cv)return;
+  const C={a:{top:Math.sqrt,bot:()=>0,c:0,lo:0,hi:4,xr:[-.3,4.4],yr:[-3,3],sc:14,max:3.9},b:{top:Math.sqrt,bot:x=>x*x,c:0,lo:0,hi:1,xr:[-.1,1.2],yr:[-1.3,1.3],sc:40,max:.95},c:{top:Math.sqrt,bot:()=>0,c:-1,lo:0,hi:4,xr:[-.3,4.4],yr:[-5,3],sc:11,max:3.9}};
+  let k='a',x0=1;
+  const R=(A,x)=>A.top(x)-A.c,r=(A,x)=>A.bot(x)-A.c;
+  const sim=glab('vr-canvas',{h:w=>clamp(w*.55,280,380),view:()=>({xr:C[k].xr,yr:C[k].yr}),draw(ctx,P){const A=C[k],N=200,refl=y=>2*A.c-y;
+      ctx.save();clip(ctx,P);[1,-1].forEach(sg=>{ctx.beginPath();for(let i=0;i<=N;i++){const x=A.lo+(A.hi-A.lo)*i/N,y=sg>0?A.top(x):refl(A.top(x));i?ctx.lineTo(P.X(x),P.Y(y)):ctx.moveTo(P.X(x),P.Y(y));}for(let i=N;i>=0;i--){const x=A.lo+(A.hi-A.lo)*i/N,y=sg>0?A.bot(x):refl(A.bot(x));ctx.lineTo(P.X(x),P.Y(y));}ctx.closePath();ctx.fillStyle=alpha(T.ce,sg>0?.3:.14);ctx.fill();});
+      ctx.strokeStyle=alpha(T.cx,.22);ctx.lineWidth=1;for(let i=0;i<=40;i++){const x=A.lo+(A.hi-A.lo)*i/40;ctx.beginPath();ctx.moveTo(P.X(x),P.Y(A.c-R(A,x)));ctx.lineTo(P.X(x),P.Y(A.c+R(A,x)));ctx.stroke();}ctx.restore();
+      curveD(ctx,P,A.top,A.lo,A.hi,T.cx,2.8,200);curveD(ctx,P,x=>refl(A.top(x)),A.lo,A.hi,alpha(T.cx,.6),2,200);if(k==='b'){curveD(ctx,P,A.bot,A.lo,A.hi,T.ca,2.8,200);curveD(ctx,P,x=>refl(A.bot(x)),A.lo,A.hi,alpha(T.ca,.6),2,200);}
+      line(ctx,P,P.xr[0],A.c,P.xr[1],A.c,T.ink,1.6,[6,4]);const Rv=R(A,x0),rv=r(A,x0);line(ctx,P,x0,A.c+rv,x0,A.c+Rv,T.hot,4.5);line(ctx,P,x0,A.c-Rv,x0,A.c-rv,T.hot,4.5);
+      const cx=P.box.x+P.box.w-62,cy=P.box.y+62;ctx.beginPath();ctx.arc(cx,cy,Rv*A.sc,0,6.283);ctx.fillStyle=alpha(T.ce,.45);ctx.fill();ctx.strokeStyle=T.hot;ctx.lineWidth=2;ctx.stroke();if(rv>1e-6){ctx.beginPath();ctx.arc(cx,cy,rv*A.sc,0,6.283);ctx.fillStyle=T.surface;ctx.fill();ctx.stroke();}label(ctx,'end view',cx,cy+Rv*A.sc+13,T.muted,'center','middle',MONO);}});
+  const V=()=>{const A=C[k];return Math.PI*integ(x=>R(A,x)**2-r(A,x)**2,A.lo,A.hi,1000);};
+  function upd(){const A=C[k];setText('vr-ro',fmt(R(A,x0),4));setText('vr-ri',fmt(r(A,x0),4));setText('vr-V',fmt(V(),4));sim.render();}
+  function setR(){const A=C[k],el=$('#vr-x');el.max=A.max;el.value=Math.min(+el.value,A.max);if(k==='b')el.value=.5;x0=+el.value;}
+  bindRange('vr-x',v=>nz(v),v=>{x0=v;upd();});segBind('vr-fn','k',v=>{k=v;setR();upd();});upd();drawers.volrev=()=>sim.render();
+  KEYS['vr-canvas']=['Slide x. The orange segment is the slice across the solid; the end view shows the disc or washer you would see looking along the axis.',[['cx','the curve(s) and their mirror image'],['hot','radii R and r of the slice'],['ce','the region and the solid'],['ink','the axis of revolution']]];
+  TIPS['vr-x']=el=>`Slice at x = ${nz(+el.value)}: R = ${fmt(R(C[k],+el.value),3)}, r = ${fmt(r(C[k],+el.value),3)}, area ${fmt(Math.PI*(R(C[k],+el.value)**2-r(C[k],+el.value)**2),3)}.`;
+  GLOSS['washer']='A disc with a circular hole: area π(R² − r²).';GLOSS['disc method']='Slice a solid of revolution perpendicular to the axis: each slice is a disc of area πR².';
+  TT.volrev='Have students sketch the end view of a slice before writing the integral, and label R and r as distances from the axis.';
+})();
+(function(){
+  PROBS.push({id:'vr-disc',topic:'volrev',title:'Disc method',gen(){const n=pick([.5,1,2]),b=ri(1,4),nm=n===.5?'√x':n===1?'x':'x²',ans=Math.PI*Math.pow(b,2*n+1)/(2*n+1);
+    return {q:`The region under y = ${nm} on [0, ${b}] is revolved about the x-axis. Find the volume of the solid. Give a decimal to two places.`,ans,unit:'',tol:.004,chk:Math.PI*integ(x=>Math.pow(x,2*n),0,b,3000),hint:`Discs of radius R = ${nm}: V = π∫R² dx.`,sol:`V = π∫<sub>0</sub><sup>${b}</sup> (${nm})² dx = π·${b}<sup>${2*n+1}</sup>/${2*n+1} = <b>${fmt(ans,2)}</b>.`};}});
+  PROBS.push({id:'vr-washer',topic:'volrev',title:'Washer method',gen(){const kk=ri(1,4),ans=Math.PI*kk**5*2/15;
+    return {q:`The region between y = ${kk===1?'':kk}x and y = x² is revolved about the x-axis. Find the volume. Give a decimal to two places.`,ans,unit:'',tol:.004,chk:Math.PI*integ(x=>(kk*x)**2-x**4,0,kk,3000),hint:`Intersections x = 0 and x = ${kk}. Outer radius ${kk}x, inner radius x². V = π∫(R² − r²) dx.`,sol:`V = π∫<sub>0</sub><sup>${kk}</sup> (${kk*kk}x² − x⁴) dx = π(${kk*kk}·${kk}³/3 − ${kk}⁵/5) = <b>${fmt(ans,2)}</b>.`};}});
+  PROBS.push({id:'vr-axis',topic:'volrev',title:'Revolving about a different line',gen(){const c=ri(1,3),ans=Math.PI*(8+32*c/3);
+    return {q:`The region under y = √x on [0, 4] is revolved about the line y = −${c}. Find the volume. Give a decimal to one place.`,ans,unit:'',tol:.003,chk:Math.PI*integ(x=>(Math.sqrt(x)+c)**2-c*c,0,4,3000),hint:`Outer radius √x + ${c}, inner radius ${c} (distance from the axis to the x-axis).`,sol:`V = π∫<sub>0</sub><sup>4</sup> [(√x + ${c})² − ${c}²] dx = π∫(x + ${2*c}√x) dx = π(8 + ${32*c}/3) = <b>${fmt(ans,1)}</b>.`};}});
+  PROBS.push({id:'vr-setup',topic:'volrev',title:'Set up the volume integral',gen(){const R=[['the region between y = √x and y = x about the x-axis','π∫₀¹ (x − x²) dx',['π∫₀¹ (√x − x)² dx','π∫₀¹ (√x + x)² dx','∫₀¹ (x − x²) dx']],['the region under y = x² on [0, 2] about the x-axis','π∫₀² x⁴ dx',['π∫₀² x² dx','π∫₀² x dx','2π∫₀² x⁴ dx']],['the region under y = √x on [0, 4] about y = −1','π∫₀⁴ [(√x + 1)² − 1] dx',['π∫₀⁴ x dx','π∫₀⁴ (√x − 1)² dx','π∫₀⁴ (√x + 1)² dx']]],[reg,c,w]=pick(R),m=mcq(c,w);
+    return {q:`Which integral gives the volume when ${reg} is revolved?`,choices:m.choices,ans:m.ans,hint:'Radii are distances from the axis. Square each radius, subtract the inner from the outer if there is a hole, and include π.',sol:`<b>${c}</b>.`};}});
 })();
 
 /* ===== overview.js ===== */

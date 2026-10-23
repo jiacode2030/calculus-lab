@@ -1,0 +1,50 @@
+  <section class="view" id="v-slope" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 7</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Slope fields</h1>
+        <p class="lede">A differential equation tells you the slope at every point. A slope field draws those slopes, and the solutions are the curves that follow them.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>A <b>differential equation</b> like <span class="m">dy/dx = x − y</span> gives the slope of a solution at every point (x, y) without telling you the solution. A <b>slope field</b> draws a tiny line segment of the right slope at a grid of points. A solution curve is one that is tangent to the segments everywhere it passes, like a leaf drifting on a current.</p>
+        <p>Read the field: if the right side depends only on x, segments in each vertical column are parallel; if only on y, segments in each row are parallel; slopes are zero where the right side is zero. Choose a starting point and you can trace the one solution through it. An initial condition like y(0) = 1 picks that curve.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>a derivative was computed from a known function</dd><dt>So we didn't need</dt><dd>a rule for the slope, and a function to find</dd><dt>Now</dt><dd>population growth, cooling, mixing and every model written as a rate</dd><dt>So we need</dt><dd>differential equations and slope fields</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>dy/dx = F(x, y)</span><small>slope at (x, y)</small></div><div class="eqn"><span>y(x₀) = y₀</span><small>initial condition picks the curve</small></div><div class="eqn"><span>a solution is tangent to the field</span><small>everywhere</small></div></div>
+      <div class="lab" id="sf-lab">
+        <div class="labbar"><span class="title">Trace a solution</span></div>
+        <div class="ctl"><span class="lbl">Differential equation</span><div class="seg" id="sf-fn" role="group" aria-label="Differential equation"><button type="button" data-k="a" aria-pressed="true">dy/dx = x</button><button type="button" data-k="b" aria-pressed="false">dy/dx = y</button><button type="button" data-k="c" aria-pressed="false">dy/dx = x − y</button><button type="button" data-k="d" aria-pressed="false">dy/dx = −x/y</button><button type="button" data-k="e" aria-pressed="false">dy/dx = 0.5y(1 − y/4)</button></div></div>
+        <p class="small" style="margin:0">Drag on the graph to move the starting point, or use the sliders.</p>
+        <canvas id="sf-canvas" aria-label="A slope field with a solution curve through a chosen starting point."></canvas>
+        <div class="controls"><div class="ctl"><label for="sf-x0"><span>Start x₀</span> <output id="sf-x0-out"></output></label><input type="range" id="sf-x0" min="-3" max="3" step="0.1" value="0"></div><div class="ctl"><label for="sf-y0"><span>Start y₀</span> <output id="sf-y0-out"></output></label><input type="range" id="sf-y0" min="-3" max="3" step="0.1" value="1"></div></div>
+        <div class="readout"><div><span>slope at the start</span><strong class="x" id="sf-sl">—</strong></div><div><span>solution value 1 unit to the right</span><strong class="v" id="sf-y1">—</strong></div><div><span>what to notice</span><strong class="" id="sf-note">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose dy/dx = x. What do the solutions look like, and why are the segments in each column parallel? <button type="button" class="btn link" data-show='[["click", "#sf-fn [data-k=a]"]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Parabolas y = x²/2 + C. The slope depends only on x, so every point in a vertical column has the same slope.</p></details></li>
+        <li><p>Choose dy/dx = y and start at y₀ = 1, then at y₀ = −1. What happens? <button type="button" class="btn link" data-show='[["click", "#sf-fn [data-k=b]"], ["#sf-y0", 1], ["#sf-x0", 0]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Solutions y = Ce^x grow away from the x-axis in both directions: y = 0 is a solution but an unstable one. Segments are parallel along each row (slope depends only on y).</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">For dy/dx = x − y with y(0) = 1, find the slope at the start and use the tangent line to estimate y(0.2).</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Slope at (0, 1).</b> dy/dx = 0 − 1 = −1.</li>
+          <li hidden><b>Tangent line.</b> y ≈ 1 + (−1)(x − 0).</li>
+          <li hidden><b>Estimate.</b> y(0.2) ≈ 1 − 0.2 = 0.8.</li>
+          <li hidden><b>Answer.</b> About <b>0.8</b>. (This is one step of Euler's method, a BC topic: use the new point to find a new slope.)</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Reading a slope field as the graph of the solution. The segments show slope only.</li>
+        <li>Mixing up "depends only on x" (parallel in columns) with "depends only on y" (parallel in rows).</li>
+        <li>Forgetting that two different solutions never cross (for a smooth equation).</li>
+        <li>Using the slope formula at the wrong point.</li>
+        <li>Believing the field determines one curve. You need an initial condition.</li>
+      </ul></div>
+      <div class="prose"><h2>Equilibrium solutions</h2>
+        <p>Where dy/dx = 0 for all x along a horizontal line y = c, that line is a solution (an equilibrium). In dy/dx = y it is y = 0. In the last case of the lab, y = 0 and y = 4 are equilibria, and solutions between them level off at 4.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="dy/dx = 1 − 1 = 0 there, so the segments are flat.">
+        <p class="q">Check yourself: In a slope field for dy/dx = y² − 1, the segments along y = 1 are</p>
+        <div class="opts"><button type="button">horizontal</button><button type="button">vertical</button><button type="button">rising</button><button type="button">falling</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

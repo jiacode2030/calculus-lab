@@ -1,0 +1,50 @@
+  <section class="view" id="v-sepvar" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 7</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Separation of variables & exponential models</h1>
+        <p class="lede">For some equations you can move all the y's to one side and all the x's to the other, then integrate. The most important result: when something changes at a rate proportional to itself, it follows an exponential.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p><b>Separate</b>: for <span class="m">dy/dx = f(x)·g(y)</span>, write <span class="m">dy / g(y) = f(x) dx</span>, integrate both sides, and put the constant C on the x side (once). Then use the initial condition to find C, and solve for y if possible. Skipping the +C before using the starting value is the classic error.</p>
+        <p>The model <span class="m">dy/dt = k y</span> says the rate is proportional to the amount. Separating gives <span class="m">y = y₀ e<sup>kt</sup></span>. With k &gt; 0 it is exponential growth (population, money at continuous interest); with k &lt; 0 it is decay (radioactive material, with half-life ln 2 / |k|). Newton's law of cooling, <span class="m">dT/dt = −k(T − T<sub>a</sub>)</span>, is the same thing for the difference T − T<sub>a</sub>.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>a slope field showed the shape of solutions</dd><dt>So we didn't need</dt><dd>a way to find the exact solution</dd><dt>Now</dt><dd>growth and decay, cooling, and any separable equation</dd><dt>So we need</dt><dd>separation of variables and exponential models</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>dy/dt = k y ⇒ y = y₀ e<sup>kt</sup></span><small>proportional growth or decay</small></div><div class="eqn"><span>∫ dy/g(y) = ∫ f(x) dx + C</span><small>separate, then integrate</small></div><div class="eqn"><span>half-life = ln 2 / |k|</span><small>doubling time = ln 2 / k</small></div></div>
+      <div class="lab" id="sv-lab">
+        <div class="labbar"><span class="title">Rate proportional to the amount</span></div>
+        <div class="ctl"><span class="lbl">Model</span><div class="seg" id="sv-fn" role="group" aria-label="Model"><button type="button" data-k="gr" aria-pressed="true">dy/dt = k y</button><button type="button" data-k="co" aria-pressed="false">cooling: dT/dt = −k(T − Tₐ)</button></div></div>
+        <canvas id="sv-canvas" aria-label="A graph of a quantity over time following the chosen differential equation, with its tangent line at a chosen time."></canvas>
+        <div class="controls"><div class="ctl"><label for="sv-k"><span>k</span> <output id="sv-k-out"></output></label><input type="range" id="sv-k" min="-1" max="1" step="0.05" value="0.3"></div><div class="ctl"><label for="sv-y0"><span>Start value</span> <output id="sv-y0-out"></output></label><input type="range" id="sv-y0" min="0.5" max="10" step="0.5" value="2"></div><div class="ctl"><label for="sv-ta"><span>Room temperature Tₐ (cooling only)</span> <output id="sv-ta-out"></output></label><input type="range" id="sv-ta" min="0" max="8" step="0.5" value="1"></div><div class="ctl"><label for="sv-t"><span>Time t</span> <output id="sv-t-out"></output></label><input type="range" id="sv-t" min="0" max="10" step="0.1" value="3"></div></div>
+        <div class="readout"><div><span>value at time t</span><strong class="x" id="sv-y">—</strong></div><div><span>rate dy/dt there</span><strong class="v" id="sv-dy">—</strong></div><div><span>doubling time or half-life</span><strong class="a" id="sv-key">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Set k = 0.3 and y₀ = 2. When does the quantity double? <button type="button" class="btn link" data-show='[["click", "#sv-fn [data-k=gr]"], ["#sv-k", 0.3], ["#sv-y0", 2]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>After ln 2 / 0.3 ≈ 2.31 time units, and again after another 2.31. The doubling time does not depend on the starting value.</p></details></li>
+        <li><p>Switch to cooling with Tₐ = 1, y₀ = 6 and k = 0.4. What does T approach? <button type="button" class="btn link" data-show='[["click", "#sv-fn [data-k=co]"], ["#sv-k", 0.4], ["#sv-y0", 6], ["#sv-ta", 1]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The room temperature, 1: the difference T − Tₐ decays exponentially, so T levels off at Tₐ.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Solve dy/dx = 2xy with y(0) = 3.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Separate.</b> dy/y = 2x dx (valid for y ≠ 0).</li>
+          <li hidden><b>Integrate both sides.</b> ln|y| = x² + C.</li>
+          <li hidden><b>Solve for y.</b> |y| = e<sup>C</sup> e<sup>x²</sup>, so y = A e<sup>x²</sup> with A = ± e<sup>C</sup>.</li>
+          <li hidden><b>Use y(0) = 3.</b> A·e⁰ = 3, so A = 3.</li>
+          <li hidden><b>Answer.</b> y = <b>3e<sup>x²</sup></b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Not separating completely: all y's (with dy) on one side, all x's (with dx) on the other.</li>
+        <li>Forgetting + C, or adding it on both sides.</li>
+        <li>Using the initial condition before including C.</li>
+        <li>Dividing by something that could be zero without noting the equilibrium solution.</li>
+        <li>Mixing up k signs: k &lt; 0 is decay.</li>
+      </ul></div>
+      <div class="prose"><h2>Why exponentials</h2>
+        <p>If the rate of change is proportional to the amount, a bigger amount grows faster, which makes it even bigger: that feedback is the shape of e<sup>kt</sup>. Check any proposed solution by differentiating: if y = y₀e<sup>kt</sup> then dy/dt = k·y₀e<sup>kt</sup> = k y. ✓</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="dy/dt = ky gives y = y₀e^{kt} with k = −0.2.">
+        <p class="q">Check yourself: If dy/dt = −0.2y and y(0) = 50, then y(t) =</p>
+        <div class="opts"><button type="button">50e<sup>−0.2t</sup></button><button type="button">50e<sup>0.2t</sup></button><button type="button">−0.2·50e<sup>t</sup></button><button type="button">50 − 0.2t</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

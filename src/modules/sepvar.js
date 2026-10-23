@@ -1,0 +1,29 @@
+/* ---------------- Separation of variables & exponential models ---------------- */
+(function sepvar(){
+  const cv=$('#sv-canvas');if(!cv)return;
+  let k='gr',kk=.3,y0=2,ta=1,t0=3;
+  const y=t=>k==='gr'?y0*Math.exp(kk*t):ta+(y0-ta)*Math.exp(-kk*t),dy=t=>k==='gr'?kk*y(t):-kk*(y(t)-ta);
+  const sim=glab('sv-canvas',{view:()=>{let lo=Math.min(0,y(0)),hi=y(0);for(let i=0;i<=100;i++){const v=y(10*i/100);lo=Math.min(lo,v);hi=Math.max(hi,v);}hi=Math.min(hi,Math.max(30,y0*3));const p=(hi-lo)*.1+.2;return {xr:[0,10],yr:[lo-p,hi+p],xlabel:'t'};},
+    draw(ctx,P){curveD(ctx,P,y,0,10,T.cx,2.8,300);if(k==='co')hline(ctx,P,ta,T.hot,[5,5]);const v=y(t0),m=dy(t0);line(ctx,P,t0-1.5,v-1.5*m,t0+1.5,v+1.5*m,T.hot,2.2);dot(ctx,P.X(t0),P.Y(v),6.5,T.cx,T.surface);vline(ctx,P,t0,T.muted,[3,4]);}});
+  function upd(){setText('sv-y',fmt(y(t0),4));setText('sv-dy',fmt(dy(t0),4));
+    setText('sv-key',k==='gr'?(kk>0?`doubling time ln 2 / k = ${fmt(Math.log(2)/kk,3)}`:kk<0?`half-life ln 2 / |k| = ${fmt(Math.log(2)/-kk,3)}`:'k = 0: constant'):(kk>0?`T → ${fmt(ta,1)}; the gap halves every ${fmt(Math.log(2)/kk,3)}`:'k ≤ 0: T moves away from Tₐ'));sim.render();}
+  bindRange('sv-k',v=>nz(v),v=>{kk=v;upd();});bindRange('sv-y0',v=>nz(v),v=>{y0=v;upd();});bindRange('sv-ta',v=>nz(v),v=>{ta=v;upd();});bindRange('sv-t',v=>nz(v),v=>{t0=v;upd();});segBind('sv-fn','k',v=>{k=v;upd();});upd();drawers.sepvar=()=>sim.render();
+  KEYS['sv-canvas']=['Change k and the start value. The orange tangent has slope dy/dt: it is proportional to y (or to T − Tₐ).',[['cx','the solution'],['hot','tangent at t; dashed line is the ambient temperature']]];
+  TIPS['sv-k']=el=>`k = ${nz(+el.value)}: ${+el.value>0?'growth (or cooling toward Tₐ)':+el.value<0?'decay (or heating away from Tₐ)':'no change'}.`;
+  GLOSS['half-life']='The time for a decaying quantity to fall to half: ln 2 / |k|.';GLOSS['separable']='A differential equation that can be written with all the y terms on one side and all the x terms on the other.';
+  TT.sepvar='Have students check the solution by differentiating it and substituting back into the equation.';
+})();
+(function(){
+  PROBS.push({id:'sv-exp',topic:'sepvar',title:'Exponential growth or decay',gen(){const k=pick([.1,.2,.3,.5,-.1,-.2,-.5]),y0=ri(2,40),t=ri(1,10),ans=y0*Math.exp(k*t);
+    return {q:`dy/dt = ${k<0?'−':''}${Math.abs(k)}y and y(0) = ${y0}. Find y(${t}). Give a decimal to two places.`,ans,unit:'',tol:.003,chk:y0*Math.exp(k*t),hint:'The solution of dy/dt = ky is y = y₀e^(kt).',sol:`y(t) = ${y0}e<sup>${nz(k)}t</sup>, so y(${t}) = ${y0}e<sup>${nz(+(k*t).toFixed(3))}</sup> = <b>${fmt(ans,2)}</b>.`};}});
+  const T1=[()=>{const k=ri(1,4);return {de:`dy/dx = ${k}y`,y0:`y(0) = 2`,sol:`2e^(${k}x)`,fx:x=>2*Math.exp(k*x)};},()=>({de:'dy/dx = 2xy',y0:'y(0) = 1',sol:'e^(x^2)',fx:x=>Math.exp(x*x)}),()=>({de:'dy/dx = x/y',y0:'y(0) = 3, y &gt; 0',sol:'sqrt(x^2+9)',fx:x=>Math.sqrt(x*x+9)}),()=>({de:'dy/dx = xy',y0:'y(0) = 1',sol:'e^(x^2/2)',fx:x=>Math.exp(x*x/2)}),()=>({de:'dy/dx = e^x/y',y0:'y(0) = 1, y &gt; 0',sol:'sqrt(2e^x-1)',fx:x=>Math.sqrt(2*Math.exp(x)-1)})];
+  PROBS.push({id:'sv-solve',topic:'sepvar',title:'Solve by separating variables',gen(){const t=pick(T1)();
+    return {q:`Solve the initial value problem ${t.de}, ${t.y0}. Type y as an expression in x.`,expr:t.sol,chkf:t.fx,hint:'Separate the variables, integrate both sides (one +C), then use the initial condition.',sol:`Separating and integrating, then using the condition: y = <b>${pretty(t.sol)}</b>.`};}});
+  PROBS.push({id:'sv-half',topic:'sepvar',title:'Half-life',gen(){const k=pick([.05,.1,.2,.3,.5,.7]),askT=Math.random()<.5,y0=pick([40,80,100,200]),frac0=pick([.5,.25,.1]),ans=askT?Math.log(1/frac0)/k:Math.log(2)/k;
+    return askT?{q:`A substance decays according to dy/dt = −${k}y (t in years). How many years until ${Math.round(frac0*100)}% of the original amount remains? Give a decimal to two places.`,ans,unit:'years',tol:.003,chk:-Math.log(frac0)/k,hint:'y = y₀e^(−kt). Set e^(−kt) equal to the fraction remaining and take ln.',sol:`e<sup>−${k}t</sup> = ${frac0} ⇒ t = ln(1/${frac0})/${k} = <b>${fmt(ans,2)} years</b>.`}
+      :{q:`A substance decays according to dy/dt = −${k}y (t in years). What is its half-life? Give a decimal to two places.`,ans,unit:'years',tol:.003,chk:Math.log(2)/k,hint:'Half-life = ln 2 / k.',sol:`e<sup>−${k}t</sup> = 1/2 ⇒ t = ln 2 / ${k} = <b>${fmt(ans,2)} years</b>.`};}});
+  PROBS.push({id:'sv-cool',topic:'sepvar',title:'Newton\'s law of cooling',gen(){const Ta=pick([20,22,0,70]),T0=pick([90,95,100,5,40]),k=pick([.05,.1,.2,.3]),t=pick([2,5,10]),ans=Ta+(T0-Ta)*Math.exp(-k*t);if(T0===Ta)return PROBS.find(z=>z.id==='sv-cool').gen();
+    return {q:`An object at ${T0}° is placed in surroundings at ${Ta}°. Its temperature satisfies dT/dt = −${k}(T − ${Ta}), t in minutes. Find T after ${t} minutes. Give a decimal to one place.`,ans,unit:'°',abs:.06,chk:Ta+(T0-Ta)*Math.exp(-k*t),hint:'T − Ta decays exponentially: T = Ta + (T0 − Ta)e^(−kt).',sol:`T = ${Ta} + (${T0} − ${Ta})e<sup>−${k}t</sup>. At t = ${t}: ${Ta} + ${T0-Ta}e<sup>${nz(-k*t)}</sup> = <b>${fmt(ans,1)}°</b>.`};}});
+  PROBS.push({id:'sv-model',topic:'sepvar',title:'Which model?',gen(){const R=[['The rate of growth of a bacteria population is proportional to its size','dP/dt = kP, k > 0'],['A radioactive sample loses mass at a rate proportional to the mass present','dm/dt = −km, k > 0'],['A hot drink cools at a rate proportional to the difference from room temperature','dT/dt = −k(T − Ta), k > 0'],['A tank drains at a constant rate','dV/dt = −c, c > 0'],['A population grows by 3 individuals per year','dP/dt = 3']],[tx,ans]=pick(R),m=mcq(ans,R.map(r=>r[1]));
+    return {q:`${tx}. Which differential equation models this?`,choices:m.choices,ans:m.ans,hint:'Translate "rate proportional to…" into dy/dt = k·(that quantity).',sol:`<b>${ans}</b>.`};}});
+})();
