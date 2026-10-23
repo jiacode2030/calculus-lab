@@ -258,7 +258,7 @@ body.is-ab .mitem.bc,body.is-ab .frq.bc,body.is-ab tr.bc{display:none!important}
 /* very small phones: long formulas may wrap */
 @media (max-width:360px){.m{white-space:normal}}
 
-/* Dark mode: no colored glows (same as the other AP Labs sites). Light mode is unchanged. */
+/* Dark mode: no colored glows (same as the other Intulab sites). Light mode is unchanged. */
 :root[data-theme="dark"] .nav a[aria-current="page"],:root[data-theme="dark"] .nav .ind,:root[data-theme="dark"] .steps .ind,:root[data-theme="dark"] .btn.primary{box-shadow:none}
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]) .nav a[aria-current="page"],:root:not([data-theme="light"]) .nav .ind,:root:not([data-theme="light"]) .steps .ind,:root:not([data-theme="light"]) .btn.primary{box-shadow:none}

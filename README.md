@@ -22,8 +22,8 @@ node tests/check.js [moduleId ...]
 ```
 See `CLAUDE.md` for the layout and the rules that keep the site working. localStorage keys all start with `calc-`.
 
-Part of [AP Labs](https://jiacode2030.github.io/ap-labs/), and installable as part of the AP Labs app (works offline).
+Part of [Intulab](https://jiacode2030.github.io/ap-labs/), and installable as part of the Intulab app (works offline).
 
-Report a mistake or something confusing with the **Report an issue** link on any page. It opens a pre-filled issue in the shared [AP Labs feedback](https://github.com/jiacode2030/ap-labs-feedback/issues) tracker, labelled `course:calc`.
+Report a mistake or something confusing with the **Report an issue** link on any page. It opens a pre-filled issue in the shared [Intulab feedback](https://github.com/jiacode2030/ap-labs-feedback/issues) tracker, labelled `course:calc`.
 
 Privacy: progress stays in your browser (keys start with `calc-`); visits are counted anonymously with GoatCounter (no cookies). See the [Privacy policy](https://jiacode2030.github.io/ap-labs/privacy.html) and [Terms of use](https://jiacode2030.github.io/ap-labs/terms.html). © 2026 JL. All rights reserved.
