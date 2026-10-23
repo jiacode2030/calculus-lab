@@ -804,23 +804,23 @@ table.data{min-width:0}
 }
 
 /* =====================================================================
-   Pastel yellow theme layer: soft butter surfaces, a sunny accent, rounder cards.
+   Ocean aqua theme layer: soft sea-glass surfaces, an aqua accent, rounder cards.
    Graph color roles: f blue, f′ green, f″ pink, tangent/secant orange, accumulation gold.
    ===================================================================== */
 :root{
-  --bg:#FBF6E3; --surface:#FFFDF6; --sunk:#F4ECCF; --ink:#2A2410; --muted:#554C31; --line:#E9DDB2; --grid:#F2E9C6;
-  --accent:#F2C94C; --accent-d:#634900; --accent-soft:#F8EAB4; --accent-ink:#2A2108; --blush:#FBE9F0; --peach:#FDEBD8;
-  --shadow-1:0 1px 2px rgba(90,70,10,.06),0 4px 14px rgba(90,70,10,.06);
-  --shadow-2:0 2px 4px rgba(90,70,10,.07),0 16px 34px rgba(90,70,10,.12);
+  --bg:#ECF7F8; --surface:#FAFEFE; --sunk:#D9EEF0; --ink:#0F2427; --muted:#425E62; --line:#C6E3E6; --grid:#DCEFF1;
+  --accent:#1E7A85; --accent-d:#0F6872; --accent-soft:#CBEBEE; --accent-ink:#FFFFFF; --blush:#FBE9F0; --peach:#FDEBD8;
+  --shadow-1:0 1px 2px rgba(60,40,40,.06),0 4px 14px rgba(60,40,40,.06);
+  --shadow-2:0 2px 4px rgba(60,40,40,.07),0 16px 34px rgba(60,40,40,.12);
   --r:18px;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#15130B; --surface:#1F1C12; --sunk:#29251A; --ink:#F5EFDC; --muted:#BDB392; --line:#3A3424; --grid:#221F15;
-  --accent:#F3D57E; --accent-d:#F7E3A6; --accent-soft:#3B331B; --accent-ink:#1A1607; --blush:#35222A; --peach:#35291B;
+  --bg:#0B1516; --surface:#121F21; --sunk:#192A2C; --ink:#E4F4F5; --muted:#9DBCBF; --line:#26393C; --grid:#142224;
+  --accent:#5FD0DA; --accent-d:#93E0E7; --accent-soft:#173A3E; --accent-ink:#04191B; --blush:#35222A; --peach:#35291B;
   --shadow-1:0 1px 2px rgba(0,0,0,.4); --shadow-2:0 2px 4px rgba(0,0,0,.4),0 14px 30px rgba(0,0,0,.45);}}
 :root[data-theme="dark"]{
-  --bg:#15130B; --surface:#1F1C12; --sunk:#29251A; --ink:#F5EFDC; --muted:#BDB392; --line:#3A3424; --grid:#221F15;
-  --accent:#F3D57E; --accent-d:#F7E3A6; --accent-soft:#3B331B; --accent-ink:#1A1607; --blush:#35222A; --peach:#35291B;
+  --bg:#0B1516; --surface:#121F21; --sunk:#192A2C; --ink:#E4F4F5; --muted:#9DBCBF; --line:#26393C; --grid:#142224;
+  --accent:#5FD0DA; --accent-d:#93E0E7; --accent-soft:#173A3E; --accent-ink:#04191B; --blush:#35222A; --peach:#35291B;
   --shadow-1:0 1px 2px rgba(0,0,0,.4); --shadow-2:0 2px 4px rgba(0,0,0,.4),0 14px 30px rgba(0,0,0,.45);}
 
 /* page: soft pastel glow instead of a flat grey */
@@ -856,7 +856,7 @@ a{color:var(--accent-d)}
 .btn.isdone{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .fs-btn{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);box-shadow:var(--shadow-2)}
 .seg{background:color-mix(in srgb,var(--accent) 10%,var(--sunk));border-radius:12px}
-.seg button[aria-pressed="true"]{background:var(--surface);color:var(--accent-d);box-shadow:0 1px 4px rgba(90,70,10,.18)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--accent-d);box-shadow:0 1px 4px rgba(60,40,40,.18)}
 input[type=range],input[type=checkbox]{accent-color:var(--accent)}
 select,input[type=text]{border-radius:11px;background:var(--surface);border-color:var(--line)}
 select:focus,input[type=text]:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
