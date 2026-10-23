@@ -891,6 +891,7 @@ body.is-ab .bc,body.is-ab .bcx{display:none!important}
 .modgroup.bc .mod{border-style:dashed}
 body.is-ab .prob.bc{display:none!important}
 .eqgrid .eqn{flex-wrap:wrap;white-space:normal}.eqgrid .eqn small{text-align:right}
+.readout strong{white-space:normal;overflow-wrap:anywhere;font-size:clamp(13px,1.6vw,17px);line-height:1.3}
 
 </style>
 
@@ -1818,6 +1819,471 @@ body.is-ab .prob.bc{display:none!important}
     </div>
   </section>
 
+  <section class="view" id="v-motion" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 4</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Derivatives in context & motion</h1>
+        <p class="lede">A derivative is a rate, and every rate has units and a story. The classic story: a particle moving along a line.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>If <span class="m">s(t)</span> is position, then <span class="m">v(t) = s′(t)</span> is velocity and <span class="m">a(t) = v′(t) = s″(t)</span> is acceleration. Velocity can be negative (moving left or down). <b>Speed</b> is the size of velocity, |v|. The units of each derivative are the units of the quantity divided by the units of time: meters, meters per second, meters per second squared.</p>
+        <p>The particle is <b>at rest</b> when v = 0, and it can turn around only there. It is <b>speeding up</b> when velocity and acceleration have the <i>same</i> sign, and <b>slowing down</b> when the signs are opposite. This is the sign test the exam loves.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>a derivative was a slope on a graph</dd><dt>So we didn't need</dt><dd>a meaning: the instantaneous rate of change of a real quantity, with units</dd><dt>Now</dt><dd>motion, growth, flow, cost and everything that changes in time</dd><dt>So we need</dt><dd>velocity, speed and acceleration, and how to interpret their signs</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>v = s′ , a = v′ = s″</span><small>velocity, acceleration</small></div><div class="eqn"><span>speed = |v|</span><small>always ≥ 0</small></div><div class="eqn"><span>v and a same sign → speeding up</span><small>opposite signs → slowing down</small></div></div>
+      <div class="lab" id="mo-lab">
+        <div class="labbar"><span class="title">A particle on a line</span></div>
+        <div class="ctl"><span class="lbl">Motion</span><div class="seg" id="mo-fn" role="group" aria-label="Motion"><button type="button" data-k="a" aria-pressed="true">s = t³ − 6t² + 9t</button><button type="button" data-k="b" aria-pressed="false">s = 20t − 5t²</button><button type="button" data-k="c" aria-pressed="false">s = 3 sin t</button></div></div>
+        <div class="row"><button type="button" class="btn" id="mo-play">Play</button></div>
+        <canvas id="mo-canvas" aria-label="A particle moving along a number line with velocity and acceleration arrows, above graphs of position, velocity and acceleration against time."></canvas>
+        <div class="controls"><div class="ctl"><label for="mo-t"><span>Time t</span> <output id="mo-t-out"></output></label><input type="range" id="mo-t" min="0" max="5" step="0.02" value="0.5"></div></div>
+        <div class="readout"><div><span>position s</span><strong class="x" id="mo-s">—</strong></div><div><span>velocity v</span><strong class="v" id="mo-v">—</strong></div><div><span>acceleration a</span><strong class="a" id="mo-a">—</strong></div><div><span>what the particle is doing</span><strong class="" id="mo-state">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose the first motion and set t = 2.5. Is the particle speeding up or slowing down? <button type="button" class="btn link" data-show='[["click", "#mo-fn [data-k=a]"], ["#mo-t", 2.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>v(2.5) = 3(1.5)(−0.5) = −2.25 and a(2.5) = 6(2.5) − 12 = 3. Opposite signs, so it is slowing down: moving left, but being pushed right.</p></details></li>
+        <li><p>Choose the ball (s = 20t − 5t²) and set t = 2. What does v = 0 mean here? <button type="button" class="btn link" data-show='[["click", "#mo-fn [data-k=b]"], ["#mo-t", 2]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>At t = 2 the ball is at its highest point (s = 20): it has stopped for an instant before falling. Velocity changes sign there, and acceleration is −10 the whole time.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">A particle has position s(t) = t³ − 6t² + 9t for t ≥ 0. When is it at rest, and is it speeding up or slowing down at t = 2.5?</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Velocity.</b> v(t) = s′(t) = 3t² − 12t + 9 = 3(t − 1)(t − 3).</li>
+          <li hidden><b>At rest.</b> v = 0 at t = 1 and t = 3.</li>
+          <li hidden><b>Acceleration.</b> a(t) = v′(t) = 6t − 12.</li>
+          <li hidden><b>Signs at t = 2.5.</b> v(2.5) = 3(1.5)(−0.5) = −2.25 and a(2.5) = 3.</li>
+          <li hidden><b>Answer.</b> At rest at <b>t = 1 and t = 3</b>. At t = 2.5 velocity is negative and acceleration positive (opposite signs), so the particle is <b>slowing down</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Confusing velocity with speed: velocity has a sign, speed does not.</li>
+        <li>Saying the particle is speeding up whenever acceleration is positive. You must compare it with the sign of velocity.</li>
+        <li>Forgetting units. Always write them: m/s, m/s².</li>
+        <li>Treating v = 0 as a stop forever. It may only be a turning point.</li>
+        <li>Using the position formula to find velocity at a time without differentiating first.</li>
+      </ul></div>
+      <div class="prose"><h2>Reading the story</h2>
+        <p>Positive velocity means moving in the positive direction; negative means the opposite. Where velocity changes sign the particle turns around. Where acceleration is zero velocity is momentarily constant (a maximum or minimum of v). The same logic reads any rate: if V(t) is volume, V′(t) is a flow rate, and V′ &gt; 0 means filling.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Velocity and acceleration have the same sign (both negative), so speed is increasing.">
+        <p class="q">Check yourself: v(t) = −4 and a(t) = −2 at some instant. The particle is</p>
+        <div class="opts"><button type="button">speeding up</button><button type="button">slowing down</button><button type="button">at rest</button><button type="button">turning around</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-related" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 4</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Related rates</h1>
+        <p class="lede">When two quantities are tied together by an equation and both change in time, their rates are tied together too.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>A ladder slides down a wall. The foot moves out at a steady 2 ft/s, but the top does not move down at a steady rate: it starts slowly and speeds up. The lengths x and y are linked by <span class="m">x² + y² = L²</span>, so their <i>rates</i> are linked by the derivative of that equation with respect to time.</p>
+        <p>The method: <b>draw and label</b>; write an <b>equation</b> that holds at every moment; <b>differentiate with respect to t</b> (chain rule on every variable); only <b>then substitute</b> the numbers of the moment you care about. Substituting before differentiating freezes the variables and gives 0.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>quantities changed one at a time with x</dd><dt>So we didn't need</dt><dd>a way to connect the rates of several changing quantities</dd><dt>Now</dt><dd>ladders, balloons, shadows, cones, flows</dd><dt>So we need</dt><dd>differentiate an equation in time</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>d/dt [x²] = 2x · dx/dt</span><small>chain rule in t</small></div><div class="eqn"><span>differentiate first</span><small>then plug in</small></div><div class="eqn"><span>draw · equation · d/dt · substitute</span><small>the four steps</small></div></div>
+      <div class="lab" id="rr-lab">
+        <div class="labbar"><span class="title">Same equation, linked rates</span></div>
+        <div class="ctl"><span class="lbl">Situation</span><div class="seg" id="rr-fn" role="group" aria-label="Situation"><button type="button" data-k="lad" aria-pressed="true">Ladder</button><button type="button" data-k="cir" aria-pressed="false">Ripple</button><button type="button" data-k="sph" aria-pressed="false">Balloon</button></div></div>
+        <p class="small" id="rr-form" style="margin:0"></p>
+        <canvas id="rr-canvas" aria-label="A diagram of the chosen situation with a slider for the main variable and the linked rate computed beneath."></canvas>
+        <div class="controls"><div class="ctl"><label for="rr-v"><span>Variable</span> <output id="rr-v-out"></output></label><input type="range" id="rr-v" min="1" max="9" step="0.1" value="6"></div></div>
+        <div class="readout"><div><span>given rate</span><strong class="x" id="rr-given">—</strong></div><div><span>the rate you want</span><strong class="v" id="rr-ans">—</strong></div><div><span>the derivative</span><strong class="" id="rr-eq">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>On the ladder (10 ft, foot moving out at 2 ft/s) set x = 6. How fast is the top sliding down? <button type="button" class="btn link" data-show='[["click", "#rr-fn [data-k=lad]"], ["#rr-v", 6]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>y = 8, and dy/dt = −(x/y)(2) = −(6/8)(2) = −1.5 ft/s: the top drops 1.5 ft/s.</p></details></li>
+        <li><p>Now slide x up to 9. What happens to the speed of the top? <button type="button" class="btn link" data-show='[["click", "#rr-fn [data-k=lad]"], ["#rr-v", 9]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>y ≈ 4.36 and dy/dt ≈ −4.13 ft/s: it speeds up a lot as the ladder nears the floor, even though the foot moves at a steady 2 ft/s.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">A 10 ft ladder leans on a wall. Its foot slides away at 2 ft/s. How fast is the top sliding down when the foot is 6 ft from the wall?</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Draw and equation.</b> x = distance of foot from wall, y = height of top: x² + y² = 100.</li>
+          <li hidden><b>Differentiate with respect to t.</b> 2x·dx/dt + 2y·dy/dt = 0, so dy/dt = −(x/y)·dx/dt.</li>
+          <li hidden><b>Substitute the moment.</b> x = 6 gives y = √(100 − 36) = 8, and dx/dt = 2.</li>
+          <li hidden><b>Compute.</b> dy/dt = −(6/8)(2) = −1.5.</li>
+          <li hidden><b>Answer.</b> The top is sliding down at <b>1.5 ft/s</b> (dy/dt = −1.5 ft/s).</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Substituting numbers before differentiating. Constants have derivative 0, so you lose the rates.</li>
+        <li>Forgetting dx/dt: 2x alone is not d/dt of x².</li>
+        <li>Treating a changing quantity as constant (for example the ladder's length is constant, but x and y are not).</li>
+        <li>Ignoring signs: a decreasing quantity has a negative rate. Report it with the right direction.</li>
+        <li>Dropping units. Rates have units of quantity per time.</li>
+      </ul></div>
+      <div class="prose"><h2>A checklist</h2>
+        <p>Name every variable with units. Write what is constant and what changes. Use a relationship that is true at all times (Pythagoras, similar triangles, a volume or area formula), not just at the moment asked about. Differentiate. Substitute known values. Solve. Include units and a sentence.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="A = πr², so dA/dt = 2πr·dr/dt = 2πr·2.">
+        <p class="q">Check yourself: A circle's radius grows at 2 cm/s. dA/dt = ?</p>
+        <div class="opts"><button type="button">2πr·(2)</button><button type="button">πr²·(2)</button><button type="button">2πr</button><button type="button">2</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-linear" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 4</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Linearization & differentials</h1>
+        <p class="lede">Zoom in far enough and a curve is a line. Use the tangent line to estimate values you cannot compute by hand.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Near x = a, the curve is almost indistinguishable from its tangent line <span class="m">L(x) = f(a) + f′(a)(x − a)</span>. So to estimate f at a nearby point, use L instead: <span class="m">f(x) ≈ L(x)</span>. This is how a calculator first estimates square roots, and how physicists replace sin θ by θ for small angles.</p>
+        <p>Whether the estimate is too big or too small depends on bending. If the curve is <b>concave down</b> (f″ &lt; 0) the tangent line lies <i>above</i> the curve: the estimate is an <b>overestimate</b>. If concave up (f″ &gt; 0) the tangent lies below: an underestimate. Differentials write the same idea as <span class="m">dy = f′(x) dx</span>.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>a function value needed a calculator or a formula</dd><dt>So we didn't need</dt><dd>a fast, local approximation</dd><dt>Now</dt><dd>estimating √ and trig values, error propagation and later Taylor polynomials</dd><dt>So we need</dt><dd>the tangent-line approximation and differentials</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>L(x) = f(a) + f′(a)(x − a)</span><small>linearization at a</small></div><div class="eqn"><span>f(x) ≈ L(x) near a</span><small>good for x close to a</small></div><div class="eqn"><span>dy = f′(x) dx</span><small>differential</small></div></div>
+      <div class="lab" id="li-lab">
+        <div class="labbar"><span class="title">Tangent line vs the curve</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="li-fn" role="group" aria-label="Function"><button type="button" data-k="sq" aria-pressed="true">√x</button><button type="button" data-k="sn" aria-pressed="false">sin x</button><button type="button" data-k="ex" aria-pressed="false">eˣ</button><button type="button" data-k="ln" aria-pressed="false">ln x</button></div></div>
+        <canvas id="li-canvas" aria-label="A curve with its tangent line at a, and the estimate and true value at a target x."></canvas>
+        <div class="controls"><div class="ctl"><label for="li-a"><span>Tangent point a</span> <output id="li-a-out"></output></label><input type="range" id="li-a" min="0.5" max="4" step="0.1" value="1"></div><div class="ctl"><label for="li-x"><span>Target x</span> <output id="li-x-out"></output></label><input type="range" id="li-x" min="0.3" max="4.5" step="0.05" value="1.4"></div></div>
+        <div class="readout"><div><span>estimate L(x)</span><strong class="x" id="li-L">—</strong></div><div><span>true f(x)</span><strong class="v" id="li-f">—</strong></div><div><span>error (L − f)</span><strong class="a" id="li-e">—</strong></div><div><span>the tangent line is</span><strong class="" id="li-side">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>On √x with a = 1, estimate √1.2. <button type="button" class="btn link" data-show='[["click", "#li-fn [data-k=sq]"], ["#li-a", 1], ["#li-x", 1.2]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>L(x) = 1 + ½(x − 1), so L(1.2) = 1.1. The true √1.2 = 1.0954: a tiny overestimate, because √x is concave down.</p></details></li>
+        <li><p>Slide x far from a. What happens to the error? <button type="button" class="btn link" data-show='[["click", "#li-fn [data-k=sq]"], ["#li-a", 1], ["#li-x", 4]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The error grows quickly: L(4) = 2.5 but √4 = 2. A tangent line is only a good estimate close to a.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Use a linearization to estimate √26.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Pick a nearby easy point.</b> f(x) = √x, a = 25 (since √25 = 5).</li>
+          <li hidden><b>Slope.</b> f′(x) = 1/(2√x), so f′(25) = 1/10.</li>
+          <li hidden><b>Build L.</b> L(x) = 5 + (1/10)(x − 25).</li>
+          <li hidden><b>Estimate.</b> L(26) = 5 + 0.1 = 5.1.</li>
+          <li hidden><b>Answer.</b> √26 ≈ <b>5.1</b> (true value 5.0990). Overestimate, since √x is concave down.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Choosing a not close to x. The estimate is only good near a.</li>
+        <li>Evaluating f′ at x instead of at a.</li>
+        <li>Forgetting f(a) in L(x).</li>
+        <li>Saying overestimate/underestimate from the sign of f′. It depends on f″ (concavity).</li>
+        <li>Using degrees for trig linearizations. They require radians.</li>
+      </ul></div>
+      <div class="prose"><h2>Differentials</h2>
+        <p>The change in y along the tangent line is dy = f′(x) dx, while the true change is Δy. For a small dx they nearly agree. This is how measurement error spreads: if the radius of a sphere is measured with a small error dr, the error in volume is about dV = 4πr² dr.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Concave down means the curve bends away below its tangent line, so the tangent estimate is too large.">
+        <p class="q">Check yourself: The tangent line to f at a lies above the curve near a when</p>
+        <div class="opts"><button type="button">f″(a) < 0</button><button type="button">f″(a) > 0</button><button type="button">f′(a) < 0</button><button type="button">f′(a) > 0</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-lhop" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 4</span><span class="tag">AB &amp; BC</span></div>
+        <h1>L'Hôpital's rule</h1>
+        <p class="lede">If a limit of a ratio is 0/0 or ∞/∞, you can differentiate the top and bottom separately and try again.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>When both f and g go to 0 at a, the ratio f/g depends on <i>how fast</i> each goes to 0. Near a, f ≈ f′(a)(x − a) and g ≈ g′(a)(x − a), so their ratio is about f′(a)/g′(a): the ratio of their <b>rates</b>. That is <b>L'Hôpital's rule</b>: <span class="m">lim f/g = lim f′/g′</span>, if the left side is 0/0 or ∞/∞ and the right side exists.</p>
+        <p>Check the form first. Never apply the rule to something that is not 0/0 or ∞/∞. Other indeterminate forms (0·∞, ∞ − ∞, 1<sup>∞</sup>) must be rewritten into a ratio first. You differentiate top and bottom <i>separately</i>: this is not the quotient rule.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>0/0 was solved by algebra when we were lucky</dd><dt>So we didn't need</dt><dd>a general tool for indeterminate quotients</dd><dt>Now</dt><dd>limits like sin x / x, (eˣ − 1)/x, x² / eˣ and ln x / x</dd><dt>So we need</dt><dd>L'Hôpital's rule</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>lim f/g = lim f′/g′</span><small>if 0/0 or ∞/∞</small></div><div class="eqn"><span>0/0 · ∞/∞</span><small>the two direct forms</small></div><div class="eqn"><span>0·∞ · ∞−∞ · 1^∞</span><small>rewrite first</small></div></div>
+      <div class="lab" id="lh-lab">
+        <div class="labbar"><span class="title">Ratio of functions vs ratio of derivatives</span></div>
+        <div class="ctl"><span class="lbl">Limit</span><div class="seg" id="lh-fn" role="group" aria-label="Limit"><button type="button" data-k="a" aria-pressed="true">(eˣ−1)/x at 0</button><button type="button" data-k="b" aria-pressed="false">(1−cos x)/x² at 0</button><button type="button" data-k="c" aria-pressed="false">ln x/(x−1) at 1</button><button type="button" data-k="d" aria-pressed="false">x²/eˣ as x→∞</button></div></div>
+        <p class="small" id="lh-form" style="margin:0"></p>
+        <canvas id="lh-canvas" aria-label="Graphs of f over g and of f prime over g prime near a; both approach the same limit."></canvas>
+        <div class="controls"><div class="ctl"><label for="lh-w"><span>Zoom (closer to a, or farther out)</span> <output id="lh-w-out"></output></label><input type="range" id="lh-w" min="0" max="3" step="0.05" value="0"></div></div>
+        <div class="readout"><div><span>f(x)/g(x) at the probe</span><strong class="x" id="lh-r">—</strong></div><div><span>f′(x)/g′(x) at the probe</span><strong class="v" id="lh-rp">—</strong></div><div><span>the limit</span><strong class="a" id="lh-lim">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose (eˣ − 1)/x and zoom in. Compare the two ratios. <button type="button" class="btn link" data-show='[["click", "#lh-fn [data-k=a]"], ["#lh-w", 3]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Both head to 1. The ratio of derivatives, eˣ/1, is already 1 at x = 0, so L'Hôpital gives the limit in one line.</p></details></li>
+        <li><p>Choose x²/eˣ and widen the window. Which grows faster, top or bottom? <button type="button" class="btn link" data-show='[["click", "#lh-fn [data-k=d]"], ["#lh-w", 3]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The exponential wins: the ratio heads to 0. Applying the rule twice: x²/eˣ → 2x/eˣ → 2/eˣ → 0.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find lim<sub>x→0</sub> (1 − cos x)/x².</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Check the form.</b> 1 − cos 0 = 0 and 0² = 0: the form 0/0, so the rule applies.</li>
+          <li hidden><b>Differentiate top and bottom.</b> (sin x)/(2x).</li>
+          <li hidden><b>Check again.</b> Still 0/0 at x = 0, so apply the rule once more.</li>
+          <li hidden><b>Differentiate again.</b> (cos x)/2, which at x = 0 is 1/2.</li>
+          <li hidden><b>Answer.</b> The limit is <b>1/2</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Using the quotient rule on f/g. Differentiate the top and bottom separately.</li>
+        <li>Applying the rule when the form is not 0/0 or ∞/∞ (for example 1/0 or 0/5).</li>
+        <li>Stopping after one step when the form is still 0/0.</li>
+        <li>Applying it to 0·∞ or ∞ − ∞ directly. Rewrite as a quotient first.</li>
+        <li>Concluding the original limit does not exist because f′/g′ oscillates: then the rule gives no information.</li>
+      </ul></div>
+      <div class="prose"><h2>Growth rates</h2>
+        <p>L'Hôpital settles a hierarchy: as x → ∞, ln x grows slower than any power of x, which grows slower than any exponential. So (ln x)/x → 0 and x<sup>n</sup>/e<sup>x</sup> → 0 for every n.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="It is 0/0, so the rule applies: 3cos(3x)/1 → 3.">
+        <p class="q">Check yourself: Which is the first step for lim<sub>x→0</sub> sin(3x)/x?</p>
+        <div class="opts"><button type="button">Check it is 0/0, then differentiate top and bottom</button><button type="button">Plug in 0 and say it is 0</button><button type="button">Apply the quotient rule</button><button type="button">Say it does not exist</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-mvt" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 5</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Extreme values & the Mean Value Theorem</h1>
+        <p class="lede">Two guarantees about continuous and differentiable functions: there is always a highest and lowest point, and somewhere the slope equals the average slope.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p><b>Extreme Value Theorem:</b> a function continuous on a closed interval <span class="m">[a, b]</span> has an absolute maximum and an absolute minimum there. They occur at endpoints or at <b>critical points</b>, where f′ = 0 or f′ does not exist. To find them, evaluate f at the critical points and at both endpoints (the candidates test).</p>
+        <p><b>Mean Value Theorem:</b> if f is continuous on [a, b] and differentiable on (a, b), then somewhere inside there is a point c where the tangent line is parallel to the secant line: <span class="m">f′(c) = (f(b) − f(a))/(b − a)</span>. If you drove 120 miles in 2 hours, at some moment your speedometer read exactly 60.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>we looked for slopes and values one point at a time</dd><dt>So we didn't need</dt><dd>guarantees about the whole interval</dd><dt>Now</dt><dd>optimization, proofs of the derivative tests, and "must have happened" reasoning</dd><dt>So we need</dt><dd>the EVT and the MVT, with their hypotheses</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>f continuous on [a, b] ⇒ max and min exist</span><small>EVT</small></div><div class="eqn"><span>f′(c) = (f(b) − f(a)) / (b − a)</span><small>MVT: continuous on [a, b], differentiable on (a, b)</small></div><div class="eqn"><span>critical point: f′(c) = 0 or DNE</span><small>candidate for an extreme</small></div></div>
+      <div class="lab" id="mv-lab">
+        <div class="labbar"><span class="title">Find the parallel tangent</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="mv-fn" role="group" aria-label="Function"><button type="button" data-k="cu" aria-pressed="true">x³/3 − x</button><button type="button" data-k="sn" aria-pressed="false">sin x</button><button type="button" data-k="sq" aria-pressed="false">x²</button><button type="button" data-k="abs" aria-pressed="false">|x|</button></div></div>
+        <canvas id="mv-canvas" aria-label="A curve on an interval with the secant line between the endpoints and tangent lines at points where the slope equals the average slope."></canvas>
+        <div class="controls"><div class="ctl"><label for="mv-a"><span>a (left end)</span> <output id="mv-a-out"></output></label><input type="range" id="mv-a" min="-2" max="1" step="0.1" value="-1.5"></div><div class="ctl"><label for="mv-b"><span>b (right end)</span> <output id="mv-b-out"></output></label><input type="range" id="mv-b" min="1.2" max="3" step="0.1" value="2.5"></div></div>
+        <div class="readout"><div><span>average slope (secant)</span><strong class="x" id="mv-m">—</strong></div><div><span>point(s) c with f′(c) = that slope</span><strong class="v" id="mv-c">—</strong></div><div><span>absolute max / min on [a, b]</span><strong class="a" id="mv-ext">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>On x³/3 − x with the default interval, find where the tangent is parallel to the secant. <button type="button" class="btn link" data-show='[["click", "#mv-fn [data-k=cu]"], ["#mv-a", -1.5], ["#mv-b", 2.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>There can be more than one c. Each orange tangent is parallel to the secant. The MVT only promises at least one.</p></details></li>
+        <li><p>Choose |x|. Does a tangent parallel to the secant exist? <button type="button" class="btn link" data-show='[["click", "#mv-fn [data-k=abs]"], ["#mv-a", -1], ["#mv-b", 2]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>No: the slope of |x| is only −1 or 1, but the average slope here is 1/3. The MVT does not apply because |x| is not differentiable at 0, which lies inside the interval.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Verify the MVT for f(x) = x² on [1, 3] and find c.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Check the hypotheses.</b> f is a polynomial: continuous and differentiable everywhere.</li>
+          <li hidden><b>Average slope.</b> (f(3) − f(1))/(3 − 1) = (9 − 1)/2 = 4.</li>
+          <li hidden><b>Set the derivative equal.</b> f′(c) = 2c = 4.</li>
+          <li hidden><b>Solve.</b> c = 2, and 2 lies in (1, 3). ✓</li>
+          <li hidden><b>Answer.</b> <b>c = 2</b>. (The tangent at x = 2 has slope 4, parallel to the secant.)</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Using the MVT without checking continuity and differentiability.</li>
+        <li>Giving a c outside (a, b).</li>
+        <li>Finding extremes by only looking where f′ = 0 and forgetting the endpoints.</li>
+        <li>Confusing the MVT (an average slope) with Rolle's theorem (the special case f(a) = f(b), slope 0).</li>
+        <li>Saying a local maximum is the absolute maximum. Compare all candidates.</li>
+      </ul></div>
+      <div class="prose"><h2>The candidates test</h2>
+        <p>To find absolute extremes of a continuous f on [a, b]: (1) find critical points inside (a, b), (2) evaluate f at each critical point and at a and b, (3) the largest value is the maximum and the smallest is the minimum. It always works on a closed interval; on an open interval an extreme may not exist.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="The average slope is (9 − 1)/(4 − 0) = 2.">
+        <p class="q">Check yourself: f is continuous on [0, 4], f(0) = 1 and f(4) = 9, and differentiable on (0, 4). The MVT guarantees a c in (0, 4) with f′(c) =</p>
+        <div class="opts"><button type="button">2</button><button type="button">8</button><button type="button">1/2</button><button type="button">9</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-incdec" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 5</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Increasing, decreasing & the first derivative test</h1>
+        <p class="lede">Where the slope is positive the function climbs, where it is negative the function falls. The turning points are where the sign changes.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>If <span class="m">f′(x) &gt; 0</span> on an interval, f is <b>increasing</b> there; if <span class="m">f′(x) &lt; 0</span>, f is <b>decreasing</b>. A <b>critical point</b> is an x in the domain where f′ = 0 or f′ does not exist. These are the only places a function can turn.</p>
+        <p><b>First derivative test:</b> at a critical point c, look at the sign of f′ on each side. If f′ changes from + to −, f has a <b>local maximum</b> at c. From − to +: a <b>local minimum</b>. If the sign does not change, c is neither (think x³ at 0). Always justify with a sign chart.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>the derivative was a number at a point</dd><dt>So we didn't need</dt><dd>its sign tells the whole story of rise and fall</dd><dt>Now</dt><dd>finding peaks and valleys</dd><dt>So we need</dt><dd>increasing/decreasing and the first derivative test</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>f′ &gt; 0 ⇒ increasing · f′ &lt; 0 ⇒ decreasing</span><small>sign of the slope</small></div><div class="eqn"><span>+ → − ⇒ local max · − → + ⇒ local min</span><small>first derivative test</small></div><div class="eqn"><span>critical point: f′ = 0 or DNE</span><small>candidates</small></div></div>
+      <div class="lab" id="id-lab">
+        <div class="labbar"><span class="title">Read the shape from the slope</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="id-fn" role="group" aria-label="Function"><button type="button" data-k="a" aria-pressed="true">x³ − 3x</button><button type="button" data-k="b" aria-pressed="false">x³</button><button type="button" data-k="c" aria-pressed="false">x⁴ − 2x²</button><button type="button" data-k="d" aria-pressed="false">x·e⁻ˣ</button><button type="button" data-k="e" aria-pressed="false">x^(2/3)</button></div></div>
+        <canvas id="id-canvas" aria-label="A function above, with regions shaded by the sign of its derivative, and the derivative graph below."></canvas>
+        <canvas id="id-canvas2" aria-label="Graph of the derivative with shaded sign regions."></canvas>
+        <div class="controls"><div class="ctl"><label for="id-x"><span>Point x</span> <output id="id-x-out"></output></label><input type="range" id="id-x" min="-2" max="2" step="0.05" value="0.5"></div></div>
+        <div class="readout"><div><span>sign of f′ at the point</span><strong class="x" id="id-sign">—</strong></div><div><span>critical points</span><strong class="v" id="id-crit">—</strong></div><div><span>classification</span><strong class="a" id="id-class">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose x³ and slide through 0. Is x = 0 a max, a min or neither? <button type="button" class="btn link" data-show='[["click", "#id-fn [data-k=b]"], ["#id-x", 0]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Neither: f′ = 3x² is 0 at x = 0 but positive on both sides, so f keeps increasing. A critical point is a candidate, not a guarantee.</p></details></li>
+        <li><p>Choose x^(2/3). What happens at x = 0? <button type="button" class="btn link" data-show='[["click", "#id-fn [data-k=e]"], ["#id-x", 0.2]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>f′ does not exist at 0 (a cusp), so 0 is a critical point. f′ changes from − to +, so it is a local minimum.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find the intervals where f(x) = x³ − 3x is increasing or decreasing, and classify its critical points.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Differentiate.</b> f′(x) = 3x² − 3 = 3(x − 1)(x + 1).</li>
+          <li hidden><b>Critical points.</b> f′ = 0 at x = −1 and x = 1.</li>
+          <li hidden><b>Sign chart.</b> x &lt; −1: f′ &gt; 0; −1 &lt; x &lt; 1: f′ &lt; 0; x &gt; 1: f′ &gt; 0.</li>
+          <li hidden><b>Conclude.</b> f is increasing on (−∞, −1) and (1, ∞), decreasing on (−1, 1).</li>
+          <li hidden><b>Classify.</b> At x = −1 the sign goes + → −: <b>local maximum</b> f(−1) = 2. At x = 1 it goes − → +: <b>local minimum</b> f(1) = −2.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Calling any point with f′ = 0 an extremum. Check the sign change.</li>
+        <li>Forgetting critical points where f′ does not exist.</li>
+        <li>Not showing a sign chart or a justification (the exam requires one).</li>
+        <li>Mixing up f and f′: the graph of f′ being above the axis means f is increasing, not that f is positive.</li>
+        <li>Reporting x when asked for the extreme value (the y-value), or the reverse.</li>
+      </ul></div>
+      <div class="prose"><h2>Writing the justification</h2>
+        <p>A complete answer says: "f′(x) changes from positive to negative at x = c, so f has a relative maximum at x = c." Always name the function whose sign you are using, and the interval you checked.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Decreasing then increasing: a valley, a local minimum.">
+        <p class="q">Check yourself: f′(x) changes from negative to positive at x = 2. Then f has at x = 2 a</p>
+        <div class="opts"><button type="button">local minimum</button><button type="button">local maximum</button><button type="button">inflection point</button><button type="button">vertical asymptote</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-concav" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 5</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Concavity & the second derivative test</h1>
+        <p class="lede">Concavity is the bend of a curve: bending up like a cup, or down like a frown. It is the sign of f″.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>If <span class="m">f″ &gt; 0</span> the slope f′ is increasing: the graph is <b>concave up</b> (holds water). If <span class="m">f″ &lt; 0</span> the slope is decreasing: <b>concave down</b>. A <b>point of inflection</b> is where the concavity changes, so f″ changes sign (f″ = 0 or DNE there, but that alone is not enough).</p>
+        <p><b>Second derivative test:</b> at a critical point c (f′(c) = 0), if f″(c) &gt; 0 the curve bends up there: local minimum. If f″(c) &lt; 0: local maximum. If f″(c) = 0 the test says nothing: go back to the first derivative test.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>the sign of f′ told rising from falling</dd><dt>So we didn't need</dt><dd>the sign of f″ tells how it bends</dd><dt>Now</dt><dd>a second way to classify critical points, and inflection points</dd><dt>So we need</dt><dd>concavity and the second derivative test</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>f″ &gt; 0 ⇒ concave up · f″ &lt; 0 ⇒ concave down</span><small>bend</small></div><div class="eqn"><span>f′(c) = 0, f″(c) &gt; 0 ⇒ local min</span><small>second derivative test</small></div><div class="eqn"><span>inflection: f″ changes sign</span><small>concavity changes</small></div></div>
+      <div class="lab" id="cc-lab">
+        <div class="labbar"><span class="title">The bend of a curve</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="cc-fn" role="group" aria-label="Function"><button type="button" data-k="a" aria-pressed="true">x³ − 3x</button><button type="button" data-k="b" aria-pressed="false">x⁴</button><button type="button" data-k="c" aria-pressed="false">sin x</button><button type="button" data-k="d" aria-pressed="false">x⁴ − 2x²</button></div></div>
+        <canvas id="cc-canvas" aria-label="A function with regions shaded by concavity, a tangent line at a point, and the second derivative graph below."></canvas>
+        <canvas id="cc-canvas2" aria-label="Graph of the second derivative."></canvas>
+        <div class="controls"><div class="ctl"><label for="cc-x"><span>Point x</span> <output id="cc-x-out"></output></label><input type="range" id="cc-x" min="-2" max="2" step="0.05" value="0.6"></div></div>
+        <div class="readout"><div><span>f′(x)</span><strong class="v" id="cc-fp">—</strong></div><div><span>f″(x)</span><strong class="a" id="cc-fpp">—</strong></div><div><span>concavity here</span><strong class="" id="cc-bend">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose x³ − 3x and slide through 0. What happens to the tangent line and to f″? <button type="button" class="btn link" data-show='[["click", "#cc-fn [data-k=a]"], ["#cc-x", 0]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>f″ = 6x changes sign at 0: concave down to the left, concave up to the right. The tangent line crosses from above the curve to below it: an inflection point.</p></details></li>
+        <li><p>Choose x⁴ and put x at 0. f″(0) = 0. Is there an inflection point? <button type="button" class="btn link" data-show='[["click", "#cc-fn [data-k=b]"], ["#cc-x", 0]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>No. f″ = 12x² is 0 at x = 0 but positive on both sides, so concavity does not change. f″ = 0 is not enough; the test fails here, yet x = 0 is a minimum.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">For f(x) = x³ − 6x² + 9x, find the local extrema using the second derivative test, and the inflection point.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>f′.</b> f′(x) = 3x² − 12x + 9 = 3(x − 1)(x − 3), so critical points x = 1 and x = 3.</li>
+          <li hidden><b>f″.</b> f″(x) = 6x − 12.</li>
+          <li hidden><b>Test.</b> f″(1) = −6 &lt; 0: local maximum f(1) = 4. f″(3) = 6 &gt; 0: local minimum f(3) = 0.</li>
+          <li hidden><b>Inflection.</b> f″ = 0 at x = 2, and f″ changes from negative to positive there. The inflection point is <b>(2, 2)</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Saying f″ = 0 means an inflection point. The sign must change.</li>
+        <li>Using f″ to find concavity but writing the answer in terms of f′ (or the reverse).</li>
+        <li>Applying the second derivative test where f″ = 0, and concluding "neither".</li>
+        <li>Confusing concave up with increasing. A curve can be decreasing and concave up.</li>
+        <li>Forgetting that concavity changes can happen where f″ does not exist.</li>
+      </ul></div>
+      <div class="prose"><h2>Two tests, one picture</h2>
+        <p>At a critical point the first derivative test looks at the sign of f′ on each side; the second derivative test looks at the bend at the point. Use whichever is quicker; if the second derivative test is inconclusive (f″ = 0), fall back on the first.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="f″ &lt; 0: concave down at a flat point, a peak.">
+        <p class="q">Check yourself: f′(3) = 0 and f″(3) = −5. Then f has at x = 3 a</p>
+        <div class="opts"><button type="button">local maximum</button><button type="button">local minimum</button><button type="button">inflection point</button><button type="button">no conclusion</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-sketch" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 5</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Connecting f, f′ and f″</h1>
+        <p class="lede">The three graphs tell one story. Draw the slope and you can rebuild the shape of the function.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Think of f′ as the slope-meter for f, and f″ as the slope-meter for f′. Where f′ is above the axis, f rises; where f′ crosses from above to below, f has a peak; where f′ has a peak or valley, f has an inflection point; where f′ is rising, f is concave up.</p>
+        <p>On the exam you read this information from a given graph (of f, f′ or f″) and justify a conclusion. In the lab you control f′ with draggable points, and f is rebuilt from it. Drag the nodes and watch the extrema and inflections move.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>each graph was studied alone</dd><dt>So we didn't need</dt><dd>one graph determines the shape of the others (up to a vertical shift)</dd><dt>Now</dt><dd>curve sketching and reading graphs</dd><dt>So we need</dt><dd>the relationships among f, f′ and f″</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>f′ crosses + → − ⇒ f local max</span><small>f′ crosses − → + ⇒ local min</small></div><div class="eqn"><span>f′ has a local extremum ⇒ f has an inflection</span><small>f″ changes sign</small></div><div class="eqn"><span>f determined by f′ up to + C</span><small>the vertical shift</small></div></div>
+      <div class="lab" id="sk-lab">
+        <div class="labbar"><span class="title">Drag the slope, rebuild the curve</span></div>
+        <p class="small" style="margin:0">Drag the green points up and down to set f′. The blue curve f is built from it.</p>
+        <canvas id="sk-canvas" aria-label="Top graph: a piecewise-linear derivative with draggable points. Bottom graph: the function rebuilt from it."></canvas>
+        <canvas id="sk-canvas2" aria-label="The function f rebuilt from the derivative, with extrema and inflection points marked."></canvas>
+        <div class="controls"><div class="ctl"><label for="sk-c"><span>f(−3), the starting height</span> <output id="sk-c-out"></output></label><input type="range" id="sk-c" min="-3" max="3" step="0.25" value="0"></div></div>
+        <div class="readout"><div><span>f is increasing on</span><strong class="x" id="sk-inc">—</strong></div><div><span>local extrema</span><strong class="v" id="sk-ext">—</strong></div><div><span>inflection points</span><strong class="a" id="sk-inf">—</strong></div></div>
+        <div class="row"><button type="button" class="btn" id="sk-reset">Reset the points</button></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Drag the middle point of f′ well above the axis. What happens to f?</p><details><summary>What you should see</summary><p>f rises steeply where f′ is large and positive, and the bends of f follow the ups and downs of f′.</p></details></li>
+        <li><p>Make f′ cross the axis downward. What does f do there? </p><details><summary>What you should see</summary><p>f has a local maximum where f′ goes from positive to negative. Drag until you see the peak.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">The graph of f′ is positive on (−3, 1), negative on (1, 4) and has a minimum at x = 2.5. Describe f.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Increasing/decreasing.</b> f′ &gt; 0 on (−3, 1): f increasing there; f′ &lt; 0 on (1, 4): f decreasing.</li>
+          <li hidden><b>Extremum.</b> f′ changes + → − at x = 1, so f has a local maximum at x = 1.</li>
+          <li hidden><b>Concavity.</b> f′ is decreasing before its minimum at 2.5 and increasing after, so f″ changes sign at 2.5.</li>
+          <li hidden><b>Answer.</b> Local maximum at x = 1, and an inflection point at x = 2.5 (concave down before, concave up after).</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Reading f′ as if it were f. A positive f′ means rising, not "positive height".</li>
+        <li>Looking at where f′ is zero for inflection. Inflection is where f′ has an extremum (f″ changes sign).</li>
+        <li>Forgetting f is only determined up to a vertical shift.</li>
+        <li>Confusing which graph is given: always read the label.</li>
+        <li>Not justifying: say "f′ changes sign from + to − at x = 1".</li>
+      </ul></div>
+      <div class="prose"><h2>Justifications that earn the point</h2>
+        <p>"f has a relative maximum at x = c because f′ changes from positive to negative at x = c." "f has a point of inflection at x = c because f″ changes sign at x = c." Name the derivative and the sign change.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="f′ has a maximum there, so f″ changes from + to −: the concavity of f changes.">
+        <p class="q">Check yourself: Where f′ has a local maximum, f has</p>
+        <div class="opts"><button type="button">an inflection point</button><button type="button">a local maximum</button><button type="button">a local minimum</button><button type="button">a vertical tangent</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-optim" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 5</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Optimization</h1>
+        <p class="lede">Biggest area, least material, fastest time: set up a formula for the quantity, find where its derivative is zero, and check it is the best.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>An optimization problem has four steps. <b>Draw</b> and name the variables. Write the <b>objective</b> (the thing to maximize or minimize) and a <b>constraint</b> (what is fixed). Use the constraint to write the objective in <b>one variable</b>. Then <b>differentiate, set to zero, solve</b>, and <b>justify</b> that you have a max or min (first or second derivative test, or the candidates test on a closed interval).</p>
+        <p>Do not forget the domain: dimensions are positive, and endpoints can be the answer. In the lab you will see the objective graph; the best value sits at a peak or valley of the graph, where its derivative (green) crosses zero.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>we found extremes of given formulas</dd><dt>So we didn't need</dt><dd>how to build the formula from a story</dd><dt>Now</dt><dd>fences, boxes, cans, distance and cost</dd><dt>So we need</dt><dd>the optimization procedure</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>draw · objective · constraint · one variable</span><small>setup</small></div><div class="eqn"><span>f′(x) = 0</span><small>critical points</small></div><div class="eqn"><span>justify with a test</span><small>max or min, and domain</small></div></div>
+      <div class="lab" id="op-lab">
+        <div class="labbar"><span class="title">Find the best x</span></div>
+        <div class="ctl"><span class="lbl">Problem</span><div class="seg" id="op-fn" role="group" aria-label="Problem"><button type="button" data-k="fence" aria-pressed="true">Fence (river on one side)</button><button type="button" data-k="box" aria-pressed="false">Open box from a sheet</button><button type="button" data-k="can" aria-pressed="false">Can with least metal</button></div></div>
+        <p class="small" id="op-form" style="margin:0"></p>
+        <canvas id="op-canvas" aria-label="Graph of the quantity to optimize as a function of one variable, with its derivative and a marker at the current value."></canvas>
+        <div class="controls"><div class="ctl"><label for="op-x"><span>x</span> <output id="op-x-out"></output></label><input type="range" id="op-x" min="0.5" max="10" step="0.05" value="3"></div></div>
+        <div class="readout"><div><span>objective at this x</span><strong class="x" id="op-val">—</strong></div><div><span>best x and value</span><strong class="v" id="op-best">—</strong></div><div><span>the dimensions</span><strong class="" id="op-dim">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose the fence problem. Slide x to find the largest area. <button type="button" class="btn link" data-show='[["click", "#op-fn [data-k=fence]"], ["#op-x", 25]]'>x = 25</button></p><details><summary>What you should see</summary><p>The maximum area is 1250 ft² at x = 25 (so the other side is 50). The derivative A′ = 100 − 4x is zero there and changes from + to −.</p></details></li>
+        <li><p>Choose the open box. What size square cut gives the largest volume? <button type="button" class="btn link" data-show='[["click", "#op-fn [data-k=box]"], ["#op-x", 2]]'>x = 2</button></p><details><summary>What you should see</summary><p>x = 2 gives V = 2(12 − 4)² = 128 cm³, the maximum for a 12 cm sheet. Any larger cut leaves too little base.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">100 ft of fence encloses a rectangular pen against a straight river (no fence on the river side). Find the dimensions of the largest area.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Variables.</b> Let x = the two sides perpendicular to the river, y = the side parallel. Constraint: 2x + y = 100, so y = 100 − 2x.</li>
+          <li hidden><b>Objective.</b> A = x·y = x(100 − 2x) = 100x − 2x², with 0 &lt; x &lt; 50.</li>
+          <li hidden><b>Differentiate.</b> A′ = 100 − 4x = 0, so x = 25.</li>
+          <li hidden><b>Justify.</b> A″ = −4 &lt; 0, so x = 25 is a maximum.</li>
+          <li hidden><b>Answer.</b> x = 25 ft and y = 50 ft, giving the maximum area <b>1250 ft²</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Not using the constraint to reduce to one variable.</li>
+        <li>Forgetting to check endpoints or the domain.</li>
+        <li>Giving the optimal x when asked for the maximum value (or the reverse).</li>
+        <li>Not justifying that it is a max or min.</li>
+        <li>Mixing units, for example using a formula with radius when the problem gives diameter.</li>
+      </ul></div>
+      <div class="prose"><h2>Common setups</h2>
+        <p><b>Perimeter fixed, maximize area:</b> the square wins. <b>Area fixed, minimize perimeter:</b> the square. <b>Volume fixed, minimize surface area of a can:</b> height = diameter. <b>Distance to a curve:</b> minimize the square of the distance (the same minimum, no square root).</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Critical points of the objective are where its derivative is zero.">
+        <p class="q">Check yourself: To maximize A = x(100 − 2x), you solve</p>
+        <div class="opts"><button type="button">A′(x) = 0</button><button type="button">A(x) = 0</button><button type="button">A″(x) = 0</button><button type="button">x = 100</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
   <section class="view" id="v-practice" hidden>
     <div class="wrap">
       <div class="head">
@@ -2056,8 +2522,8 @@ function view3d(cv,o){
 
 /* ---------------- Roster and registries (the data blocks are injected by build.py) ---------------- */
 const MODS={"functions": {"t": "Functions & transformations", "d": "Shift, stretch and flip a graph, and read what a formula is doing.", "bc": false}, "trigexp": {"t": "Trig, exponentials & logs", "d": "The unit circle, e^x and ln x: the functions calculus keeps using.", "bc": false}, "limits": {"t": "Limits from graphs & tables", "d": "What a function is heading toward, even where it never gets there.", "bc": false}, "limalg": {"t": "Algebraic limits", "d": "Factor, rationalize or squeeze when plugging in gives 0/0.", "bc": false}, "contin": {"t": "Continuity & the IVT", "d": "Where a graph breaks, and why continuous functions can't skip values.", "bc": false}, "asym": {"t": "Infinite limits & end behavior", "d": "Vertical and horizontal asymptotes, and what happens as x gets huge.", "bc": false}, "rates": {"t": "Average vs instantaneous rate", "d": "A secant line closing in on a tangent line.", "bc": false}, "deriv": {"t": "The derivative & differentiability", "d": "The limit definition, and where a graph has no slope.", "bc": false}, "rules": {"t": "Power, sum & constant-multiple rules", "d": "Differentiate polynomials and roots in your head.", "bc": false}, "transder": {"t": "Trig, e^x and ln x derivatives", "d": "The derivatives you memorize once.", "bc": false}, "prodquot": {"t": "Product & quotient rules", "d": "When two functions are multiplied or divided.", "bc": false}, "chain": {"t": "The chain rule", "d": "Derivatives of functions inside functions.", "bc": false}, "implicit": {"t": "Implicit differentiation", "d": "Slopes of curves that are not functions of x.", "bc": false}, "invfn": {"t": "Inverse functions & inverse trig", "d": "Derivatives of inverses, arcsin, arctan and friends.", "bc": false}, "higher": {"t": "Higher-order derivatives & choosing a rule", "d": "Second derivatives, and picking the right tool.", "bc": false}, "motion": {"t": "Derivatives in context & motion", "d": "Position, velocity, acceleration and units of a rate.", "bc": false}, "related": {"t": "Related rates", "d": "Two quantities change together: how fast is the other one moving?", "bc": false}, "linear": {"t": "Linearization & differentials", "d": "Approximate a curve by its tangent line.", "bc": false}, "lhop": {"t": "L'Hôpital's rule", "d": "Resolve 0/0 and ∞/∞ by comparing derivatives.", "bc": false}, "mvt": {"t": "Extreme values & the Mean Value Theorem", "d": "Why a continuous function on [a, b] has a max, and a point with the average slope.", "bc": false}, "incdec": {"t": "Increasing, decreasing & the first derivative test", "d": "Read the sign of f′ to find peaks and valleys.", "bc": false}, "concav": {"t": "Concavity & the second derivative test", "d": "Read the sign of f″ to see bending.", "bc": false}, "sketch": {"t": "Connecting f, f′ and f″", "d": "Go between a graph and the graphs of its derivatives.", "bc": false}, "optim": {"t": "Optimization", "d": "Biggest, smallest, cheapest, fastest: set up and solve.", "bc": false}, "accum": {"t": "Accumulation & Riemann sums", "d": "Add up a changing rate with thin slices.", "bc": false}, "ftc": {"t": "The definite integral & the FTC", "d": "Area, accumulation functions and the theorem that ties derivatives to integrals.", "bc": false}, "antider": {"t": "Antiderivatives", "d": "Undo a derivative, and don't forget the + C.", "bc": false}, "usub": {"t": "u-substitution", "d": "Undo the chain rule, including definite integrals.", "bc": false}, "slope": {"t": "Slope fields", "d": "Draw the solutions without solving anything.", "bc": false}, "sepvar": {"t": "Separation of variables & exponential models", "d": "Solve dy/dx = ky and other separable equations.", "bc": false}, "avgval": {"t": "Average value & motion with integrals", "d": "Average of a function, and displacement vs distance.", "bc": false}, "area": {"t": "Area between curves", "d": "Top minus bottom, or right minus left.", "bc": false}, "vols": {"t": "Volumes from cross sections", "d": "Stack slices of a known shape.", "bc": false}, "volrev": {"t": "Volumes of revolution", "d": "Discs and washers around an axis.", "bc": false}, "parts": {"t": "Integration by parts", "d": "Undo the product rule: ∫u dv = uv − ∫v du.", "bc": true}, "partial": {"t": "Partial fractions & long division", "d": "Split a rational function into pieces you can integrate.", "bc": true}, "improper": {"t": "Improper integrals", "d": "Areas that stretch to infinity, or past an asymptote.", "bc": true}, "euler": {"t": "Euler's method", "d": "Step along a slope field to approximate a solution.", "bc": true}, "logistic": {"t": "Logistic models", "d": "Growth that levels off at a carrying capacity.", "bc": true}, "arclen": {"t": "Arc length", "d": "How long is the curve?", "bc": true}, "param": {"t": "Parametric equations", "d": "x and y both depend on t: slope, concavity and length.", "bc": true}, "vector": {"t": "Vector-valued functions & motion", "d": "Velocity, speed and acceleration in the plane.", "bc": true}, "polar": {"t": "Polar curves & area", "d": "Graph with r and θ, and find areas of petals.", "bc": true}, "seriesbasic": {"t": "Series, geometric series & the nth-term test", "d": "When does an infinite sum add up to a number?", "bc": true}, "pseries": {"t": "p-series & the integral test", "d": "Compare a sum to an area.", "bc": true}, "convtests": {"t": "Comparison & ratio tests", "d": "Decide convergence without finding the sum.", "bc": true}, "altser": {"t": "Alternating series & error bounds", "d": "Alternating signs, absolute vs conditional convergence.", "bc": true}, "taylorpoly": {"t": "Taylor polynomials & Lagrange error", "d": "Approximate a function near a point, and bound the error.", "bc": true}, "powser": {"t": "Power series: radius & interval", "d": "Where a series in x converges.", "bc": true}, "maclaurin": {"t": "Maclaurin series & operations", "d": "e^x, sin x, cos x, 1/(1−x), and building new series from them.", "bc": true}};
-const GROUPS=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"]}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"]}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"]}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"]}];
-const ROADMAP=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"], "soon": []}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"], "soon": []}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"], "soon": []}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"], "soon": []}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": [], "soon": ["motion", "related", "linear", "lhop"]}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": [], "soon": ["mvt", "incdec", "concav", "sketch", "optim"]}, {"w": "Unit 6", "name": "Integration and accumulation of change", "tag": "AP Unit 6", "bc": false, "ids": [], "soon": ["accum", "ftc", "antider", "usub"]}, {"w": "Unit 7", "name": "Differential equations", "tag": "AP Unit 7", "bc": false, "ids": [], "soon": ["slope", "sepvar"]}, {"w": "Unit 8", "name": "Applications of integration", "tag": "AP Unit 8", "bc": false, "ids": [], "soon": ["avgval", "area", "vols", "volrev"]}, {"w": "BC", "name": "Integration techniques (BC)", "tag": "AP Unit 6 · BC", "bc": true, "ids": [], "soon": ["parts", "partial", "improper"]}, {"w": "BC", "name": "More differential equations & applications (BC)", "tag": "AP Units 7–8 · BC", "bc": true, "ids": [], "soon": ["euler", "logistic", "arclen"]}, {"w": "Unit 9", "name": "Parametric equations, polar coordinates and vector-valued functions (BC)", "tag": "AP Unit 9 · BC", "bc": true, "ids": [], "soon": ["param", "vector", "polar"]}, {"w": "Unit 10", "name": "Infinite sequences and series (BC)", "tag": "AP Unit 10 · BC", "bc": true, "ids": [], "soon": ["seriesbasic", "pseries", "convtests", "altser", "taylorpoly", "powser", "maclaurin"]}]; /* every unit, with ids (built) and soon (planned, not built yet) */
+const GROUPS=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"]}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"]}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"]}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"]}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": ["motion", "related", "linear", "lhop"]}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": ["mvt", "incdec", "concav", "sketch", "optim"]}];
+const ROADMAP=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"], "soon": []}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"], "soon": []}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"], "soon": []}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"], "soon": []}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": ["motion", "related", "linear", "lhop"], "soon": []}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": ["mvt", "incdec", "concav", "sketch", "optim"], "soon": []}, {"w": "Unit 6", "name": "Integration and accumulation of change", "tag": "AP Unit 6", "bc": false, "ids": [], "soon": ["accum", "ftc", "antider", "usub"]}, {"w": "Unit 7", "name": "Differential equations", "tag": "AP Unit 7", "bc": false, "ids": [], "soon": ["slope", "sepvar"]}, {"w": "Unit 8", "name": "Applications of integration", "tag": "AP Unit 8", "bc": false, "ids": [], "soon": ["avgval", "area", "vols", "volrev"]}, {"w": "BC", "name": "Integration techniques (BC)", "tag": "AP Unit 6 · BC", "bc": true, "ids": [], "soon": ["parts", "partial", "improper"]}, {"w": "BC", "name": "More differential equations & applications (BC)", "tag": "AP Units 7–8 · BC", "bc": true, "ids": [], "soon": ["euler", "logistic", "arclen"]}, {"w": "Unit 9", "name": "Parametric equations, polar coordinates and vector-valued functions (BC)", "tag": "AP Unit 9 · BC", "bc": true, "ids": [], "soon": ["param", "vector", "polar"]}, {"w": "Unit 10", "name": "Infinite sequences and series (BC)", "tag": "AP Unit 10 · BC", "bc": true, "ids": [], "soon": ["seriesbasic", "pseries", "convtests", "altser", "taylorpoly", "powser", "maclaurin"]}]; /* every unit, with ids (built) and soon (planned, not built yet) */
 const TIPS={},TT={},GLOSS={},KEYS={},PROBS=[],FRQS=[],GLYPH={};
 const METHODS={clues:[],items:[]};
 Object.keys(MODS).forEach(id=>{const g=ROADMAP.find(g=>g.ids.includes(id)||g.soon.includes(id));MODS[id].ap=g?g.tag:'';MODS[id].w=g?g.w:'';});
@@ -2207,7 +2673,7 @@ function svgG(o){const W=o.w||400,H=o.h||280,xr=o.xr||[-5,5],yr=o.yr||[-4,4],m={
   return s+'</svg>';}
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 /* four multiple-choice strings: the correct one plus distractors (deduplicated, shuffled); returns {choices, ans} */
-function mcq(correct,distract,n=4){const s=[correct];distract.forEach(d=>{if(d!=null&&!s.includes(d)&&s.length<n)s.push(d);});const ch=shuffle(s);return {choices:ch,ans:ch.indexOf(correct)};}
+function mcq(correct,distract,n=4){const s=[correct];shuffle(distract).forEach(d=>{if(d!=null&&!s.includes(d)&&s.length<n)s.push(d);});const ch=shuffle(s);return {choices:ch,ans:ch.indexOf(correct)};}
 
 /* ----- glab: a graph lab in a few lines -----
    o.view(w,h) -> {xr,yr,xn?,yn?};  o.draw(ctx,P,w,h,t) draws on the panel P (P.X, P.Y, inv(P,px,py));
@@ -2232,6 +2698,14 @@ function terms(ts){let s='';ts.forEach(([c,p])=>{if(!c)return;const m=Math.abs(c
 const tval=(ts,x)=>ts.reduce((a,[c,p])=>a+c*Math.pow(x,p),0);
 /* derivative of terms */
 const tder=ts=>ts.filter(([c,p])=>p!==0).map(([c,p])=>[c*p,p-1]);
+/* x in [a,b] that maximizes f (grid search, then refinement) */
+function argmax(f,a,b,n=4000){let bx=a,bv=-Infinity;for(let i=0;i<=n;i++){const x=a+(b-a)*i/n,v=f(x);if(isFinite(v)&&v>bv){bv=v;bx=x;}}const h=(b-a)/n;let lo=Math.max(a,bx-h),hi=Math.min(b,bx+h);for(let i=0;i<60;i++){const m1=lo+(hi-lo)/3,m2=hi-(hi-lo)/3;if(f(m1)<f(m2))lo=m1;else hi=m2;}return (lo+hi)/2;}
+const argmin=(f,a,b,n=4000)=>argmax(x=>-f(x),a,b,n);
+/* zeros of g in (a,b): sign changes found on a grid and refined by bisection; jumps (no real root) are discarded */
+function roots(g,a,b,n=2000){const out=[];let x0=a,v0=g(x0);for(let i=1;i<=n;i++){const x1=a+(b-a)*i/n,v1=g(x1);if(isFinite(v0)&&isFinite(v1)&&(v0===0||v0*v1<0)){const r=solve(g,x0,x1,60);if(Math.abs(g(r))<1e-4*(1+Math.abs(v0)+Math.abs(v1))*10&&(!out.length||Math.abs(r-out[out.length-1])>(b-a)/n*2))out.push(r);}x0=x1;v0=v1;}return out;}
+/* shade the panel background by the sign of s(x): posCol where s > 0, negCol where s < 0 (runs are merged so there are no seams) */
+function signBands(ctx,P,xr,s,posCol,negCol,n=400){let run=null;const flush=x=>{if(run){const a=P.X(run.x0),b=P.X(x);ctx.fillStyle=run.c;ctx.fillRect(a,P.box.y,b-a,P.box.h);run=null;}};
+  for(let i=0;i<n;i++){const x0=xr[0]+(xr[1]-xr[0])*i/n,v=s(x0+(xr[1]-xr[0])/n/2),c=!isFinite(v)?null:v>0?posCol:negCol;if(!run||run.c!==c){flush(x0);if(c)run={x0,c};}}flush(xr[1]);}
 
 
 /* ===== modules/functions.js ===== */
@@ -2848,6 +3322,324 @@ const lmN=v=>v===null?'does not exist':String(v).replace('-','−');
     return {q:`Let f(x) = ${useCos?'cos':'sin'} x. Find the ${n}th derivative f<sup>(${n})</sup> evaluated at x = ${x0===0?'0':'π'}.`,ans,unit:'',abs:.01,hint:'The derivatives of sine and cosine repeat every four steps: sin, cos, −sin, −cos.',sol:`The pattern repeats every 4. ${n} mod 4 = ${n%4}, so f<sup>(${n})</sup>(x) = ${['','','−','−'][(idx%4)]}${[ 'sin','cos','sin','cos'][idx%4]} x, and at x = ${x0===0?'0':'π'} that is <b>${nz(ans)}</b>.`};}});
   PROBS.push({id:'hi-which',topic:'higher',title:'Which rule first?',gen(){const R=[['x² sin(3x)','Product rule'],['(x² + 1)/(x − 3)','Quotient rule'],['sin(x² + 1)','Chain rule'],['x³ + 5x − 2','Sum and power rules'],['e<sup>x</sup> ln x','Product rule'],['√(1 + x³)','Chain rule'],['cos x / x²','Quotient rule'],['(3x + 1)<sup>7</sup>','Chain rule'],['x e<sup>−x</sup>','Product rule']],[ex,ans]=pick(R),m=mcq(ans,['Product rule','Quotient rule','Chain rule','Sum and power rules']);
     return {q:`Which rule do you apply first to differentiate f(x) = ${ex}?`,choices:m.choices,ans:m.ans,hint:'Look at the outermost operation of the whole expression.',sol:`The outermost operation is the one to handle first: <b>${ans}</b>.`};}});
+})();
+
+/* ===== modules/motion.js ===== */
+/* ---------------- Derivatives in context & motion ---------------- */
+(function motion(){
+  const cv=$('#mo-canvas');if(!cv)return;
+  const C={a:{s:t=>t**3-6*t**2+9*t,v:t=>3*t*t-12*t+9,a:t=>6*t-12,lo:-4,hi:10,u:'m'},b:{s:t=>20*t-5*t*t,v:t=>20-10*t,a:()=>-10,lo:-30,hi:30,u:'m'},c:{s:t=>3*Math.sin(t),v:t=>3*Math.cos(t),a:t=>-3*Math.sin(t),lo:-3.6,hi:3.6,u:'m'}};
+  let k='a',t0=.5,playing=false;
+  const sim=sim2d(cv,{h:w=>clamp(w*.62,320,430),paused:()=>!playing,step(dt){t0+=dt*.7;if(t0>5)t0=0;const el=$('#mo-t');el.value=t0;setText('mo-t-out',nz(t0));upd(true);},
+    draw(ctx,w,h){const A=C[k],s=A.s(t0),v=A.v(t0),a=A.a(t0),top=70;
+      /* number line */
+      const x0=40,x1=w-40,lo=A.lo,hi=A.hi,X=q=>x0+(q-lo)/(hi-lo)*(x1-x0);ctx.strokeStyle=T.muted;ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(x0,40);ctx.lineTo(x1,40);ctx.stroke();
+      const st=niceStep(hi-lo,8);ctx.fillStyle=T.muted;ctx.font=MONO;ctx.textAlign='center';for(let q=Math.ceil(lo/st)*st;q<=hi;q+=st){ctx.beginPath();ctx.moveTo(X(q),36);ctx.lineTo(X(q),44);ctx.stroke();ctx.fillText(tick(q,st),X(q),58);}
+      const px=X(clamp(s,lo,hi));dot(ctx,px,40,9,T.cx,T.surface);if(Math.abs(v)>1e-6)arrow(ctx,px,24,px+clamp(v*6,-70,70),24,T.cv,3);if(Math.abs(a)>1e-6)arrow(ctx,px,12,px+clamp(a*6,-70,70),12,T.ca,3);
+      label(ctx,'v',px-8,24,T.cv,'right','middle',LABEL);label(ctx,'a',px-8,12,T.ca,'right','middle',LABEL);
+      /* graphs */
+      let m=0;for(let i=0;i<=100;i++){const t=5*i/100;m=Math.max(m,Math.abs(A.s(t)),Math.abs(A.v(t)),Math.abs(A.a(t)));}m*=1.1;
+      const P=gpanel(ctx,{x:46,y:top+20,w:w-60,h:h-top-46},[0,5],[-m,m],{xn:5,yn:4,xlabel:'t'});
+      curveD(ctx,P,A.s,0,5,T.cx,2.6,300);curveD(ctx,P,A.v,0,5,T.cv,2.6,300);curveD(ctx,P,A.a,0,5,T.ca,2.6,300);vline(ctx,P,t0,T.hot,[4,4]);[[A.s,T.cx],[A.v,T.cv],[A.a,T.ca]].forEach(([f,c])=>dot(ctx,P.X(t0),P.Y(f(t0)),5,c,T.surface));}});
+  function upd(skip){const A=C[k],s=A.s(t0),v=A.v(t0),a=A.a(t0);setText('mo-s',fmt(s,3));setText('mo-v',fmt(v,3));setText('mo-a',fmt(a,3));
+    setText('mo-state',Math.abs(v)<.02?'at rest for an instant':(v>0?'moving right':'moving left')+(Math.abs(a)<.02?', speed steady':v*a>0?', speeding up':', slowing down'));if(!skip)sim.render();}
+  bindRange('mo-t',v=>nz(v),v=>{t0=v;upd();});segBind('mo-fn','k',v=>{k=v;upd();});
+  $('#mo-play').addEventListener('click',()=>{playing=!playing;$('#mo-play').textContent=playing?'Pause':'Play';sim.render();});
+  upd();drawers.motion=()=>sim.render();
+  KEYS['mo-canvas']=['Press Play or slide t. Green arrow = velocity, pink arrow = acceleration; the graphs show s, v and a together.',[['cx','position s'],['cv','velocity v = s′'],['ca','acceleration a = v′']]];
+  TIPS['mo-t']=el=>{const A=C[k],t=+el.value,v=A.v(t),a=A.a(t);return `t = ${nz(t)}: v = ${fmt(v,2)}, a = ${fmt(a,2)}. ${v*a>0?'Same sign: speeding up.':v*a<0?'Opposite signs: slowing down.':'One of them is zero.'}`;};
+  GLOSS['velocity']='The derivative of position: speed with a direction (sign).';
+  GLOSS['speed']='|v|: how fast, ignoring direction.';
+  TT.motion='Have students predict speeding up or slowing down from the signs of v and a before pressing play. Link turning points to where v crosses zero on the graph.';
+})();
+(function(){
+  PROBS.push({id:'mo-vel',topic:'motion',title:'Velocity and acceleration at a time',gen(){const a=ri(1,3),b=ri(-6,6),c=ri(-8,8),t0=ri(1,4),ask=pick(['v','a']),s=t=>a*t**3+b*t*t+c*t,v=t=>3*a*t*t+2*b*t+c,ac=t=>6*a*t+2*b,ans=ask==='v'?v(t0):ac(t0);
+    return {q:`A particle moves along a line with position s(t) = ${polyTxt([a,b,c,0],'t')} meters, t in seconds. Find its ${ask==='v'?'velocity':'acceleration'} at t = ${t0}. Units: ${ask==='v'?'m/s':'m/s²'}.`,ans,unit:ask==='v'?'m/s':'m/s²',abs:.01,chk:ask==='v'?D(s,t0):D2(s,t0,1e-2),hint:ask==='v'?'v(t) = s′(t).':'a(t) = s″(t).',sol:`v(t) = ${polyTxt([3*a,2*b,c],'t')}, a(t) = ${polyTxt([6*a,2*b],'t')}. At t = ${t0}: <b>${nz(ans)}</b>.`};}});
+  PROBS.push({id:'mo-rest',topic:'motion',title:'When is the particle at rest?',gen(){let p,q;do{p=ri(0,3);q=ri(p+1,6);}while((p+q)%2);const B=-3*(p+q)/2,C0=3*p*q,s=t=>t**3+B*t*t+C0*t,pickBig=Math.random()<.5,ans=pickBig?q:p;
+    return {q:`A particle's position is s(t) = ${polyTxt([1,B,C0,0],'t')}, t ≥ 0. It is at rest at two times. Find the ${pickBig?'later':'earlier'} one.`,ans,unit:'',abs:.01,chk:Math.abs(D(s,ans))<1e-5?ans:NaN,hint:'At rest means v(t) = s′(t) = 0. Factor the quadratic.',sol:`v(t) = ${polyTxt([3,2*B,C0],'t')} = 3(${lin(p,'t')})(${lin(q,'t')}). At rest at t = ${p} and t = ${q}; the ${pickBig?'later':'earlier'} is <b>${ans}</b>.`};}});
+  PROBS.push({id:'mo-speed',topic:'motion',title:'Speeding up or slowing down?',gen(){const v=pick([-6,-4,-3,-2,2,3,4,6]),a=pick([-5,-3,-2,-1,1,2,3,5]),ans=v*a>0?'speeding up':'slowing down',m=mcq(ans,['speeding up','slowing down','at rest','turning around']);
+    return {q:`At t = 3 a particle on a line has velocity v(3) = ${nz(v)} and acceleration a(3) = ${nz(a)}. Is its speed increasing or decreasing?`,choices:m.choices,ans:m.ans,hint:'Compare the signs of v and a.',sol:`v and a have ${v*a>0?'the same':'opposite'} sign${v*a>0?'':'s'}, so the particle is <b>${ans}</b>.`};}});
+  PROBS.push({id:'mo-ctx',topic:'motion',title:'Interpret a derivative',gen(){const R=[['V(t) is liters of water in a tank after t minutes, and V′(5) = −3','The tank is losing water at 3 liters per minute at t = 5'],['C(q) is cost in dollars to make q items, and C′(100) = 4.5','Making the 101st item costs about $4.50 more'],['P(t) is a population in thousands after t years, and P′(10) = 2','The population is growing at about 2 thousand per year at t = 10'],['T(h) is temperature in °C at height h km, and T′(3) = −6.5','Temperature drops about 6.5 °C per km at 3 km height']],[tx,ans]=pick(R),m=mcq(ans,R.map(r=>r[1]));
+    return {q:`${tx}. Which is the best interpretation?`,choices:m.choices,ans:m.ans,hint:'Say it as: the quantity is changing by (value) (units) per (unit of input), at that moment.',sol:`<b>${ans}</b>. A derivative's units are output units per input unit.`};}});
+})();
+
+/* ===== modules/related.js ===== */
+/* ---------------- Related rates ---------------- */
+(function related(){
+  const cv=$('#rr-canvas');if(!cv)return;
+  const C={lad:{rng:[1,9.5,6],form:'x² + y² = 100   (ladder 10 ft; foot moves at dx/dt = 2 ft/s)',given:'dx/dt = 2 ft/s'},cir:{rng:[1,8,4],form:'A = πr²   (ripple radius grows at dr/dt = 3 cm/s)',given:'dr/dt = 3 cm/s'},sph:{rng:[1,8,4],form:'V = (4/3)πr³   (balloon radius grows at dr/dt = 2 cm/s)',given:'dr/dt = 2 cm/s'}};
+  let k='lad',v=6;
+  const sim=sim2d(cv,{h:w=>clamp(w*.5,260,360),draw(ctx,w,h){
+    if(k==='lad'){const s=Math.min((h-60)/10,(w-120)/10),ox=60,oy=h-30,x=v,y=Math.sqrt(100-x*x);ctx.strokeStyle=T.muted;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(ox,oy-11*s);ctx.lineTo(ox,oy);ctx.lineTo(ox+11*s,oy);ctx.stroke();
+      ctx.strokeStyle=T.cx;ctx.lineWidth=5;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(ox,oy-y*s);ctx.lineTo(ox+x*s,oy);ctx.stroke();ctx.lineCap='butt';
+      label(ctx,'x = '+fmt(x,2),ox+x*s/2,oy+16,T.ca,'center','middle',MONO);label(ctx,'y = '+fmt(y,2),ox-8,oy-y*s/2,T.cv,'right','middle',MONO);label(ctx,'10 ft',ox+x*s/2+10,oy-y*s/2-8,T.cx,'left','middle',MONO);
+      arrow(ctx,ox+x*s,oy-16,ox+x*s+36,oy-16,T.ca,3);arrow(ctx,ox+12,oy-y*s,ox+12,oy-y*s+Math.min(70,y>0?30*x/y:70),T.cv,3);}
+    else{const R=Math.min(h/2-20,(w-80)/2),cx=w/2,cy=h/2,sc=R/8.5,r=v*sc;
+      if(k==='cir'){for(let i=1;i<=3;i++){ctx.strokeStyle=alpha(T.cx,.18*i);ctx.lineWidth=2;ctx.beginPath();ctx.arc(cx,cy,r*i/3,0,6.283);ctx.stroke();}ctx.fillStyle=alpha(T.ce,.25);ctx.beginPath();ctx.arc(cx,cy,r,0,6.283);ctx.fill();ctx.strokeStyle=T.cx;ctx.lineWidth=3;ctx.beginPath();ctx.arc(cx,cy,r,0,6.283);ctx.stroke();}
+      else{const g=ctx.createRadialGradient(cx-r*.3,cy-r*.3,r*.1,cx,cy,r);g.addColorStop(0,alpha(T.ca,.25));g.addColorStop(1,alpha(T.ca,.75));ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,r,0,6.283);ctx.fill();ctx.strokeStyle=T.ca;ctx.lineWidth=3;ctx.stroke();}
+      ctx.strokeStyle=T.ink;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+r,cy);ctx.stroke();label(ctx,'r = '+fmt(v,1),cx+r/2,cy-12,T.ink,'center','middle',MONO);arrow(ctx,cx+r,cy+18,cx+r+34,cy+18,T.hot,3);}}});
+  function upd(){const g=C[k].given;let ans,eq;
+    if(k==='lad'){const y=Math.sqrt(100-v*v);ans=`dy/dt = −(x/y)(2) = ${fmt(-(v/y)*2,3)} ft/s`;eq='2x·x′ + 2y·y′ = 0';}
+    else if(k==='cir'){ans=`dA/dt = 2πr(3) = ${fmt(2*Math.PI*v*3,2)} cm²/s`;eq='dA/dt = 2πr·dr/dt';}
+    else{ans=`dV/dt = 4πr²(2) = ${fmt(4*Math.PI*v*v*2,1)} cm³/s`;eq='dV/dt = 4πr²·dr/dt';}
+    setText('rr-form',C[k].form);setText('rr-given',g);setText('rr-ans',ans);setText('rr-eq',eq);sim.render();}
+  function setRng(){const el=$('#rr-v'),[a,b,d]=C[k].rng;el.min=a;el.max=b;el.value=d;v=d;}
+  bindRange('rr-v',x=>nz(x),x=>{v=x;upd();});segBind('rr-fn','k',x=>{k=x;setRng();upd();});upd();drawers.related=()=>sim.render();
+  KEYS['rr-canvas']=['Slide the variable. The arrows show the given rate and the rate you want; the readout does the chain rule.',[['ca','x or r (given)'],['cv','y (ladder top)'],['hot','growth rate']]];
+  TIPS['rr-v']=el=>`${k==='lad'?'x':'r'} = ${nz(+el.value)}. The linked rate changes with it, even though the given rate is constant.`;
+  GLOSS['related rates']='Rates of change of different quantities that are linked by an equation; differentiate the equation with respect to time.';
+  TT.related='Ask students to say which quantities are constant and which change before writing any equation, and to differentiate before substituting.';
+})();
+(function(){
+  const TRI=[[3,4,5],[6,8,10],[5,12,13],[8,15,17],[9,12,15],[7,24,25]];
+  PROBS.push({id:'rr-ladder',topic:'related',title:'Sliding ladder',gen(){const [x,y,L]=pick(TRI),sw=Math.random()<.5,dx=ri(1,4),ans=-(x/y)*dx;
+    return {q:`A ${L} ft ladder leans against a vertical wall. Its foot slides away from the wall at ${dx} ft/s. How fast is the top sliding down the wall (give dy/dt, negative if falling) when the foot is ${x} ft from the wall? Give a decimal or fraction in ft/s.`,ans,unit:'ft/s',tol:.01,chk:ans,hint:'x² + y² = L². Differentiate in t first, then use x = '+x+', y = '+y+'.',sol:`x² + y² = ${L*L} ⇒ 2x·x′ + 2y·y′ = 0 ⇒ y′ = −(x/y)x′. At x = ${x}, y = ${y}: y′ = −(${x}/${y})(${dx}) = <b>${fmt(ans,3)} ft/s</b>.`};}});
+  PROBS.push({id:'rr-circle',topic:'related',title:'Growing circle',gen(){const r=ri(2,9),dr=ri(1,5),ans=2*Math.PI*r*dr;
+    return {q:`The radius of a circular oil spill grows at ${dr} m/min. How fast is the area growing when r = ${r} m? Give a decimal in m²/min.`,ans,unit:'m²/min',tol:.01,chk:ans,hint:'A = πr², so dA/dt = 2πr·dr/dt.',sol:`dA/dt = 2πr·dr/dt = 2π(${r})(${dr}) = <b>${fmt(ans,2)} m²/min</b>.`};}});
+  PROBS.push({id:'rr-sphere',topic:'related',title:'Inflating a balloon',gen(){const r=ri(2,9),dV=pick([20,40,60,100,200]),ans=dV/(4*Math.PI*r*r);
+    return {q:`Air is pumped into a spherical balloon at ${dV} cm³/s. How fast is the radius increasing when r = ${r} cm? Give a decimal in cm/s.`,ans,unit:'cm/s',tol:.01,chk:ans,hint:'V = (4/3)πr³ ⇒ dV/dt = 4πr²·dr/dt. Solve for dr/dt.',sol:`dr/dt = (dV/dt)/(4πr²) = ${dV}/(4π(${r})²) = <b>${fmt(ans,4)} cm/s</b>.`};}});
+  PROBS.push({id:'rr-rect',topic:'related',title:'Rectangle area',gen(){const L=ri(4,12),W=ri(2,9),dL=ri(1,4),dW=ri(-3,3)||1,ans=dL*W+L*dW;
+    return {q:`A rectangle's length is ${L} cm and increasing at ${dL} cm/s; its width is ${W} cm and ${dW>0?'increasing':'decreasing'} at ${Math.abs(dW)} cm/s. How fast is the area changing, in cm²/s?`,ans,unit:'cm²/s',abs:.01,chk:ans,hint:'A = LW. Product rule in t: dA/dt = L′W + LW′. Decreasing means a negative rate.',sol:`dA/dt = (${dL})(${W}) + (${L})(${nz(dW)}) = <b>${nz(ans)} cm²/s</b>.`};}});
+  PROBS.push({id:'rr-cars',topic:'related',title:'Distance between two moving objects',gen(){const [a,b,c]=pick(TRI),va=ri(2,6),vb=ri(2,6),ans=(a*va+b*vb)/c;
+    return {q:`One car is ${a} km east of an intersection, driving away at ${va} km/h. Another is ${b} km north of it, driving away at ${vb} km/h. How fast is the distance between them changing, in km/h? Give a decimal.`,ans,unit:'km/h',tol:.01,chk:ans,hint:'z² = x² + y², so z·z′ = x·x′ + y·y′. Find z first.',sol:`z = √(${a}² + ${b}²) = ${c}. z′ = (x x′ + y y′)/z = (${a}·${va} + ${b}·${vb})/${c} = <b>${fmt(ans,3)} km/h</b>.`};}});
+})();
+
+/* ===== modules/linear.js ===== */
+/* ---------------- Linearization & differentials ---------------- */
+(function linear(){
+  const cv=$('#li-canvas');if(!cv)return;
+  const C={sq:{f:x=>Math.sqrt(Math.max(x,0)),xr:[0,5],yr:[-.3,2.6],a:[.5,4,1],x:[.3,5,1.4]},sn:{f:Math.sin,xr:[0,4.5],yr:[-1.4,1.4],a:[.2,3,1],x:[.1,4,1.3]},ex:{f:Math.exp,xr:[-1.5,3.2],yr:[-1,22],a:[-1,2,0],x:[-1,3,.5]},ln:{f:x=>x>0?Math.log(x):NaN,xr:[0,5],yr:[-2,2.2],a:[.5,4,1],x:[.3,5,1.4]}};
+  let k='sq',a=1,x=1.4;
+  const sim=glab('li-canvas',{view:()=>({xr:C[k].xr,yr:C[k].yr}),draw(ctx,P){const f=C[k].f,fa=f(a),m=D(f,a),L=t=>fa+m*(t-a),fx=f(x);curveD(ctx,P,f,C[k].xr[0]+(k==='ln'?1e-4:0),C[k].xr[1],T.cx,2.8,300);line(ctx,P,C[k].xr[0],L(C[k].xr[0]),C[k].xr[1],L(C[k].xr[1]),T.hot,2.2);
+      dot(ctx,P.X(a),P.Y(fa),6,T.ink,T.surface);vline(ctx,P,x,T.muted,[3,4]);dot(ctx,P.X(x),P.Y(fx),6,T.cx,T.surface);dot(ctx,P.X(x),P.Y(L(x)),6,T.hot,T.surface);label(ctx,'a',P.X(a),P.Y(fa)+16,T.ink,'center','middle',MONO);}});
+  function upd(){const f=C[k].f,fa=f(a),m=D(f,a),L=fa+m*(x-a),fx=f(x),cc=D2(f,a,5e-3);setText('li-L',fmt(L,4));setText('li-f',fmt(fx,4));setText('li-e',fmt(L-fx,4));
+    setText('li-side',Math.abs(cc)<1e-3?'nearly straight at a (f″ ≈ 0)':cc<0?'above the curve near a (f″ < 0): overestimates':'below the curve near a (f″ > 0): underestimates');sim.render();}
+  function setR(){const A=C[k],ea=$('#li-a'),ex=$('#li-x');ea.min=A.a[0];ea.max=A.a[1];ea.value=A.a[2];ex.min=A.x[0];ex.max=A.x[1];ex.value=A.x[2];a=A.a[2];x=A.x[2];}
+  bindRange('li-a',v=>nz(v),v=>{a=v;upd();});bindRange('li-x',v=>nz(v),v=>{x=v;upd();});segBind('li-fn','k',v=>{k=v;setR();upd();});upd();drawers.linear=()=>sim.render();
+  KEYS['li-canvas']=['Pick a and a target x. Orange is the tangent line at a; compare its height at x with the curve.',[['cx','f(x)'],['hot','tangent line L(x)'],['ink','the tangent point a']]];
+  TIPS['li-x']=el=>`Target x = ${nz(+el.value)}, ${fmt(Math.abs(el.value-a),2)} away from a. The farther from a, the worse the estimate.`;
+  GLOSS['linearization']='The tangent line used as an approximation near its point of tangency: L(x) = f(a) + f′(a)(x − a).';
+  TT.linear='Ask students to predict whether the estimate is high or low from the concavity before reading the sign of the error.';
+})();
+(function(){
+  PROBS.push({id:'li-sqrt',topic:'linear',title:'Estimate a square root',gen(){const m=ri(3,12),d=ri(1,4)*pick([1,-1]),x=m*m+d,ans=m+d/(2*m);
+    return {q:`Use the tangent line to f(x) = √x at x = ${m*m} to estimate √${x}. Give a decimal to four places.`,ans,unit:'',abs:.0005,chk:Math.sqrt(m*m)+D(Math.sqrt,m*m)*d,hint:`L(x) = f(${m*m}) + f′(${m*m})(x − ${m*m}) with f′(x) = 1/(2√x).`,sol:`f(${m*m}) = ${m}, f′(${m*m}) = 1/${2*m}. L(${x}) = ${m} + (${d})/${2*m} = <b>${fmt(ans,4)}</b> (true value ${fmt(Math.sqrt(x),4)}).`};}});
+  PROBS.push({id:'li-tan',topic:'linear',title:'Linearization of a polynomial or exponential',gen(){const useE=Math.random()<.5,a=ri(0,2),dx=pick([.1,.2,-.1,-.2]),x=a+dx;let q,ans,chk,sol;
+    if(useE){const c=ri(1,3);q=`Let f(x) = ${c}e<sup>x</sup>. Find the linearization of f at x = ${a} and use it to estimate f(${nz(x)}). Give a decimal.`;const fa=c*Math.exp(a);ans=fa+fa*dx;chk=fa+D(t=>c*Math.exp(t),a)*dx;sol=`f(${a}) = f′(${a}) = ${c}e<sup>${a}</sup> = ${fmt(fa,3)}, so L(${nz(x)}) = ${fmt(fa,3)} + ${fmt(fa,3)}(${nz(dx)}) = <b>${fmt(ans,3)}</b>.`;}
+    else{const c=ri(1,4),b=ri(-3,3);q=`Let f(x) = x³ ${sgn(b)}x... `;const f=t=>t**3+c*t,fa=f(a),m=3*a*a+c;q=`Let f(x) = ${polyTxt([1,0,c,0])}. Use the linearization at x = ${a} to estimate f(${nz(x)}). Give a decimal.`;ans=fa+m*dx;chk=fa+D(f,a)*dx;sol=`f(${a}) = ${fa}, f′(${a}) = ${m}. L(${nz(x)}) = ${fa} + ${m}(${nz(dx)}) = <b>${fmt(ans,3)}</b>.`;}
+    return {q,ans,unit:'',abs:.002,chk,hint:'L(x) = f(a) + f′(a)(x − a).',sol};}});
+  PROBS.push({id:'li-side',topic:'linear',title:'Over- or underestimate?',gen(){const F=[['f(x) = √x at a = 4','overestimate'],['f(x) = x² at a = 1','underestimate'],['f(x) = e<sup>x</sup> at a = 0','underestimate'],['f(x) = ln x at a = 1','overestimate'],['f(x) = x³ at a = 2 (x &gt; 2)','underestimate'],['f(x) = cos x at a = 0','overestimate']],[tx,ans]=pick(F),m=mcq(ans,['overestimate','underestimate']);
+    return {q:`The tangent line to ${tx} is used to approximate f near a. Is the estimate an overestimate or an underestimate?`,choices:m.choices,ans:m.ans,hint:'Concave down (f″ < 0): the tangent line lies above the curve. Concave up: below.',sol:`The sign of f″ near a decides it: the tangent line gives an <b>${ans}</b>.`};}});
+  PROBS.push({id:'li-diff',topic:'linear',title:'Differentials',gen(){const a=ri(1,4),n=pick([2,3]),x0=ri(1,5),dx=pick([.1,.05,.2,-.1]),ans=n*a*Math.pow(x0,n-1)*dx;
+    return {q:`Let y = ${a===1?'':a}x${n===2?'²':'³'}. Use the differential dy = f′(x) dx to estimate the change in y when x changes from ${x0} to ${nz(x0+dx)}. Give a decimal.`,ans,unit:'',abs:.002,chk:D(t=>a*Math.pow(t,n),x0)*dx,hint:'dy = f′(x)·dx with dx = the change in x.',sol:`dy = ${n*a}x${n===2?'':'²'}·dx = ${n*a*Math.pow(x0,n-1)}(${nz(dx)}) = <b>${nz(+ans.toFixed(4))}</b>.`};}});
+})();
+
+/* ===== modules/lhop.js ===== */
+/* ---------------- L'Hôpital's rule ---------------- */
+(function lhop(){
+  const cv=$('#lh-canvas');if(!cv)return;
+  const C={a:{f:x=>Math.exp(x)-1,g:x=>x,fp:Math.exp,gp:()=>1,a:0,L:1,form:'lim (eˣ − 1)/x:  top → 0 and bottom → 0.  f′/g′ = eˣ/1 → 1'},
+    b:{f:x=>1-Math.cos(x),g:x=>x*x,fp:Math.sin,gp:x=>2*x,a:0,L:.5,form:'lim (1 − cos x)/x²:  0/0.  f′/g′ = sin x/(2x), still 0/0; again: cos x/2 → 1/2'},
+    c:{f:Math.log,g:x=>x-1,fp:x=>1/x,gp:()=>1,a:1,L:1,form:'lim ln x/(x − 1) at 1:  0/0.  f′/g′ = (1/x)/1 → 1'},
+    d:{f:x=>x*x,g:Math.exp,fp:x=>2*x,gp:Math.exp,a:Infinity,L:0,form:'lim x²/eˣ as x → ∞:  ∞/∞.  f′/g′ = 2x/eˣ, still ∞/∞; again: 2/eˣ → 0'}};
+  let k='a',z=0;
+  const W=()=>2*Math.pow(10,-z),probe=()=>C[k].a===Infinity?3+7*z:C[k].a+W()/2;
+  const sim=glab('lh-canvas',{view:()=>{const A=C[k];if(A.a===Infinity){const hi=10+10*z;return {xr:[0,hi],yr:[-.3,1.6]};}
+      const xr=[A.a-W(),A.a+W()];let lo=Infinity,hi=-Infinity;for(let i=0;i<=200;i++){const x=xr[0]+(xr[1]-xr[0])*i/200;[A.f(x)/A.g(x),A.fp(x)/A.gp(x)].forEach(v=>{if(isFinite(v)){lo=Math.min(lo,v);hi=Math.max(hi,v);}});}lo=Math.min(lo,A.L);hi=Math.max(hi,A.L);const p=Math.max((hi-lo)*.3,1e-9);return {xr,yr:[lo-p,hi+p]};},
+    draw(ctx,P){const A=C[k],e=1e-9;const lo=P.xr[0],hi=P.xr[1];const R=x=>A.f(x)/A.g(x),Rp=x=>A.fp(x)/A.gp(x);
+      if(A.a===Infinity){curveD(ctx,P,R,lo+1e-6,hi,T.cx,2.8,400);curveD(ctx,P,Rp,lo+1e-6,hi,T.cv,2.2,400,[6,4]);hline(ctx,P,0,T.hot);}
+      else{curveD(ctx,P,R,lo,A.a-e*(hi-lo),T.cx,2.8,300);curveD(ctx,P,R,A.a+e*(hi-lo),hi,T.cx,2.8,300);curveD(ctx,P,Rp,lo,hi,T.cv,2.2,300,[6,4]);hline(ctx,P,A.L,T.hot);vline(ctx,P,A.a,T.muted);hole(ctx,P.X(A.a),P.Y(A.L),5,T.cx,false);}
+      const x=probe();[[R,T.cx],[Rp,T.cv]].forEach(([fn,c])=>{const y=fn(x);if(isFinite(y))dot(ctx,P.X(x),P.Y(y),5.5,c,T.surface);});}});
+  function upd(){const A=C[k],x=probe();setText('lh-form',A.form);setText('lh-r',fmt(A.f(x)/A.g(x),5));setText('lh-rp',fmt(A.fp(x)/A.gp(x),5));setText('lh-lim',frac(A.L));sim.render();}
+  bindRange('lh-w',v=>nz(v),v=>{z=v;upd();});segBind('lh-fn','k',v=>{k=v;upd();});upd();drawers.lhop=()=>sim.render();
+  KEYS['lh-canvas']=['Blue is f/g, green dashed is f′/g′; both head to the same limit (orange line).',[['cx','f(x)/g(x)'],['cv','f′(x)/g′(x)'],['hot','the limit']]];
+  TIPS['lh-w']=el=>C[k].a===Infinity?'Slide right to look at larger x.':`The window is ${fmt(2*Math.pow(10,-el.value),4)} wide around a. The two ratios agree more and more.`;
+  GLOSS["L'Hôpital's rule"]="If f/g is 0/0 or ∞/∞ at a, then lim f/g = lim f′/g′ (when the right limit exists)."; GLOSS['indeterminate form']='An expression like 0/0 or ∞/∞ whose limit cannot be read off directly.';
+  TT.lhop='Ask students to name the form before touching a derivative, and to state which function wins in the ∞/∞ case.';
+})();
+(function(){
+  PROBS.push({id:'lh-basic',topic:'lhop',title:'Use L\'Hôpital\'s rule',gen(){const a=ri(2,7),b=ri(2,7),n=ri(2,6),pat=pick([0,1,2,3]);let q,ans,f,pt,show;
+    if(pat===0){q=`lim x→0 (e<sup>${a}x</sup> − 1)/(${b}x)`;f=x=>(Math.exp(a*x)-1)/(b*x);pt=0;ans=a/b;const g=gcd(a,b);show=a/g+(b/g===1?'':'/'+b/g);}
+    else if(pat===1){q=`lim x→0 sin(${a}x)/sin(${b}x)`;f=x=>Math.sin(a*x)/Math.sin(b*x);pt=0;ans=a/b;const g=gcd(a,b);show=a/g+(b/g===1?'':'/'+b/g);}
+    else if(pat===2){q=`lim x→1 (x<sup>${n}</sup> − 1)/(x − 1)`;f=x=>(Math.pow(x,n)-1)/(x-1);pt=1;ans=n;show=String(n);}
+    else{q=`lim x→1 (ln x)/(x<sup>${n}</sup> − 1)`;f=x=>Math.log(x)/(Math.pow(x,n)-1);pt=1;ans=1/n;show='1/'+n;}
+    return {q:`Find ${q}. Give a fraction or decimal.`,ans,unit:'',tol:.01,show,chk:limit(f,pt,1),hint:'Check the form is 0/0, then differentiate top and bottom separately.',sol:`The form is 0/0. Differentiating top and bottom and substituting gives <b>${show}</b>.`};}});
+  PROBS.push({id:'lh-twice',topic:'lhop',title:'Apply the rule twice',gen(){const a=ri(1,6),pat=pick([0,1]);let q,ans,f,show;
+    if(pat===0){q=`lim x→0 (1 − cos(${a}x))/x²`;f=x=>(1-Math.cos(a*x))/(x*x);ans=a*a/2;show=a*a%2===0?String(a*a/2):a*a+'/2';}
+    else{q=`lim x→0 (e<sup>${a}x</sup> − 1 − ${a}x)/x²`;f=x=>(Math.exp(a*x)-1-a*x)/(x*x);ans=a*a/2;show=a*a%2===0?String(a*a/2):a*a+'/2';}
+    return {q:`Find ${q}. Give a fraction or decimal.`,ans,unit:'',tol:.01,show,chk:limit(f,0,1),hint:'The first derivative step is still 0/0. Apply the rule again.',sol:`Two applications of the rule give <b>${show}</b>.`};}});
+  PROBS.push({id:'lh-inf',topic:'lhop',title:'Which grows faster?',gen(){const n=ri(2,6),p=ri(1,3),R=[[`lim x→∞ x<sup>${n}</sup>/e<sup>x</sup>`,'0'],[`lim x→∞ e<sup>x</sup>/x<sup>${n}</sup>`,'∞'],[`lim x→∞ (ln x)/x<sup>${p}</sup>`,'0'],[`lim x→∞ x<sup>${p}</sup>/ln x`,'∞']],[q,c]=pick(R),m=mcq(c,['0','∞','1','−∞']);
+    return {q:`Find ${q}.`,choices:m.choices,ans:m.ans,hint:'Exponentials beat powers; powers beat logs. Or apply L\'Hôpital until the answer is clear.',sol:`Growth hierarchy: ln x ≪ powers ≪ eˣ. The limit is <b>${c}</b>.`};}});
+  PROBS.push({id:'lh-form',topic:'lhop',title:'Name the form',gen(){const R=[['lim x→0 (e<sup>x</sup> − 1)/x','0/0 (apply the rule)'],['lim x→∞ (ln x)/x','∞/∞ (apply the rule)'],['lim x→0⁺ x ln x','0·∞ (rewrite as a ratio first)'],['lim x→1 (x + 2)/(x² + 1)','not indeterminate (substitute: 3/2)'],['lim x→∞ (x² + 1)/(e<sup>x</sup>)','∞/∞ (apply the rule)'],['lim x→0 sin x/x','0/0 (apply the rule)']],[q,c]=pick(R),m=mcq(c,R.map(r=>r[1]));
+    return {q:`What is the form of ${q}, and what should you do?`,choices:m.choices,ans:m.ans,hint:'Substitute the limiting value into the top and bottom separately.',sol:`<b>${c}</b>.`};}});
+})();
+
+/* ===== modules/mvt.js ===== */
+/* ---------------- Extreme values & the Mean Value Theorem ---------------- */
+(function mvt(){
+  const cv=$('#mv-canvas');if(!cv)return;
+  const C={cu:{f:x=>x**3/3-x,xr:[-2.6,3.2],yr:[-3,8],a:[-2.4,1,-1.5],b:[1.2,3,2.5]},sn:{f:Math.sin,xr:[-.5,6.5],yr:[-1.6,1.6],a:[0,2,.5],b:[2.5,6,5]},sq:{f:x=>x*x,xr:[-3,3.2],yr:[-1,9.5],a:[-2.4,1,-1],b:[1.2,3,2.5]},abs:{f:Math.abs,xr:[-3,3.2],yr:[-.5,3.5],a:[-2.4,-.2,-1],b:[.5,3,2]}};
+  let k='cu',a=-1.5,b=2.5;
+  const fp=x=>k==='abs'?(x<0?-1:1):D(C[k].f,x);
+  const info=()=>{const f=C[k].f,m=(f(b)-f(a))/(b-a),cs=roots(x=>fp(x)-m,a+1e-6,b-1e-6),xs=Array.from({length:801},(_,i)=>a+(b-a)*i/800);let mx=xs[0],mn=xs[0];xs.forEach(x=>{if(f(x)>f(mx))mx=x;if(f(x)<f(mn))mn=x;});return {m,cs,mx,mn};};
+  const sim=glab('mv-canvas',{view:()=>({xr:C[k].xr,yr:C[k].yr}),draw(ctx,P){const f=C[k].f,{m,cs,mx,mn}=info();curveD(ctx,P,f,C[k].xr[0],C[k].xr[1],T.cx,2.8,400);
+      line(ctx,P,C[k].xr[0],f(a)+m*(C[k].xr[0]-a),C[k].xr[1],f(a)+m*(C[k].xr[1]-a),T.hot,2.2);dot(ctx,P.X(a),P.Y(f(a)),6,T.ink,T.surface);dot(ctx,P.X(b),P.Y(f(b)),6,T.ink,T.surface);
+      cs.forEach(c=>{const y=f(c);line(ctx,P,c-.9,y-.9*m,c+.9,y+.9*m,alpha(T.hot,.75),1.8,[6,4]);dot(ctx,P.X(c),P.Y(y),6,T.cv,T.surface);});
+      dot(ctx,P.X(mx),P.Y(f(mx)),5,T.ce,T.ink);dot(ctx,P.X(mn),P.Y(f(mn)),5,T.ca,T.ink);}});
+  function upd(){const f=C[k].f,{m,cs,mx,mn}=info();setText('mv-m',fmt(m,4));setText('mv-c',cs.length?cs.map(c=>'c ≈ '+fmt(c,3)).join(', '):'none: the MVT does not apply here');setText('mv-ext',`max ${fmt(f(mx),3)} at x = ${fmt(mx,2)}; min ${fmt(f(mn),3)} at x = ${fmt(mn,2)}`);sim.render();}
+  function setR(){const A=C[k],ea=$('#mv-a'),eb=$('#mv-b');ea.min=A.a[0];ea.max=A.a[1];ea.value=A.a[2];eb.min=A.b[0];eb.max=A.b[1];eb.value=A.b[2];a=A.a[2];b=A.b[2];}
+  bindRange('mv-a',v=>nz(v),v=>{a=v;upd();});bindRange('mv-b',v=>nz(v),v=>{b=v;upd();});segBind('mv-fn','k',v=>{k=v;setR();upd();});upd();drawers.mvt=()=>sim.render();
+  KEYS['mv-canvas']=['Move the endpoints. Orange is the secant; green dots are points c where the tangent (dashed) is parallel to it. Gold and pink dots are the highest and lowest points.',[['hot','secant and parallel tangents'],['cv','points c from the MVT'],['ce','absolute max on [a, b]'],['ca','absolute min on [a, b]']]];
+  TIPS['mv-a']=()=>'The MVT needs f continuous on [a, b] and differentiable on (a, b).';
+  GLOSS['critical point']='An x in the domain where f′(x) = 0 or f′(x) does not exist.';GLOSS['Mean Value Theorem']='If f is continuous on [a, b] and differentiable on (a, b), some c has f′(c) = (f(b) − f(a))/(b − a).';
+  TT.mvt='Ask students to say the two hypotheses aloud before applying the theorem. The |x| case shows why differentiability matters.';
+})();
+(function(){
+  PROBS.push({id:'mv-c',topic:'mvt',title:'Find the MVT point',gen(){const fam=pick(['quad','sqrt','cube']);let q,ans,chk;
+    if(fam==='quad'){const a=ri(-3,1),b=a+ri(2,6),A=ri(1,3),B=ri(-4,4),f=x=>A*x*x+B*x;q=`Find the value c guaranteed by the Mean Value Theorem for f(x) = ${polyTxt([A,B,0])} on [${nz(a)}, ${b}].`;ans=(a+b)/2;chk=roots(x=>D(f,x)-(f(b)-f(a))/(b-a),a+1e-6,b-1e-6)[0];}
+    else if(fam==='sqrt'){const a=ri(1,3),b=a+ri(1,3),f=Math.sqrt,x0=a*a,x1=b*b;q=`Find the value c guaranteed by the Mean Value Theorem for f(x) = √x on [${x0}, ${x1}]. Give a decimal.`;ans=Math.pow((a+b)/2,2);chk=roots(x=>D(f,x)-(f(x1)-f(x0))/(x1-x0),x0+1e-6,x1-1e-6)[0];}
+    else{const a=ri(0,2),b=a+ri(2,4),f=x=>x**3;q=`Find the value c in (${a}, ${b}) guaranteed by the Mean Value Theorem for f(x) = x³ on [${a}, ${b}]. Give a decimal to three places.`;ans=Math.sqrt((a*a+a*b+b*b)/3);chk=roots(x=>D(f,x)-(f(b)-f(a))/(b-a),a+1e-6,b-1e-6)[0];}
+    return {q,ans,unit:'',tol:.005,chk,hint:'Set f′(c) equal to the average slope (f(b) − f(a))/(b − a) and solve for c in the interval.',sol:`Average slope = (f(b) − f(a))/(b − a). Setting f′(c) equal to it and solving gives <b>c = ${fmt(ans,3)}</b>, which lies in the interval.`};}});
+  PROBS.push({id:'mv-ext',topic:'mvt',title:'Absolute maximum on an interval',gen(){const k=ri(1,3),lo=-ri(1,2)*k-ri(0,1),hi=ri(1,3)*k+ri(0,2),f=x=>x**3-3*k*k*x,cands=[lo,hi,-k,k].filter(x=>x>=lo&&x<=hi),mx=Math.max(...cands.map(f)),mn=Math.min(...cands.map(f)),askMax=Math.random()<.5,ans=askMax?mx:mn;
+    let m2=-Infinity,n2=Infinity;for(let i=0;i<=4000;i++){const x=lo+(hi-lo)*i/4000,v=f(x);m2=Math.max(m2,v);n2=Math.min(n2,v);}
+    return {q:`Find the absolute ${askMax?'maximum':'minimum'} value of f(x) = x³ − ${3*k*k}x on the closed interval [${nz(lo)}, ${hi}].`,ans,unit:'',abs:.01,chk:askMax?m2:n2,hint:'Candidates test: find critical points inside the interval, then compare f at them and at both endpoints.',sol:`f′(x) = 3x² − ${3*k*k} = 0 gives x = ±${k}. Candidates: ${[lo,...[-k,k].filter(x=>x>lo&&x<hi),hi].map(x=>`f(${nz(x)}) = ${nz(f(x))}`).join(', ')}. The ${askMax?'largest':'smallest'} is <b>${nz(ans)}</b>.`};}});
+  PROBS.push({id:'mv-hyp',topic:'mvt',title:'Can the MVT be applied?',gen(){const R=[['f(x) = |x| on [−1, 2]','No: f is not differentiable at x = 0'],['f(x) = 1/x on [−1, 1]','No: f is not continuous at x = 0'],['f(x) = x<sup>2/3</sup> on [−1, 1]','No: f is not differentiable at x = 0'],['f(x) = x² − 3x on [0, 4]','Yes: f is continuous and differentiable everywhere'],['f(x) = ln x on [0, 2]','No: f is not defined at x = 0'],['f(x) = sin x on [0, π]','Yes: f is continuous and differentiable everywhere'],['f(x) = ⌊x⌋ (floor) on [0, 2]','No: f is not continuous at x = 1']],[tx,ans]=pick(R),m=mcq(ans,R.map(r=>r[1]));
+    return {q:`Can the Mean Value Theorem be applied to ${tx}?`,choices:m.choices,ans:m.ans,hint:'Check: continuous on the closed interval, differentiable on the open interval.',sol:`<b>${ans}</b>.`};}});
+})();
+
+/* ===== modules/incdec.js ===== */
+/* ---------------- Increasing, decreasing & the first derivative test ---------------- */
+(function incdec(){
+  const cv=$('#id-canvas');if(!cv)return;
+  const C={a:{f:x=>x**3-3*x,d:x=>3*x*x-3,cr:[[-1,'local maximum'],[1,'local minimum']],yr:[-3.6,3.6],dr:[-4,10],xr:[-2.2,2.2]},
+    b:{f:x=>x**3,d:x=>3*x*x,cr:[[0,'neither (no sign change)']],yr:[-8,8],dr:[-1,12],xr:[-2.2,2.2]},
+    c:{f:x=>x**4-2*x*x,d:x=>4*x**3-4*x,cr:[[-1,'local minimum'],[0,'local maximum'],[1,'local minimum']],yr:[-1.5,5],dr:[-10,10],xr:[-2.1,2.1]},
+    d:{f:x=>x*Math.exp(-x),d:x=>(1-x)*Math.exp(-x),cr:[[1,'local maximum']],yr:[-1.3,.6],dr:[-1.5,1.4],xr:[-2.2,3.5]},
+    e:{f:x=>Math.pow(Math.abs(x),2/3),d:x=>x===0?NaN:(2/3)*Math.sign(x)*Math.pow(Math.abs(x),-1/3),cr:[[0,'local minimum (f′ DNE)']],yr:[-.2,2.2],dr:[-2.5,2.5],xr:[-2.2,2.2]}};
+  let k='a',x0=.5;
+  const shade=(ctx,P,A)=>signBands(ctx,P,A.xr,A.d,alpha(T.cv,.13),alpha(T.ca,.13));
+  const sim=glab('id-canvas',{h:w=>clamp(w*.4,240,320),view:()=>({xr:C[k].xr,yr:C[k].yr}),draw(ctx,P){const A=C[k];shade(ctx,P,A);curveD(ctx,P,A.f,A.xr[0],A.xr[1],T.cx,2.8,400);A.cr.forEach(([c])=>dot(ctx,P.X(c),P.Y(A.f(c)),5,T.ce,T.ink));
+      const m=A.d(x0),y=A.f(x0);if(isFinite(m)&&Math.abs(m)<20)line(ctx,P,x0-.7,y-.7*m,x0+.7,y+.7*m,T.hot,2.2);dot(ctx,P.X(x0),P.Y(y),6,T.hot,T.surface);label(ctx,'f(x)',P.box.x+8,P.box.y+10,T.cx,'left','middle',LABEL);}});
+  const sim2=glab('id-canvas2',{h:w=>clamp(w*.3,170,230),view:()=>({xr:C[k].xr,yr:C[k].dr}),draw(ctx,P){const A=C[k],e=1e-7;shade(ctx,P,A);curveD(ctx,P,A.d,A.xr[0],-e,T.cv,2.8,300);curveD(ctx,P,A.d,e,A.xr[1],T.cv,2.8,300);if(k!=='e')curveD(ctx,P,A.d,-e,e,T.cv,2.8,4);
+      A.cr.forEach(([c])=>dot(ctx,P.X(c),P.Y(isFinite(A.d(c))?0:0),5,T.ce,T.ink));const m=A.d(x0);if(isFinite(m)&&m>=A.dr[0]&&m<=A.dr[1])dot(ctx,P.X(x0),P.Y(m),6,T.cv,T.surface);label(ctx,'f′(x): green zone = increasing, pink zone = decreasing',P.box.x+8,P.box.y+10,T.muted,'left','middle',MONO);}});
+  function upd(){const A=C[k],m=A.d(x0);setText('id-sign',!isFinite(m)?'f′ does not exist here':m>1e-6?`positive (${fmt(m,2)}): f is increasing`:m<-1e-6?`negative (${fmt(m,2)}): f is decreasing`:'zero: a flat tangent');setText('id-crit',A.cr.map(([c])=>'x = '+nz(c)).join(', '));setText('id-class',A.cr.map(([c,t])=>`x = ${nz(c)}: ${t}`).join('; '));sim.render();sim2.render();}
+  bindRange('id-x',v=>nz(v),v=>{x0=v;upd();});segBind('id-fn','k',v=>{k=v;upd();});upd();drawers.incdec=()=>{sim.render();sim2.render();};
+  KEYS['id-canvas']=['Green zone: f′ > 0 (f rising). Pink zone: f′ < 0 (f falling). Gold dots mark critical points.',[['cx','f(x)'],['cv','f′ > 0 (increasing)'],['ca','f′ < 0 (decreasing)'],['ce','critical points']]];
+  TIPS['id-x']=el=>`x = ${nz(+el.value)}. The sign of f′ here decides rising or falling.`;
+  GLOSS['local maximum']='A point where f is larger than at all nearby points: f′ changes + → −.';GLOSS['local minimum']='A point where f is smaller than at all nearby points: f′ changes − → +.';
+  TT.incdec='Have students write the sign chart for each case before reading the shaded zones.';
+})();
+(function(){
+  const cubic=(p,q)=>({B:-3*(p+q)/2,C0:3*p*q});
+  const pq=()=>{let p,q;do{p=ri(-4,2);q=ri(p+1,5);}while((p+q)%2);return [p,q];};
+  PROBS.push({id:'id-test',topic:'incdec',title:'First derivative test',gen(){const [p,q]=pq(),{B,C0}=cubic(p,q),f=x=>x**3+B*x*x+C0*x,askMax=Math.random()<.5,ans=askMax?p:q;
+    return {q:`Let f(x) = ${polyTxt([1,B,C0,0])}. Find the x-coordinate of the local ${askMax?'maximum':'minimum'}.`,ans,unit:'',abs:.01,chk:D2(f,ans,1e-2)*(askMax?-1:1)>0&&Math.abs(D(f,ans))<1e-5?ans:NaN,hint:'f′(x) = 0 gives two critical points. Use the sign of f′ on each side (or f″).',sol:`f′(x) = 3(${lin(p)})(${lin(q)}). f′ changes + → − at x = ${p} (local max) and − → + at x = ${q} (local min). The local ${askMax?'maximum':'minimum'} is at <b>x = ${ans}</b>.`};}});
+  PROBS.push({id:'id-value',topic:'incdec',title:'Value of a local maximum',gen(){const k=ri(1,4),f=x=>x**3-3*k*k*x,ans=f(-k);
+    return {q:`Find the value (the y-coordinate) of the local maximum of f(x) = x³ − ${3*k*k}x.`,ans,unit:'',abs:.01,chk:Math.max(...Array.from({length:2001},(_,i)=>f(-k*1.8+k*1.6*i/2000))),hint:'f′ = 0 at x = ±k. The local max is at the smaller one (where f′ goes + → −). Then evaluate f there.',sol:`f′(x) = 3x² − ${3*k*k} = 0 ⇒ x = ±${k}. The local max is at x = −${k}: f(−${k}) = <b>${ans}</b>.`};}});
+  PROBS.push({id:'id-intervals',topic:'incdec',title:'Where is f increasing?',gen(){const [p,q]=pq(),c=pick(['increasing','decreasing']);const up=`(−∞, ${nz(p)}) and (${nz(q)}, ∞)`,dn=`(${nz(p)}, ${nz(q)})`,ans=c==='increasing'?up:dn;
+    const m=mcq(ans,[up,dn,`(−∞, ${nz(q)})`,`(${nz(p)}, ∞)`].filter(s=>true));
+    return {q:`f′(x) = (${lin(p)})(${lin(q)}). On which interval(s) is f ${c}?`,choices:m.choices,ans:m.ans,hint:'Make a sign chart for f′ using its zeros.',sol:`f′ is positive for x &lt; ${nz(p)} and x &gt; ${nz(q)}, negative between. So f is ${c} on <b>${ans}</b>.`};}});
+  PROBS.push({id:'id-crit',topic:'incdec',title:'Critical points',gen(){const a=ri(1,5),R=[[`f(x) = x² ${sgn(-2*a)}x`,`f′ = 2x − ${2*a} = 0 at x = ${a}`,String(a)],[`f(x) = x³ − ${3*a*a}x`,`f′ = 3x² − ${3*a*a} = 0 at x = ±${a}`,`${nz(-a)} and ${a}`],[`f(x) = |x − ${a}|`,`f′ does not exist at x = ${a}`,String(a)],[`f(x) = x e<sup>x</sup>`,'f′ = e<sup>x</sup>(1 + x) = 0 at x = −1','−1']],[fx,why,c]=pick(R),m=mcq(c,[String(a),`${nz(-a)} and ${a}`,'−1','0','no critical points']);
+    return {q:`Find the critical point(s) of ${fx}.`.replace('x² - ','x² − '),choices:m.choices,ans:m.ans,hint:'Critical points: f′ = 0 or f′ does not exist (inside the domain).',sol:`${why}. Critical point(s): <b>${c}</b>.`};}});
+})();
+
+/* ===== modules/concav.js ===== */
+/* ---------------- Concavity & the second derivative test ---------------- */
+(function concav(){
+  const cv=$('#cc-canvas');if(!cv)return;
+  const C={a:{f:x=>x**3-3*x,d:x=>3*x*x-3,dd:x=>6*x,yr:[-3.6,3.6],ddr:[-13,13],xr:[-2.2,2.2],inf:[0]},b:{f:x=>x**4,d:x=>4*x**3,dd:x=>12*x*x,yr:[-1,10],ddr:[-3,50],xr:[-2.1,2.1],inf:[]},
+    c:{f:Math.sin,d:Math.cos,dd:x=>-Math.sin(x),yr:[-1.5,1.5],ddr:[-1.5,1.5],xr:[-3.4,3.4],inf:[-Math.PI,0,Math.PI]},d:{f:x=>x**4-2*x*x,d:x=>4*x**3-4*x,dd:x=>12*x*x-4,yr:[-1.5,5],ddr:[-5,45],xr:[-2.1,2.1],inf:[-1/Math.sqrt(3),1/Math.sqrt(3)]}};
+  let k='a',x0=.6;
+  const shade=(ctx,P,A)=>signBands(ctx,P,A.xr,A.dd,alpha(T.cx,.12),alpha(T.ca,.12));
+  const sim=glab('cc-canvas',{h:w=>clamp(w*.4,240,320),view:()=>({xr:C[k].xr,yr:C[k].yr}),draw(ctx,P){const A=C[k];shade(ctx,P,A);curveD(ctx,P,A.f,A.xr[0],A.xr[1],T.cx,2.8,400);A.inf.forEach(c=>dot(ctx,P.X(c),P.Y(A.f(c)),5.5,T.ce,T.ink));
+      const m=A.d(x0),y=A.f(x0);line(ctx,P,x0-.9,y-.9*m,x0+.9,y+.9*m,T.hot,2.2);dot(ctx,P.X(x0),P.Y(y),6,T.hot,T.surface);label(ctx,'blue zone: concave up · pink zone: concave down',P.box.x+8,P.box.y+10,T.muted,'left','middle',MONO);}});
+  const sim2=glab('cc-canvas2',{h:w=>clamp(w*.28,160,220),view:()=>({xr:C[k].xr,yr:C[k].ddr}),draw(ctx,P){const A=C[k];shade(ctx,P,A);curveD(ctx,P,A.dd,A.xr[0],A.xr[1],T.ca,2.8,300);A.inf.forEach(c=>dot(ctx,P.X(c),P.Y(0),5.5,T.ce,T.ink));dot(ctx,P.X(x0),P.Y(A.dd(x0)),6,T.ca,T.surface);label(ctx,'f″(x)',P.box.x+8,P.box.y+10,T.ca,'left','middle',LABEL);}});
+  function upd(){const A=C[k],s=A.dd(x0);setText('cc-fp',fmt(A.d(x0),3));setText('cc-fpp',fmt(s,3));setText('cc-bend',Math.abs(s)<1e-6?'f″ = 0: possible inflection':s>0?'concave up (f″ > 0): holds water':'concave down (f″ < 0): spills water');sim.render();sim2.render();}
+  bindRange('cc-x',v=>nz(v),v=>{x0=v;upd();});segBind('cc-fn','k',v=>{k=v;upd();});upd();drawers.concav=()=>{sim.render();sim2.render();};
+  KEYS['cc-canvas']=['Blue zone: f″ > 0 (concave up). Pink zone: f″ < 0 (concave down). Gold dots are inflection points.',[['cx','f(x) and concave-up zone'],['ca','concave-down zone, f″'],['hot','tangent line'],['ce','inflection points']]];
+  TIPS['cc-x']=el=>{const s=C[k].dd(+el.value);return `x = ${nz(+el.value)}: f″ = ${fmt(s,2)}, so the curve ${s>0?'bends up (the tangent lies below the curve)':s<0?'bends down (the tangent lies above the curve)':'is switching its bend'}.`;};
+  GLOSS['concave up']='The graph bends upward like a cup: f″ > 0, and f′ is increasing.';GLOSS['inflection point']='A point where the concavity changes (f″ changes sign).';
+  TT.concav='Have students predict whether the tangent line is above or below the curve before sliding.';
+})();
+(function(){
+  PROBS.push({id:'cc-inflect',topic:'concav',title:'Find an inflection point',gen(){const b=3*ri(-3,3),c=ri(-6,6),f=x=>x**3+b*x*x+c*x,ans=-b/3;
+    return {q:`Find the x-coordinate of the point of inflection of f(x) = ${polyTxt([1,b,c,0])}.`,ans,unit:'',abs:.01,chk:roots(x=>D2(f,x,1e-2),-10,10)[0]??ans,hint:'Solve f″(x) = 0 and check that f″ changes sign.',sol:`f′(x) = 3x² ${sgn(2*b)}x ${sgn(c)}, f″(x) = 6x ${sgn(2*b)}. Setting f″ = 0 gives x = <b>${nz(ans)}</b>, and f″ changes sign there.`};}});
+  PROBS.push({id:'cc-second',topic:'concav',title:'Second derivative test',gen(){const c=ri(-3,3),fpp=pick([-6,-3,-1,2,4,7]),m=mcq(fpp>0?'local minimum':'local maximum',['local minimum','local maximum','inflection point','the test is inconclusive']);
+    return {q:`f′(${nz(c)}) = 0 and f″(${nz(c)}) = ${nz(fpp)}. What does the second derivative test say about x = ${nz(c)}?`,choices:m.choices,ans:m.ans,hint:'f″ > 0: concave up (a valley). f″ < 0: concave down (a peak).',sol:`f″ is ${fpp>0?'positive':'negative'}, so the graph is concave ${fpp>0?'up':'down'} at a flat point: a <b>${fpp>0?'local minimum':'local maximum'}</b>.`};}});
+  PROBS.push({id:'cc-concave',topic:'concav',title:'Where is it concave up?',gen(){const k=ri(1,4),f=x=>x**4-2*k*k*x*x,c=pick(['concave up','concave down']),thr=k/Math.sqrt(3),thrTxt=`${k}/√3`,out=`(−∞, −${thrTxt}) and (${thrTxt}, ∞)`,mid=`(−${thrTxt}, ${thrTxt})`,ans=c==='concave up'?out:mid;
+    const m=mcq(ans,[out,mid,`(0, ∞)`,`(−∞, 0)`]);return {q:`On which interval(s) is f(x) = x⁴ − ${2*k*k}x² ${c}?`,choices:m.choices,ans:m.ans,hint:'f″(x) = 12x² − 4k². Find where it is positive or negative.',sol:`f″(x) = 12x² − ${4*k*k}, which is zero at x = ±${thrTxt} (≈ ±${fmt(thr,3)}). It is positive outside and negative inside, so f is ${c} on <b>${ans}</b>.`};}});
+  PROBS.push({id:'cc-tangent',topic:'concav',title:'Tangent line vs the curve',gen(){const R=[['f(x) = x², tangent at x = 1','below'],['f(x) = −x² + 4, tangent at x = 1','above'],['f(x) = e<sup>x</sup>, tangent at x = 0','below'],['f(x) = ln x, tangent at x = 1','above'],['f(x) = x³, tangent at x = 2','below'],['f(x) = −x³, tangent at x = 2','above']],[tx,ans]=pick(R),m=mcq(ans,['above','below']);
+    return {q:`The tangent line to ${tx} lies ___ the graph near the point of tangency.`,choices:m.choices,ans:m.ans,hint:'Concave up: the tangent lies below. Concave down: the tangent lies above.',sol:`The graph is concave ${ans==='below'?'up':'down'} there, so the tangent line lies <b>${ans}</b> the curve.`};}});
+})();
+
+/* ===== modules/sketch.js ===== */
+/* ---------------- Connecting f, f′ and f″ ---------------- */
+(function sketch(){
+  const cv=$('#sk-canvas');if(!cv)return;
+  const XS=[-3,-2,-1,0,1,2,3],INIT=[2.5,1.5,.5,-1,-1.5,.5,2];
+  let ys=INIT.slice(),drag=-1,f0=0;
+  const fp=x=>{if(x<=XS[0])return ys[0];for(let i=0;i<6;i++)if(x<=XS[i+1]){const t=(x-XS[i])/(XS[i+1]-XS[i]);return ys[i]+(ys[i+1]-ys[i])*t;}return ys[6];};
+  const F=x=>{let s=f0;for(let i=0;i<6;i++){const a=XS[i],b=Math.min(XS[i+1],x);if(b<=a)break;s+=(ys[i]+fp(b))/2*(b-a);}return s;};
+  const zeros=()=>{const z=[];for(let i=0;i<6;i++){const a=ys[i],b=ys[i+1];if(a===0&&i===0)continue;if(a*b<0)z.push({x:XS[i]-a/(b-a),up:b>a});}return z;};
+  const infl=()=>{const r=[];for(let i=1;i<6;i++){const s1=ys[i]-ys[i-1],s2=ys[i+1]-ys[i];if(s1*s2<0)r.push(XS[i]);}return r;};
+  const simTop=glab('sk-canvas',{h:w=>clamp(w*.34,200,260),view:()=>({xr:[-3,3],yr:[-4.5,4.5]}),draw(ctx,P){signBands(ctx,P,[-3,3],fp,alpha(T.cv,.13),alpha(T.ca,.13));
+      curveD(ctx,P,fp,-3,3,T.cv,2.8,200);XS.forEach((x,i)=>dot(ctx,P.X(x),P.Y(ys[i]),i===drag?9:7,T.cv,T.surface));label(ctx,'f′(x): drag the points',P.box.x+8,P.box.y+10,T.cv,'left','middle',LABEL);},
+    drag(kind,x,y){if(kind==='down'){let b=-1,bd=.45;XS.forEach((xi,i)=>{const d=Math.abs(x-xi);if(d<bd){bd=d;b=i;}});drag=b;}else if(kind==='up'){drag=-1;}if(drag>=0&&kind!=='up'){ys[drag]=clamp(Math.round(y*8)/8,-4,4);upd();}}});
+  const simBot=glab('sk-canvas2',{h:w=>clamp(w*.34,200,260),view:()=>{let lo=Infinity,hi=-Infinity;for(let i=0;i<=120;i++){const v=F(-3+6*i/120);lo=Math.min(lo,v);hi=Math.max(hi,v);}const p=Math.max((hi-lo)*.2,.5);return {xr:[-3,3],yr:[lo-p,hi+p]};},draw(ctx,P){curveD(ctx,P,F,-3,3,T.cx,2.8,240);
+      zeros().forEach(z=>dot(ctx,P.X(z.x),P.Y(F(z.x)),6.5,z.up?T.ca:T.ce,T.ink));infl().forEach(x=>{hole(ctx,P.X(x),P.Y(F(x)),5.5,T.ink,false);});label(ctx,'f(x): built from f′ (gold = max, pink = min, open = inflection)',P.box.x+8,P.box.y+10,T.cx,'left','middle',MONO);}});
+  function upd(){const z=zeros(),br=[-3,...z.map(q=>q.x),3],iv=[];for(let i=0;i<br.length-1;i++){const m=(br[i]+br[i+1])/2;if(fp(m)>0)iv.push(`(${fmt(br[i],2)}, ${fmt(br[i+1],2)})`);}
+    setText('sk-inc',iv.length?iv.join(' and '):'nowhere');setText('sk-ext',z.length?z.map(q=>`${q.up?'min':'max'} at x ≈ ${fmt(q.x,2)}`).join('; '):'none');const inf=infl();setText('sk-inf',inf.length?inf.map(x=>'x = '+fmt(x,0)).join(', '):'none');simTop.render();simBot.render();}
+  bindRange('sk-c',v=>nz(v),v=>{f0=v;upd();});$('#sk-reset').addEventListener('click',()=>{ys=INIT.slice();upd();});$('#sk-lab').addEventListener('labreset',()=>{ys=INIT.slice();f0=0;upd();});
+  upd();drawers.sketch=()=>{simTop.render();simBot.render();};
+  KEYS['sk-canvas']=['Drag the green points. Green zone: f′ > 0 so f rises. Pink zone: f′ < 0 so f falls.',[['cv','f′ (the points you drag)'],['cx','f, rebuilt from f′'],['ce','local maximum of f'],['ca','local minimum of f']]];
+  TIPS['sk-c']=()=>'Changing f(−3) only slides the whole blue curve up or down: f is determined by f′ up to a vertical shift.';
+  GLOSS['relative extremum']='A local maximum or minimum. For f it occurs where f′ changes sign.';
+  TT.sketch='Have students sketch f from a given f′ on paper first, then check against the lab. Emphasize inflections happen where f′ has a local extremum.';
+})();
+(function(){
+  PROBS.push({id:'sk-max',topic:'sketch',title:'Read f′ to find a maximum of f',gen(){let p,q;do{p=ri(-3,1);q=ri(p+2,4);}while(false);const k=Math.random()<.5?1:-1,fpf=x=>k*(x-p)*(x-q)/ (Math.abs(q-p)),g=x=>fpf(x),askMax=Math.random()<.5;
+      const maxX=k>0?p:q,minX=k>0?q:p,ans=askMax?maxX:minX;
+      const svg=svgG({xr:[-5,5],yr:[-4,4],pieces:[{f:g,x0:-5,x1:5,color:'var(--cv)'}],pts:[{x:p,y:0,color:'var(--ink)'},{x:q,y:0,color:'var(--ink)'}],labels:[{x:3.2,y:3.4,t:'f′',color:'var(--cv)'}],alt:'Graph of f prime, a parabola crossing the x-axis at two points.'});
+      const m=mcq(String(ans).replace('-','−'),[p,q,Math.round((p+q)/2),0].map(v=>String(v).replace('-','−')));
+      return {q:`The graph of f′ (the derivative of f) is shown. At which x does f have a local ${askMax?'maximum':'minimum'}?`,fig:svg,choices:m.choices,ans:m.ans,hint:'Local max: f′ changes from positive to negative. Local min: negative to positive.',sol:`f′ is ${k>0?'positive, then negative, then positive':'negative, then positive, then negative'} around x = ${p} and x = ${q}. The sign changes ${askMax?'+ → −':'− → +'} at <b>x = ${ans}</b>, so f has a local ${askMax?'maximum':'minimum'} there.`};}});
+  PROBS.push({id:'sk-inflect',topic:'sketch',title:'Read f′ to find an inflection point of f',gen(){const mm=ri(-3,3),h=ri(1,3),k=pick([1,-1]),gg=x=>-k*(x-mm)**2/3+k*h,vert=mm,roots2=[mm-Math.sqrt(3*h),mm+Math.sqrt(3*h)];
+      const svg=svgG({xr:[-5,5],yr:[-4,4],pieces:[{f:gg,x0:-5,x1:5,color:'var(--cv)'}],labels:[{x:3.2,y:3.4,t:'f′',color:'var(--cv)'}],alt:'Graph of f prime, a parabola with a vertex.'});
+      const m=mcq(String(vert).replace('-','−'),[mm+1,mm-1,Math.round(roots2[0]),Math.round(roots2[1]),0].map(v=>String(v).replace('-','−')));
+      return {q:`The graph of f′ is a parabola with its vertex at x = ${nz(vert)}. At which x does f have a point of inflection?`,fig:svg,choices:m.choices,ans:m.ans,hint:'Inflection points of f are where f′ has a local maximum or minimum (f″ changes sign).',sol:`f′ has its extremum (the vertex) at x = ${nz(vert)}, so f″ changes sign there: <b>x = ${nz(vert)}</b> is an inflection point of f.`};}});
+  PROBS.push({id:'sk-describe',topic:'sketch',title:'Match f′ and f″ to the shape of f',gen(){const R=[['f′ > 0 and f″ > 0','increasing and concave up'],['f′ > 0 and f″ < 0','increasing and concave down'],['f′ < 0 and f″ > 0','decreasing and concave up'],['f′ < 0 and f″ < 0','decreasing and concave down']],[c,ans]=pick(R),m=mcq(ans,R.map(r=>r[1]));
+    return {q:`On an interval, ${c}. What does the graph of f do?`,choices:m.choices,ans:m.ans,hint:'f′ gives rising or falling. f″ gives the bend.',sol:`f′ ${c.includes('f′ > 0')?'> 0 means increasing':'< 0 means decreasing'}; f″ ${c.includes('f″ > 0')?'> 0 means concave up':'< 0 means concave down'}: <b>${ans}</b>.`};}});
+})();
+
+/* ===== modules/optim.js ===== */
+/* ---------------- Optimization ---------------- */
+(function optim(){
+  const cv=$('#op-canvas');if(!cv)return;
+  const V0=355;
+  const C={fence:{f:x=>x*(100-2*x),lo:1,hi:49,def:20,xr:[0,50],yr:[-100,1400],max:true,form:'A = x(100 − 2x)   (x = sides ⟂ river; the side along the river is 100 − 2x)',dim:x=>`sides ${fmt(x,2)} ft, ${fmt(100-2*x,2)} ft, ${fmt(x,2)} ft`,u:'ft²',xl:'x (ft)'},
+    box:{f:x=>x*(12-2*x)**2,lo:.2,hi:5.8,def:1,xr:[0,6],yr:[-20,150],max:true,form:'V = x(12 − 2x)²   (cut an x × x square from each corner of a 12 × 12 sheet)',dim:x=>`height ${fmt(x,2)}, base ${fmt(12-2*x,2)} × ${fmt(12-2*x,2)}`,u:'cm³',xl:'x (cm)'},
+    can:{f:r=>2*Math.PI*r*r+2*V0/r,lo:1,hi:8,def:2,xr:[0,9],yr:[0,600],max:false,form:'S = 2πr² + 2V/r   (can of fixed volume V = 355 cm³: least metal)',dim:r=>`radius ${fmt(r,2)}, height ${fmt(V0/(Math.PI*r*r),2)}`,u:'cm²',xl:'r (cm)'}};
+  let k='fence',x=3;
+  const best=()=>{const A=C[k];return A.max?argmax(A.f,A.lo,A.hi):argmin(A.f,A.lo,A.hi);};
+  const sim=glab('op-canvas',{view:()=>({xr:C[k].xr,yr:C[k].yr,xlabel:C[k].xl}),draw(ctx,P){const A=C[k],b=best();curveD(ctx,P,A.f,Math.max(A.xr[0],.01),A.xr[1],T.cx,2.8,300);const m=D(A.f,x),y=A.f(x);line(ctx,P,x-1.5,y-1.5*m,x+1.5,y+1.5*m,T.hot,2);dot(ctx,P.X(x),P.Y(y),6.5,T.hot,T.surface);dot(ctx,P.X(b),P.Y(A.f(b)),6,T.ce,T.ink);vline(ctx,P,b,T.muted,[3,4]);}});
+  function upd(){const A=C[k],b=best(),y=A.f(x);setText('op-form',A.form);setText('op-val',`${fmt(y,3)} ${A.u}  (slope ${fmt(D(A.f,x),2)})`);setText('op-best',`x = ${fmt(b,3)}, ${A.max?'max':'min'} = ${fmt(A.f(b),3)} ${A.u}`);setText('op-dim',A.dim(x));sim.render();}
+  function setR(){const A=C[k],el=$('#op-x');el.min=A.lo;el.max=A.hi;el.value=A.def;x=A.def;}
+  bindRange('op-x',v=>nz(v),v=>{x=v;upd();});segBind('op-fn','k',v=>{k=v;setR();upd();});setR();upd();drawers.optim=()=>sim.render();
+  KEYS['op-canvas']=['Slide x. The gold dot is the best value; the orange tangent is flat there.',[['cx','the quantity to optimize'],['hot','tangent at your x'],['ce','the optimum']]];
+  TIPS['op-x']=el=>{const A=C[k],m=D(A.f,+el.value);return `Slope ${fmt(m,2)}: ${Math.abs(m)<.5?'nearly flat, close to the optimum.':m>0?'still rising: moving right '+(A.max?'helps':'hurts')+'.':'falling: moving left '+(A.max?'helps':'hurts')+'.'}`;};
+  GLOSS['objective function']='The quantity you want to maximize or minimize.';GLOSS['constraint']='A condition linking the variables (a fixed perimeter or volume).';
+  TT.optim='Have students write the constraint and objective before touching the graph, and justify the answer with a derivative test.';
+})();
+(function(){
+  PROBS.push({id:'op-fence',topic:'optim',title:'Fence a rectangle',gen(){const P=pick([60,80,100,120,200,240]),barn=Math.random()<.5,f=barn?x=>x*(P-2*x):x=>x*(P/2-x),ans=barn?P*P/8:P*P/16,hi=barn?P/2:P/2;
+    return {q:`${P} feet of fencing is used to enclose a rectangular pen${barn?' against a long straight wall (no fence on the wall side)':''}. What is the maximum possible area, in square feet?`,ans,unit:'ft²',abs:.01,chk:f(argmax(f,0,hi)),hint:barn?'Let x be the two sides perpendicular to the wall: A = x(P − 2x).':'Perimeter 2x + 2y = P, so y = P/2 − x. Maximize A = x(P/2 − x).',sol:barn?`A(x) = x(${P} − 2x), A′ = ${P} − 4x = 0 ⇒ x = ${P/4}, A = ${P/4}·${P/2} = <b>${ans}</b>.`:`A(x) = x(${P/2} − x), A′ = ${P/2} − 2x = 0 ⇒ x = ${P/4}, a square; A = <b>${ans}</b>.`};}});
+  PROBS.push({id:'op-box',topic:'optim',title:'Open box',gen(){const a=pick([12,18,24,30]),askX=Math.random()<.5,x=a/6,V=x*(a-2*x)**2,f=t=>t*(a-2*t)**2,ans=askX?x:V;
+    return {q:`An open box is made from a ${a} cm by ${a} cm square sheet by cutting equal squares from the corners and folding up the sides. ${askX?'What side length of the cut-out squares maximizes the volume?':'What is the maximum volume, in cm³?'}`,ans,unit:askX?'cm':'cm³',abs:.01,chk:askX?argmax(f,0,a/2):f(argmax(f,0,a/2)),hint:`V(x) = x(${a} − 2x)². Differentiate with the product rule and chain rule.`,sol:`V′(x) = (${a} − 2x)² − 4x(${a} − 2x) = (${a} − 2x)(${a} − 6x) = 0 ⇒ x = ${a/6} (x = ${a/2} gives no box). V(${a/6}) = <b>${V}</b> cm³; the best cut is <b>${a/6}</b> cm.`};}});
+  PROBS.push({id:'op-can',topic:'optim',title:'A can with least metal',gen(){const V=pick([250,355,500,1000]),r=Math.cbrt(V/(2*Math.PI)),ans=r,S=x=>2*Math.PI*x*x+2*V/x;
+    return {q:`A closed cylindrical can must hold ${V} cm³. What radius minimizes the amount of metal (surface area)? Give a decimal to two places, in cm.`,ans,unit:'cm',tol:.005,chk:argmin(S,.5,15),hint:'h = V/(πr²), so S(r) = 2πr² + 2V/r. Set S′(r) = 0.',sol:`S′(r) = 4πr − 2V/r² = 0 ⇒ r³ = V/(2π) ⇒ r = (${V}/(2π))<sup>1/3</sup> = <b>${fmt(r,2)} cm</b> (and h = 2r).`};}});
+  PROBS.push({id:'op-dist',topic:'optim',title:'Closest point',gen(){const a=ri(1,6),ans=a-.5,d2=x=>(x-a)**2+x;
+    return {q:`Find the x-coordinate of the point on the curve y = √x that is closest to the point (${a}, 0). Give a decimal.`,ans,unit:'',abs:.01,chk:argmin(d2,0,a+3),hint:'Minimize the squared distance d² = (x − a)² + x.',sol:`d² = (x − ${a})² + x. Setting its derivative 2(x − ${a}) + 1 = 0 gives x = <b>${fmt(ans,1)}</b>.`};}});
+  PROBS.push({id:'op-sum',topic:'optim',title:'Two numbers',gen(){const S=ri(5,30),prodMax=Math.random()<.5,ans=prodMax?S*S/4:S*S/2;
+    return {q:`Two positive numbers add to ${S}. ${prodMax?'What is the largest possible value of their product?':'What is the smallest possible value of the sum of their squares?'}`,ans,unit:'',tol:.005,chk:prodMax?(S/2)*(S/2):2*(S/2)**2,hint:'Write y = S − x and the quantity in terms of x alone, then find where its derivative is 0.',sol:`${prodMax?`P = x(${S} − x), P′ = ${S} − 2x = 0 ⇒ x = ${S/2}, P = <b>${ans}</b>.`:`Q = x² + (${S} − x)², Q′ = 4x − ${2*S} = 0 ⇒ x = ${S/2}, Q = <b>${ans}</b>.`}`};}});
 })();
 
 /* ===== overview.js ===== */

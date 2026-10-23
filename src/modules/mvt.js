@@ -1,0 +1,31 @@
+/* ---------------- Extreme values & the Mean Value Theorem ---------------- */
+(function mvt(){
+  const cv=$('#mv-canvas');if(!cv)return;
+  const C={cu:{f:x=>x**3/3-x,xr:[-2.6,3.2],yr:[-3,8],a:[-2.4,1,-1.5],b:[1.2,3,2.5]},sn:{f:Math.sin,xr:[-.5,6.5],yr:[-1.6,1.6],a:[0,2,.5],b:[2.5,6,5]},sq:{f:x=>x*x,xr:[-3,3.2],yr:[-1,9.5],a:[-2.4,1,-1],b:[1.2,3,2.5]},abs:{f:Math.abs,xr:[-3,3.2],yr:[-.5,3.5],a:[-2.4,-.2,-1],b:[.5,3,2]}};
+  let k='cu',a=-1.5,b=2.5;
+  const fp=x=>k==='abs'?(x<0?-1:1):D(C[k].f,x);
+  const info=()=>{const f=C[k].f,m=(f(b)-f(a))/(b-a),cs=roots(x=>fp(x)-m,a+1e-6,b-1e-6),xs=Array.from({length:801},(_,i)=>a+(b-a)*i/800);let mx=xs[0],mn=xs[0];xs.forEach(x=>{if(f(x)>f(mx))mx=x;if(f(x)<f(mn))mn=x;});return {m,cs,mx,mn};};
+  const sim=glab('mv-canvas',{view:()=>({xr:C[k].xr,yr:C[k].yr}),draw(ctx,P){const f=C[k].f,{m,cs,mx,mn}=info();curveD(ctx,P,f,C[k].xr[0],C[k].xr[1],T.cx,2.8,400);
+      line(ctx,P,C[k].xr[0],f(a)+m*(C[k].xr[0]-a),C[k].xr[1],f(a)+m*(C[k].xr[1]-a),T.hot,2.2);dot(ctx,P.X(a),P.Y(f(a)),6,T.ink,T.surface);dot(ctx,P.X(b),P.Y(f(b)),6,T.ink,T.surface);
+      cs.forEach(c=>{const y=f(c);line(ctx,P,c-.9,y-.9*m,c+.9,y+.9*m,alpha(T.hot,.75),1.8,[6,4]);dot(ctx,P.X(c),P.Y(y),6,T.cv,T.surface);});
+      dot(ctx,P.X(mx),P.Y(f(mx)),5,T.ce,T.ink);dot(ctx,P.X(mn),P.Y(f(mn)),5,T.ca,T.ink);}});
+  function upd(){const f=C[k].f,{m,cs,mx,mn}=info();setText('mv-m',fmt(m,4));setText('mv-c',cs.length?cs.map(c=>'c ≈ '+fmt(c,3)).join(', '):'none: the MVT does not apply here');setText('mv-ext',`max ${fmt(f(mx),3)} at x = ${fmt(mx,2)}; min ${fmt(f(mn),3)} at x = ${fmt(mn,2)}`);sim.render();}
+  function setR(){const A=C[k],ea=$('#mv-a'),eb=$('#mv-b');ea.min=A.a[0];ea.max=A.a[1];ea.value=A.a[2];eb.min=A.b[0];eb.max=A.b[1];eb.value=A.b[2];a=A.a[2];b=A.b[2];}
+  bindRange('mv-a',v=>nz(v),v=>{a=v;upd();});bindRange('mv-b',v=>nz(v),v=>{b=v;upd();});segBind('mv-fn','k',v=>{k=v;setR();upd();});upd();drawers.mvt=()=>sim.render();
+  KEYS['mv-canvas']=['Move the endpoints. Orange is the secant; green dots are points c where the tangent (dashed) is parallel to it. Gold and pink dots are the highest and lowest points.',[['hot','secant and parallel tangents'],['cv','points c from the MVT'],['ce','absolute max on [a, b]'],['ca','absolute min on [a, b]']]];
+  TIPS['mv-a']=()=>'The MVT needs f continuous on [a, b] and differentiable on (a, b).';
+  GLOSS['critical point']='An x in the domain where f′(x) = 0 or f′(x) does not exist.';GLOSS['Mean Value Theorem']='If f is continuous on [a, b] and differentiable on (a, b), some c has f′(c) = (f(b) − f(a))/(b − a).';
+  TT.mvt='Ask students to say the two hypotheses aloud before applying the theorem. The |x| case shows why differentiability matters.';
+})();
+(function(){
+  PROBS.push({id:'mv-c',topic:'mvt',title:'Find the MVT point',gen(){const fam=pick(['quad','sqrt','cube']);let q,ans,chk;
+    if(fam==='quad'){const a=ri(-3,1),b=a+ri(2,6),A=ri(1,3),B=ri(-4,4),f=x=>A*x*x+B*x;q=`Find the value c guaranteed by the Mean Value Theorem for f(x) = ${polyTxt([A,B,0])} on [${nz(a)}, ${b}].`;ans=(a+b)/2;chk=roots(x=>D(f,x)-(f(b)-f(a))/(b-a),a+1e-6,b-1e-6)[0];}
+    else if(fam==='sqrt'){const a=ri(1,3),b=a+ri(1,3),f=Math.sqrt,x0=a*a,x1=b*b;q=`Find the value c guaranteed by the Mean Value Theorem for f(x) = √x on [${x0}, ${x1}]. Give a decimal.`;ans=Math.pow((a+b)/2,2);chk=roots(x=>D(f,x)-(f(x1)-f(x0))/(x1-x0),x0+1e-6,x1-1e-6)[0];}
+    else{const a=ri(0,2),b=a+ri(2,4),f=x=>x**3;q=`Find the value c in (${a}, ${b}) guaranteed by the Mean Value Theorem for f(x) = x³ on [${a}, ${b}]. Give a decimal to three places.`;ans=Math.sqrt((a*a+a*b+b*b)/3);chk=roots(x=>D(f,x)-(f(b)-f(a))/(b-a),a+1e-6,b-1e-6)[0];}
+    return {q,ans,unit:'',tol:.005,chk,hint:'Set f′(c) equal to the average slope (f(b) − f(a))/(b − a) and solve for c in the interval.',sol:`Average slope = (f(b) − f(a))/(b − a). Setting f′(c) equal to it and solving gives <b>c = ${fmt(ans,3)}</b>, which lies in the interval.`};}});
+  PROBS.push({id:'mv-ext',topic:'mvt',title:'Absolute maximum on an interval',gen(){const k=ri(1,3),lo=-ri(1,2)*k-ri(0,1),hi=ri(1,3)*k+ri(0,2),f=x=>x**3-3*k*k*x,cands=[lo,hi,-k,k].filter(x=>x>=lo&&x<=hi),mx=Math.max(...cands.map(f)),mn=Math.min(...cands.map(f)),askMax=Math.random()<.5,ans=askMax?mx:mn;
+    let m2=-Infinity,n2=Infinity;for(let i=0;i<=4000;i++){const x=lo+(hi-lo)*i/4000,v=f(x);m2=Math.max(m2,v);n2=Math.min(n2,v);}
+    return {q:`Find the absolute ${askMax?'maximum':'minimum'} value of f(x) = x³ − ${3*k*k}x on the closed interval [${nz(lo)}, ${hi}].`,ans,unit:'',abs:.01,chk:askMax?m2:n2,hint:'Candidates test: find critical points inside the interval, then compare f at them and at both endpoints.',sol:`f′(x) = 3x² − ${3*k*k} = 0 gives x = ±${k}. Candidates: ${[lo,...[-k,k].filter(x=>x>lo&&x<hi),hi].map(x=>`f(${nz(x)}) = ${nz(f(x))}`).join(', ')}. The ${askMax?'largest':'smallest'} is <b>${nz(ans)}</b>.`};}});
+  PROBS.push({id:'mv-hyp',topic:'mvt',title:'Can the MVT be applied?',gen(){const R=[['f(x) = |x| on [−1, 2]','No: f is not differentiable at x = 0'],['f(x) = 1/x on [−1, 1]','No: f is not continuous at x = 0'],['f(x) = x<sup>2/3</sup> on [−1, 1]','No: f is not differentiable at x = 0'],['f(x) = x² − 3x on [0, 4]','Yes: f is continuous and differentiable everywhere'],['f(x) = ln x on [0, 2]','No: f is not defined at x = 0'],['f(x) = sin x on [0, π]','Yes: f is continuous and differentiable everywhere'],['f(x) = ⌊x⌋ (floor) on [0, 2]','No: f is not continuous at x = 1']],[tx,ans]=pick(R),m=mcq(ans,R.map(r=>r[1]));
+    return {q:`Can the Mean Value Theorem be applied to ${tx}?`,choices:m.choices,ans:m.ans,hint:'Check: continuous on the closed interval, differentiable on the open interval.',sol:`<b>${ans}</b>.`};}});
+})();

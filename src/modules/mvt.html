@@ -1,0 +1,50 @@
+  <section class="view" id="v-mvt" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 5</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Extreme values & the Mean Value Theorem</h1>
+        <p class="lede">Two guarantees about continuous and differentiable functions: there is always a highest and lowest point, and somewhere the slope equals the average slope.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p><b>Extreme Value Theorem:</b> a function continuous on a closed interval <span class="m">[a, b]</span> has an absolute maximum and an absolute minimum there. They occur at endpoints or at <b>critical points</b>, where f′ = 0 or f′ does not exist. To find them, evaluate f at the critical points and at both endpoints (the candidates test).</p>
+        <p><b>Mean Value Theorem:</b> if f is continuous on [a, b] and differentiable on (a, b), then somewhere inside there is a point c where the tangent line is parallel to the secant line: <span class="m">f′(c) = (f(b) − f(a))/(b − a)</span>. If you drove 120 miles in 2 hours, at some moment your speedometer read exactly 60.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>we looked for slopes and values one point at a time</dd><dt>So we didn't need</dt><dd>guarantees about the whole interval</dd><dt>Now</dt><dd>optimization, proofs of the derivative tests, and "must have happened" reasoning</dd><dt>So we need</dt><dd>the EVT and the MVT, with their hypotheses</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>f continuous on [a, b] ⇒ max and min exist</span><small>EVT</small></div><div class="eqn"><span>f′(c) = (f(b) − f(a)) / (b − a)</span><small>MVT: continuous on [a, b], differentiable on (a, b)</small></div><div class="eqn"><span>critical point: f′(c) = 0 or DNE</span><small>candidate for an extreme</small></div></div>
+      <div class="lab" id="mv-lab">
+        <div class="labbar"><span class="title">Find the parallel tangent</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="mv-fn" role="group" aria-label="Function"><button type="button" data-k="cu" aria-pressed="true">x³/3 − x</button><button type="button" data-k="sn" aria-pressed="false">sin x</button><button type="button" data-k="sq" aria-pressed="false">x²</button><button type="button" data-k="abs" aria-pressed="false">|x|</button></div></div>
+        <canvas id="mv-canvas" aria-label="A curve on an interval with the secant line between the endpoints and tangent lines at points where the slope equals the average slope."></canvas>
+        <div class="controls"><div class="ctl"><label for="mv-a"><span>a (left end)</span> <output id="mv-a-out"></output></label><input type="range" id="mv-a" min="-2" max="1" step="0.1" value="-1.5"></div><div class="ctl"><label for="mv-b"><span>b (right end)</span> <output id="mv-b-out"></output></label><input type="range" id="mv-b" min="1.2" max="3" step="0.1" value="2.5"></div></div>
+        <div class="readout"><div><span>average slope (secant)</span><strong class="x" id="mv-m">—</strong></div><div><span>point(s) c with f′(c) = that slope</span><strong class="v" id="mv-c">—</strong></div><div><span>absolute max / min on [a, b]</span><strong class="a" id="mv-ext">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>On x³/3 − x with the default interval, find where the tangent is parallel to the secant. <button type="button" class="btn link" data-show='[["click", "#mv-fn [data-k=cu]"], ["#mv-a", -1.5], ["#mv-b", 2.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>There can be more than one c. Each orange tangent is parallel to the secant. The MVT only promises at least one.</p></details></li>
+        <li><p>Choose |x|. Does a tangent parallel to the secant exist? <button type="button" class="btn link" data-show='[["click", "#mv-fn [data-k=abs]"], ["#mv-a", -1], ["#mv-b", 2]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>No: the slope of |x| is only −1 or 1, but the average slope here is 1/3. The MVT does not apply because |x| is not differentiable at 0, which lies inside the interval.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Verify the MVT for f(x) = x² on [1, 3] and find c.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Check the hypotheses.</b> f is a polynomial: continuous and differentiable everywhere.</li>
+          <li hidden><b>Average slope.</b> (f(3) − f(1))/(3 − 1) = (9 − 1)/2 = 4.</li>
+          <li hidden><b>Set the derivative equal.</b> f′(c) = 2c = 4.</li>
+          <li hidden><b>Solve.</b> c = 2, and 2 lies in (1, 3). ✓</li>
+          <li hidden><b>Answer.</b> <b>c = 2</b>. (The tangent at x = 2 has slope 4, parallel to the secant.)</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Using the MVT without checking continuity and differentiability.</li>
+        <li>Giving a c outside (a, b).</li>
+        <li>Finding extremes by only looking where f′ = 0 and forgetting the endpoints.</li>
+        <li>Confusing the MVT (an average slope) with Rolle's theorem (the special case f(a) = f(b), slope 0).</li>
+        <li>Saying a local maximum is the absolute maximum. Compare all candidates.</li>
+      </ul></div>
+      <div class="prose"><h2>The candidates test</h2>
+        <p>To find absolute extremes of a continuous f on [a, b]: (1) find critical points inside (a, b), (2) evaluate f at each critical point and at a and b, (3) the largest value is the maximum and the smallest is the minimum. It always works on a closed interval; on an open interval an extreme may not exist.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="The average slope is (9 − 1)/(4 − 0) = 2.">
+        <p class="q">Check yourself: f is continuous on [0, 4], f(0) = 1 and f(4) = 9, and differentiable on (0, 4). The MVT guarantees a c in (0, 4) with f′(c) =</p>
+        <div class="opts"><button type="button">2</button><button type="button">8</button><button type="button">1/2</button><button type="button">9</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

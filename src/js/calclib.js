@@ -120,7 +120,7 @@ function svgG(o){const W=o.w||400,H=o.h||280,xr=o.xr||[-5,5],yr=o.yr||[-4,4],m={
   return s+'</svg>';}
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 /* four multiple-choice strings: the correct one plus distractors (deduplicated, shuffled); returns {choices, ans} */
-function mcq(correct,distract,n=4){const s=[correct];distract.forEach(d=>{if(d!=null&&!s.includes(d)&&s.length<n)s.push(d);});const ch=shuffle(s);return {choices:ch,ans:ch.indexOf(correct)};}
+function mcq(correct,distract,n=4){const s=[correct];shuffle(distract).forEach(d=>{if(d!=null&&!s.includes(d)&&s.length<n)s.push(d);});const ch=shuffle(s);return {choices:ch,ans:ch.indexOf(correct)};}
 
 /* ----- glab: a graph lab in a few lines -----
    o.view(w,h) -> {xr,yr,xn?,yn?};  o.draw(ctx,P,w,h,t) draws on the panel P (P.X, P.Y, inv(P,px,py));
@@ -145,3 +145,14 @@ function terms(ts){let s='';ts.forEach(([c,p])=>{if(!c)return;const m=Math.abs(c
 const tval=(ts,x)=>ts.reduce((a,[c,p])=>a+c*Math.pow(x,p),0);
 /* derivative of terms */
 const tder=ts=>ts.filter(([c,p])=>p!==0).map(([c,p])=>[c*p,p-1]);
+/* x in [a,b] that maximizes f (grid search, then refinement) */
+function argmax(f,a,b,n=4000){let bx=a,bv=-Infinity;for(let i=0;i<=n;i++){const x=a+(b-a)*i/n,v=f(x);if(isFinite(v)&&v>bv){bv=v;bx=x;}}const h=(b-a)/n;let lo=Math.max(a,bx-h),hi=Math.min(b,bx+h);for(let i=0;i<60;i++){const m1=lo+(hi-lo)/3,m2=hi-(hi-lo)/3;if(f(m1)<f(m2))lo=m1;else hi=m2;}return (lo+hi)/2;}
+const argmin=(f,a,b,n=4000)=>argmax(x=>-f(x),a,b,n);
+/* zeros of g in (a,b): sign changes found on a grid and refined by bisection; jumps (no real root) are discarded */
+function roots(g,a,b,n=2000){const out=[];let x0=a,v0=g(x0);for(let i=1;i<=n;i++){const x1=a+(b-a)*i/n,v1=g(x1);if(isFinite(v0)&&isFinite(v1)&&(v0===0||v0*v1<0)){const r=solve(g,x0,x1,60);if(Math.abs(g(r))<1e-4*(1+Math.abs(v0)+Math.abs(v1))*10&&(!out.length||Math.abs(r-out[out.length-1])>(b-a)/n*2))out.push(r);}x0=x1;v0=v1;}return out;}
+/* shade the panel background by the sign of s(x): posCol where s > 0, negCol where s < 0 (runs are merged so there are no seams) */
+function signBands(ctx,P,xr,s,posCol,negCol,n=400){let run=null;const flush=x=>{if(run){const a=P.X(run.x0),b=P.X(x);ctx.fillStyle=run.c;ctx.fillRect(a,P.box.y,b-a,P.box.h);run=null;}};
+  for(let i=0;i<n;i++){const x0=xr[0]+(xr[1]-xr[0])*i/n,v=s(x0+(xr[1]-xr[0])/n/2),c=!isFinite(v)?null:v>0?posCol:negCol;if(!run||run.c!==c){flush(x0);if(c)run={x0,c};}}flush(xr[1]);}
+/* area between f and the x-axis from a to b: gold above the axis, pink below (signed area) */
+function areaSigned(ctx,P,f,a,b,posCol,negCol,n=300,al=.35){if(b<=a)return;const y0=P.Y(0);const poly=()=>{ctx.beginPath();ctx.moveTo(P.X(a),y0);for(let i=0;i<=n;i++){const t=a+(b-a)*i/n;ctx.lineTo(P.X(t),P.Y(f(t)));}ctx.lineTo(P.X(b),y0);ctx.closePath();};
+  ctx.save();clip(ctx,P);[[posCol,P.box.y,y0],[negCol,y0,P.box.y+P.box.h]].forEach(([c,t,bt])=>{ctx.save();ctx.beginPath();ctx.rect(P.box.x,t,P.box.w,bt-t);ctx.clip();poly();ctx.fillStyle=alpha(c,al);ctx.fill();ctx.restore();});ctx.restore();}

@@ -1,0 +1,51 @@
+  <section class="view" id="v-incdec" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 5</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Increasing, decreasing & the first derivative test</h1>
+        <p class="lede">Where the slope is positive the function climbs, where it is negative the function falls. The turning points are where the sign changes.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>If <span class="m">f′(x) &gt; 0</span> on an interval, f is <b>increasing</b> there; if <span class="m">f′(x) &lt; 0</span>, f is <b>decreasing</b>. A <b>critical point</b> is an x in the domain where f′ = 0 or f′ does not exist. These are the only places a function can turn.</p>
+        <p><b>First derivative test:</b> at a critical point c, look at the sign of f′ on each side. If f′ changes from + to −, f has a <b>local maximum</b> at c. From − to +: a <b>local minimum</b>. If the sign does not change, c is neither (think x³ at 0). Always justify with a sign chart.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>the derivative was a number at a point</dd><dt>So we didn't need</dt><dd>its sign tells the whole story of rise and fall</dd><dt>Now</dt><dd>finding peaks and valleys</dd><dt>So we need</dt><dd>increasing/decreasing and the first derivative test</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>f′ &gt; 0 ⇒ increasing · f′ &lt; 0 ⇒ decreasing</span><small>sign of the slope</small></div><div class="eqn"><span>+ → − ⇒ local max · − → + ⇒ local min</span><small>first derivative test</small></div><div class="eqn"><span>critical point: f′ = 0 or DNE</span><small>candidates</small></div></div>
+      <div class="lab" id="id-lab">
+        <div class="labbar"><span class="title">Read the shape from the slope</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="id-fn" role="group" aria-label="Function"><button type="button" data-k="a" aria-pressed="true">x³ − 3x</button><button type="button" data-k="b" aria-pressed="false">x³</button><button type="button" data-k="c" aria-pressed="false">x⁴ − 2x²</button><button type="button" data-k="d" aria-pressed="false">x·e⁻ˣ</button><button type="button" data-k="e" aria-pressed="false">x^(2/3)</button></div></div>
+        <canvas id="id-canvas" aria-label="A function above, with regions shaded by the sign of its derivative, and the derivative graph below."></canvas>
+        <canvas id="id-canvas2" aria-label="Graph of the derivative with shaded sign regions."></canvas>
+        <div class="controls"><div class="ctl"><label for="id-x"><span>Point x</span> <output id="id-x-out"></output></label><input type="range" id="id-x" min="-2" max="2" step="0.05" value="0.5"></div></div>
+        <div class="readout"><div><span>sign of f′ at the point</span><strong class="x" id="id-sign">—</strong></div><div><span>critical points</span><strong class="v" id="id-crit">—</strong></div><div><span>classification</span><strong class="a" id="id-class">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose x³ and slide through 0. Is x = 0 a max, a min or neither? <button type="button" class="btn link" data-show='[["click", "#id-fn [data-k=b]"], ["#id-x", 0]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Neither: f′ = 3x² is 0 at x = 0 but positive on both sides, so f keeps increasing. A critical point is a candidate, not a guarantee.</p></details></li>
+        <li><p>Choose x^(2/3). What happens at x = 0? <button type="button" class="btn link" data-show='[["click", "#id-fn [data-k=e]"], ["#id-x", 0.2]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>f′ does not exist at 0 (a cusp), so 0 is a critical point. f′ changes from − to +, so it is a local minimum.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find the intervals where f(x) = x³ − 3x is increasing or decreasing, and classify its critical points.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Differentiate.</b> f′(x) = 3x² − 3 = 3(x − 1)(x + 1).</li>
+          <li hidden><b>Critical points.</b> f′ = 0 at x = −1 and x = 1.</li>
+          <li hidden><b>Sign chart.</b> x &lt; −1: f′ &gt; 0; −1 &lt; x &lt; 1: f′ &lt; 0; x &gt; 1: f′ &gt; 0.</li>
+          <li hidden><b>Conclude.</b> f is increasing on (−∞, −1) and (1, ∞), decreasing on (−1, 1).</li>
+          <li hidden><b>Classify.</b> At x = −1 the sign goes + → −: <b>local maximum</b> f(−1) = 2. At x = 1 it goes − → +: <b>local minimum</b> f(1) = −2.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Calling any point with f′ = 0 an extremum. Check the sign change.</li>
+        <li>Forgetting critical points where f′ does not exist.</li>
+        <li>Not showing a sign chart or a justification (the exam requires one).</li>
+        <li>Mixing up f and f′: the graph of f′ being above the axis means f is increasing, not that f is positive.</li>
+        <li>Reporting x when asked for the extreme value (the y-value), or the reverse.</li>
+      </ul></div>
+      <div class="prose"><h2>Writing the justification</h2>
+        <p>A complete answer says: "f′(x) changes from positive to negative at x = c, so f has a relative maximum at x = c." Always name the function whose sign you are using, and the interval you checked.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Decreasing then increasing: a valley, a local minimum.">
+        <p class="q">Check yourself: f′(x) changes from negative to positive at x = 2. Then f has at x = 2 a</p>
+        <div class="opts"><button type="button">local minimum</button><button type="button">local maximum</button><button type="button">inflection point</button><button type="button">vertical asymptote</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

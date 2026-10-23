@@ -1,0 +1,51 @@
+  <section class="view" id="v-optim" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 5</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Optimization</h1>
+        <p class="lede">Biggest area, least material, fastest time: set up a formula for the quantity, find where its derivative is zero, and check it is the best.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>An optimization problem has four steps. <b>Draw</b> and name the variables. Write the <b>objective</b> (the thing to maximize or minimize) and a <b>constraint</b> (what is fixed). Use the constraint to write the objective in <b>one variable</b>. Then <b>differentiate, set to zero, solve</b>, and <b>justify</b> that you have a max or min (first or second derivative test, or the candidates test on a closed interval).</p>
+        <p>Do not forget the domain: dimensions are positive, and endpoints can be the answer. In the lab you will see the objective graph; the best value sits at a peak or valley of the graph, where its derivative (green) crosses zero.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>we found extremes of given formulas</dd><dt>So we didn't need</dt><dd>how to build the formula from a story</dd><dt>Now</dt><dd>fences, boxes, cans, distance and cost</dd><dt>So we need</dt><dd>the optimization procedure</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>draw · objective · constraint · one variable</span><small>setup</small></div><div class="eqn"><span>f′(x) = 0</span><small>critical points</small></div><div class="eqn"><span>justify with a test</span><small>max or min, and domain</small></div></div>
+      <div class="lab" id="op-lab">
+        <div class="labbar"><span class="title">Find the best x</span></div>
+        <div class="ctl"><span class="lbl">Problem</span><div class="seg" id="op-fn" role="group" aria-label="Problem"><button type="button" data-k="fence" aria-pressed="true">Fence (river on one side)</button><button type="button" data-k="box" aria-pressed="false">Open box from a sheet</button><button type="button" data-k="can" aria-pressed="false">Can with least metal</button></div></div>
+        <p class="small" id="op-form" style="margin:0"></p>
+        <canvas id="op-canvas" aria-label="Graph of the quantity to optimize as a function of one variable, with its derivative and a marker at the current value."></canvas>
+        <div class="controls"><div class="ctl"><label for="op-x"><span>x</span> <output id="op-x-out"></output></label><input type="range" id="op-x" min="0.5" max="10" step="0.05" value="3"></div></div>
+        <div class="readout"><div><span>objective at this x</span><strong class="x" id="op-val">—</strong></div><div><span>best x and value</span><strong class="v" id="op-best">—</strong></div><div><span>the dimensions</span><strong class="" id="op-dim">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose the fence problem. Slide x to find the largest area. <button type="button" class="btn link" data-show='[["click", "#op-fn [data-k=fence]"], ["#op-x", 25]]'>x = 25</button></p><details><summary>What you should see</summary><p>The maximum area is 1250 ft² at x = 25 (so the other side is 50). The derivative A′ = 100 − 4x is zero there and changes from + to −.</p></details></li>
+        <li><p>Choose the open box. What size square cut gives the largest volume? <button type="button" class="btn link" data-show='[["click", "#op-fn [data-k=box]"], ["#op-x", 2]]'>x = 2</button></p><details><summary>What you should see</summary><p>x = 2 gives V = 2(12 − 4)² = 128 cm³, the maximum for a 12 cm sheet. Any larger cut leaves too little base.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">100 ft of fence encloses a rectangular pen against a straight river (no fence on the river side). Find the dimensions of the largest area.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Variables.</b> Let x = the two sides perpendicular to the river, y = the side parallel. Constraint: 2x + y = 100, so y = 100 − 2x.</li>
+          <li hidden><b>Objective.</b> A = x·y = x(100 − 2x) = 100x − 2x², with 0 &lt; x &lt; 50.</li>
+          <li hidden><b>Differentiate.</b> A′ = 100 − 4x = 0, so x = 25.</li>
+          <li hidden><b>Justify.</b> A″ = −4 &lt; 0, so x = 25 is a maximum.</li>
+          <li hidden><b>Answer.</b> x = 25 ft and y = 50 ft, giving the maximum area <b>1250 ft²</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Not using the constraint to reduce to one variable.</li>
+        <li>Forgetting to check endpoints or the domain.</li>
+        <li>Giving the optimal x when asked for the maximum value (or the reverse).</li>
+        <li>Not justifying that it is a max or min.</li>
+        <li>Mixing units, for example using a formula with radius when the problem gives diameter.</li>
+      </ul></div>
+      <div class="prose"><h2>Common setups</h2>
+        <p><b>Perimeter fixed, maximize area:</b> the square wins. <b>Area fixed, minimize perimeter:</b> the square. <b>Volume fixed, minimize surface area of a can:</b> height = diameter. <b>Distance to a curve:</b> minimize the square of the distance (the same minimum, no square root).</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Critical points of the objective are where its derivative is zero.">
+        <p class="q">Check yourself: To maximize A = x(100 − 2x), you solve</p>
+        <div class="opts"><button type="button">A′(x) = 0</button><button type="button">A(x) = 0</button><button type="button">A″(x) = 0</button><button type="button">x = 100</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

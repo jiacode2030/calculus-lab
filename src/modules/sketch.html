@@ -1,0 +1,51 @@
+  <section class="view" id="v-sketch" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 5</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Connecting f, f′ and f″</h1>
+        <p class="lede">The three graphs tell one story. Draw the slope and you can rebuild the shape of the function.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Think of f′ as the slope-meter for f, and f″ as the slope-meter for f′. Where f′ is above the axis, f rises; where f′ crosses from above to below, f has a peak; where f′ has a peak or valley, f has an inflection point; where f′ is rising, f is concave up.</p>
+        <p>On the exam you read this information from a given graph (of f, f′ or f″) and justify a conclusion. In the lab you control f′ with draggable points, and f is rebuilt from it. Drag the nodes and watch the extrema and inflections move.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>each graph was studied alone</dd><dt>So we didn't need</dt><dd>one graph determines the shape of the others (up to a vertical shift)</dd><dt>Now</dt><dd>curve sketching and reading graphs</dd><dt>So we need</dt><dd>the relationships among f, f′ and f″</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>f′ crosses + → − ⇒ f local max</span><small>f′ crosses − → + ⇒ local min</small></div><div class="eqn"><span>f′ has a local extremum ⇒ f has an inflection</span><small>f″ changes sign</small></div><div class="eqn"><span>f determined by f′ up to + C</span><small>the vertical shift</small></div></div>
+      <div class="lab" id="sk-lab">
+        <div class="labbar"><span class="title">Drag the slope, rebuild the curve</span></div>
+        <p class="small" style="margin:0">Drag the green points up and down to set f′. The blue curve f is built from it.</p>
+        <canvas id="sk-canvas" aria-label="Top graph: a piecewise-linear derivative with draggable points. Bottom graph: the function rebuilt from it."></canvas>
+        <canvas id="sk-canvas2" aria-label="The function f rebuilt from the derivative, with extrema and inflection points marked."></canvas>
+        <div class="controls"><div class="ctl"><label for="sk-c"><span>f(−3), the starting height</span> <output id="sk-c-out"></output></label><input type="range" id="sk-c" min="-3" max="3" step="0.25" value="0"></div></div>
+        <div class="readout"><div><span>f is increasing on</span><strong class="x" id="sk-inc">—</strong></div><div><span>local extrema</span><strong class="v" id="sk-ext">—</strong></div><div><span>inflection points</span><strong class="a" id="sk-inf">—</strong></div></div>
+        <div class="row"><button type="button" class="btn" id="sk-reset">Reset the points</button></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Drag the middle point of f′ well above the axis. What happens to f?</p><details><summary>What you should see</summary><p>f rises steeply where f′ is large and positive, and the bends of f follow the ups and downs of f′.</p></details></li>
+        <li><p>Make f′ cross the axis downward. What does f do there? </p><details><summary>What you should see</summary><p>f has a local maximum where f′ goes from positive to negative. Drag until you see the peak.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">The graph of f′ is positive on (−3, 1), negative on (1, 4) and has a minimum at x = 2.5. Describe f.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Increasing/decreasing.</b> f′ &gt; 0 on (−3, 1): f increasing there; f′ &lt; 0 on (1, 4): f decreasing.</li>
+          <li hidden><b>Extremum.</b> f′ changes + → − at x = 1, so f has a local maximum at x = 1.</li>
+          <li hidden><b>Concavity.</b> f′ is decreasing before its minimum at 2.5 and increasing after, so f″ changes sign at 2.5.</li>
+          <li hidden><b>Answer.</b> Local maximum at x = 1, and an inflection point at x = 2.5 (concave down before, concave up after).</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Reading f′ as if it were f. A positive f′ means rising, not "positive height".</li>
+        <li>Looking at where f′ is zero for inflection. Inflection is where f′ has an extremum (f″ changes sign).</li>
+        <li>Forgetting f is only determined up to a vertical shift.</li>
+        <li>Confusing which graph is given: always read the label.</li>
+        <li>Not justifying: say "f′ changes sign from + to − at x = 1".</li>
+      </ul></div>
+      <div class="prose"><h2>Justifications that earn the point</h2>
+        <p>"f has a relative maximum at x = c because f′ changes from positive to negative at x = c." "f has a point of inflection at x = c because f″ changes sign at x = c." Name the derivative and the sign change.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="f′ has a maximum there, so f″ changes from + to −: the concavity of f changes.">
+        <p class="q">Check yourself: Where f′ has a local maximum, f has</p>
+        <div class="opts"><button type="button">an inflection point</button><button type="button">a local maximum</button><button type="button">a local minimum</button><button type="button">a vertical tangent</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

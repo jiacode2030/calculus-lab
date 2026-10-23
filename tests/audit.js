@@ -24,7 +24,7 @@ const path = require('path');
         } else if (d.expr) {
           const A = window.__calc.parseExpr, ok = (() => { try { A(d.expr); return true; } catch (e) { return false; } })();
           if (!ok && !seen.pe) { seen.pe = 1; bump(q.id, 'expr does not parse', d.expr); }
-          if (ok && d.chkf && !seen.cf) { const f = A(d.expr); for (const x of [0.37, 0.83, 1.21, 1.74, 2.3]) { const v = f(x), w = d.chkf(x); if (isFinite(v) && isFinite(w) && Math.abs(v - w) > 1e-3 * (1 + Math.abs(w)) && !(d.c)) { seen.cf = 1; bump(q.id, 'expression disagrees with numeric check at x=' + x + ' (' + v + ' vs ' + w + ')', d.expr); break; } } }
+          if (ok && d.chkf && !seen.cf) { const f = A(d.expr); for (const x of [0.37, 0.83, 1.21, 1.74, 2.3]) { const v = d.c ? window.__calc.D(f, x) : f(x), w = d.chkf(x); if (isFinite(v) && isFinite(w) && Math.abs(v - w) > 1e-3 * (1 + Math.abs(w))) { seen.cf = 1; bump(q.id, 'expression disagrees with numeric check at x=' + x + ' (' + v + ' vs ' + w + ')', d.expr); break; } } }
           if (!d.hint && !seen.hint) { seen.hint = 1; bump(q.id, 'missing hint'); }
           if (!d.sol && !seen.sol) { seen.sol = 1; bump(q.id, 'missing solution'); }
         } else {

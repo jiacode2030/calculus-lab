@@ -1,0 +1,50 @@
+  <section class="view" id="v-concav" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 5</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Concavity & the second derivative test</h1>
+        <p class="lede">Concavity is the bend of a curve: bending up like a cup, or down like a frown. It is the sign of f″.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>If <span class="m">f″ &gt; 0</span> the slope f′ is increasing: the graph is <b>concave up</b> (holds water). If <span class="m">f″ &lt; 0</span> the slope is decreasing: <b>concave down</b>. A <b>point of inflection</b> is where the concavity changes, so f″ changes sign (f″ = 0 or DNE there, but that alone is not enough).</p>
+        <p><b>Second derivative test:</b> at a critical point c (f′(c) = 0), if f″(c) &gt; 0 the curve bends up there: local minimum. If f″(c) &lt; 0: local maximum. If f″(c) = 0 the test says nothing: go back to the first derivative test.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>the sign of f′ told rising from falling</dd><dt>So we didn't need</dt><dd>the sign of f″ tells how it bends</dd><dt>Now</dt><dd>a second way to classify critical points, and inflection points</dd><dt>So we need</dt><dd>concavity and the second derivative test</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>f″ &gt; 0 ⇒ concave up · f″ &lt; 0 ⇒ concave down</span><small>bend</small></div><div class="eqn"><span>f′(c) = 0, f″(c) &gt; 0 ⇒ local min</span><small>second derivative test</small></div><div class="eqn"><span>inflection: f″ changes sign</span><small>concavity changes</small></div></div>
+      <div class="lab" id="cc-lab">
+        <div class="labbar"><span class="title">The bend of a curve</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="cc-fn" role="group" aria-label="Function"><button type="button" data-k="a" aria-pressed="true">x³ − 3x</button><button type="button" data-k="b" aria-pressed="false">x⁴</button><button type="button" data-k="c" aria-pressed="false">sin x</button><button type="button" data-k="d" aria-pressed="false">x⁴ − 2x²</button></div></div>
+        <canvas id="cc-canvas" aria-label="A function with regions shaded by concavity, a tangent line at a point, and the second derivative graph below."></canvas>
+        <canvas id="cc-canvas2" aria-label="Graph of the second derivative."></canvas>
+        <div class="controls"><div class="ctl"><label for="cc-x"><span>Point x</span> <output id="cc-x-out"></output></label><input type="range" id="cc-x" min="-2" max="2" step="0.05" value="0.6"></div></div>
+        <div class="readout"><div><span>f′(x)</span><strong class="v" id="cc-fp">—</strong></div><div><span>f″(x)</span><strong class="a" id="cc-fpp">—</strong></div><div><span>concavity here</span><strong class="" id="cc-bend">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose x³ − 3x and slide through 0. What happens to the tangent line and to f″? <button type="button" class="btn link" data-show='[["click", "#cc-fn [data-k=a]"], ["#cc-x", 0]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>f″ = 6x changes sign at 0: concave down to the left, concave up to the right. The tangent line crosses from above the curve to below it: an inflection point.</p></details></li>
+        <li><p>Choose x⁴ and put x at 0. f″(0) = 0. Is there an inflection point? <button type="button" class="btn link" data-show='[["click", "#cc-fn [data-k=b]"], ["#cc-x", 0]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>No. f″ = 12x² is 0 at x = 0 but positive on both sides, so concavity does not change. f″ = 0 is not enough; the test fails here, yet x = 0 is a minimum.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">For f(x) = x³ − 6x² + 9x, find the local extrema using the second derivative test, and the inflection point.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>f′.</b> f′(x) = 3x² − 12x + 9 = 3(x − 1)(x − 3), so critical points x = 1 and x = 3.</li>
+          <li hidden><b>f″.</b> f″(x) = 6x − 12.</li>
+          <li hidden><b>Test.</b> f″(1) = −6 &lt; 0: local maximum f(1) = 4. f″(3) = 6 &gt; 0: local minimum f(3) = 0.</li>
+          <li hidden><b>Inflection.</b> f″ = 0 at x = 2, and f″ changes from negative to positive there. The inflection point is <b>(2, 2)</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Saying f″ = 0 means an inflection point. The sign must change.</li>
+        <li>Using f″ to find concavity but writing the answer in terms of f′ (or the reverse).</li>
+        <li>Applying the second derivative test where f″ = 0, and concluding "neither".</li>
+        <li>Confusing concave up with increasing. A curve can be decreasing and concave up.</li>
+        <li>Forgetting that concavity changes can happen where f″ does not exist.</li>
+      </ul></div>
+      <div class="prose"><h2>Two tests, one picture</h2>
+        <p>At a critical point the first derivative test looks at the sign of f′ on each side; the second derivative test looks at the bend at the point. Use whichever is quicker; if the second derivative test is inconclusive (f″ = 0), fall back on the first.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="f″ &lt; 0: concave down at a flat point, a peak.">
+        <p class="q">Check yourself: f′(3) = 0 and f″(3) = −5. Then f has at x = 3 a</p>
+        <div class="opts"><button type="button">local maximum</button><button type="button">local minimum</button><button type="button">inflection point</button><button type="button">no conclusion</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
