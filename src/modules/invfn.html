@@ -1,0 +1,57 @@
+  <section class="view" id="v-invfn" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 3</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Inverse functions & inverse trig</h1>
+        <p class="lede">If f turns a into b, its inverse turns b back into a. Their slopes at matching points are reciprocals, and that fact gives the derivatives of ln, arcsin and arctan.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>The graph of f⁻¹ is the graph of f reflected over the line y = x. A reflection swaps the roles of rise and run, so a tangent of slope m at (a, b) becomes a tangent of slope <span class="m">1/m</span> at (b, a). That is the rule: <span class="m">(f⁻¹)′(b) = 1 / f′(a)</span> where <span class="m">f(a) = b</span>.</p>
+        <p>Use it on f(x) = sin x to get <span class="m">(arcsin x)′ = 1/√(1 − x²)</span>, and on tan x to get <span class="m">(arctan x)′ = 1/(1 + x²)</span>. The AP course asks for arcsin, arccos and arctan.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>inverses were just "undo" functions</dd><dt>So we didn't need</dt><dd>their slopes are linked</dd><dt>Now</dt><dd>arcsin, arctan and ln have clean derivatives</dd><dt>So we need</dt><dd>the derivative of an inverse function</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>(f⁻¹)′(b) = 1 / f′(a), f(a) = b</span><small>inverse function derivative</small></div><div class="eqn"><span>(arcsin x)′ = 1/√(1−x²)</span><small>−1/√(1−x²) for arccos</small></div><div class="eqn"><span>(arctan x)′ = 1/(1+x²)</span><small></small></div></div>
+      <div class="lab" id="iv-lab">
+        <div class="labbar"><span class="title">Reflect a tangent line</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="iv-fn" role="group" aria-label="Function"><button type="button" data-k="ex" aria-pressed="true">eˣ</button><button type="button" data-k="cu" aria-pressed="false">x³ + x</button><button type="button" data-k="sn" aria-pressed="false">sin x</button><button type="button" data-k="sq" aria-pressed="false">x² (x ≥ 0)</button></div></div>
+        <canvas id="iv-canvas" aria-label="A function and its inverse as mirror images across y = x, with tangent lines at matching points."></canvas>
+        <div class="controls"><div class="ctl"><label for="iv-a"><span>a</span> <output id="iv-a-out"></output></label><input type="range" id="iv-a" min="-1.5" max="1.5" step="0.05" value="0.6"></div></div>
+        <div class="readout"><div><span>f′(a)</span><strong class="x" id="iv-m">—</strong></div><div><span>(f⁻¹)′(f(a))</span><strong class="a" id="iv-mi">—</strong></div><div><span>product</span><strong class="v" id="iv-prod">—</strong></div></div>
+      </div>
+      <div class="lab" id="iv-lab2">
+        <div class="labbar"><span class="title">Inverse trig derivatives</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="iv-tr" role="group" aria-label="Function"><button type="button" data-k="as" aria-pressed="true">arcsin x</button><button type="button" data-k="ac" aria-pressed="false">arccos x</button><button type="button" data-k="at" aria-pressed="false">arctan x</button></div></div>
+        <p class="small" id="iv-form" style="margin:0"></p>
+        <canvas id="iv-canvas2" aria-label="An inverse trig function in blue with its derivative in green."></canvas>
+        <div class="controls"><div class="ctl"><label for="iv-x"><span>x</span> <output id="iv-x-out"></output></label><input type="range" id="iv-x" min="-0.95" max="0.95" step="0.05" value="0.5"></div></div>
+        <div class="readout"><div><span>slope at x (numeric)</span><strong class="x" id="iv-sl">—</strong></div><div><span>formula value</span><strong class="v" id="iv-fm">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>On eˣ, find the product f′(a)·(f⁻¹)′. <button type="button" class="btn link" data-show='[["click", "#iv-fn [data-k=ex]"], ["#iv-a", 0.6]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Always 1: the slopes are reciprocals. At a = 0.6, f′ = e^0.6 ≈ 1.82, and the inverse (ln) has slope 1/1.82 ≈ 0.55 at the matching point.</p></details></li>
+        <li><p>On arcsin x, move x toward 1. What happens to the slope? <button type="button" class="btn link" data-show='[["click", "#iv-tr [data-k=as]"], ["#iv-x", 0.95]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>It grows large: arcsin has a vertical tangent at x = 1, matching 1/√(1 − x²) → ∞. The sine curve is flat there, so its inverse is steep.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">If f(x) = x³ + x, find (f⁻¹)′(10).</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Find a.</b> We need f(a) = 10. Try a = 2: 8 + 2 = 10. ✓</li>
+          <li hidden><b>Differentiate f.</b> f′(x) = 3x² + 1, so f′(2) = 13.</li>
+          <li hidden><b>Reciprocal.</b> (f⁻¹)′(10) = 1/f′(2).</li>
+          <li hidden><b>Answer.</b> <b>1/13</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Evaluating f′ at b instead of at a. You need the x that f sends to b.</li>
+        <li>Writing (f⁻¹)′ = 1/f′(x) without the inverse in the argument: it is 1/f′(f⁻¹(b)).</li>
+        <li>Confusing f⁻¹ with 1/f.</li>
+        <li>Forgetting the domain restrictions for inverse trig.</li>
+        <li>Dropping the chain rule: d/dx arctan(2x) = 2/(1 + 4x²), not 1/(1 + 4x²).</li>
+      </ul></div>
+      <div class="prose"><h2>Why arcsin has that derivative</h2>
+        <p>Let y = arcsin x, so sin y = x. Differentiate implicitly: cos y · y′ = 1, so y′ = 1/cos y. With y between −π/2 and π/2, cos y = √(1 − sin²y) = √(1 − x²).</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Reciprocal of the slope at the matching point: 1/f′(2) = 1/4.">
+        <p class="q">Check yourself: If f(2) = 5 and f′(2) = 4, then (f⁻¹)′(5) =</p>
+        <div class="opts"><button type="button">1/4</button><button type="button">4</button><button type="button">1/5</button><button type="button">5/4</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

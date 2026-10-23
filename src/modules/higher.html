@@ -1,0 +1,49 @@
+  <section class="view" id="v-higher" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 3</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Higher-order derivatives & choosing a rule</h1>
+        <p class="lede">Differentiate again and you get the rate at which the slope changes. Then practise the skill that matters most on the exam: picking the right rule.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>The <b>second derivative</b> f″ is the derivative of f′. If f is position, f′ is velocity and f″ is acceleration. If f′ is slope, f″ tells you how the slope is changing: positive means the slope is increasing (the curve bends up), negative means it bends down. You will use this in Unit 5 to find concavity.</p>
+        <p>With more rules, the real skill is <b>choosing</b>. Look at the outermost operation first: is the whole expression a sum, a product, a quotient, or a function of something? That operation is the rule you apply first.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>one derivative per function</dd><dt>So we didn't need</dt><dd>f″, f‴ and a method for picking the right rule</dd><dt>Now</dt><dd>acceleration, concavity and the shapes of graphs</dd><dt>So we need</dt><dd>repeated differentiation, and a decision procedure</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>f″ = (f′)′</span><small>second derivative</small></div><div class="eqn"><span>d²y/dx² · f⁽ⁿ⁾</span><small>notation</small></div><div class="eqn"><span>sum → product → quotient → chain</span><small>look at the outermost operation first</small></div></div>
+      <div class="lab" id="hi-lab">
+        <div class="labbar"><span class="title">Height, slope and bend</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="hi-fn" role="group" aria-label="Function"><button type="button" data-k="a" aria-pressed="true">x³ − 3x</button><button type="button" data-k="b" aria-pressed="false">sin x</button><button type="button" data-k="c" aria-pressed="false">x⁴ − 2x²</button><button type="button" data-k="d" aria-pressed="false">eˣ</button></div></div>
+        <canvas id="hi-canvas" aria-label="Three stacked graphs: f, its derivative f prime, and its second derivative f double prime, with matching points."></canvas>
+        <div class="controls"><div class="ctl"><label for="hi-x"><span>Point x</span> <output id="hi-x-out"></output></label><input type="range" id="hi-x" min="-2" max="2" step="0.05" value="0.5"></div></div>
+        <div class="readout"><div><span>f(x): height</span><strong class="x" id="hi-f">—</strong></div><div><span>f′(x): slope</span><strong class="v" id="hi-d">—</strong></div><div><span>f″(x): bend</span><strong class="a" id="hi-dd">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose <b>x³ − 3x</b> and slide x to 0. What is f″ there, and what does the curve do? <button type="button" class="btn link" data-show='[["click", "#hi-fn [data-k=a]"], ["#hi-x", 0]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>f″(0) = 0: the bend switches there. The curve changes from bending down (f″ < 0 for x &lt; 0) to bending up (f″ > 0).</p></details></li>
+        <li><p>Choose <b>sin x</b>. Where is f″ largest in size? <button type="button" class="btn link" data-show='[["click", "#hi-fn [data-k=b]"], ["#hi-x", 1.5708]]'>x = π/2</button></p><details><summary>What you should see</summary><p>At the peak (x = π/2): f″ = −sin(π/2) = −1. The curve bends sharply there, and f′ passes through zero.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find f″(x) for f(x) = x e<sup>2x</sup>.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Choose a rule.</b> It is a product of x and e<sup>2x</sup>.</li>
+          <li hidden><b>First derivative.</b> f′ = 1·e<sup>2x</sup> + x·(2e<sup>2x</sup>) = e<sup>2x</sup>(1 + 2x).</li>
+          <li hidden><b>Differentiate again (product).</b> f″ = 2e<sup>2x</sup>(1 + 2x) + e<sup>2x</sup>·2.</li>
+          <li hidden><b>Simplify.</b> f″ = e<sup>2x</sup>(2 + 4x + 2) = <b>e<sup>2x</sup>(4x + 4)</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Differentiating the original instead of f′ for the second derivative.</li>
+        <li>Not simplifying f′ before differentiating again.</li>
+        <li>Choosing the wrong rule: look at the outermost operation, not the innermost.</li>
+        <li>Confusing f² with f″.</li>
+        <li>Sign errors when differentiating trig functions twice: sin → cos → −sin.</li>
+      </ul></div>
+      <div class="prose"><h2>Which rule first?</h2>
+        <p><b>Sum or difference</b>: split and differentiate each term. <b>Product</b> of two functions of x: product rule. <b>Quotient</b>: quotient rule (or rewrite as a product with a negative power). <b>A function of a function</b>, like sin(3x) or √(x² + 1): chain rule. <b>Constant times something</b>: pull out the constant. Many problems need two or three of these in order.</p>
+      </div>
+      <div class="quiz" data-correct="1" data-explain="The outermost operation is a product of x² and sin(3x); the chain rule then appears inside sin(3x).">
+        <p class="q">Check yourself: Which rule do you apply first to f(x) = x² sin(3x)?</p>
+        <div class="opts"><button type="button">Chain rule</button><button type="button">Product rule</button><button type="button">Quotient rule</button><button type="button">Power rule only</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

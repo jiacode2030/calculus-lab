@@ -1,0 +1,50 @@
+  <section class="view" id="v-transder" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 2</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Trig, e^x and ln x derivatives</h1>
+        <p class="lede">Four functions to memorize once: the slopes of sine, cosine, e<sup>x</sup> and ln x.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Here is the pattern worth seeing. The slope of sin x is cos x: sine climbs fastest at 0 (slope 1 = cos 0) and is flat at its peaks (slope 0 = cos π/2). The slope of cos x is <b>−sin x</b>: cosine starts flat, then falls. The slope of e<sup>x</sup> is e<sup>x</sup>: the one function whose slope equals its height. The slope of ln x is <b>1/x</b>: steep near 0, flatter and flatter after.</p>
+        <p>tan x, cot x, sec x and csc x follow from the quotient rule. The three with "co" in their names get minus signs. These derivatives need radians.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>we could differentiate only powers of x</dd><dt>So we didn't need</dt><dd>memorized derivatives for the other basic functions</dd><dt>Now</dt><dd>every model with oscillation or growth</dd><dt>So we need</dt><dd>the derivatives of trig, exponential and log functions</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>(sin x)′ = cos x · (cos x)′ = −sin x</span><small>trig</small></div><div class="eqn"><span>(tan x)′ = sec²x</span><small>and sec, csc, cot below</small></div><div class="eqn"><span>(e<sup>x</sup>)′ = e<sup>x</sup> · (a<sup>x</sup>)′ = a<sup>x</sup> ln a</span><small>exponentials</small></div><div class="eqn"><span>(ln x)′ = 1/x</span><small>x &gt; 0</small></div></div>
+      <div class="lab" id="td-lab">
+        <div class="labbar"><span class="title">Guess the slope function</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="td-fn" role="group" aria-label="Function"><button type="button" data-k="sin" aria-pressed="true">sin x</button><button type="button" data-k="cos" aria-pressed="false">cos x</button><button type="button" data-k="exp" aria-pressed="false">eˣ</button><button type="button" data-k="ln" aria-pressed="false">ln x</button><button type="button" data-k="tan" aria-pressed="false">tan x</button></div></div>
+        <label class="check"><input type="checkbox" id="td-show"> Show the slope function f′ (predict it first!)</label>
+        <canvas id="td-canvas" aria-label="Top graph: the chosen function with a tangent. Bottom graph: the slope function, which can be hidden."></canvas>
+        <canvas id="td-canvas2" aria-label="Graph of the derivative of the chosen function, hidden until you tick the box."></canvas>
+        <div class="controls"><div class="ctl"><label for="td-x"><span>Point x</span> <output id="td-x-out"></output></label><input type="range" id="td-x" min="0.2" max="3" step="0.05" value="1"></div></div>
+        <div class="readout"><div><span>slope at x (numeric)</span><strong class="x" id="td-sl">—</strong></div><div><span>f′(x) by formula</span><strong class="v" id="td-fx">—</strong></div><div><span>the rule</span><strong class="" id="td-form">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose <b>sin x</b>, find where the tangent is flat, and predict f′ there. <button type="button" class="btn link" data-show='[["click", "#td-fn [data-k=sin]"], ["#td-x", 1.5708]]'>x = π/2</button></p><details><summary>What you should see</summary><p>At the peak (x = π/2) the tangent is flat, so f′ = 0, and cos(π/2) = 0. The slope graph is the cosine curve.</p></details></li>
+        <li><p>Choose <b>eˣ</b> and tick the box. What do you notice about the two graphs? <button type="button" class="btn link" data-show='[["click", "#td-fn [data-k=exp]"], ["#td-show", true]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>They are identical. Wherever the curve has height h its slope is h too. That is what makes e special.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Differentiate f(x) = 3 sin x − 2e<sup>x</sup> + 5 ln x, and find f′(1).</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Term by term.</b> (3 sin x)′ = 3 cos x; (−2e<sup>x</sup>)′ = −2e<sup>x</sup>; (5 ln x)′ = 5/x.</li>
+          <li hidden><b>Combine.</b> f′(x) = 3 cos x − 2e<sup>x</sup> + 5/x.</li>
+          <li hidden><b>Evaluate at 1.</b> 3 cos 1 − 2e + 5 = 3(0.5403) − 2(2.7183) + 5 = 1.6209 − 5.4366 + 5 ≈ <b>1.184</b> (radians).</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 3</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Writing (cos x)′ = sin x. The sign is minus: −sin x.</li>
+        <li>Using degrees on the calculator. The rules assume radians.</li>
+        <li>Writing (e<sup>x</sup>)′ = x e<sup>x−1</sup>. The power rule needs the variable in the base.</li>
+        <li>Writing (ln x)′ = ln x or x. It is 1/x.</li>
+        <li>Forgetting (a<sup>x</sup>)′ = a<sup>x</sup> ln a for other bases.</li>
+      </ul></div>
+      <div class="prose"><h2>The other trig derivatives</h2>
+        <p>(tan x)′ = sec²x, (cot x)′ = −csc²x, (sec x)′ = sec x tan x, (csc x)′ = −csc x cot x. You can get all of them from the quotient rule on sin and cos, but they are common enough to memorize.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Cosine falls from 1 at the start, so its slope is negative: −sin x.">
+        <p class="q">Check yourself: (cos x)′ =</p>
+        <div class="opts"><button type="button">−sin x</button><button type="button">sin x</button><button type="button">−cos x</button><button type="button">1/x</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

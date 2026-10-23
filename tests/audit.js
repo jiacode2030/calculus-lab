@@ -21,12 +21,15 @@ const path = require('path');
           if (!(d.ans >= 0 && d.ans < d.choices.length) && !seen.idx) { seen.idx = 1; bump(q.id, 'answer index out of range', JSON.stringify(d.ans)); }
           if (new Set(d.choices).size !== d.choices.length && !seen.dup) { seen.dup = 1; bump(q.id, 'duplicate choices', d.choices.join(' | ')); }
           if (d.choices.length < 2 && !seen.few) { seen.few = 1; bump(q.id, 'fewer than 2 choices'); }
+        } else if (d.expr) {
+          const A = window.__calc.parseExpr, ok = (() => { try { A(d.expr); return true; } catch (e) { return false; } })();
+          if (!ok && !seen.pe) { seen.pe = 1; bump(q.id, 'expr does not parse', d.expr); }
+          if (ok && d.chkf && !seen.cf) { const f = A(d.expr); for (const x of [0.37, 0.83, 1.21, 1.74, 2.3]) { const v = f(x), w = d.chkf(x); if (isFinite(v) && isFinite(w) && Math.abs(v - w) > 1e-3 * (1 + Math.abs(w)) && !(d.c)) { seen.cf = 1; bump(q.id, 'expression disagrees with numeric check at x=' + x + ' (' + v + ' vs ' + w + ')', d.expr); break; } } }
+          if (!d.hint && !seen.hint) { seen.hint = 1; bump(q.id, 'missing hint'); }
+          if (!d.sol && !seen.sol) { seen.sol = 1; bump(q.id, 'missing solution'); }
         } else {
           if (!Number.isFinite(d.ans) && !seen.fin) { seen.fin = 1; bump(q.id, 'answer not finite', String(d.ans)); }
-          if (d.unit === 'M' && d.ans < 0 && !seen.neg) { seen.neg = 1; bump(q.id, 'negative concentration', String(d.ans)); }
-          if (d.unit === 'M' && d.ans > 20 && !seen.big) { seen.big = 1; bump(q.id, 'concentration > 20 M', String(d.ans)); }
-          if (d.unit === '' && /pH/.test(strip(d.q)) && !/Kw|K<sub>w|neutral|saturated/.test(d.q) && (d.ans < -0.5 || d.ans > 14.5) && !seen.ph) { seen.ph = 1; bump(q.id, 'pH outside 0-14', strip(d.q).slice(0, 120) + ' => ' + d.ans); }
-          if (d.ans === 0 && !seen.zero) { seen.zero = 1; bump(q.id, 'answer is exactly 0 (check)', strip(d.q).slice(0, 120)); }
+          if (d.chk !== undefined && !seen.chk) { const tol = Math.max(1e-3 * Math.abs(d.chk), 2e-3); if (!(Math.abs(d.chk - d.ans) <= tol)) { seen.chk = 1; bump(q.id, 'answer disagrees with independent numeric check (' + d.ans + ' vs ' + d.chk + ')', strip(d.q).slice(0, 140)); } }
           if (!d.unit && d.unit !== '' && !seen.unit) { seen.unit = 1; bump(q.id, 'missing unit field'); }
           if (!d.hint && !seen.hint) { seen.hint = 1; bump(q.id, 'missing hint'); }
           if (!d.sol && !seen.sol) { seen.sol = 1; bump(q.id, 'missing solution'); }

@@ -1,0 +1,48 @@
+  <section class="view" id="v-rates" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 2</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Average vs instantaneous rate</h1>
+        <p class="lede">Speed over a trip is easy: distance divided by time. Speed at one instant needs a limit. Watch a secant line turn into a tangent line.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>The <b>average rate of change</b> of f from x = a to x = b is the slope of the <b>secant line</b> through the two points: <span class="m">(f(b) − f(a)) / (b − a)</span>. It is what a car's trip computer tells you: miles per hour over the whole trip.</p>
+        <p>The <b>instantaneous rate of change</b> is what the speedometer shows at one moment. Shrink the interval: move the second point toward the first. The secant line rotates and settles into the <b>tangent line</b>, and its slope is the limit of the average rates. That limit is the derivative.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>a rate needed two different points (distance over time)</dd><dt>So we didn't need</dt><dd>a rate at a single instant</dd><dt>Now</dt><dd>speed at a moment, marginal cost, the slope of a curve at a point</dd><dt>So we need</dt><dd>an instantaneous rate defined as a limit of average rates</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>(f(b) − f(a)) / (b − a)</span><small>average rate = secant slope</small></div><div class="eqn"><span>lim<sub>h→0</sub> (f(a + h) − f(a)) / h</span><small>instantaneous rate = tangent slope</small></div><div class="eqn"><span>units: output per input</span><small>e.g. meters per second</small></div></div>
+      <div class="lab" id="rt-lab">
+        <div class="labbar"><span class="title">Shrink the interval</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="rt-fn" role="group" aria-label="Function"><button type="button" data-k="sq" aria-pressed="true">x²</button><button type="button" data-k="cu" aria-pressed="false">x³ − 3x</button><button type="button" data-k="sn" aria-pressed="false">sin x</button><button type="button" data-k="ex" aria-pressed="false">eˣ</button></div></div>
+        <canvas id="rt-canvas" aria-label="A curve with a fixed point, a second point at distance h, and the secant line through them; the tangent line is dashed."></canvas>
+        <div class="controls"><div class="ctl"><label for="rt-x"><span>Point a</span> <output id="rt-x-out"></output></label><input type="range" id="rt-x" min="-2" max="2" step="0.1" value="1"></div><div class="ctl"><label for="rt-h"><span>Gap h</span> <output id="rt-h-out"></output></label><input type="range" id="rt-h" min="-1.5" max="1.5" step="0.05" value="1.2"></div></div>
+        <div class="readout"><div><span>average rate (secant slope)</span><strong class="a" id="rt-avg">—</strong></div><div><span>instantaneous rate (tangent slope)</span><strong class="v" id="rt-inst">—</strong></div><div><span>difference</span><strong class="" id="rt-diff">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Make h smaller and smaller on x² at a = 1. What do the secant slopes approach? <button type="button" class="btn link" data-show='[["click", "#rt-fn [data-k=sq]"], ["#rt-x", 1], ["#rt-h", 0.05]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Toward 2, the slope of the tangent line at x = 1. With h = 0.05 the average rate is 2.05; with h = 0.001 it would be 2.001.</p></details></li>
+        <li><p>Set h negative (second point on the left). Does the answer still approach the same number? <button type="button" class="btn link" data-show='[["click", "#rt-fn [data-k=sq]"], ["#rt-x", 1], ["#rt-h", -0.05]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Yes: 1.95 from the left, 2.05 from the right. For a smooth curve both sides squeeze toward the same tangent slope.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">A car's position is s(t) = t² feet after t seconds. Find the average velocity from t = 1 to t = 3 and estimate the velocity at t = 1.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Average rate.</b> (s(3) − s(1))/(3 − 1) = (9 − 1)/2 = 4 ft/s.</li>
+          <li hidden><b>Shrink the interval.</b> From t = 1 to t = 1.1: (1.21 − 1)/0.1 = 2.1 ft/s. From 1 to 1.01: (1.0201 − 1)/0.01 = 2.01.</li>
+          <li hidden><b>Spot the pattern.</b> The average velocities approach 2.</li>
+          <li hidden><b>Answer.</b> Average velocity on [1, 3] is <b>4 ft/s</b>; the instantaneous velocity at t = 1 is <b>2 ft/s</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Dividing by the wrong thing: the denominator is b − a (change in input), not b.</li>
+        <li>Forgetting units. A rate has units of output per input, like ft/s or dollars per item.</li>
+        <li>Thinking the average rate over an interval equals the rate at its midpoint. It only does for special functions.</li>
+        <li>Using a gap h = 0 in the formula: the quotient is 0/0. A limit, not substitution.</li>
+      </ul></div>
+      <div class="prose"><h2>Two ways to see it</h2>
+        <p>Geometrically: secant slope → tangent slope. Numerically: a table of (f(a+h) − f(a))/h for smaller and smaller h. Algebraically: simplify the quotient, then let h → 0. The next module does that last step formally.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Average rate = change in output over change in input = (f(5) − f(2))/(5 − 2).">
+        <p class="q">Check yourself: The average rate of change of f over [2, 5] is</p>
+        <div class="opts"><button type="button">(f(5) − f(2))/(5 − 2)</button><button type="button">(f(5) − f(2))/5</button><button type="button">f(5)/f(2)</button><button type="button">(f(5) + f(2))/2</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

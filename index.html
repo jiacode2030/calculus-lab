@@ -1010,6 +1010,111 @@ body.is-ab .prob.bc{display:none!important}
     </div>
   </section>
 
+  <section class="view" id="v-functions" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag na">Math</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Functions & transformations</h1>
+        <p class="lede">Before derivatives: how to read a formula as a graph. Shift, stretch and flip a parent function and see exactly what each number does.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Every graph in calculus is a familiar parent function that has been moved. <span class="m">y = a·f(b(x − h)) + k</span> says: shift right by <b>h</b>, shift up by <b>k</b>, stretch vertically by <b>a</b> (flip if negative) and squeeze horizontally by <b>b</b>. Changes <i>inside</i> the parentheses act on x and act backwards (x − h moves right); changes <i>outside</i> act on y and do what they say.</p>
+        <p>Functions can also be composed, <span class="m">f(g(x))</span> (do g first), and many have inverses that reflect the graph over the line y = x. Composition is what the chain rule differentiates.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>you read each graph as its own formula</dd><dt>So we didn't need</dt><dd>a way to see families of graphs at once</dd><dt>Now</dt><dd>derivatives of shifted and stretched functions come straight from the parent</dd><dt>So we need</dt><dd>a transformation toolkit and composition</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>y = a·f(b(x − h)) + k</span><small>general transformation</small></div><div class="eqn"><span>(f∘g)(x) = f(g(x))</span><small>composition: g first</small></div><div class="eqn"><span>f(f⁻¹(x)) = x</span><small>inverse</small></div></div>
+      <div class="lab" id="fn-lab">
+        <div class="labbar"><span class="title">Move the parent function</span></div>
+        <div class="ctl"><span class="lbl">Parent</span><div class="seg" id="fn-base" role="group" aria-label="Parent"><button type="button" data-k="sq" aria-pressed="true">x²</button><button type="button" data-k="abs" aria-pressed="false">|x|</button><button type="button" data-k="rt" aria-pressed="false">√x</button><button type="button" data-k="sin" aria-pressed="false">sin x</button></div></div>
+        <p class="small" id="fn-eq" style="margin:0"></p>
+        <canvas id="fn-canvas" aria-label="Graph of a parent function (faint) and its transformed version (solid)."></canvas>
+        <div class="controls"><div class="ctl"><label for="fn-a"><span>a (vertical stretch / flip)</span> <output id="fn-a-out"></output></label><input type="range" id="fn-a" min="-3" max="3" step="0.25" value="1"></div><div class="ctl"><label for="fn-b"><span>b (horizontal squeeze)</span> <output id="fn-b-out"></output></label><input type="range" id="fn-b" min="0.25" max="3" step="0.25" value="1"></div><div class="ctl"><label for="fn-h"><span>h (right)</span> <output id="fn-h-out"></output></label><input type="range" id="fn-h" min="-4" max="4" step="0.5" value="0"></div><div class="ctl"><label for="fn-k"><span>k (up)</span> <output id="fn-k-out"></output></label><input type="range" id="fn-k" min="-4" max="4" step="0.5" value="0"></div></div>
+        <div class="readout"><div><span>key point moves from</span><strong class="x" id="fn-ho">—</strong></div><div><span>to</span><strong class="a" id="fn-hn">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Set h = 2 and k = 1 on x². Where is the vertex? <button type="button" class="btn link" data-show='[["click", "#fn-base [data-k=sq]"], ["#fn-h", 2], ["#fn-k", 1]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>At (2, 1): right 2 because of (x − 2), up 1 because of + 1.</p></details></li>
+        <li><p>Set a = −1 on x². What happens? <button type="button" class="btn link" data-show='[["click", "#fn-base [data-k=sq]"], ["#fn-a", -1]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The parabola flips upside down: a negative a reflects the graph across the x-axis.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">If f(x) = x² + 1 and g(x) = 2x − 3, find f(g(2)) and g(f(2)).</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Inside first.</b> For f(g(2)) work out g(2) = 2·2 − 3 = 1.</li>
+          <li hidden><b>Then f.</b> f(1) = 1² + 1 = 2.</li>
+          <li hidden><b>Now the other order.</b> f(2) = 4 + 1 = 5, then g(5) = 10 − 3 = 7.</li>
+          <li hidden><b>Answer.</b> f(g(2)) = <b>2</b> and g(f(2)) = <b>7</b>. Composition is not commutative.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Moving the wrong way: (x + 2) shifts the graph left, not right.</li>
+        <li>Applying h before the stretch b when b is inside: in y = f(b(x − h)) the shift is h, not h/b.</li>
+        <li>Mixing up f(g(x)) and g(f(x)).</li>
+        <li>Treating f<sup>−1</sup>(x) as 1/f(x). It is the inverse function, not the reciprocal.</li>
+      </ul></div>
+      <div class="prose"><h2>Even, odd and inverses</h2>
+        <p>Even functions satisfy f(−x) = f(x) (mirror in the y-axis, like x²). Odd functions satisfy f(−x) = −f(x) (turn 180° about the origin, like x³ and sin x). A function has an inverse only if it passes the horizontal line test; the inverse graph is the reflection over y = x.</p>
+      </div>
+      <div class="quiz" data-correct="1" data-explain="Inside shifts act backwards: x − 3 moves right 3; + 2 outside moves up 2.">
+        <p class="q">Check yourself: The graph of y = (x − 3)² + 2 is the graph of y = x² moved:</p>
+        <div class="opts"><button type="button">left 3, up 2</button><button type="button">right 3, up 2</button><button type="button">right 3, down 2</button><button type="button">left 3, down 2</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-trigexp" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag na">Math</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Trig, exponentials & logs</h1>
+        <p class="lede">Sine, cosine, e<sup>x</sup> and ln x: four functions you will differentiate and integrate constantly. Here is what each one looks like and why.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>On the unit circle, the point at angle <span class="m">θ</span> (measured in radians from the positive x-axis) is <span class="m">(cos θ, sin θ)</span>. That one picture gives you the graphs of sine and cosine, their values at the special angles, and the identity <span class="m">sin²θ + cos²θ = 1</span>. Calculus uses radians because then the arc length equals the angle.</p>
+        <p>An <b>exponential</b> <span class="m">b<sup>x</sup></span> multiplies by b for every step in x. The special base <b>e ≈ 2.718</b> is the one whose slope equals its height at every point. Its inverse is the <b>natural log</b> <span class="m">ln x</span>: <span class="m">ln(e<sup>x</sup>) = x</span> and <span class="m">e<sup>ln x</sup> = x</span>.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>angles were degrees and growth was a table</dd><dt>So we didn't need</dt><dd>radians, and one special exponential base</dd><dt>Now</dt><dd>the derivative of sin x is only cos x in radians, and e<sup>x</sup> is its own derivative</dd><dt>So we need</dt><dd>the unit circle in radians, and e and ln</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>(cos θ, sin θ)</span><small>point on the unit circle</small></div><div class="eqn"><span>sin²θ + cos²θ = 1</span><small>identity</small></div><div class="eqn"><span>ln(ab) = ln a + ln b · ln(a<sup>n</sup>) = n ln a</span><small>log rules</small></div><div class="eqn"><span>e<sup>ln x</sup> = x · ln e<sup>x</sup> = x</span><small>inverses</small></div></div>
+      <div class="lab" id="te-lab">
+        <div class="labbar"><span class="title">The unit circle</span></div>
+        <canvas id="te-canvas" aria-label="Unit circle with a point at the chosen angle, and its sine and cosine drawn as segments."></canvas>
+        <div class="controls"><div class="ctl"><label for="te-ang"><span>Angle θ (radians)</span> <output id="te-ang-out"></output></label><input type="range" id="te-ang" min="0" max="6.2832" step="0.0524" value="0.7854"></div></div>
+        <div class="readout"><div><span>sin θ (blue)</span><strong class="x" id="te-sin">—</strong></div><div><span>cos θ (green)</span><strong class="v" id="te-cos">—</strong></div><div><span>tan θ = sin θ / cos θ</span><strong class="" id="te-tan">—</strong></div><div><span>in degrees</span><strong class="" id="te-deg">—</strong></div></div>
+      </div>
+      <div class="lab" id="te-lab2">
+        <div class="labbar"><span class="title">e and ln are inverses</span></div>
+        <canvas id="te-canvas2" aria-label="Graphs of b to the x, its inverse log, and the line y = x."></canvas>
+        <div class="controls"><div class="ctl"><label for="te-base"><span>Base b</span> <output id="te-base-out"></output></label><input type="range" id="te-base" min="1.2" max="6" step="0.05" value="2.718"></div></div>
+        <div class="readout"><div><span>slope of b^x at x = 0</span><strong class="x" id="te-slope">—</strong></div><div><span>ln b</span><strong class="a" id="te-ln">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Set θ = π/4 (about 0.785). What are sine and cosine? <button type="button" class="btn link" data-show='[["#te-ang", 0.7854]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Both are √2/2 ≈ 0.707: at 45° the point sits on the diagonal, so its x and y coordinates are equal.</p></details></li>
+        <li><p>Slide the base b to e (2.718). What is the slope of b<sup>x</sup> at x = 0? <button type="button" class="btn link" data-show='[["#te-base", 2.718]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>1. For other bases the slope at 0 is ln b: below 1 for b &lt; e, above 1 for b &gt; e. Only e makes the slope exactly equal to the height (1) at x = 0.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Solve e<sup>2x</sup> = 7 for x.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Undo e with ln.</b> Take the natural log of both sides: ln(e<sup>2x</sup>) = ln 7.</li>
+          <li hidden><b>Simplify.</b> ln(e<sup>2x</sup>) = 2x, so 2x = ln 7.</li>
+          <li hidden><b>Solve.</b> x = (ln 7)/2.</li>
+          <li hidden><b>Answer.</b> x ≈ <b>0.973</b>. Check: e<sup>1.946</sup> ≈ 7.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Using degrees in calculus formulas. Set your calculator to radians.</li>
+        <li>Writing ln(a + b) = ln a + ln b. The rule is for products: ln(ab) = ln a + ln b.</li>
+        <li>Forgetting ln x is only defined for x &gt; 0.</li>
+        <li>Thinking e<sup>x</sup> can be zero or negative: it is always positive.</li>
+        <li>Mixing up sin²θ with sin(θ²).</li>
+      </ul></div>
+      <div class="prose"><h2>The special angles</h2>
+        <p>Memorize the first-quadrant values: sin 0 = 0, sin π/6 = 1/2, sin π/4 = √2/2, sin π/3 = √3/2, sin π/2 = 1, and cosine runs the other way (1, √3/2, √2/2, 1/2, 0). The signs in the other quadrants follow from which coordinate is negative.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="ln undoes e to a power: ln(e^5) = 5.">
+        <p class="q">Check yourself: ln(e<sup>5</sup>) =</p>
+        <div class="opts"><button type="button">5</button><button type="button">e<sup>5</sup></button><button type="button">1/5</button><button type="button">ln 5</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
   <section class="view" id="v-limits" hidden>
     <div class="wrap">
       <div class="head">
@@ -1078,6 +1183,636 @@ body.is-ab .prob.bc{display:none!important}
       <div class="quiz" data-correct="0" data-explain="A hole means f(a) has no value, but both sides still head toward the same height, so the limit exists.">
         <p class="q">Check yourself: the graph has an open circle at (3, 5) and approaches height 5 from both sides. Does lim<sub>x→3</sub> f(x) exist?</p>
         <div class="opts"><button type="button">Yes, it equals 5</button><button type="button">No, because f(3) has no value</button><button type="button">No, because the graph has a hole</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-limalg" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 1</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Algebraic limits</h1>
+        <p class="lede">When plugging in gives 0/0, the function is hiding something. Algebra rewrites it into a form that does not hide it.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Direct substitution works whenever the function is continuous at <span class="m">a</span>: just evaluate. The trouble is the form <span class="m">0/0</span>, which is not a number but a clue: the top and bottom share a factor that is going to zero. Remove the shared factor and what is left can be evaluated.</p>
+        <p>Three moves cover almost everything. <b>Factor and cancel</b> (polynomials). <b>Multiply by the conjugate</b> (square roots). <b>Combine fractions</b> (a fraction inside a fraction). When a function is trapped between two others that share a limit, the <b>squeeze</b> theorem gives the answer.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>a limit was something you read off a table or graph</dd><dt>So we didn't need</dt><dd>algebra</dd><dt>Now</dt><dd>most limits on the exam come as formulas, not pictures</dd><dt>So we need</dt><dd>a way to simplify the formula until the limit is just substitution</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>lim f = f(a)</span><small>if f is continuous at a</small></div><div class="eqn"><span>0/0</span><small>factor, rationalize or combine</small></div><div class="eqn"><span>g ≤ f ≤ h</span><small>and lim g = lim h = L ⇒ lim f = L</small></div></div>
+      <div class="lab" id="la-lab">
+        <div class="labbar"><span class="title">Same graph, simpler formula</span></div>
+        <div class="ctl"><span class="lbl">Case</span><div class="seg" id="la-fn" role="group" aria-label="Case"><button type="button" data-k="fac" aria-pressed="true">Factor</button><button type="button" data-k="rat" aria-pressed="false">Conjugate</button><button type="button" data-k="frc" aria-pressed="false">Fractions</button><button type="button" data-k="sq" aria-pressed="false">Squeeze</button></div></div>
+        <p class="small" id="la-formula" style="margin:0"></p>
+        <canvas id="la-canvas" aria-label="Graph of the original function with a hole, and the simplified function drawn dashed on top."></canvas>
+        <div class="readout"><div><span>plugging in gives</span><strong class="x" id="la-plug">—</strong></div><div><span>after algebra</span><strong class="a" id="la-simp">—</strong></div><div><span>the limit</span><strong class="v" id="la-lim">—</strong></div></div>
+        <div class="xpsteps"><div><b>The algebra</b><span id="la-alg">—</span></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose <b>Factor</b>. The orange dashed line is the simplified formula. Where do the two graphs differ? <button type="button" class="btn link" data-show='[["click", "#la-fn [data-k=fac]"]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Only at x = 3, where the original has a hole. Everywhere else they are the same graph, so they approach the same height: the simplified formula gives the limit.</p></details></li>
+        <li><p>Choose <b>Squeeze</b>. Why can't you just plug in x = 0? <button type="button" class="btn link" data-show='[["click", "#la-fn [data-k=sq]"]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>sin(1/0) is meaningless. But sin is always between −1 and 1, so x²·sin(1/x) is trapped between −x² and x². Both bounds go to 0, so the function is squeezed to 0.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find lim<sub>x→2</sub> (x² − x − 2)/(x − 2).</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Plug in.</b> 4 − 2 − 2 = 0 on top and 2 − 2 = 0 on the bottom: the form 0/0, so keep working.</li>
+          <li hidden><b>Factor the top.</b> x² − x − 2 = (x − 2)(x + 1).</li>
+          <li hidden><b>Cancel the common factor.</b> For x ≠ 2, (x − 2)(x + 1)/(x − 2) = x + 1. The limit only looks at x ≠ 2, so this is allowed.</li>
+          <li hidden><b>Substitute.</b> lim<sub>x→2</sub> (x + 1) = 3.</li>
+          <li hidden><b>Answer.</b> The limit is <b>3</b>. The original has a hole at (2, 3).</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Cancelling a factor that does not go to 0: only cancel the factor that is the cause of 0/0.</li>
+        <li>Stopping at 0/0 and writing "the limit does not exist". 0/0 means "do more work".</li>
+        <li>Multiplying only the top by the conjugate. Multiply top and bottom by the same thing.</li>
+        <li>Using the squeeze theorem with bounds that do not have the same limit.</li>
+        <li>Writing "= 3" after the first step. Keep "lim" until you substitute.</li>
+      </ul></div>
+      <div class="prose"><h2>Why algebra is allowed</h2>
+        <p>Two functions that agree everywhere except at <span class="m">a</span> have the same limit at <span class="m">a</span>, because a limit never looks at <span class="m">x = a</span> itself. That is why cancelling (x − 2)/(x − 2) is legal in a limit, even though 0/0 at x = 2 is not defined.</p>
+      </div>
+      <div class="quiz" data-correct="1" data-explain="The square root is the problem; multiplying by the conjugate gives x/(x(√(x+9)+3)), then cancel x. The limit is 1/6.">
+        <p class="q">Check yourself: which move turns (√(x + 9) − 3)/x into something you can evaluate at 0?</p>
+        <div class="opts"><button type="button">Factor the top</button><button type="button">Multiply top and bottom by √(x + 9) + 3</button><button type="button">Plug in 0 and divide</button><button type="button">Use the squeeze theorem</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-contin" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 1</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Continuity & the IVT</h1>
+        <p class="lede">A function is continuous if you can draw it without lifting your pencil. Calculus needs a sharper test, and one big consequence: continuous functions cannot skip values.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Continuity at a point means three things hold: <b>f(a) exists</b>, <b>the limit as x → a exists</b>, and <b>they are equal</b>. A hole, a jump or a blow-up each breaks one of the three. Continuous on an interval means continuous at every point of it.</p>
+        <p>If a function is continuous on <span class="m">[a, b]</span> it cannot skip over any value between <span class="m">f(a)</span> and <span class="m">f(b)</span>. That is the <b>Intermediate Value Theorem</b>. It is why you can say a root exists in an interval without finding it.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>a graph was just a picture you could sketch</dd><dt>So we didn't need</dt><dd>a precise test for "no breaks"</dd><dt>Now</dt><dd>continuity underpins differentiation and integration theorems</dd><dt>So we need</dt><dd>continuity defined with limits, and the IVT</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>lim<sub>x→a</sub> f(x) = f(a)</span><small>continuous at a</small></div><div class="eqn"><span>f(c) = N</span><small>IVT: some c in (a, b) for any N between f(a) and f(b)</small></div><div class="eqn"><span>removable · jump · infinite</span><small>types of discontinuity</small></div></div>
+      <div class="lab" id="ct-lab">
+        <div class="labbar"><span class="title">Make it continuous</span></div>
+        <p class="small" style="margin:0">f(x) = x + 1 for x &lt; 2 and f(x) = kx − 3 for x ≥ 2. Slide k until the graph has no break.</p>
+        <canvas id="ct-canvas" aria-label="Graph of a piecewise function with a slider-controlled slope on the right piece."></canvas>
+        <div class="controls"><div class="ctl"><label for="ct-k"><span>k</span> <output id="ct-k-out"></output></label><input type="range" id="ct-k" min="-1" max="5" step="0.25" value="1"></div></div>
+        <div class="readout"><div><span>1. f(2) is defined</span><strong class="x" id="ct-defd">—</strong></div><div><span>2. the limit exists</span><strong class="a" id="ct-lim">—</strong></div><div><span>3. limit = f(2)</span><strong class="v" id="ct-eq">—</strong></div><div><span>verdict</span><strong class="" id="ct-verdict">—</strong></div></div>
+      </div>
+      <div class="lab" id="ct-lab2">
+        <div class="labbar"><span class="title">The Intermediate Value Theorem</span></div>
+        <label class="check"><input type="checkbox" id="ct-brk"> Break the function (add a jump at x = 1.5)</label>
+        <canvas id="ct-canvas2" aria-label="A graph on [0, 3] with a horizontal line at a chosen height; the crossing is marked, or not found if the function jumps."></canvas>
+        <div class="controls"><div class="ctl"><label for="ct-c"><span>height N</span> <output id="ct-c-out"></output></label><input type="range" id="ct-c" min="-2" max="7" step="0.1" value="3"></div></div>
+        <div class="readout"><div><span>where f(x) = N</span><strong class="x" id="ct-ivt">—</strong></div><div><span>what this shows</span><strong class="" id="ct-ivt2">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Slide k to 3. What changes in the three-part checklist? <button type="button" class="btn link" data-show='[["#ct-k", 3]]'>k = 3</button></p><details><summary>What you should see</summary><p>At k = 3 the right piece starts at 3·2 − 3 = 3, exactly where the left piece is heading (2 + 1 = 3). All three conditions pass: f(2) = 3, the limit is 3, and they match.</p></details></li>
+        <li><p>Tick <b>Break the function</b> and set N = 2. Does any x give f(x) = 2? <button type="button" class="btn link" data-show='[["#ct-brk", true], ["#ct-c", 2]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>No. The jump skips from height 0.25 to 3.25, so heights in between are never reached. The IVT does not apply because the function is not continuous.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find k so that f(x) = x² for x ≤ 1 and f(x) = kx + 2 for x &gt; 1 is continuous at x = 1.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Left piece at 1.</b> f(1) = 1² = 1, and the left limit is also 1.</li>
+          <li hidden><b>Right limit.</b> As x → 1⁺ the function is kx + 2, so the right limit is k + 2.</li>
+          <li hidden><b>Match.</b> Continuity needs left = right = f(1): k + 2 = 1.</li>
+          <li hidden><b>Solve.</b> k = <b>−1</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Checking only that the limit exists and forgetting f(a) must be defined and equal to it.</li>
+        <li>Calling a hole a "jump". A hole (removable) has matching sides; a jump does not.</li>
+        <li>Using the IVT without checking the function is continuous on the whole closed interval.</li>
+        <li>Thinking the IVT finds the number: it only guarantees one exists.</li>
+        <li>Assuming "continuous" means "differentiable". A corner is continuous but not differentiable (Unit 2).</li>
+      </ul></div>
+      <div class="prose"><h2>Types of discontinuity</h2>
+        <p><b>Removable</b>: the limit exists but f(a) is missing or different. <b>Jump</b>: the one-sided limits are different numbers. <b>Infinite</b>: the function blows up (a vertical asymptote). <b>Oscillating</b>: the function swings forever. A removable discontinuity can be "repaired" by redefining f(a) as the limit.</p>
+      </div>
+      <div class="quiz" data-correct="1" data-explain="0 lies between −2 and 5, so the IVT guarantees it. The others are outside the interval from −2 to 5.">
+        <p class="q">Check yourself: f is continuous on [1, 4] with f(1) = −2 and f(4) = 5. Which value must f take somewhere in [1, 4]?</p>
+        <div class="opts"><button type="button">6</button><button type="button">0</button><button type="button">−3</button><button type="button">8</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-asym" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 1</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Infinite limits & end behavior</h1>
+        <p class="lede">What happens when the function blows up near a point, or when x gets enormous? Both questions give asymptotes.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>A <b>vertical asymptote</b> at <span class="m">x = a</span> means the function grows without bound as x → a: <span class="m">lim f(x) = ±∞</span> from at least one side. In a fraction it happens where the bottom is 0 but the top is not. The limit "= ∞" is shorthand: it technically does not exist, but we say <i>how</i> it fails.</p>
+        <p>A <b>horizontal asymptote</b> comes from limits at infinity: <span class="m">lim<sub>x→∞</sub> f(x) = L</span>. For a ratio of polynomials compare the leading terms: a lower-degree top gives 0, equal degrees give the ratio of leading coefficients, a higher-degree top gives ±∞ (no horizontal asymptote).</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>limits were finite numbers at finite points</dd><dt>So we didn't need</dt><dd>a language for "grows without bound" and "as x gets huge"</dd><dt>Now</dt><dd>rational functions near their zeros and far from the origin</dd><dt>So we need</dt><dd>infinite limits and limits at infinity</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>lim<sub>x→a</sub> f(x) = ±∞</span><small>vertical asymptote x = a</small></div><div class="eqn"><span>lim<sub>x→±∞</sub> f(x) = L</span><small>horizontal asymptote y = L</small></div><div class="eqn"><span>deg top vs deg bottom</span><small>compare leading terms</small></div></div>
+      <div class="lab" id="ay-lab">
+        <div class="labbar"><span class="title">Zoom out to see the end behavior</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="ay-fn" role="group" aria-label="Function"><button type="button" data-k="lt" aria-pressed="true">top lower degree</button><button type="button" data-k="eq" aria-pressed="false">equal degrees</button><button type="button" data-k="gt" aria-pressed="false">top higher degree</button><button type="button" data-k="sin" aria-pressed="false">sin x / x</button></div></div>
+        <p class="small" id="ay-formula" style="margin:0"></p>
+        <canvas id="ay-canvas" aria-label="Graph of a rational function with its asymptotes drawn dashed; slider widens the x window."></canvas>
+        <div class="controls"><div class="ctl"><label for="ay-w"><span>Window half-width</span> <output id="ay-w-out"></output></label><input type="range" id="ay-w" min="0.7" max="3" step="0.05" value="1"></div></div>
+        <div class="readout"><div><span>f at the right edge</span><strong class="x" id="ay-fx">—</strong></div><div><span>as x → ±∞</span><strong class="a" id="ay-inf">—</strong></div><div><span>vertical asymptotes</span><strong class="v" id="ay-vert">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose <b>equal degrees</b> and zoom out. What height does the graph flatten to? <button type="button" class="btn link" data-show='[["click", "#ay-fn [data-k=eq]"], ["#ay-w", 3]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Toward 2, the ratio of leading coefficients (2x² over x²). The two vertical asymptotes at x = ±1 stay put while the ends level off.</p></details></li>
+        <li><p>Choose <b>top higher degree</b> and zoom out. Does it level off? <button type="button" class="btn link" data-show='[["click", "#ay-fn [data-k=gt]"], ["#ay-w", 3]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>No. It keeps growing, like the line y = x. A higher-degree top means no horizontal asymptote: the limit at infinity is ±∞.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find the asymptotes of f(x) = (3x² − 3)/(x² − 4).</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Vertical.</b> The bottom is 0 at x = ±2. The top at x = ±2 is 9, not 0, so both are vertical asymptotes.</li>
+          <li hidden><b>Horizontal.</b> The degrees match (2 and 2): divide the leading coefficients, 3/1 = 3.</li>
+          <li hidden><b>Check the limit.</b> lim<sub>x→∞</sub> (3 − 3/x²)/(1 − 4/x²) = 3/1 = 3. The same value at −∞.</li>
+          <li hidden><b>Answer.</b> Vertical: x = 2 and x = −2. Horizontal: y = <b>3</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Calling every zero of the bottom a vertical asymptote. If the factor also cancels with the top, it is a hole.</li>
+        <li>Writing lim = ∞ as if ∞ were a number you can substitute.</li>
+        <li>Using only the leading coefficient of the top for the horizontal asymptote.</li>
+        <li>Forgetting the limit at −∞ can differ from +∞ (for example, e<sup>x</sup> or an odd-degree ratio).</li>
+        <li>Thinking a graph cannot cross its horizontal asymptote. It can, near the origin; the asymptote describes the far ends.</li>
+      </ul></div>
+      <div class="prose"><h2>Reading the sign</h2>
+        <p>To get the sign of an infinite limit, check which side you approach from. Near x = 2, 1/(x − 2) is large positive from the right (positive denominator) and large negative from the left, so lim<sub>x→2⁺</sub> = ∞ and lim<sub>x→2⁻</sub> = −∞, and the two-sided limit does not exist.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="The bottom has the higher degree, so it wins and the ratio goes to 0.">
+        <p class="q">Check yourself: lim<sub>x→∞</sub> (5x + 1)/(2x² + 7) =</p>
+        <div class="opts"><button type="button">0</button><button type="button">5/2</button><button type="button">∞</button><button type="button">1/7</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-rates" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 2</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Average vs instantaneous rate</h1>
+        <p class="lede">Speed over a trip is easy: distance divided by time. Speed at one instant needs a limit. Watch a secant line turn into a tangent line.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>The <b>average rate of change</b> of f from x = a to x = b is the slope of the <b>secant line</b> through the two points: <span class="m">(f(b) − f(a)) / (b − a)</span>. It is what a car's trip computer tells you: miles per hour over the whole trip.</p>
+        <p>The <b>instantaneous rate of change</b> is what the speedometer shows at one moment. Shrink the interval: move the second point toward the first. The secant line rotates and settles into the <b>tangent line</b>, and its slope is the limit of the average rates. That limit is the derivative.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>a rate needed two different points (distance over time)</dd><dt>So we didn't need</dt><dd>a rate at a single instant</dd><dt>Now</dt><dd>speed at a moment, marginal cost, the slope of a curve at a point</dd><dt>So we need</dt><dd>an instantaneous rate defined as a limit of average rates</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>(f(b) − f(a)) / (b − a)</span><small>average rate = secant slope</small></div><div class="eqn"><span>lim<sub>h→0</sub> (f(a + h) − f(a)) / h</span><small>instantaneous rate = tangent slope</small></div><div class="eqn"><span>units: output per input</span><small>e.g. meters per second</small></div></div>
+      <div class="lab" id="rt-lab">
+        <div class="labbar"><span class="title">Shrink the interval</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="rt-fn" role="group" aria-label="Function"><button type="button" data-k="sq" aria-pressed="true">x²</button><button type="button" data-k="cu" aria-pressed="false">x³ − 3x</button><button type="button" data-k="sn" aria-pressed="false">sin x</button><button type="button" data-k="ex" aria-pressed="false">eˣ</button></div></div>
+        <canvas id="rt-canvas" aria-label="A curve with a fixed point, a second point at distance h, and the secant line through them; the tangent line is dashed."></canvas>
+        <div class="controls"><div class="ctl"><label for="rt-x"><span>Point a</span> <output id="rt-x-out"></output></label><input type="range" id="rt-x" min="-2" max="2" step="0.1" value="1"></div><div class="ctl"><label for="rt-h"><span>Gap h</span> <output id="rt-h-out"></output></label><input type="range" id="rt-h" min="-1.5" max="1.5" step="0.05" value="1.2"></div></div>
+        <div class="readout"><div><span>average rate (secant slope)</span><strong class="a" id="rt-avg">—</strong></div><div><span>instantaneous rate (tangent slope)</span><strong class="v" id="rt-inst">—</strong></div><div><span>difference</span><strong class="" id="rt-diff">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Make h smaller and smaller on x² at a = 1. What do the secant slopes approach? <button type="button" class="btn link" data-show='[["click", "#rt-fn [data-k=sq]"], ["#rt-x", 1], ["#rt-h", 0.05]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Toward 2, the slope of the tangent line at x = 1. With h = 0.05 the average rate is 2.05; with h = 0.001 it would be 2.001.</p></details></li>
+        <li><p>Set h negative (second point on the left). Does the answer still approach the same number? <button type="button" class="btn link" data-show='[["click", "#rt-fn [data-k=sq]"], ["#rt-x", 1], ["#rt-h", -0.05]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Yes: 1.95 from the left, 2.05 from the right. For a smooth curve both sides squeeze toward the same tangent slope.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">A car's position is s(t) = t² feet after t seconds. Find the average velocity from t = 1 to t = 3 and estimate the velocity at t = 1.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Average rate.</b> (s(3) − s(1))/(3 − 1) = (9 − 1)/2 = 4 ft/s.</li>
+          <li hidden><b>Shrink the interval.</b> From t = 1 to t = 1.1: (1.21 − 1)/0.1 = 2.1 ft/s. From 1 to 1.01: (1.0201 − 1)/0.01 = 2.01.</li>
+          <li hidden><b>Spot the pattern.</b> The average velocities approach 2.</li>
+          <li hidden><b>Answer.</b> Average velocity on [1, 3] is <b>4 ft/s</b>; the instantaneous velocity at t = 1 is <b>2 ft/s</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Dividing by the wrong thing: the denominator is b − a (change in input), not b.</li>
+        <li>Forgetting units. A rate has units of output per input, like ft/s or dollars per item.</li>
+        <li>Thinking the average rate over an interval equals the rate at its midpoint. It only does for special functions.</li>
+        <li>Using a gap h = 0 in the formula: the quotient is 0/0. A limit, not substitution.</li>
+      </ul></div>
+      <div class="prose"><h2>Two ways to see it</h2>
+        <p>Geometrically: secant slope → tangent slope. Numerically: a table of (f(a+h) − f(a))/h for smaller and smaller h. Algebraically: simplify the quotient, then let h → 0. The next module does that last step formally.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Average rate = change in output over change in input = (f(5) − f(2))/(5 − 2).">
+        <p class="q">Check yourself: The average rate of change of f over [2, 5] is</p>
+        <div class="opts"><button type="button">(f(5) − f(2))/(5 − 2)</button><button type="button">(f(5) − f(2))/5</button><button type="button">f(5)/f(2)</button><button type="button">(f(5) + f(2))/2</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-deriv" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 2</span><span class="tag">AB &amp; BC</span></div>
+        <h1>The derivative & differentiability</h1>
+        <p class="lede">The derivative is a function: at every x it gives the slope of the tangent line. Some graphs have no tangent at certain points, and those are worth knowing.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Define <span class="m">f′(x) = lim<sub>h→0</sub> (f(x + h) − f(x))/h</span>. When this limit exists, f is <b>differentiable</b> at x and f′(x) is the slope of the tangent line there. Doing this at every x produces a new function f′, the <b>derivative function</b>, and its graph is built from the slopes of the original.</p>
+        <p>Differentiable means smooth: no corner, no cusp, no vertical tangent, no jump. A corner has two different one-sided slopes. A vertical tangent has an infinite slope. A discontinuity has no tangent at all. <b>Differentiable ⇒ continuous</b>, but not the other way: |x| is continuous at 0 and not differentiable there.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>the slope was a single number you got from two points</dd><dt>So we didn't need</dt><dd>the slope at every x, as a function</dd><dt>Now</dt><dd>this is the central object of Units 2–5</dd><dt>So we need</dt><dd>the derivative defined by a limit, and the idea of "differentiable"</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>f′(x) = lim<sub>h→0</sub> [f(x+h) − f(x)] / h</span><small>definition</small></div><div class="eqn"><span>f′(a) = lim<sub>x→a</sub> [f(x) − f(a)] / (x − a)</span><small>same, one point</small></div><div class="eqn"><span>differentiable ⇒ continuous</span><small>not the converse</small></div></div>
+      <div class="lab" id="dv-lab">
+        <div class="labbar"><span class="title">Slope at every point</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="dv-fn" role="group" aria-label="Function"><button type="button" data-k="sq" aria-pressed="true">x²</button><button type="button" data-k="abs" aria-pressed="false">|x|</button><button type="button" data-k="cr" aria-pressed="false">∛x</button><button type="button" data-k="st" aria-pressed="false">step</button></div></div>
+        <canvas id="dv-canvas" aria-label="Top graph: the function with a tangent line at a draggable point. Bottom graph: the slope function, with a matching point."></canvas>
+        <canvas id="dv-canvas2" aria-label="Graph of the derivative: the slope of the top graph at each x."></canvas>
+        <div class="controls"><div class="ctl"><label for="dv-x"><span>Point x</span> <output id="dv-x-out"></output></label><input type="range" id="dv-x" min="-2.5" max="2.5" step="0.05" value="1"></div></div>
+        <div class="readout"><div><span>slope from the left</span><strong class="x" id="dv-sl">—</strong></div><div><span>slope from the right</span><strong class="a" id="dv-sr">—</strong></div><div><span>differentiable here?</span><strong class="v" id="dv-ok">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose <b>|x|</b> and slide x through 0. What does the slope graph do at 0? <button type="button" class="btn link" data-show='[["click", "#dv-fn [data-k=abs]"], ["#dv-x", 0]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The left slope is −1 and the right slope is +1, so there is no single slope at 0: the derivative graph jumps. A corner is not differentiable.</p></details></li>
+        <li><p>Choose <b>∛x</b> and move toward 0. What happens to the slope? <button type="button" class="btn link" data-show='[["click", "#dv-fn [data-k=cr]"], ["#dv-x", 0.1]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The slope grows without bound as x → 0 (the tangent becomes vertical), so f′(0) does not exist even though the function is continuous.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Use the definition to find f′(x) for f(x) = x².</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Write the quotient.</b> f′(x) = lim (f(x + h) − f(x))/h = lim ((x + h)² − x²)/h.</li>
+          <li hidden><b>Expand.</b> (x + h)² − x² = 2xh + h².</li>
+          <li hidden><b>Factor out h.</b> (2xh + h²)/h = 2x + h (for h ≠ 0).</li>
+          <li hidden><b>Take the limit.</b> lim<sub>h→0</sub> (2x + h) = 2x.</li>
+          <li hidden><b>Answer.</b> f′(x) = <b>2x</b>. At x = 3 the slope is 6.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Plugging h = 0 into the quotient before simplifying: it is 0/0.</li>
+        <li>Forgetting to expand (x + h)² as x² + 2xh + h².</li>
+        <li>Believing continuous means differentiable (|x| is the counterexample).</li>
+        <li>Writing f′(x) = limit "= 0" when the numerator goes to zero: the denominator goes to zero too.</li>
+        <li>Calling the derivative at a point a function. f′(a) is a number; f′(x) is a function.</li>
+      </ul></div>
+      <div class="prose"><h2>Notation</h2>
+        <p>f′(x), y′, dy/dx and d/dx[f(x)] all mean the same derivative. Leibniz's dy/dx reminds you it is a ratio of tiny changes (change in y over change in x). f′(a) means "evaluate the derivative function at x = a".</p>
+      </div>
+      <div class="quiz" data-correct="1" data-explain="|x| has a corner at 0: the left slope is −1 and the right slope is 1.">
+        <p class="q">Check yourself: Which function is continuous at 0 but not differentiable at 0?</p>
+        <div class="opts"><button type="button">x²</button><button type="button">|x|</button><button type="button">x³</button><button type="button">sin x</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-rules" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 2</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Power, sum & constant-multiple rules</h1>
+        <p class="lede">You will not use the limit definition every time. A few rules let you differentiate polynomials, roots and reciprocals almost instantly.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p><b>Power rule:</b> <span class="m">d/dx [x<sup>n</sup>] = n x<sup>n−1</sup></span>. Bring the exponent down in front and lower the exponent by one. It works for every real n: x³, √x = x<sup>1/2</sup>, and 1/x² = x<sup>−2</sup>.</p>
+        <p><b>Constants and sums:</b> constants multiply through, <span class="m">(c·f)′ = c·f′</span>, and sums differentiate term by term, <span class="m">(f + g)′ = f′ + g′</span>. The derivative of a constant is 0, because a flat line has slope 0. Rewrite roots and fractions as powers first.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>every derivative needed the limit definition</dd><dt>So we didn't need</dt><dd>a shortcut for powers of x</dd><dt>Now</dt><dd>polynomials, roots and reciprocals everywhere</dd><dt>So we need</dt><dd>the power, sum and constant-multiple rules</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>d/dx [x<sup>n</sup>] = n x<sup>n−1</sup></span><small>power rule</small></div><div class="eqn"><span>(c f)′ = c f′</span><small>constant multiple</small></div><div class="eqn"><span>(f ± g)′ = f′ ± g′</span><small>sum</small></div><div class="eqn"><span>d/dx [c] = 0</span><small>constant</small></div></div>
+      <div class="lab" id="ru-lab">
+        <div class="labbar"><span class="title">The power rule, checked</span></div>
+        <canvas id="ru-canvas" aria-label="Graph of x to the n in blue, its derivative n x to the n minus 1 in green, and the tangent at a point."></canvas>
+        <div class="controls"><div class="ctl"><label for="ru-n"><span>Exponent n</span> <output id="ru-n-out"></output></label><input type="range" id="ru-n" min="-2" max="4" step="0.5" value="3"></div><div class="ctl"><label for="ru-x"><span>Point x</span> <output id="ru-x-out"></output></label><input type="range" id="ru-x" min="0.3" max="2.5" step="0.05" value="1.5"></div></div>
+        <div class="readout"><div><span>f(x) = xⁿ</span><strong class="x" id="ru-f">—</strong></div><div><span>f′(x) = n·xⁿ⁻¹</span><strong class="v" id="ru-d">—</strong></div><div><span>slope from the graph (numeric)</span><strong class="a" id="ru-num">—</strong></div></div>
+      </div>
+      <div class="lab" id="ru-lab2">
+        <div class="labbar"><span class="title">Build a polynomial, differentiate it</span></div>
+        <p class="small" id="ru-eq" style="margin:0"></p>
+        <canvas id="ru-canvas2" aria-label="A cubic polynomial with adjustable coefficients, its derivative, and the tangent at a point."></canvas>
+        <div class="controls"><div class="ctl"><label for="ru-a"><span>a (x³ coefficient)</span> <output id="ru-a-out"></output></label><input type="range" id="ru-a" min="-2" max="2" step="0.25" value="0.5"></div><div class="ctl"><label for="ru-b"><span>b (x² coefficient)</span> <output id="ru-b-out"></output></label><input type="range" id="ru-b" min="-3" max="3" step="0.5" value="-1"></div><div class="ctl"><label for="ru-c"><span>c (x coefficient)</span> <output id="ru-c-out"></output></label><input type="range" id="ru-c" min="-4" max="4" step="0.5" value="-1"></div><div class="ctl"><label for="ru-px"><span>Point x</span> <output id="ru-px-out"></output></label><input type="range" id="ru-px" min="-3" max="3" step="0.1" value="1"></div></div>
+        <div class="readout"><div><span>f′(x) by the rules</span><strong class="v" id="ru-fx">—</strong></div><div><span>f′ at the point</span><strong class="x" id="ru-slope">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Set n = 2 and x = 1.5. What are the formula and the graph's slope? <button type="button" class="btn link" data-show='[["#ru-n", 2], ["#ru-x", 1.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>f′(x) = 2x, so the slope at 1.5 is 3. The numeric slope agrees: the rule is the shortcut for the limit.</p></details></li>
+        <li><p>Set n = 0.5 (a square root). What is f′ at x = 1? <button type="button" class="btn link" data-show='[["#ru-n", 0.5], ["#ru-x", 1]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>f′(x) = ½x<sup>−1/2</sup> = 1/(2√x), so f′(1) = 0.5. The square root flattens as x grows.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Differentiate f(x) = 4x³ − 6√x + 5/x² + 7.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Rewrite as powers.</b> f(x) = 4x³ − 6x<sup>1/2</sup> + 5x<sup>−2</sup> + 7.</li>
+          <li hidden><b>Differentiate each term.</b> 4·3x² = 12x²; −6·(1/2)x<sup>−1/2</sup> = −3x<sup>−1/2</sup>; 5·(−2)x<sup>−3</sup> = −10x<sup>−3</sup>; the constant 7 goes to 0.</li>
+          <li hidden><b>Answer.</b> f′(x) = <b>12x² − 3x<sup>−1/2</sup> − 10x<sup>−3</sup></b>, or 12x² − 3/√x − 10/x³.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 3</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Differentiating a constant as if it had an x: the derivative of 7 is 0, and of 7x is 7.</li>
+        <li>Forgetting to lower the exponent, writing (x³)′ = 3x³.</li>
+        <li>Applying the power rule to eˣ or 2ˣ. The variable is in the exponent there: a different rule.</li>
+        <li>Not rewriting 1/x² or √x as powers before differentiating.</li>
+        <li>Splitting a product or quotient term by term. (x²·x³)′ is not (x²)′·(x³)′.</li>
+      </ul></div>
+      <div class="prose"><h2>Why it works</h2>
+        <p>The derivative of x² is 2x (you saw it from the definition). For x³ expand (x + h)³ = x³ + 3x²h + 3xh² + h³, subtract x³, divide by h and let h → 0: 3x². The pattern n x<sup>n−1</sup> comes from the binomial expansion, and it holds for every real n.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="4·3 = 12 on x³; the derivative of −2x is −2; the derivative of 9 is 0.">
+        <p class="q">Check yourself: d/dx [3x⁴ − 2x + 9] =</p>
+        <div class="opts"><button type="button">12x³ − 2</button><button type="button">12x³ − 2x</button><button type="button">3x³ − 2</button><button type="button">12x³ − 2 + 9</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-transder" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 2</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Trig, e^x and ln x derivatives</h1>
+        <p class="lede">Four functions to memorize once: the slopes of sine, cosine, e<sup>x</sup> and ln x.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Here is the pattern worth seeing. The slope of sin x is cos x: sine climbs fastest at 0 (slope 1 = cos 0) and is flat at its peaks (slope 0 = cos π/2). The slope of cos x is <b>−sin x</b>: cosine starts flat, then falls. The slope of e<sup>x</sup> is e<sup>x</sup>: the one function whose slope equals its height. The slope of ln x is <b>1/x</b>: steep near 0, flatter and flatter after.</p>
+        <p>tan x, cot x, sec x and csc x follow from the quotient rule. The three with "co" in their names get minus signs. These derivatives need radians.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>we could differentiate only powers of x</dd><dt>So we didn't need</dt><dd>memorized derivatives for the other basic functions</dd><dt>Now</dt><dd>every model with oscillation or growth</dd><dt>So we need</dt><dd>the derivatives of trig, exponential and log functions</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>(sin x)′ = cos x · (cos x)′ = −sin x</span><small>trig</small></div><div class="eqn"><span>(tan x)′ = sec²x</span><small>and sec, csc, cot below</small></div><div class="eqn"><span>(e<sup>x</sup>)′ = e<sup>x</sup> · (a<sup>x</sup>)′ = a<sup>x</sup> ln a</span><small>exponentials</small></div><div class="eqn"><span>(ln x)′ = 1/x</span><small>x &gt; 0</small></div></div>
+      <div class="lab" id="td-lab">
+        <div class="labbar"><span class="title">Guess the slope function</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="td-fn" role="group" aria-label="Function"><button type="button" data-k="sin" aria-pressed="true">sin x</button><button type="button" data-k="cos" aria-pressed="false">cos x</button><button type="button" data-k="exp" aria-pressed="false">eˣ</button><button type="button" data-k="ln" aria-pressed="false">ln x</button><button type="button" data-k="tan" aria-pressed="false">tan x</button></div></div>
+        <label class="check"><input type="checkbox" id="td-show"> Show the slope function f′ (predict it first!)</label>
+        <canvas id="td-canvas" aria-label="Top graph: the chosen function with a tangent. Bottom graph: the slope function, which can be hidden."></canvas>
+        <canvas id="td-canvas2" aria-label="Graph of the derivative of the chosen function, hidden until you tick the box."></canvas>
+        <div class="controls"><div class="ctl"><label for="td-x"><span>Point x</span> <output id="td-x-out"></output></label><input type="range" id="td-x" min="0.2" max="3" step="0.05" value="1"></div></div>
+        <div class="readout"><div><span>slope at x (numeric)</span><strong class="x" id="td-sl">—</strong></div><div><span>f′(x) by formula</span><strong class="v" id="td-fx">—</strong></div><div><span>the rule</span><strong class="" id="td-form">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose <b>sin x</b>, find where the tangent is flat, and predict f′ there. <button type="button" class="btn link" data-show='[["click", "#td-fn [data-k=sin]"], ["#td-x", 1.5708]]'>x = π/2</button></p><details><summary>What you should see</summary><p>At the peak (x = π/2) the tangent is flat, so f′ = 0, and cos(π/2) = 0. The slope graph is the cosine curve.</p></details></li>
+        <li><p>Choose <b>eˣ</b> and tick the box. What do you notice about the two graphs? <button type="button" class="btn link" data-show='[["click", "#td-fn [data-k=exp]"], ["#td-show", true]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>They are identical. Wherever the curve has height h its slope is h too. That is what makes e special.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Differentiate f(x) = 3 sin x − 2e<sup>x</sup> + 5 ln x, and find f′(1).</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Term by term.</b> (3 sin x)′ = 3 cos x; (−2e<sup>x</sup>)′ = −2e<sup>x</sup>; (5 ln x)′ = 5/x.</li>
+          <li hidden><b>Combine.</b> f′(x) = 3 cos x − 2e<sup>x</sup> + 5/x.</li>
+          <li hidden><b>Evaluate at 1.</b> 3 cos 1 − 2e + 5 = 3(0.5403) − 2(2.7183) + 5 = 1.6209 − 5.4366 + 5 ≈ <b>1.184</b> (radians).</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 3</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Writing (cos x)′ = sin x. The sign is minus: −sin x.</li>
+        <li>Using degrees on the calculator. The rules assume radians.</li>
+        <li>Writing (e<sup>x</sup>)′ = x e<sup>x−1</sup>. The power rule needs the variable in the base.</li>
+        <li>Writing (ln x)′ = ln x or x. It is 1/x.</li>
+        <li>Forgetting (a<sup>x</sup>)′ = a<sup>x</sup> ln a for other bases.</li>
+      </ul></div>
+      <div class="prose"><h2>The other trig derivatives</h2>
+        <p>(tan x)′ = sec²x, (cot x)′ = −csc²x, (sec x)′ = sec x tan x, (csc x)′ = −csc x cot x. You can get all of them from the quotient rule on sin and cos, but they are common enough to memorize.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Cosine falls from 1 at the start, so its slope is negative: −sin x.">
+        <p class="q">Check yourself: (cos x)′ =</p>
+        <div class="opts"><button type="button">−sin x</button><button type="button">sin x</button><button type="button">−cos x</button><button type="button">1/x</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-prodquot" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 2</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Product & quotient rules</h1>
+        <p class="lede">The derivative of a product is not the product of the derivatives. Here is what it is, and why the naive answer fails.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>If f = u·v, change in f has two parts: u changes while v stays, and v changes while u stays. That gives <span class="m">(uv)′ = u′v + uv′</span>: "derivative of the first times the second, plus the first times the derivative of the second". For a quotient, <span class="m">(u/v)′ = (u′v − uv′)/v²</span>: low d-high minus high d-low over low squared.</p>
+        <p>You can check that (uv)′ ≠ u′v′ with any example: for u = v = x, uv = x² has derivative 2x, but u′v′ = 1. Watch the lab: the naive answer drifts away from the true slope.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>we differentiated one term at a time</dd><dt>So we didn't need</dt><dd>a rule for products and for quotients</dd><dt>Now</dt><dd>functions like x² sin x and (x + 1)/(x − 2)</dd><dt>So we need</dt><dd>the product and quotient rules</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>(uv)′ = u′v + uv′</span><small>product</small></div><div class="eqn"><span>(u/v)′ = (u′v − uv′) / v²</span><small>quotient</small></div><div class="eqn"><span>(uv)′ ≠ u′v′</span><small>the common error</small></div></div>
+      <div class="lab" id="pq-lab">
+        <div class="labbar"><span class="title">True derivative vs the tempting wrong one</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="pq-fn" role="group" aria-label="Function"><button type="button" data-k="a" aria-pressed="true">x²·sin x</button><button type="button" data-k="b" aria-pressed="false">x·eˣ</button><button type="button" data-k="c" aria-pressed="false">sin x / x</button><button type="button" data-k="d" aria-pressed="false">(x²+1)/(x−1)</button></div></div>
+        <p class="small" id="pq-form" style="margin:0"></p>
+        <canvas id="pq-canvas" aria-label="Graph of the function in blue, the correct derivative in green and the incorrect product of derivatives in orange dashed."></canvas>
+        <div class="controls"><div class="ctl"><label for="pq-x"><span>Point x</span> <output id="pq-x-out"></output></label><input type="range" id="pq-x" min="0.3" max="3" step="0.05" value="1.5"></div></div>
+        <div class="readout"><div><span>correct rule</span><strong class="v" id="pq-ok">—</strong></div><div><span>slope from the graph (numeric)</span><strong class="x" id="pq-num">—</strong></div><div><span>naive u′·v′ (or u′/v′)</span><strong class="a" id="pq-bad">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose <b>x·eˣ</b> at x = 1.5. Compare the three numbers. <button type="button" class="btn link" data-show='[["click", "#pq-fn [data-k=b]"], ["#pq-x", 1.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The product rule matches the numeric slope (about 11.2); the naive u′v′ gives e<sup>1.5</sup> ≈ 4.48. Only the product rule is right.</p></details></li>
+        <li><p>Choose the quotient <b>sin x / x</b> and compare. <button type="button" class="btn link" data-show='[["click", "#pq-fn [data-k=c]"], ["#pq-x", 2]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>(x cos x − sin x)/x² agrees with the numeric slope. Dividing the derivatives (cos x / 1) does not.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Differentiate f(x) = x² eˣ and g(x) = (x + 1)/(x − 2).</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Product rule on f.</b> u = x², v = eˣ, so u′ = 2x, v′ = eˣ. f′ = 2x·eˣ + x²·eˣ = eˣ(x² + 2x).</li>
+          <li hidden><b>Quotient rule on g.</b> u = x + 1, v = x − 2, so u′ = 1, v′ = 1. g′ = (1·(x − 2) − (x + 1)·1)/(x − 2)².</li>
+          <li hidden><b>Simplify the top.</b> (x − 2) − (x + 1) = −3.</li>
+          <li hidden><b>Answer.</b> f′(x) = <b>eˣ(x² + 2x)</b> and g′(x) = <b>−3/(x − 2)²</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Writing (uv)′ = u′v′. It misses half of the change.</li>
+        <li>Getting the quotient numerator in the wrong order: it is u′v − uv′ (low d-high minus high d-low).</li>
+        <li>Forgetting to square the denominator.</li>
+        <li>Using the quotient rule when the denominator is a constant. Just pull the constant out.</li>
+        <li>Not simplifying: factor and cancel if you can.</li>
+      </ul></div>
+      <div class="prose"><h2>Why the product rule has two terms</h2>
+        <p>A rectangle with sides u and v has area uv. If both sides grow, the area gains a strip along each side: u′v from stretching one side and uv′ from stretching the other. The tiny corner u′v′ is second order and vanishes in the limit.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="(x)′ sin x + x (sin x)′ = sin x + x cos x.">
+        <p class="q">Check yourself: d/dx [x sin x] =</p>
+        <div class="opts"><button type="button">sin x + x cos x</button><button type="button">cos x</button><button type="button">x cos x</button><button type="button">sin x + cos x</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-chain" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 3</span><span class="tag">AB &amp; BC</span></div>
+        <h1>The chain rule</h1>
+        <p class="lede">When one function sits inside another, rates multiply: the speed of the outer function times the speed of the inner one.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Picture a chain of gears. If gear A turns 3 times as fast as gear B, and gear B turns twice as fast as gear C, then A turns 3 × 2 = 6 times as fast as C. A composite function <span class="m">y = f(g(x))</span> works the same way: as x changes, <span class="m">u = g(x)</span> changes at rate g′(x), and y changes with u at rate f′(u). Multiply them.</p>
+        <p>So <span class="m">d/dx f(g(x)) = f′(g(x)) · g′(x)</span>: <b>differentiate the outside, leave the inside alone, then multiply by the derivative of the inside</b>. Leibniz writes it so it looks like cancelling: dy/dx = (dy/du)(du/dx).</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>each rule handled one function at a time</dd><dt>So we didn't need</dt><dd>a way through nested functions</dd><dt>Now</dt><dd>sin(x²), e^{3x}, (2x + 1)⁵ and √(x² + 1) all need it</dd><dt>So we need</dt><dd>the chain rule</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>(f∘g)′(x) = f′(g(x)) · g′(x)</span><small>chain rule</small></div><div class="eqn"><span>dy/dx = (dy/du)(du/dx)</span><small>Leibniz form</small></div><div class="eqn"><span>d/dx [f(u)] = f′(u) · u′</span><small>shorthand</small></div></div>
+      <div class="lab" id="ch-lab">
+        <div class="labbar"><span class="title">Two rates, multiplied</span></div>
+        <div class="ctl"><span class="lbl">Composite</span><div class="seg" id="ch-fn" role="group" aria-label="Composite"><button type="button" data-k="a" aria-pressed="true">sin(x²)</button><button type="button" data-k="b" aria-pressed="false">(3x+1)⁴</button><button type="button" data-k="c" aria-pressed="false">e²ˣ</button><button type="button" data-k="d" aria-pressed="false">√(x²+1)</button></div></div>
+        <p class="small" id="ch-form" style="margin:0"></p>
+        <canvas id="ch-canvas" aria-label="Left graph: the inner function u = g(x) with its tangent. Right graph: the outer function f(u) with its tangent at the matching point."></canvas>
+        <canvas id="ch-canvas2" aria-label="The outer function f against u, with the tangent at u = g(x)."></canvas>
+        <div class="controls"><div class="ctl"><label for="ch-x"><span>Point x</span> <output id="ch-x-out"></output></label><input type="range" id="ch-x" min="-1.5" max="1.5" step="0.05" value="0.8"></div></div>
+        <div class="readout"><div><span>g′(x): inner rate</span><strong class="a" id="ch-gp">—</strong></div><div><span>f′(g(x)): outer rate</span><strong class="v" id="ch-fp">—</strong></div><div><span>product</span><strong class="x" id="ch-prod">—</strong></div><div><span>numeric slope of f(g(x))</span><strong class="" id="ch-num">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose <b>e²ˣ</b>. What are the two rates at any x, and what do they give? <button type="button" class="btn link" data-show='[["click", "#ch-fn [data-k=c]"], ["#ch-x", 0.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The inner rate is always 2, the outer rate is e<sup>2x</sup>: the product 2e<sup>2x</sup> matches the numeric slope. The factor 2 is what the chain rule adds.</p></details></li>
+        <li><p>Choose <b>(3x+1)⁴</b> and change x. Which factor is always the same? <button type="button" class="btn link" data-show='[["click", "#ch-fn [data-k=b]"]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The inner rate 3. The outer rate 4u³ depends on x, but the inner rate does not, so the derivative is 4(3x+1)³·3 = 12(3x + 1)³.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Differentiate f(x) = sin(x²) and g(x) = (3x + 1)⁵.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Name the layers.</b> For f: outer = sin u, inner = u = x². For g: outer = u⁵, inner = u = 3x + 1.</li>
+          <li hidden><b>Differentiate the outside, keep the inside.</b> f′ = cos(x²) · (x²)′. g′ = 5(3x + 1)⁴ · (3x + 1)′.</li>
+          <li hidden><b>Multiply by the derivative of the inside.</b> (x²)′ = 2x and (3x + 1)′ = 3.</li>
+          <li hidden><b>Answer.</b> f′(x) = <b>2x cos(x²)</b>; g′(x) = <b>15(3x + 1)⁴</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Forgetting the inside derivative: (sin x²)′ is not cos x².</li>
+        <li>Changing the inside when differentiating the outside. cos(x²) keeps x² as it is.</li>
+        <li>Applying the power rule to eˣ-type functions: (e<sup>3x</sup>)′ = 3e<sup>3x</sup>, not 3x e<sup>3x−1</sup>.</li>
+        <li>Stopping early on layers: √(sin(x²)) has three layers.</li>
+        <li>Mixing up the order of composition when evaluating at a point: you need g(a) first, then f′(g(a)).</li>
+      </ul></div>
+      <div class="prose"><h2>Several layers</h2>
+        <p>For three layers, y = f(g(h(x))), multiply three rates: f′(g(h(x)))·g′(h(x))·h′(x). Work from the outside in, one layer at a time, and write each step.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Outer e^u gives e^(x²); the inside x² has derivative 2x.">
+        <p class="q">Check yourself: d/dx [e<sup>x²</sup>] =</p>
+        <div class="opts"><button type="button">2x e<sup>x²</sup></button><button type="button">e<sup>x²</sup></button><button type="button">x² e<sup>x²−1</sup></button><button type="button">2e<sup>x</sup></button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-implicit" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 3</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Implicit differentiation</h1>
+        <p class="lede">Some curves, like a circle, cannot be written as y = f(x). You can still find their slopes by differentiating both sides and treating y as a function of x.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>The circle <span class="m">x² + y² = 25</span> is not a single function (each x has two y values), but near any point it <i>behaves</i> like one. Differentiate both sides with respect to x. The key: whenever you differentiate something with y in it, use the chain rule and write <b>dy/dx</b>, because y depends on x.</p>
+        <p>For the circle: <span class="m">2x + 2y·dy/dx = 0</span>, so <span class="m">dy/dx = −x/y</span>. The slope depends on both x and y: you need the point. At (3, 4) the slope is −3/4: the tangent heads down to the right, as a circle does in its upper right.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>y was always given as a formula in x</dd><dt>So we didn't need</dt><dd>a way to find slopes of curves without solving for y</dd><dt>Now</dt><dd>circles, ellipses and any equation tangled in x and y</dd><dt>So we need</dt><dd>implicit differentiation: differentiate, treat y as y(x), solve for dy/dx</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>d/dx [y²] = 2y · dy/dx</span><small>chain rule on y</small></div><div class="eqn"><span>d/dx [xy] = y + x · dy/dx</span><small>product rule</small></div><div class="eqn"><span>solve for dy/dx</span><small>collect the dy/dx terms</small></div></div>
+      <div class="lab" id="im-lab">
+        <div class="labbar"><span class="title">A slope you can see</span></div>
+        <div class="ctl"><span class="lbl">Curve</span><div class="seg" id="im-fn" role="group" aria-label="Curve"><button type="button" data-k="circ" aria-pressed="true">x² + y² = 9</button><button type="button" data-k="ell" aria-pressed="false">x² + 4y² = 4</button><button type="button" data-k="hyp" aria-pressed="false">xy = 4</button><button type="button" data-k="cub" aria-pressed="false">y² = x³ − x + 1</button></div></div>
+        <label class="check"><input type="checkbox" id="im-low"> Use the lower branch</label><p class="small" id="im-form" style="margin:0"></p>
+        <canvas id="im-canvas" aria-label="A curve defined by an equation, a point on it, and the tangent line with slope given by implicit differentiation."></canvas>
+        <div class="controls"><div class="ctl"><label for="im-x"><span>x of the point</span> <output id="im-x-out"></output></label><input type="range" id="im-x" min="-2" max="2.9" step="0.05" value="1.5"></div></div>
+        <div class="readout"><div><span>point (x, y)</span><strong class="x" id="im-pt">—</strong></div><div><span>dy/dx from the formula</span><strong class="v" id="im-sl">—</strong></div><div><span>slope measured on the curve</span><strong class="a" id="im-num">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>On the circle, move to x = 3 on the upper branch. What is the slope? <button type="button" class="btn link" data-show='[["click", "#im-fn [data-k=circ]"], ["#im-x", 2.4], ["#im-low", false]]'>x = 2.4</button></p><details><summary>What you should see</summary><p>At x = 2.4 the point is (2.4, 1.8), and dy/dx = −x/y = −2.4/1.8 = −1.33. The tangent falls to the right.</p></details></li>
+        <li><p>Switch to the lower branch at the same x. What happens to the slope? <button type="button" class="btn link" data-show='[["click", "#im-fn [data-k=circ]"], ["#im-x", 2.4], ["#im-low", true]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>y is now negative, so −x/y is positive: the lower right of a circle slopes up. Same x, opposite slope, because the formula needs y too.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find dy/dx for x² + y² = 25 and the slope at (3, 4). Then find dy/dx for x²y + y³ = 10.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Differentiate both sides.</b> d/dx[x²] + d/dx[y²] = d/dx[25] gives 2x + 2y·y′ = 0.</li>
+          <li hidden><b>Solve for y′.</b> 2y·y′ = −2x, so y′ = −x/y. At (3, 4): <b>−3/4</b>.</li>
+          <li hidden><b>Second curve, product rule on x²y.</b> 2xy + x²y′ + 3y²y′ = 0.</li>
+          <li hidden><b>Collect the y′ terms.</b> y′(x² + 3y²) = −2xy.</li>
+          <li hidden><b>Answer.</b> y′ = <b>−2xy/(x² + 3y²)</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Forgetting dy/dx after differentiating a y term: (y²)′ is 2y·y′, not 2y.</li>
+        <li>Not using the product rule on mixed terms like xy.</li>
+        <li>Dropping y from the answer. Leave it in; the formula depends on both coordinates.</li>
+        <li>Not isolating dy/dx: collect every y′ term on one side, factor and divide.</li>
+        <li>Substituting the point too early. Differentiate first, then substitute.</li>
+      </ul></div>
+      <div class="prose"><h2>Why it works</h2>
+        <p>Near a point on the curve, y is some function of x, even if you cannot write it down. Differentiating an equation that is true for all nearby (x, y) gives another true equation. The chain rule is just the way to differentiate y² = (y(x))² with respect to x.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Chain rule: derivative of the outside (3y²) times the derivative of the inside (dy/dx).">
+        <p class="q">Check yourself: d/dx [y³] with respect to x equals</p>
+        <div class="opts"><button type="button">3y² dy/dx</button><button type="button">3y²</button><button type="button">y³ dy/dx</button><button type="button">3y² dx/dy</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-invfn" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 3</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Inverse functions & inverse trig</h1>
+        <p class="lede">If f turns a into b, its inverse turns b back into a. Their slopes at matching points are reciprocals, and that fact gives the derivatives of ln, arcsin and arctan.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>The graph of f⁻¹ is the graph of f reflected over the line y = x. A reflection swaps the roles of rise and run, so a tangent of slope m at (a, b) becomes a tangent of slope <span class="m">1/m</span> at (b, a). That is the rule: <span class="m">(f⁻¹)′(b) = 1 / f′(a)</span> where <span class="m">f(a) = b</span>.</p>
+        <p>Use it on f(x) = sin x to get <span class="m">(arcsin x)′ = 1/√(1 − x²)</span>, and on tan x to get <span class="m">(arctan x)′ = 1/(1 + x²)</span>. The AP course asks for arcsin, arccos and arctan.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>inverses were just "undo" functions</dd><dt>So we didn't need</dt><dd>their slopes are linked</dd><dt>Now</dt><dd>arcsin, arctan and ln have clean derivatives</dd><dt>So we need</dt><dd>the derivative of an inverse function</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>(f⁻¹)′(b) = 1 / f′(a), f(a) = b</span><small>inverse function derivative</small></div><div class="eqn"><span>(arcsin x)′ = 1/√(1−x²)</span><small>−1/√(1−x²) for arccos</small></div><div class="eqn"><span>(arctan x)′ = 1/(1+x²)</span><small></small></div></div>
+      <div class="lab" id="iv-lab">
+        <div class="labbar"><span class="title">Reflect a tangent line</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="iv-fn" role="group" aria-label="Function"><button type="button" data-k="ex" aria-pressed="true">eˣ</button><button type="button" data-k="cu" aria-pressed="false">x³ + x</button><button type="button" data-k="sn" aria-pressed="false">sin x</button><button type="button" data-k="sq" aria-pressed="false">x² (x ≥ 0)</button></div></div>
+        <canvas id="iv-canvas" aria-label="A function and its inverse as mirror images across y = x, with tangent lines at matching points."></canvas>
+        <div class="controls"><div class="ctl"><label for="iv-a"><span>a</span> <output id="iv-a-out"></output></label><input type="range" id="iv-a" min="-1.5" max="1.5" step="0.05" value="0.6"></div></div>
+        <div class="readout"><div><span>f′(a)</span><strong class="x" id="iv-m">—</strong></div><div><span>(f⁻¹)′(f(a))</span><strong class="a" id="iv-mi">—</strong></div><div><span>product</span><strong class="v" id="iv-prod">—</strong></div></div>
+      </div>
+      <div class="lab" id="iv-lab2">
+        <div class="labbar"><span class="title">Inverse trig derivatives</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="iv-tr" role="group" aria-label="Function"><button type="button" data-k="as" aria-pressed="true">arcsin x</button><button type="button" data-k="ac" aria-pressed="false">arccos x</button><button type="button" data-k="at" aria-pressed="false">arctan x</button></div></div>
+        <p class="small" id="iv-form" style="margin:0"></p>
+        <canvas id="iv-canvas2" aria-label="An inverse trig function in blue with its derivative in green."></canvas>
+        <div class="controls"><div class="ctl"><label for="iv-x"><span>x</span> <output id="iv-x-out"></output></label><input type="range" id="iv-x" min="-0.95" max="0.95" step="0.05" value="0.5"></div></div>
+        <div class="readout"><div><span>slope at x (numeric)</span><strong class="x" id="iv-sl">—</strong></div><div><span>formula value</span><strong class="v" id="iv-fm">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>On eˣ, find the product f′(a)·(f⁻¹)′. <button type="button" class="btn link" data-show='[["click", "#iv-fn [data-k=ex]"], ["#iv-a", 0.6]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Always 1: the slopes are reciprocals. At a = 0.6, f′ = e^0.6 ≈ 1.82, and the inverse (ln) has slope 1/1.82 ≈ 0.55 at the matching point.</p></details></li>
+        <li><p>On arcsin x, move x toward 1. What happens to the slope? <button type="button" class="btn link" data-show='[["click", "#iv-tr [data-k=as]"], ["#iv-x", 0.95]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>It grows large: arcsin has a vertical tangent at x = 1, matching 1/√(1 − x²) → ∞. The sine curve is flat there, so its inverse is steep.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">If f(x) = x³ + x, find (f⁻¹)′(10).</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Find a.</b> We need f(a) = 10. Try a = 2: 8 + 2 = 10. ✓</li>
+          <li hidden><b>Differentiate f.</b> f′(x) = 3x² + 1, so f′(2) = 13.</li>
+          <li hidden><b>Reciprocal.</b> (f⁻¹)′(10) = 1/f′(2).</li>
+          <li hidden><b>Answer.</b> <b>1/13</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Evaluating f′ at b instead of at a. You need the x that f sends to b.</li>
+        <li>Writing (f⁻¹)′ = 1/f′(x) without the inverse in the argument: it is 1/f′(f⁻¹(b)).</li>
+        <li>Confusing f⁻¹ with 1/f.</li>
+        <li>Forgetting the domain restrictions for inverse trig.</li>
+        <li>Dropping the chain rule: d/dx arctan(2x) = 2/(1 + 4x²), not 1/(1 + 4x²).</li>
+      </ul></div>
+      <div class="prose"><h2>Why arcsin has that derivative</h2>
+        <p>Let y = arcsin x, so sin y = x. Differentiate implicitly: cos y · y′ = 1, so y′ = 1/cos y. With y between −π/2 and π/2, cos y = √(1 − sin²y) = √(1 − x²).</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Reciprocal of the slope at the matching point: 1/f′(2) = 1/4.">
+        <p class="q">Check yourself: If f(2) = 5 and f′(2) = 4, then (f⁻¹)′(5) =</p>
+        <div class="opts"><button type="button">1/4</button><button type="button">4</button><button type="button">1/5</button><button type="button">5/4</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-higher" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 3</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Higher-order derivatives & choosing a rule</h1>
+        <p class="lede">Differentiate again and you get the rate at which the slope changes. Then practise the skill that matters most on the exam: picking the right rule.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>The <b>second derivative</b> f″ is the derivative of f′. If f is position, f′ is velocity and f″ is acceleration. If f′ is slope, f″ tells you how the slope is changing: positive means the slope is increasing (the curve bends up), negative means it bends down. You will use this in Unit 5 to find concavity.</p>
+        <p>With more rules, the real skill is <b>choosing</b>. Look at the outermost operation first: is the whole expression a sum, a product, a quotient, or a function of something? That operation is the rule you apply first.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>one derivative per function</dd><dt>So we didn't need</dt><dd>f″, f‴ and a method for picking the right rule</dd><dt>Now</dt><dd>acceleration, concavity and the shapes of graphs</dd><dt>So we need</dt><dd>repeated differentiation, and a decision procedure</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>f″ = (f′)′</span><small>second derivative</small></div><div class="eqn"><span>d²y/dx² · f⁽ⁿ⁾</span><small>notation</small></div><div class="eqn"><span>sum → product → quotient → chain</span><small>look at the outermost operation first</small></div></div>
+      <div class="lab" id="hi-lab">
+        <div class="labbar"><span class="title">Height, slope and bend</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="hi-fn" role="group" aria-label="Function"><button type="button" data-k="a" aria-pressed="true">x³ − 3x</button><button type="button" data-k="b" aria-pressed="false">sin x</button><button type="button" data-k="c" aria-pressed="false">x⁴ − 2x²</button><button type="button" data-k="d" aria-pressed="false">eˣ</button></div></div>
+        <canvas id="hi-canvas" aria-label="Three stacked graphs: f, its derivative f prime, and its second derivative f double prime, with matching points."></canvas>
+        <div class="controls"><div class="ctl"><label for="hi-x"><span>Point x</span> <output id="hi-x-out"></output></label><input type="range" id="hi-x" min="-2" max="2" step="0.05" value="0.5"></div></div>
+        <div class="readout"><div><span>f(x): height</span><strong class="x" id="hi-f">—</strong></div><div><span>f′(x): slope</span><strong class="v" id="hi-d">—</strong></div><div><span>f″(x): bend</span><strong class="a" id="hi-dd">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose <b>x³ − 3x</b> and slide x to 0. What is f″ there, and what does the curve do? <button type="button" class="btn link" data-show='[["click", "#hi-fn [data-k=a]"], ["#hi-x", 0]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>f″(0) = 0: the bend switches there. The curve changes from bending down (f″ < 0 for x &lt; 0) to bending up (f″ > 0).</p></details></li>
+        <li><p>Choose <b>sin x</b>. Where is f″ largest in size? <button type="button" class="btn link" data-show='[["click", "#hi-fn [data-k=b]"], ["#hi-x", 1.5708]]'>x = π/2</button></p><details><summary>What you should see</summary><p>At the peak (x = π/2): f″ = −sin(π/2) = −1. The curve bends sharply there, and f′ passes through zero.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find f″(x) for f(x) = x e<sup>2x</sup>.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Choose a rule.</b> It is a product of x and e<sup>2x</sup>.</li>
+          <li hidden><b>First derivative.</b> f′ = 1·e<sup>2x</sup> + x·(2e<sup>2x</sup>) = e<sup>2x</sup>(1 + 2x).</li>
+          <li hidden><b>Differentiate again (product).</b> f″ = 2e<sup>2x</sup>(1 + 2x) + e<sup>2x</sup>·2.</li>
+          <li hidden><b>Simplify.</b> f″ = e<sup>2x</sup>(2 + 4x + 2) = <b>e<sup>2x</sup>(4x + 4)</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Differentiating the original instead of f′ for the second derivative.</li>
+        <li>Not simplifying f′ before differentiating again.</li>
+        <li>Choosing the wrong rule: look at the outermost operation, not the innermost.</li>
+        <li>Confusing f² with f″.</li>
+        <li>Sign errors when differentiating trig functions twice: sin → cos → −sin.</li>
+      </ul></div>
+      <div class="prose"><h2>Which rule first?</h2>
+        <p><b>Sum or difference</b>: split and differentiate each term. <b>Product</b> of two functions of x: product rule. <b>Quotient</b>: quotient rule (or rewrite as a product with a negative power). <b>A function of a function</b>, like sin(3x) or √(x² + 1): chain rule. <b>Constant times something</b>: pull out the constant. Many problems need two or three of these in order.</p>
+      </div>
+      <div class="quiz" data-correct="1" data-explain="The outermost operation is a product of x² and sin(3x); the chain rule then appears inside sin(3x).">
+        <p class="q">Check yourself: Which rule do you apply first to f(x) = x² sin(3x)?</p>
+        <div class="opts"><button type="button">Chain rule</button><button type="button">Product rule</button><button type="button">Quotient rule</button><button type="button">Power rule only</button></div>
         <p class="fb" aria-live="polite"></p>
       </div>
     </div>
@@ -1321,8 +2056,8 @@ function view3d(cv,o){
 
 /* ---------------- Roster and registries (the data blocks are injected by build.py) ---------------- */
 const MODS={"functions": {"t": "Functions & transformations", "d": "Shift, stretch and flip a graph, and read what a formula is doing.", "bc": false}, "trigexp": {"t": "Trig, exponentials & logs", "d": "The unit circle, e^x and ln x: the functions calculus keeps using.", "bc": false}, "limits": {"t": "Limits from graphs & tables", "d": "What a function is heading toward, even where it never gets there.", "bc": false}, "limalg": {"t": "Algebraic limits", "d": "Factor, rationalize or squeeze when plugging in gives 0/0.", "bc": false}, "contin": {"t": "Continuity & the IVT", "d": "Where a graph breaks, and why continuous functions can't skip values.", "bc": false}, "asym": {"t": "Infinite limits & end behavior", "d": "Vertical and horizontal asymptotes, and what happens as x gets huge.", "bc": false}, "rates": {"t": "Average vs instantaneous rate", "d": "A secant line closing in on a tangent line.", "bc": false}, "deriv": {"t": "The derivative & differentiability", "d": "The limit definition, and where a graph has no slope.", "bc": false}, "rules": {"t": "Power, sum & constant-multiple rules", "d": "Differentiate polynomials and roots in your head.", "bc": false}, "transder": {"t": "Trig, e^x and ln x derivatives", "d": "The derivatives you memorize once.", "bc": false}, "prodquot": {"t": "Product & quotient rules", "d": "When two functions are multiplied or divided.", "bc": false}, "chain": {"t": "The chain rule", "d": "Derivatives of functions inside functions.", "bc": false}, "implicit": {"t": "Implicit differentiation", "d": "Slopes of curves that are not functions of x.", "bc": false}, "invfn": {"t": "Inverse functions & inverse trig", "d": "Derivatives of inverses, arcsin, arctan and friends.", "bc": false}, "higher": {"t": "Higher-order derivatives & choosing a rule", "d": "Second derivatives, and picking the right tool.", "bc": false}, "motion": {"t": "Derivatives in context & motion", "d": "Position, velocity, acceleration and units of a rate.", "bc": false}, "related": {"t": "Related rates", "d": "Two quantities change together: how fast is the other one moving?", "bc": false}, "linear": {"t": "Linearization & differentials", "d": "Approximate a curve by its tangent line.", "bc": false}, "lhop": {"t": "L'Hôpital's rule", "d": "Resolve 0/0 and ∞/∞ by comparing derivatives.", "bc": false}, "mvt": {"t": "Extreme values & the Mean Value Theorem", "d": "Why a continuous function on [a, b] has a max, and a point with the average slope.", "bc": false}, "incdec": {"t": "Increasing, decreasing & the first derivative test", "d": "Read the sign of f′ to find peaks and valleys.", "bc": false}, "concav": {"t": "Concavity & the second derivative test", "d": "Read the sign of f″ to see bending.", "bc": false}, "sketch": {"t": "Connecting f, f′ and f″", "d": "Go between a graph and the graphs of its derivatives.", "bc": false}, "optim": {"t": "Optimization", "d": "Biggest, smallest, cheapest, fastest: set up and solve.", "bc": false}, "accum": {"t": "Accumulation & Riemann sums", "d": "Add up a changing rate with thin slices.", "bc": false}, "ftc": {"t": "The definite integral & the FTC", "d": "Area, accumulation functions and the theorem that ties derivatives to integrals.", "bc": false}, "antider": {"t": "Antiderivatives", "d": "Undo a derivative, and don't forget the + C.", "bc": false}, "usub": {"t": "u-substitution", "d": "Undo the chain rule, including definite integrals.", "bc": false}, "slope": {"t": "Slope fields", "d": "Draw the solutions without solving anything.", "bc": false}, "sepvar": {"t": "Separation of variables & exponential models", "d": "Solve dy/dx = ky and other separable equations.", "bc": false}, "avgval": {"t": "Average value & motion with integrals", "d": "Average of a function, and displacement vs distance.", "bc": false}, "area": {"t": "Area between curves", "d": "Top minus bottom, or right minus left.", "bc": false}, "vols": {"t": "Volumes from cross sections", "d": "Stack slices of a known shape.", "bc": false}, "volrev": {"t": "Volumes of revolution", "d": "Discs and washers around an axis.", "bc": false}, "parts": {"t": "Integration by parts", "d": "Undo the product rule: ∫u dv = uv − ∫v du.", "bc": true}, "partial": {"t": "Partial fractions & long division", "d": "Split a rational function into pieces you can integrate.", "bc": true}, "improper": {"t": "Improper integrals", "d": "Areas that stretch to infinity, or past an asymptote.", "bc": true}, "euler": {"t": "Euler's method", "d": "Step along a slope field to approximate a solution.", "bc": true}, "logistic": {"t": "Logistic models", "d": "Growth that levels off at a carrying capacity.", "bc": true}, "arclen": {"t": "Arc length", "d": "How long is the curve?", "bc": true}, "param": {"t": "Parametric equations", "d": "x and y both depend on t: slope, concavity and length.", "bc": true}, "vector": {"t": "Vector-valued functions & motion", "d": "Velocity, speed and acceleration in the plane.", "bc": true}, "polar": {"t": "Polar curves & area", "d": "Graph with r and θ, and find areas of petals.", "bc": true}, "seriesbasic": {"t": "Series, geometric series & the nth-term test", "d": "When does an infinite sum add up to a number?", "bc": true}, "pseries": {"t": "p-series & the integral test", "d": "Compare a sum to an area.", "bc": true}, "convtests": {"t": "Comparison & ratio tests", "d": "Decide convergence without finding the sum.", "bc": true}, "altser": {"t": "Alternating series & error bounds", "d": "Alternating signs, absolute vs conditional convergence.", "bc": true}, "taylorpoly": {"t": "Taylor polynomials & Lagrange error", "d": "Approximate a function near a point, and bound the error.", "bc": true}, "powser": {"t": "Power series: radius & interval", "d": "Where a series in x converges.", "bc": true}, "maclaurin": {"t": "Maclaurin series & operations", "d": "e^x, sin x, cos x, 1/(1−x), and building new series from them.", "bc": true}};
-const GROUPS=[{"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits"]}];
-const ROADMAP=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": [], "soon": ["functions", "trigexp"]}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits"], "soon": ["limalg", "contin", "asym"]}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": [], "soon": ["rates", "deriv", "rules", "transder", "prodquot"]}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": [], "soon": ["chain", "implicit", "invfn", "higher"]}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": [], "soon": ["motion", "related", "linear", "lhop"]}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": [], "soon": ["mvt", "incdec", "concav", "sketch", "optim"]}, {"w": "Unit 6", "name": "Integration and accumulation of change", "tag": "AP Unit 6", "bc": false, "ids": [], "soon": ["accum", "ftc", "antider", "usub"]}, {"w": "Unit 7", "name": "Differential equations", "tag": "AP Unit 7", "bc": false, "ids": [], "soon": ["slope", "sepvar"]}, {"w": "Unit 8", "name": "Applications of integration", "tag": "AP Unit 8", "bc": false, "ids": [], "soon": ["avgval", "area", "vols", "volrev"]}, {"w": "BC", "name": "Integration techniques (BC)", "tag": "AP Unit 6 · BC", "bc": true, "ids": [], "soon": ["parts", "partial", "improper"]}, {"w": "BC", "name": "More differential equations & applications (BC)", "tag": "AP Units 7–8 · BC", "bc": true, "ids": [], "soon": ["euler", "logistic", "arclen"]}, {"w": "Unit 9", "name": "Parametric equations, polar coordinates and vector-valued functions (BC)", "tag": "AP Unit 9 · BC", "bc": true, "ids": [], "soon": ["param", "vector", "polar"]}, {"w": "Unit 10", "name": "Infinite sequences and series (BC)", "tag": "AP Unit 10 · BC", "bc": true, "ids": [], "soon": ["seriesbasic", "pseries", "convtests", "altser", "taylorpoly", "powser", "maclaurin"]}]; /* every unit, with ids (built) and soon (planned, not built yet) */
+const GROUPS=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"]}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"]}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"]}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"]}];
+const ROADMAP=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"], "soon": []}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"], "soon": []}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"], "soon": []}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"], "soon": []}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": [], "soon": ["motion", "related", "linear", "lhop"]}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": [], "soon": ["mvt", "incdec", "concav", "sketch", "optim"]}, {"w": "Unit 6", "name": "Integration and accumulation of change", "tag": "AP Unit 6", "bc": false, "ids": [], "soon": ["accum", "ftc", "antider", "usub"]}, {"w": "Unit 7", "name": "Differential equations", "tag": "AP Unit 7", "bc": false, "ids": [], "soon": ["slope", "sepvar"]}, {"w": "Unit 8", "name": "Applications of integration", "tag": "AP Unit 8", "bc": false, "ids": [], "soon": ["avgval", "area", "vols", "volrev"]}, {"w": "BC", "name": "Integration techniques (BC)", "tag": "AP Unit 6 · BC", "bc": true, "ids": [], "soon": ["parts", "partial", "improper"]}, {"w": "BC", "name": "More differential equations & applications (BC)", "tag": "AP Units 7–8 · BC", "bc": true, "ids": [], "soon": ["euler", "logistic", "arclen"]}, {"w": "Unit 9", "name": "Parametric equations, polar coordinates and vector-valued functions (BC)", "tag": "AP Unit 9 · BC", "bc": true, "ids": [], "soon": ["param", "vector", "polar"]}, {"w": "Unit 10", "name": "Infinite sequences and series (BC)", "tag": "AP Unit 10 · BC", "bc": true, "ids": [], "soon": ["seriesbasic", "pseries", "convtests", "altser", "taylorpoly", "powser", "maclaurin"]}]; /* every unit, with ids (built) and soon (planned, not built yet) */
 const TIPS={},TT={},GLOSS={},KEYS={},PROBS=[],FRQS=[],GLYPH={};
 const METHODS={clues:[],items:[]};
 Object.keys(MODS).forEach(id=>{const g=ROADMAP.find(g=>g.ids.includes(id)||g.soon.includes(id));MODS[id].ap=g?g.tag:'';MODS[id].w=g?g.w:'';});
@@ -1474,6 +2209,115 @@ function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor
 /* four multiple-choice strings: the correct one plus distractors (deduplicated, shuffled); returns {choices, ans} */
 function mcq(correct,distract,n=4){const s=[correct];distract.forEach(d=>{if(d!=null&&!s.includes(d)&&s.length<n)s.push(d);});const ch=shuffle(s);return {choices:ch,ans:ch.indexOf(correct)};}
 
+/* ----- glab: a graph lab in a few lines -----
+   o.view(w,h) -> {xr,yr,xn?,yn?};  o.draw(ctx,P,w,h,t) draws on the panel P (P.X, P.Y, inv(P,px,py));
+   o.drag(kind,x,y) gets pointer positions in data coordinates (kind: down|move|up). Returns the sim2d handle. */
+function glab(id,o){const cv=$('#'+id);if(!cv)return null;let last=null;const mx=o.mx||46;
+  const sim=sim2d(cv,{h:o.h||(w=>clamp(w*.52,250,370)),draw(ctx,w,h,t){const v=o.view(w,h);const P=gpanel(ctx,{x:mx,y:12,w:w-mx-14,h:h-36},v.xr,v.yr,{xn:v.xn||6,yn:v.yn||4,ylabel:v.ylabel,xlabel:v.xlabel});last=P;o.draw(ctx,P,w,h,t);},
+    step:o.step,paused:o.paused,
+    drag:o.drag&&((k,e)=>{if(k==='up'){o.drag('up');return;}if(!last)return;const [px,py]=ptr(e,cv),[x,y]=inv(last,px,py);o.drag(k,x,y,e);})});
+  return sim;}
+/* signed number text for building expressions: sgn(3) -> " + 3", sgn(-3) -> " − 3" */
+const sgn=v=>(v<0?' − ':' + ')+Math.abs(+(+v).toFixed(4));
+/* number text with a true minus sign */
+const nz=v=>String(+(+v).toFixed(4)).replace('-','−');
+/* a draggable handle on a panel: returns true when the pointer is within r px of (x,y) */
+const near=(P,px,py,x,y,r=14)=>Math.hypot(P.X(x)-px,P.Y(y)-py)<r;
+/* text of the factor (x − r): lin(3) -> "x − 3", lin(-2) -> "x + 2", lin(0) -> "x" */
+const lin=(r,v='x')=>r===0?v:(r<0?v+' + '+(-r):v+' − '+r);
+/* expression text (parser syntax) from terms [[c,p],...]: c·x^p. terms([[4,3],[-6,.5],[5,-2],[7,0]]) -> "4x^3-6sqrt(x)+5x^(-2)+7". Integer coefficients. */
+function terms(ts){let s='';ts.forEach(([c,p])=>{if(!c)return;const m=Math.abs(c);const body=p===0?String(m):(m===1?'':String(m))+(p===1?'x':p===.5?'sqrt(x)':Number.isInteger(p)&&p>0?'x^'+p:'x^('+(Number.isInteger(p)?p:frac(p).replace('−','-'))+')');
+  s+=(s?(c<0?'-':'+'):(c<0?'-':''))+body;});return s||'0';}
+/* evaluate terms at x */
+const tval=(ts,x)=>ts.reduce((a,[c,p])=>a+c*Math.pow(x,p),0);
+/* derivative of terms */
+const tder=ts=>ts.filter(([c,p])=>p!==0).map(([c,p])=>[c*p,p-1]);
+
+
+/* ===== modules/functions.js ===== */
+/* ---------------- Functions & transformations ---------------- */
+(function functions(){
+  const cv=$('#fn-canvas');if(!cv)return;
+  const B={sq:{f:u=>u*u,n:'u²'},abs:{f:Math.abs,n:'|u|'},rt:{f:u=>u<0?NaN:Math.sqrt(u),n:'√u'},sin:{f:Math.sin,n:'sin u'}};
+  let base='sq',a=1,b=1,h=0,kk=0;
+  const g=x=>a*B[base].f(b*(x-h))+kk;
+  const sim=glab('fn-canvas',{view:()=>({xr:[-6,6],yr:[-6,6]}),draw(ctx,P){curveD(ctx,P,B[base].f,-6,6,T.muted,1.6,400,[5,5]);curveD(ctx,P,g,-6,6,T.cx,2.8,600);dot(ctx,P.X(0),P.Y(0),4,T.muted);dot(ctx,P.X(h),P.Y(kk),6,T.hot,T.surface);}});
+  function upd(){const u=`${b===1?'':nz(b)}(x${h===0?'':h<0?' + '+(-h):' − '+h})`.replace('(x)','x').replace(/^1/,'');const core=B[base].n.replace('u',b===1&&h===0?'x':u.startsWith('(')?u:'('+u+')');
+    setText('fn-eq',`y = ${a===1?'':a===-1?'−':nz(a)+'·'}${B[base].n.replace('u',b===1&&h===0?'x':b===1?`(x${h<0?' + '+(-h):' − '+h})`:`${nz(b)}(x${h===0?'':h<0?' + '+(-h):' − '+h})`)}${kk===0?'':kk<0?' − '+(-kk):' + '+kk}`);
+    setText('fn-ho','(0, 0)');setText('fn-hn',`(${nz(h)}, ${nz(kk)})`);sim.render();}
+  ['a','b','h','k'].forEach(s=>bindRange('fn-'+s,v=>nz(v),v=>{if(s==='a')a=v;if(s==='b')b=v;if(s==='h')h=v;if(s==='k')kk=v;upd();}));
+  segBind('fn-base','k',v=>{base=v;upd();});upd();drawers.functions=()=>sim.render();
+  KEYS['fn-canvas']=['Move the sliders. The dashed grey curve is the parent; the orange dot is its key point.',[['cx','transformed graph'],['muted','parent function'],['hot','where the key point went']]];
+  TIPS['fn-h']=el=>`h = ${nz(+el.value)}: inside the parentheses, so the graph moves ${+el.value>0?'right':+el.value<0?'left':'nowhere'} ${Math.abs(el.value)}.`;
+  TIPS['fn-k']=el=>`k = ${nz(+el.value)}: outside, so the graph moves ${+el.value>0?'up':+el.value<0?'down':'nowhere'} ${Math.abs(el.value)}.`;
+  TIPS['fn-a']=el=>`a = ${nz(+el.value)}: a vertical stretch by ${Math.abs(el.value)}${+el.value<0?', flipped over the x-axis':''}.`;
+  TIPS['fn-b']=el=>`b = ${nz(+el.value)}: squeezes the graph horizontally by a factor of ${nz(+el.value)} (stretches it if b &lt; 1).`;
+  GLOSS['composition']='f(g(x)): put x into g, then put the result into f.';
+  GLOSS['parent function']='The simplest member of a family, like x² or |x|, before any shifting or stretching.';
+  TT.functions='Let students move one slider at a time and say aloud which direction the graph moves before releasing.';
+})();
+(function(){
+  PROBS.push({id:'fn-vertex',topic:'functions',title:'Read a transformation',gen(){const h=ri(-5,5),k=ri(-6,6),a=pick([1,2,3,-1,-2]),askH=Math.random()<.5;
+    const fx=`${a===1?'':a===-1?'−':a}(${lin(h)})²${k===0?'':sgn(k)}`;
+    return {q:`The graph of y = ${fx} is a parabola. What is the ${askH?'x':'y'}-coordinate of its vertex?`,ans:askH?h:k,unit:'',abs:.01,chk:askH?h:k,hint:'Compare with the parent y = x²: inside the parentheses shifts x (backwards), outside shifts y.',
+      sol:`The vertex of y = a(x − h)² + k is (h, k) = (${nz(h)}, ${nz(k)}). The ${askH?'x':'y'}-coordinate is <b>${nz(askH?h:k)}</b>.`};}});
+  PROBS.push({id:'fn-comp',topic:'functions',title:'Composition',gen(){const a=ri(1,4),b=ri(-5,5),c=ri(1,3),d=ri(-4,4),p=ri(-3,3),inner=c*p*p+d,ans=a*inner+b;
+    return {q:`Let f(x) = ${polyTxt([a,b])} and g(x) = ${polyTxt([c,0,d])}. Find f(g(${nz(p)})).`,ans,unit:'',abs:.01,chk:ans,hint:'Work inside out: find g first, then put that result into f.',
+      sol:`g(${nz(p)}) = ${nz(inner)}. Then f(${nz(inner)}) = ${a}(${nz(inner)}) ${sgn(b)} = <b>${nz(ans)}</b>.`};}});
+  PROBS.push({id:'fn-inv',topic:'functions',title:'Inverse of a linear function',gen(){const a=pick([2,3,4,5,-2,-3]),b=ri(-6,6),x0=ri(-4,4),y0=a*x0+b;
+    return {q:`Let f(x) = ${polyTxt([a,b])}. Find f<sup>−1</sup>(${nz(y0)}).`,ans:x0,unit:'',abs:.01,chk:(y0-b)/a,hint:`f⁻¹(y) is the x for which f(x) = y. Solve ${polyTxt([a,b])} = ${nz(y0)}.`,
+      sol:`Solve ${polyTxt([a,b])} = ${nz(y0)}: ${a}x = ${nz(y0-b)}, so x = <b>${nz(x0)}</b>.`};}});
+  PROBS.push({id:'fn-parity',topic:'functions',title:'Even, odd or neither',gen(){const E=['x^2+3','2*x^4-5','x^6-x^2','cos(x)+x^2','abs(x)-1'],O=['x^3-x','x^5+3*x','2*x^3','sin(x)+x','x^3-2*x^5'],N=['x^2+x','x^3+1','2*x+5','e^x','x^4-x^3'],kind=pick(['even','odd','neither']),e=pick({even:E,odd:O,neither:N}[kind]);
+    const f=parseExpr(e),even=Math.abs(f(1.3)-f(-1.3))<1e-9,odd=Math.abs(f(1.3)+f(-1.3))<1e-9,truth=even&&!odd?'even':odd&&!even?'odd':'neither';
+    const m=mcq(truth,['even','odd','neither']);return {q:`Is f(x) = ${pretty(e).replace('abs(x)','|x|')} even, odd or neither?`,choices:m.choices,ans:m.ans,hint:'Compute f(−x) and compare it with f(x) and with −f(x).',sol:`Replacing x by −x ${truth==='even'?'gives the same function (f(−x) = f(x))':truth==='odd'?'gives the negative (f(−x) = −f(x))':'gives neither f(x) nor −f(x)'}, so it is <b>${truth}</b>.`};}});
+})();
+
+/* ===== modules/trigexp.js ===== */
+/* ---------------- Trig, exponentials & logs ---------------- */
+(function trigexp(){
+  const cv=$('#te-canvas');if(!cv)return;
+  let th=Math.PI/4;
+  const sim=sim2d(cv,{h:w=>clamp(w*.42,250,340),draw(ctx,w,h){const R=Math.min(h/2-26,w*.2),cx=R+34,cy=h/2,gx=cx+R+50,gw=w-gx-16;
+    ctx.save();ctx.strokeStyle=T.grid;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(cx-R-14,cy+.5);ctx.lineTo(cx+R+14,cy+.5);ctx.moveTo(cx+.5,cy-R-14);ctx.lineTo(cx+.5,cy+R+14);ctx.stroke();
+    ctx.strokeStyle=T.muted;ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.stroke();ctx.restore();
+    const px=cx+R*Math.cos(th),py=cy-R*Math.sin(th);
+    ctx.strokeStyle=T.hot;ctx.lineWidth=3;ctx.beginPath();ctx.arc(cx,cy,R*.28,0,-th,true);ctx.stroke();
+    arrow(ctx,cx,cy,px,py,T.ink,2);line2(ctx,px,py,px,cy,T.cx,3);line2(ctx,cx,cy,px,cy,T.cv,3);dot(ctx,px,py,6,T.ink,T.surface);
+    label(ctx,'cos θ',(cx+px)/2,cy+(Math.sin(th)>=0?14:-14),T.cv,'center','middle',LABEL);label(ctx,'sin θ',px+(Math.cos(th)>=0?8:-8),(py+cy)/2,T.cx,Math.cos(th)>=0?'left':'right','middle',LABEL);
+    /* sine and cosine against θ */
+    const gy=cy,gh=R,X=t=>gx+t/(2*Math.PI)*gw,Y=v=>gy-v*gh;ctx.strokeStyle=T.grid;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(gx,gy+.5);ctx.lineTo(gx+gw,gy+.5);ctx.stroke();
+    [[Math.sin,T.cx],[Math.cos,T.cv]].forEach(([f,c])=>{ctx.strokeStyle=c;ctx.lineWidth=2.4;ctx.beginPath();for(let i=0;i<=200;i++){const t=i/200*2*Math.PI;i?ctx.lineTo(X(t),Y(f(t))):ctx.moveTo(X(t),Y(f(t)));}ctx.stroke();dot(ctx,X(th),Y(f(th)),5,c,T.surface);});
+    ctx.strokeStyle=T.hot;ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(X(th),gy-gh-6);ctx.lineTo(X(th),gy+gh+6);ctx.stroke();ctx.setLineDash([]);
+    ['π/2','π','3π/2','2π'].forEach((s,i)=>label(ctx,s,X((i+1)*Math.PI/2),gy+gh+16,T.muted,'center','middle',MONO));label(ctx,'θ (radians)',gx+gw,gy-gh-10,T.muted,'right','middle',MONO);}});
+  const line2=(ctx,x1,y1,x2,y2,c,w)=>{ctx.strokeStyle=c;ctx.lineWidth=w;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();};
+  bindRange('te-ang',v=>fmt(v,3)+' rad',v=>{th=v;setText('te-sin',fmt(Math.sin(v),4));setText('te-cos',fmt(Math.cos(v),4));setText('te-tan',Math.abs(Math.cos(v))<1e-3?'undefined (cos θ = 0)':fmt(Math.tan(v),4));setText('te-deg',fmt(v*180/Math.PI,1)+'°');sim.render();});
+  /* exp and log */
+  let bb=Math.E;
+  const sim2=glab('te-canvas2',{view:()=>({xr:[-3,6],yr:[-3,6]}),draw(ctx,P){const lb=Math.log(bb);curveD(ctx,P,x=>Math.pow(bb,x),-3,6,T.cx,2.8,300);curveD(ctx,P,x=>x>0?Math.log(x)/lb:NaN,1e-6,6,T.ca,2.8,300);
+    line(ctx,P,-3,-3,6,6,T.muted,1.4,[5,5]);line(ctx,P,-3,1-3*lb,6,1+6*lb,T.hot,1.8);dot(ctx,P.X(0),P.Y(1),5,T.hot,T.surface);}});
+  bindRange('te-base',v=>fmt(v,2),v=>{bb=v;setText('te-slope',fmt(Math.log(v),3)+(Math.abs(v-Math.E)<.03?'  (b ≈ e: slope ≈ 1)':''));setText('te-ln',fmt(Math.log(v),3));sim2.render();});
+  drawers.trigexp=()=>{sim.render();sim2.render();};
+  KEYS['te-canvas']=['Slide θ. Blue is sine (height), green is cosine (width); the dot also traces both graphs.',[['cx','sin θ'],['cv','cos θ'],['hot','the angle']]];
+  KEYS['te-canvas2']=['Slide the base. Blue is b^x, pink is its inverse log, the orange line is the tangent at x = 0.',[['cx','b^x'],['ca','log base b'],['hot','tangent at (0, 1)']]];
+  TIPS['te-ang']=el=>`θ = ${fmt(+el.value,3)} radians = ${fmt(el.value*180/Math.PI,1)}°. The dot is (cos θ, sin θ).`;
+  TIPS['te-base']=el=>`The tangent at (0, 1) has slope ln b = ${fmt(Math.log(+el.value),3)}. At b = e it is exactly 1.`;
+  GLOSS['radian']='An angle measured by the arc it cuts on the unit circle: 180° = π radians.';
+  GLOSS['natural log']='ln x = log base e of x: the inverse of eˣ.';
+  TT.trigexp='Have students find θ where sin and cos are equal, and where each is zero, using only the circle. Then connect the slope of b^x at 0 to ln b.';
+})();
+(function(){
+  const ex=v=>{const m={0:'0',.5:'1/2','-0.5':'−1/2',1:'1','-1':'−1'};const r=+v.toFixed(6);if(m[r]!==undefined)return m[r];if(Math.abs(Math.abs(r)-Math.SQRT2/2)<1e-6)return (r<0?'−':'')+'√2/2';if(Math.abs(Math.abs(r)-Math.sqrt(3)/2)<1e-6)return (r<0?'−':'')+'√3/2';return fmt(r,3);};
+  const ANG=[['0',0],['π/6',Math.PI/6],['π/4',Math.PI/4],['π/3',Math.PI/3],['π/2',Math.PI/2],['2π/3',2*Math.PI/3],['3π/4',3*Math.PI/4],['5π/6',5*Math.PI/6],['π',Math.PI],['7π/6',7*Math.PI/6],['5π/4',5*Math.PI/4],['4π/3',4*Math.PI/3],['3π/2',3*Math.PI/2],['5π/3',5*Math.PI/3],['7π/4',7*Math.PI/4],['11π/6',11*Math.PI/6]];
+  PROBS.push({id:'te-special',topic:'trigexp',title:'Special angles',gen(){const [nm,t]=pick(ANG),fn=pick(['sin','cos']),v=Math[fn](t),ans=Math.abs(v)<1e-12?0:v;
+    return {q:`Find the exact value of ${fn}(${nm}). (You can type √3/2, 1/2, 0 and so on.)`,ans,unit:'',abs:.005,chk:Math[fn](t),show:ex(ans),hint:'Picture the point on the unit circle at that angle: cos is its x-coordinate, sin is its y-coordinate.',
+      sol:`The point at angle ${nm} on the unit circle is (${ex(Math.cos(t))}, ${ex(Math.sin(t))}), so ${fn}(${nm}) = <b>${ex(ans)}</b>.`};}});
+  PROBS.push({id:'te-solve',topic:'trigexp',title:'Solve an exponential equation',gen(){const k=pick([2,3,4,5,-2,-3,.5]),c=ri(2,20),ans=Math.log(c)/k,kt=k===.5?'0.5':nz(k);
+    return {q:`Solve e<sup>${kt}x</sup> = ${c} for x. Give a decimal to three places.`,ans,unit:'',tol:.01,chk:Math.log(c)/k,hint:'Take ln of both sides: ln(e^(kx)) = kx.',sol:`ln(e<sup>${kt}x</sup>) = ${kt}x = ln ${c} ≈ ${fmt(Math.log(c),4)}, so x = <b>${fmt(ans,3)}</b>.`};}});
+  PROBS.push({id:'te-logs',topic:'trigexp',title:'Simplify with inverses',gen(){const p=ri(2,9),q=ri(2,9),r=ri(2,6),ans=p+q-r;
+    return {q:`Evaluate ln(e<sup>${p}</sup>) + e<sup>ln ${q}</sup> − ln(e<sup>${r}</sup>).`,ans,unit:'',abs:.01,chk:Math.log(Math.exp(p))+Math.exp(Math.log(q))-Math.log(Math.exp(r)),hint:'ln and e^ undo each other: ln(e^a) = a, e^(ln b) = b.',sol:`ln(e<sup>${p}</sup>) = ${p}, e<sup>ln ${q}</sup> = ${q}, ln(e<sup>${r}</sup>) = ${r}. So ${p} + ${q} − ${r} = <b>${ans}</b>.`};}});
+  PROBS.push({id:'te-lawlog',topic:'trigexp',title:'Log rules',gen(){const a=ri(2,6),n=ri(2,4),ans=n*Math.log(a)+Math.log(a),m=n+1;
+    return {q:`If ln ${a} ≈ ${fmt(Math.log(a),4)}, find ln(${a}<sup>${n}</sup>·${a}) to three decimal places.`,ans,unit:'',tol:.005,chk:Math.log(Math.pow(a,n)*a),hint:'Combine: a^n · a = a^(n+1), then use ln(a^m) = m ln a.',sol:`${a}<sup>${n}</sup>·${a} = ${a}<sup>${m}</sup>, so ln(${a}<sup>${m}</sup>) = ${m} ln ${a} ≈ ${m}(${fmt(Math.log(a),4)}) = <b>${fmt(ans,3)}</b>.`};}});
+})();
 
 /* ===== modules/limits.js ===== */
 /* ---------------- Limits from graphs & tables ---------------- */
@@ -1560,6 +2404,450 @@ const lmN=v=>v===null?'does not exist':String(v).replace('-','−');
   PROBS.push({id:'lim-k',topic:'limits',title:'Make a limit exist',gen(){const c=pick([-3,-2,-1,1,2,3]),p=ri(-3,3),kk=ri(-4,4)||2,q=c*c+p-kk*c,cs=c<0?'−'+(-c):String(c);
     return {q:`Let f(x) = x² ${p<0?'−':'+'} ${Math.abs(p)} for x &lt; ${cs}, and f(x) = kx ${q<0?'−':'+'} ${Math.abs(q)} for x ≥ ${cs}. For what value of k does lim x→${cs} f(x) exist?`,ans:kk,unit:'',abs:.01,hint:'The limit exists when the left-hand and right-hand limits are equal. Set the two pieces equal at x = '+cs+'.',
       sol:`Left: ${c}² ${p<0?'−':'+'} ${Math.abs(p)} = ${c*c+p}. Right: ${cs}k ${q<0?'−':'+'} ${Math.abs(q)}. Setting ${cs}k ${q<0?'−':'+'} ${Math.abs(q)} = ${c*c+p} gives k = <b>${kk}</b>.`};}});
+})();
+
+/* ===== modules/limalg.js ===== */
+/* ---------------- Algebraic limits ---------------- */
+(function limalg(){
+  const cv=$('#la-canvas');if(!cv)return;
+  const C={
+    fac:{f:x=>x===3?NaN:(x*x-9)/(x-3),g:x=>x+3,a:3,L:6,plug:'0/0',simp:'x + 3',txt:'f(x) = (x² − 9)/(x − 3),  a = 3',alg:'(x² − 9)/(x − 3) = (x − 3)(x + 3)/(x − 3) = x + 3 for x ≠ 3, so the limit is 3 + 3 = 6.',xr:[0,6],yr:[0,10]},
+    rat:{f:x=>x===0?NaN:(Math.sqrt(x+4)-2)/x,g:x=>1/(Math.sqrt(x+4)+2),a:0,L:.25,plug:'0/0',simp:'1/(√(x+4) + 2)',txt:'f(x) = (√(x + 4) − 2)/x,  a = 0',alg:'Multiply top and bottom by √(x+4) + 2: (x + 4 − 4)/(x(√(x+4) + 2)) = 1/(√(x+4) + 2). The limit is 1/(2 + 2) = 1/4.',xr:[-3,5],yr:[0,.6]},
+    frc:{f:x=>x===3?NaN:(1/x-1/3)/(x-3),g:x=>-1/(3*x),a:3,L:-1/9,plug:'0/0',simp:'−1/(3x)',txt:'f(x) = (1/x − 1/3)/(x − 3),  a = 3',alg:'Combine: 1/x − 1/3 = (3 − x)/(3x). Then f = (3 − x)/(3x(x − 3)) = −1/(3x), so the limit is −1/9.',xr:[1,6],yr:[-.4,.06]},
+    sq:{f:x=>x===0?NaN:x*x*Math.sin(1/x),g:null,a:0,L:0,plug:'sin(1/0) is meaningless',simp:'−x² ≤ f(x) ≤ x²',txt:'f(x) = x² sin(1/x),  a = 0',alg:'−1 ≤ sin(1/x) ≤ 1, so −x² ≤ x² sin(1/x) ≤ x². Both bounds go to 0, so the squeeze theorem gives 0.',xr:[-.6,.6],yr:[-.4,.4]}};
+  let k='fac';
+  const sim=glab('la-canvas',{view:()=>({xr:C[k].xr,yr:C[k].yr}),draw(ctx,P){const F=C[k];const e=(F.xr[1]-F.xr[0])*1e-7;
+    if(k==='sq'){curveD(ctx,P,x=>x*x,F.xr[0],F.xr[1],T.hot,1.8,200,[6,4]);curveD(ctx,P,x=>-x*x,F.xr[0],F.xr[1],T.hot,1.8,200,[6,4]);curveD(ctx,P,F.f,F.xr[0],-e,T.cx,2,2500);curveD(ctx,P,F.f,e,F.xr[1],T.cx,2,2500);dot(ctx,P.X(0),P.Y(0),5,T.cv,T.surface);}
+    else{curveD(ctx,P,F.f,F.xr[0],F.a-e,T.cx,2.8,300);curveD(ctx,P,F.f,F.a+e,F.xr[1],T.cx,2.8,300);curveD(ctx,P,F.g,F.xr[0],F.xr[1],T.hot,1.6,200,[6,5]);hole(ctx,P.X(F.a),P.Y(F.L),5.5,T.cx,false);}
+    label(ctx,'a = '+fmt(F.a,0),P.X(F.a)+8,P.box.y+10,T.muted,'left','middle',MONO);}});
+  function update(){const F=C[k];setText('la-formula',F.txt);setText('la-plug',F.plug);setText('la-simp',F.simp);setText('la-lim',k==='sq'?'0':frac(F.L));setHTML('la-alg',F.alg);sim.render();}
+  segBind('la-fn','k',v=>{k=v;update();coachSay('#la-canvas',{fac:'Same graph except one missing point: after cancelling, just plug in.',rat:'Rationalizing removes the square root that was causing 0/0.',frc:'Combining the fractions exposes the common factor.',sq:'The dashed parabolas pinch the wiggling curve to 0.'}[v]);});
+  update();drawers.limalg=()=>sim.render();
+  KEYS['la-canvas']=['Pick a case. Blue is the original; orange is the simplified form (or the squeezing bounds).',[['cx','original f(x)'],['hot','simplified / bounds'],['cv','the squeezed value']]];
+  GLOSS['conjugate']='The same two terms with the sign between them flipped: √a − b and √a + b.';
+  GLOSS['squeeze theorem']='If g ≤ f ≤ h near a and g and h have the same limit L, then f has limit L.';
+  TT.limalg='Ask students which of the three moves each 0/0 limit calls for before any algebra. Have them check every answer against the graph.';
+})();
+(function(){
+  PROBS.push({id:'la-factor',topic:'limalg',title:'Factor and cancel',gen(){const r=ri(-5,5);let s;do{s=ri(-5,5);}while(s===r);const b=-(r+s),c=r*s,ans=r-s;
+    return {q:`Find lim x→${nz(r)} (${polyTxt([1,b,c])})/(${lin(r)}).`,ans,unit:'',abs:.01,chk:limit(x=>(x*x+b*x+c)/(x-r),r,1),hint:`Factor the top: (${lin(r)})(${lin(s)}). Cancel, then substitute.`,
+      sol:`The top factors as (${lin(r)})(${lin(s)}). Cancel ${lin(r)}, leaving ${lin(s)}. At x = ${nz(r)} that is <b>${nz(ans)}</b>.`};}});
+  PROBS.push({id:'la-conj',topic:'limalg',title:'Multiply by the conjugate',gen(){const m=ri(1,6),ans=1/(2*m);
+    return {q:`Find lim x→0 (√(x + ${m*m}) − ${m})/x. Give a fraction or decimal.`,ans,unit:'',tol:.01,chk:limit(x=>(Math.sqrt(x+m*m)-m)/x,0,1),show:'1/'+(2*m),hint:`Multiply top and bottom by √(x + ${m*m}) + ${m}.`,
+      sol:`The top becomes (x + ${m*m}) − ${m*m} = x. So the expression is x/(x(√(x + ${m*m}) + ${m})) = 1/(√(x + ${m*m}) + ${m}). At x = 0 that is 1/(${m} + ${m}) = <b>1/${2*m}</b>.`};}});
+  PROBS.push({id:'la-sin',topic:'limalg',title:'A trig limit',gen(){const a=ri(2,9),b=ri(2,9),g=gcd(a,b)||1,ans=a/b;
+    return {q:`Find lim x→0 sin(${a}x)/(${b}x). Give a fraction or decimal.`,ans,unit:'',tol:.01,chk:limit(x=>Math.sin(a*x)/(b*x),0,1),show:a/g+(b/g===1?'':'/'+b/g),hint:'Use lim sin(u)/u = 1: write sin(ax)/(bx) as (a/b)·sin(ax)/(ax).',
+      sol:`sin(${a}x)/(${b}x) = (${a}/${b})·[sin(${a}x)/(${a}x)] → (${a}/${b})(1) = <b>${a/g}${b/g===1?'':'/'+b/g}</b>.`};}});
+  PROBS.push({id:'la-frac',topic:'limalg',title:'A fraction inside a fraction',gen(){const k=pick([2,3,4,5,6,-2,-3,-4]),ans=-1/(k*k);
+    return {q:`Find lim x→${nz(k)} (1/x − 1/${nz(k)})/(x ${k<0?'+ '+(-k):'− '+k}). Give a fraction or decimal.`,ans,unit:'',tol:.01,chk:limit(x=>(1/x-1/k)/(x-k),k,1),show:'−1/'+(k*k),hint:'Combine 1/x − 1/k over a common denominator, then cancel the factor that makes 0/0.',
+      sol:`1/x − 1/${nz(k)} = (${nz(k)} − x)/(${nz(k)}x), so the expression is −1/(${nz(k)}x). At x = ${nz(k)}: −1/${k*k} = <b>${nz(+ans.toFixed(4))}</b>.`};}});
+})();
+
+/* ===== modules/contin.js ===== */
+/* ---------------- Continuity & the IVT ---------------- */
+(function contin(){
+  const cv=$('#ct-canvas');if(!cv)return;
+  let kk=1,brk=false,cN=3;
+  const f1=x=>x<2?x+1:kk*x-3;
+  const sim=glab('ct-canvas',{view:()=>({xr:[-1,5],yr:[-2,8]}),draw(ctx,P){const e=1e-7;curveD(ctx,P,f1,-1,2-e,T.cx,2.8,200);curveD(ctx,P,f1,2,5,T.cx,2.8,200);
+    const r=2*kk-3;hole(ctx,P.X(2),P.Y(3),5.5,T.cx,false);hole(ctx,P.X(2),P.Y(r),5.5,T.cx,true);vline(ctx,P,2,T.muted);}});
+  const ok=()=>Math.abs(2*kk-3-3)<1e-9;
+  function upd(){setText('ct-defd','f(2) = '+nz(2*kk-3)+' ✓');setText('ct-lim',ok()?'yes: both sides → 3 ✓':`no: left → 3, right → ${nz(2*kk-3)} ✗`);setText('ct-eq',ok()?'3 = 3 ✓':'✗');
+    setText('ct-verdict',ok()?'continuous at 2':'discontinuous (jump)');sim.render();}
+  bindRange('ct-k',v=>nz(v),v=>{kk=v;upd();});
+  /* IVT */
+  const f2=x=>x*x-2+(brk&&x>=1.5?3:0);
+  const sim2=glab('ct-canvas2',{view:()=>({xr:[0,3],yr:[-3,10]}),draw(ctx,P){const e=1e-7;if(brk){curveD(ctx,P,f2,0,1.5-e,T.cx,2.8,200);curveD(ctx,P,f2,1.5,3,T.cx,2.8,200);hole(ctx,P.X(1.5),P.Y(.25),5,T.cx,false);hole(ctx,P.X(1.5),P.Y(3.25),5,T.cx,true);}else curveD(ctx,P,f2,0,3,T.cx,2.8,200);
+      hline(ctx,P,cN,T.hot,[6,4]);const xs=cross();xs.forEach(x=>dot(ctx,P.X(x),P.Y(cN),6,T.ce,T.surface));
+      dot(ctx,P.X(0),P.Y(f2(0)),5,T.ink);dot(ctx,P.X(3),P.Y(f2(3)),5,T.ink);label(ctx,'f(0) = −2',P.X(0)+8,P.Y(-2)+14,T.muted,'left','middle',MONO);label(ctx,'f(3) = '+nz(f2(3)),P.X(3)-8,P.Y(f2(3))-12,T.muted,'right','middle',MONO);}});
+  function cross(){const out=[],n=3000;for(let i=0;i<n;i++){const a=3*i/n,b=3*(i+1)/n;if(brk&&a<1.5&&b>=1.5)continue;const u=f2(a)-cN,w=f2(b)-cN;if(u===0||u*w<0){out.push(solve(x=>f2(x)-cN,a,b,60));}}return out;}
+  function upd2(){const xs=cross();setText('ct-ivt',xs.length?'x ≈ '+xs.map(x=>fmt(x,3)).join(', '):'no x in [0, 3] has f(x) = N');
+    setText('ct-ivt2',!brk?'f is continuous and N is between f(0) and f(3): a crossing is guaranteed':(cN>.25&&cN<3.25?'f jumped over N, so the IVT cannot apply':'a crossing happens to exist, but the IVT does not promise it'));sim2.render();}
+  bindRange('ct-c',v=>nz(v),v=>{cN=v;upd2();});
+  $('#ct-brk').addEventListener('change',e=>{brk=e.target.checked;upd2();});
+  upd();upd2();drawers.contin=()=>{sim.render();sim2.render();};
+  $('#ct-lab').addEventListener('labreset',()=>{});
+  KEYS['ct-canvas']=['Slide k and watch the filled dot meet the open circle.',[['cx','f(x)'],['ink','filled: f(2); open: where the left side is heading']]];
+  KEYS['ct-canvas2']=['Slide N. The gold dot is where f(x) = N.',[['hot','the height N'],['ce','where f reaches N']]];
+  TIPS['ct-k']=el=>`k = ${nz(+el.value)}: the right piece starts at 2k − 3 = ${nz(2*el.value-3)}. The left piece is heading to 3.`;
+  GLOSS['continuous']='No breaks: f(a) exists, the limit exists, and they are equal.';
+  GLOSS['IVT']='Intermediate Value Theorem: a continuous function on [a, b] takes every value between f(a) and f(b).';
+  TT.contin='Ask students to say all three conditions aloud for each graph in the first lab. The IVT lab works best when they predict the crossing first.';
+})();
+(function(){
+  PROBS.push({id:'ct-removable',topic:'contin',title:'Make a removable discontinuity continuous',gen(){const c=pick([-4,-3,-2,-1,1,2,3,4,5]),ans=2*c;
+    return {q:`Let f(x) = (x² − ${c*c})/(${lin(c)}) for x ≠ ${nz(c)}, and f(${nz(c)}) = k. For what value of k is f continuous at x = ${nz(c)}?`,ans,unit:'',abs:.01,chk:limit(x=>(x*x-c*c)/(x-c),c,1),hint:'Continuity needs f(c) to equal the limit as x → c. Simplify the fraction first.',
+      sol:`For x ≠ ${nz(c)}, (x² − ${c*c})/(${lin(c)}) = x ${c<0?'−':'+'} ${Math.abs(c)}, which tends to ${2*c} at x = ${nz(c)}. So k = <b>${nz(ans)}</b>.`};}});
+  PROBS.push({id:'ct-k2',topic:'contin',title:'Continuity of a piecewise function',gen(){const c=pick([-2,-1,1,2]),k=pick([-3,-2,-1,1,2,3]),a=ri(-3,3)||1,b=k*c*c-a*c;
+    return {q:`Let f(x) = ${polyTxt([a,b])} for x ≤ ${nz(c)} and f(x) = kx² for x &gt; ${nz(c)}. Find k so that f is continuous at x = ${nz(c)}.`,ans:k,unit:'',abs:.01,chk:(a*c+b)/(c*c),hint:`Set the left value ${a}(${nz(c)}) ${sgn(b).trim()} equal to the right value k(${nz(c)})².`,
+      sol:`Left side at x = ${nz(c)}: ${a}(${nz(c)}) ${sgn(b)} = ${nz(a*c+b)}. Right side: k·${c*c}. Setting ${c*c}k = ${nz(a*c+b)} gives k = <b>${nz(k)}</b>.`};}});
+  PROBS.push({id:'ct-type',topic:'contin',title:'Classify a discontinuity',gen(){const T0=[['removable','lim<sub>x→a</sub> f(x) = 2 (both sides) but f(a) is not defined'],['removable','lim<sub>x→a</sub> f(x) = 5 but f(a) = 1'],['jump','lim<sub>x→a⁻</sub> f(x) = 1 and lim<sub>x→a⁺</sub> f(x) = 4'],['jump','lim<sub>x→a⁻</sub> f(x) = −2 and lim<sub>x→a⁺</sub> f(x) = 3, f(a) = −2'],['infinite','lim<sub>x→a⁺</sub> f(x) = ∞'],['infinite','lim<sub>x→a⁻</sub> f(x) = −∞'],['none (continuous)','lim<sub>x→a</sub> f(x) = 3 and f(a) = 3']],[ty,txt]=pick(T0);
+    const m=mcq(ty,['removable','jump','infinite','none (continuous)']);return {q:`What kind of behavior at x = a does this describe? ${txt}.`,choices:m.choices,ans:m.ans,hint:'Compare the one-sided limits with each other, then with f(a).',sol:`Removable: the limit exists but differs from (or lacks) f(a). Jump: the sides disagree. Infinite: the function blows up. Here it is <b>${ty}</b>.`};}});
+  PROBS.push({id:'ct-ivt',topic:'contin',title:'Apply the IVT',gen(){const a=ri(-3,2),b=a+ri(2,4),p=ri(-6,0),q=p+ri(6,12),v=ri(p+1,q-1),out=[p-ri(1,3),q+ri(1,3),p-ri(4,6),q+ri(4,6)];
+    const m=mcq(String(v).replace('-','−'),out.map(x=>String(x).replace('-','−')));return {q:`f is continuous on [${nz(a)}, ${b}] with f(${nz(a)}) = ${nz(p)} and f(${b}) = ${q}. Which value must f take somewhere on [${nz(a)}, ${b}]?`,choices:m.choices,ans:m.ans,hint:'The IVT guarantees every value between f(a) and f(b).',sol:`Every value between ${nz(p)} and ${q} is taken. Only <b>${nz(v)}</b> lies in that range.`};}});
+})();
+
+/* ===== modules/asym.js ===== */
+/* ---------------- Infinite limits & end behavior ---------------- */
+(function asym(){
+  const cv=$('#ay-canvas');if(!cv)return;
+  const C={
+    lt:{f:x=>(3*x+1)/(x*x-4),v:[-2,2],h:0,yr:[-6,6],txt:'f(x) = (3x + 1)/(x² − 4)',inf:'0 (top has lower degree)'},
+    eq:{f:x=>(2*x*x+1)/(x*x-1),v:[-1,1],h:2,yr:[-5,9],txt:'f(x) = (2x² + 1)/(x² − 1)',inf:'2 (ratio of leading coefficients)'},
+    gt:{f:x=>(x*x+1)/(x-1),v:[1],h:null,yr:[-10,10],txt:'f(x) = (x² + 1)/(x − 1)',inf:'+∞ as x → ∞ and −∞ as x → −∞: no horizontal asymptote'},
+    sin:{f:x=>x===0?NaN:Math.sin(x)/x,v:[],h:0,yr:[-.6,1.2],txt:'f(x) = sin x / x',inf:'0, even though it crosses y = 0 forever'}};
+  let k='lt',W=10;
+  const sim=glab('ay-canvas',{view:()=>({xr:[-W,W],yr:C[k].yr}),draw(ctx,P){const F=C[k],e=W*1e-6,vs=[-W,...F.v,W];
+    for(let i=0;i<vs.length-1;i++){curveD(ctx,P,F.f,vs[i]+(i?e:0),vs[i+1]-(i<vs.length-2?e:0),T.cx,2.6,1500);}
+    F.v.forEach(x=>vline(ctx,P,x,T.hot));if(F.h!==null)hline(ctx,P,F.h,T.hot);}});
+  function upd(){const F=C[k],x=W;setText('ay-fx',fmt(F.f(x),3));setText('ay-inf',F.inf);setText('ay-vert',F.v.length?F.v.map(a=>'x = '+nz(a)).join(', '):'none');setText('ay-formula',F.txt);sim.render();}
+  bindRange('ay-w',v=>'±'+fmt(Math.pow(10,v),v<1.3?1:0),v=>{W=Math.pow(10,v);upd();});
+  segBind('ay-fn','k',v=>{k=v;upd();});
+  upd();drawers.asym=()=>sim.render();
+  KEYS['ay-canvas']=['Zoom out with the slider. Dashed orange lines are the asymptotes.',[['cx','f(x)'],['hot','asymptotes']]];
+  TIPS['ay-w']=el=>`The window shows x from −${fmt(10**el.value,0)} to ${fmt(10**el.value,0)}: the far ends of the graph.`;
+  GLOSS['asymptote']='A line the graph gets closer and closer to: vertical (x = a) or horizontal (y = L).';
+  GLOSS['infinite limit']='lim f(x) = ∞ means f grows without bound. The limit technically does not exist; ∞ says how it fails.';
+  TT.asym='Have students predict the horizontal asymptote from the degrees before zooming out. Use the sin x / x case to show a graph can cross its asymptote.';
+})();
+(function(){
+  PROBS.push({id:'ay-horiz',topic:'asym',title:'Limit at infinity of a ratio',gen(){const a=ri(1,9),d=ri(1,6),b=ri(-5,5),c=ri(-5,5),e=ri(1,9),ans=a/d,g=gcd(a,d);
+    return {q:`Find lim x→∞ (${polyTxt([a,b,c])})/(${polyTxt([d,0,e])}). Give a fraction or decimal.`,ans,unit:'',tol:.01,chk:(x=>(a*x*x+b*x+c)/(d*x*x+e))(1e7),show:a/g+(d/g===1?'':'/'+d/g),hint:'Both top and bottom have degree 2. Divide every term by x², or compare the leading terms.',
+      sol:`The degrees are equal, so the limit is the ratio of the leading coefficients: ${a}/${d} = <b>${a/g}${d/g===1?'':'/'+d/g}</b>.`};}});
+  PROBS.push({id:'ay-hdeg',topic:'asym',title:'Compare degrees',gen(){const m=ri(1,4),n=ri(1,4),a=ri(1,6),d=ri(1,6),sgnA=Math.random()<.5?1:-1,A=sgnA*a;const g=gcd(a,d);
+    const term=(c,p)=>polyTxt(Array.from({length:p+1},(_,i)=>i===0?c:i===p?ri(1,5):0));const top=polyTxt([A,...Array(m).fill(0)].map((v,i)=>i===0?A:i===m?ri(1,5):0)),bot=polyTxt([d,...Array(n).fill(0)].map((v,i)=>i===0?d:i===n?ri(1,5):0));
+    let correct,chk;const ratio=(sgnA<0?'−':'')+a/g+(d/g===1?'':'/'+d/g);
+    if(m<n){correct='0';chk=0;}else if(m===n){correct=ratio;chk=A/d;}else{correct=sgnA>0?'∞':'−∞';chk=sgnA*1e9;}
+    const mc=mcq(correct,['0',ratio,'∞','−∞',sgnA>0?'−'+ratio:ratio.replace('−','')]);
+    return {q:`Find lim x→∞ (${top})/(${bot}).`,choices:mc.choices,ans:mc.ans,hint:'Compare the degree of the top with the degree of the bottom.',sol:`Top degree ${m}, bottom degree ${n}. ${m<n?'The bottom wins: the limit is <b>0</b>.':m===n?`Equal degrees: the ratio of leading coefficients, <b>${ratio}</b>.`:`The top wins and its leading coefficient over the bottom’s is ${sgnA>0?'positive':'negative'}: the limit is <b>${correct}</b>.`}`};}});
+  PROBS.push({id:'ay-vert',topic:'asym',title:'Find the vertical asymptote',gen(){let a,c;do{a=ri(-4,4);c=ri(-4,4);}while(a===c);
+    const m=mcq(`x = ${nz(c)}`,[`x = ${nz(a)}`,`x = ${nz(a)} and x = ${nz(c)}`,'none']);
+    return {q:`Which describes the vertical asymptotes of f(x) = ((${lin(a)})(x + 7))/((${lin(a)})(${lin(c)}))? (Note the factor ${lin(a)} appears on top and bottom.)`.replace('(x + 7)','(x + 7)'),choices:m.choices,ans:m.ans,hint:'A zero of the bottom is a vertical asymptote only if it is not also a zero of the top. Check the factor that cancels.',
+      sol:`The factor (${lin(a)}) cancels, leaving a hole at x = ${nz(a)}. The remaining factor in the bottom, (${lin(c)}), is zero at x = ${nz(c)} where the top is ${nz(c+7)}${c+7===0?' (this also cancels)':''}. So <b>x = ${nz(c)}</b> is the only vertical asymptote${c+7===0?' unless the top vanishes there as well':''}.`};}});
+  PROBS.push({id:'ay-sign',topic:'asym',title:'Sign of an infinite limit',gen(){const kk=pick([-5,-3,-2,-1,1,2,3,5]),c=ri(-4,4),n=pick([1,2]),side=pick([1,-1]);
+    let val;if(n===2)val=kk>0?1:-1;else val=kk*side>0?1:-1;const correct=val>0?'∞':'−∞';const m=mcq(correct,['∞','−∞','0',String(kk).replace('-','−')]);
+    return {q:`Find lim x→${nz(c)}${side>0?'⁺':'⁻'} ${nz(kk)}/(${lin(c)})${n===2?'²':''}.`,choices:m.choices,ans:m.ans,hint:`Is the bottom positive or negative just ${side>0?'right':'left'} of ${nz(c)}? ${n===2?'It is squared.':''}`,
+      sol:`Near ${nz(c)}, the bottom is tiny and ${n===2?'always positive (a square)':side>0?'positive from the right':'negative from the left'}. The top is ${nz(kk)}, so the quotient is ${val>0?'large and positive':'large and negative'}: <b>${correct}</b>.`};}});
+})();
+
+/* ===== modules/rates.js ===== */
+/* ---------------- Average vs instantaneous rate ---------------- */
+(function rates(){
+  const cv=$('#rt-canvas');if(!cv)return;
+  const F={sq:{f:x=>x*x,d:x=>2*x,yr:[-1,9]},cu:{f:x=>x*x*x-3*x,d:x=>3*x*x-3,yr:[-5,6]},sn:{f:Math.sin,d:Math.cos,yr:[-1.6,1.6]},ex:{f:Math.exp,d:Math.exp,yr:[-1,8]}};
+  let k='sq',x0=1,h=1.2;
+  const hh=()=>Math.abs(h)<1e-3?1e-4:h;
+  const sim=glab('rt-canvas',{view:()=>({xr:[-3.5,3.5],yr:F[k].yr}),draw(ctx,P){const f=F[k].f,y0=f(x0),x1=x0+hh(),y1=f(x1),m=(y1-y0)/hh(),t=F[k].d(x0);
+    curveD(ctx,P,f,-3.5,3.5,T.cx,2.8,400);line(ctx,P,-3.5,y0+t*(-3.5-x0),3.5,y0+t*(3.5-x0),alpha(T.hot,.55),1.8,[6,5]);line(ctx,P,-3.5,y0+m*(-3.5-x0),3.5,y0+m*(3.5-x0),T.hot,2.4);
+    dot(ctx,P.X(x0),P.Y(y0),6.5,T.ink,T.surface);dot(ctx,P.X(x1),P.Y(y1),6,T.ca,T.surface);label(ctx,'a',P.X(x0),P.Y(y0)+16,T.ink,'center','middle',MONO);label(ctx,'a + h',P.X(x1),P.Y(y1)-14,T.ca,'center','middle',MONO);}});
+  function upd(){const f=F[k].f,m=(f(x0+hh())-f(x0))/hh(),t=F[k].d(x0);setText('rt-avg',fmt(m,4));setText('rt-inst',fmt(t,4));setText('rt-diff',fmt(m-t,4));sim.render();}
+  bindRange('rt-x',v=>nz(v),v=>{x0=v;upd();});bindRange('rt-h',v=>nz(v),v=>{h=v;upd();});segBind('rt-fn','k',v=>{k=v;upd();});upd();drawers.rates=()=>sim.render();
+  KEYS['rt-canvas']=['Move a and shrink h. The solid orange line is the secant; the dashed one is the tangent.',[['cx','f(x)'],['hot','secant (solid) and tangent (dashed)'],['ca','the second point at a + h']]];
+  TIPS['rt-h']=el=>`h = ${nz(+el.value)}: the second point is ${Math.abs(el.value)} ${+el.value>=0?'right':'left'} of a. Smaller |h| turns the secant into the tangent.`;
+  GLOSS['secant line']='A line through two points of a curve. Its slope is the average rate of change between them.';
+  GLOSS['tangent line']='The line that just touches a curve at a point and has the same slope there.';
+  TT.rates='Ask students to predict the secant slope for h = 0.1 before they set it, and to explain why h = 0 cannot be plugged in.';
+})();
+(function(){
+  PROBS.push({id:'rt-avg',topic:'rates',title:'Average rate of change',gen(){const a=ri(-3,2),b=a+ri(2,4),c=ri(1,4),d=ri(-5,5),f=x=>c*x*x+d*x,ans=(f(b)-f(a))/(b-a);
+    return {q:`Find the average rate of change of f(x) = ${polyTxt([c,d,0])} on the interval [${nz(a)}, ${b}].`,ans,unit:'',abs:.01,chk:ans,hint:'Average rate = (f(b) − f(a)) / (b − a).',sol:`f(${b}) = ${nz(f(b))} and f(${nz(a)}) = ${nz(f(a))}. So (${nz(f(b))} − (${nz(f(a))}))/(${b} − (${nz(a)})) = ${nz(f(b)-f(a))}/${b-a} = <b>${nz(ans)}</b>.`};}});
+  PROBS.push({id:'rt-table',topic:'rates',title:'Rate of change from a table',gen(){const t0=ri(0,4),dt=[1,2,3],ts=[t0,t0+dt[0],t0+dt[0]+ri(1,3),t0+dt[0]+ri(4,6)].sort((p,q)=>p-q).filter((v,i,A)=>A.indexOf(v)===i),A=ri(1,3),B=ri(0,6),f=t=>A*t*t+B*t+ri(0,0),
+      vals=ts.map(t=>A*t*t+B*t),i=ri(0,ts.length-2),ans=(vals[i+1]-vals[i])/(ts[i+1]-ts[i]);
+    const tbl=`<table class="lmtbl"><thead><tr><th>t (s)</th>${ts.map(t=>`<th>${t}</th>`).join('')}</tr></thead><tbody><tr><th>s(t) (m)</th>${vals.map(v=>`<td>${v}</td>`).join('')}</tbody></table>`;
+    return {q:`A particle's position s(t) is given in the table. Find its average velocity from t = ${ts[i]} to t = ${ts[i+1]} seconds, in m/s.${tbl}`,ans,unit:'m/s',tol:.01,chk:(A*ts[i+1]**2+B*ts[i+1]-A*ts[i]**2-B*ts[i])/(ts[i+1]-ts[i]),hint:'Change in position over change in time.',sol:`(${vals[i+1]} − ${vals[i]})/(${ts[i+1]} − ${ts[i]}) = ${vals[i+1]-vals[i]}/${ts[i+1]-ts[i]} = <b>${nz(ans)} m/s</b>.`};}});
+  PROBS.push({id:'rt-inst',topic:'rates',title:'Estimate an instantaneous rate',gen(){const x0=ri(1,5),a=ri(1,3),f=x=>a*x*x,ans=2*a*x0,h=.001,est=(f(x0+h)-f(x0))/h;
+    return {q:`For f(x) = ${a===1?'':a}x², the average rate of change over [${x0}, ${x0}.001] is ${fmt(est,4)}. What whole number is the instantaneous rate of change at x = ${x0}, which the average rates approach?`,ans,unit:'',abs:.01,chk:ans,hint:'Round the average rate to the nearest whole number: the gap h is tiny.',sol:`The average rates approach ${ans} as h → 0 (the derivative of ${a===1?'':a}x² is ${2*a}x, and ${2*a}(${x0}) = <b>${ans}</b>).`};}});
+  PROBS.push({id:'rt-units',topic:'rates',title:'Units of a rate',gen(){const C=[['C(q) is the cost in dollars to make q items','dollars per item'],['V(t) is the volume of water in liters after t minutes','liters per minute'],['s(t) is the position in meters after t seconds','meters per second'],['P(d) is the pressure in pascals at depth d meters','pascals per meter'],['T(h) is temperature in °C at altitude h km','°C per kilometer']],[tx,u]=pick(C),m=mcq(u,C.map(c=>c[1]));
+    return {q:`${tx}. What are the units of the rate of change, the derivative?`,choices:m.choices,ans:m.ans,hint:'Rate = output units divided by input units.',sol:`The derivative is (change in output)/(change in input): <b>${u}</b>.`};}});
+})();
+
+/* ===== modules/deriv.js ===== */
+/* ---------------- The derivative & differentiability ---------------- */
+(function deriv(){
+  const cv=$('#dv-canvas');if(!cv)return;
+  const cbrt=Math.cbrt;
+  const F={sq:{f:x=>x*x,d:x=>2*x,yr:[-1,7],dr:[-5.5,5.5],why:''},abs:{f:Math.abs,d:x=>x===0?NaN:Math.sign(x),yr:[-1,3],dr:[-1.8,1.8],why:'a corner'},
+    cr:{f:cbrt,d:x=>x===0?NaN:1/(3*Math.pow(Math.abs(x),2/3)),yr:[-2,2],dr:[-.5,4],why:'a vertical tangent'},st:{f:x=>x<0?x-1:x+1,d:x=>x===0?NaN:1,yr:[-4,4],dr:[-1,3],why:'a jump'}};
+  let k='sq',x0=1;
+  const set=v=>{const el=$('#dv-x');el.value=clamp(Math.round(v*20)/20,-2.5,2.5);el.dispatchEvent(new Event('input',{bubbles:true}));};
+  const sim=glab('dv-canvas',{view:()=>({xr:[-2.5,2.5],yr:F[k].yr}),draw(ctx,P){const f=F[k].f,e=1e-7,y0=f(x0),h5=1e-5,sl=(f(x0)-f(x0-h5))/h5,sr=(f(x0+h5)-f(x0))/h5,m=Math.abs(sl-sr)<1e-2?D(f,x0):NaN;
+      if(k==='st'){curveD(ctx,P,f,-2.5,-e,T.cx,2.8,200);curveD(ctx,P,f,0,2.5,T.cx,2.8,200);hole(ctx,P.X(0),P.Y(-1),5,T.cx,false);hole(ctx,P.X(0),P.Y(1),5,T.cx,true);}else curveD(ctx,P,f,-2.5,2.5,T.cx,2.8,500);
+      if(isFinite(m)&&Math.abs(m)<8)line(ctx,P,x0-1,y0-m,x0+1,y0+m,T.hot,2.2);dot(ctx,P.X(x0),P.Y(y0),7,T.hot,T.surface);},
+    drag:(kind,x)=>{set(x);}});
+  const sim2=glab('dv-canvas2',{h:w=>clamp(w*.3,170,240),view:()=>({xr:[-2.5,2.5],yr:F[k].dr}),draw(ctx,P){const d=F[k].d,e=1e-7;curveD(ctx,P,d,-2.5,-e,T.cv,2.6,300);curveD(ctx,P,d,e,2.5,T.cv,2.6,300);
+      label(ctx,"f′(x): the slope of the graph above",P.box.x+8,P.box.y+10,T.cv,'left','middle',LABEL);const v=F[k].d(x0);if(isFinite(v)&&v>=F[k].dr[0]&&v<=F[k].dr[1])dot(ctx,P.X(x0),P.Y(v),6.5,T.cv,T.surface);else if(!isFinite(v)||Math.abs(x0)<1e-9)hole(ctx,P.X(x0),P.Y(0),5,T.cv,false);}});
+  function upd(){const f=F[k].f,h=1e-5,sl=(f(x0)-f(x0-h))/h,sr=(f(x0+h)-f(x0))/h,big=v=>Math.abs(v)>2000;
+    setText('dv-sl',big(sl)?'∞ (vertical)':fmt(sl,3));setText('dv-sr',big(sr)?'∞ (vertical)':fmt(sr,3));
+    const ok=!big(sl)&&!big(sr)&&Math.abs(sl-sr)<1e-2;setText('dv-ok',ok?'yes: f′ = '+fmt((sl+sr)/2,3):'no: '+F[k].why);sim.render();sim2.render();}
+  bindRange('dv-x',v=>nz(v),v=>{x0=v;upd();});segBind('dv-fn','k',v=>{k=v;upd();});upd();drawers.deriv=()=>{sim.render();sim2.render();};
+  KEYS['dv-canvas']=['Drag the point (or use the slider). Orange is the tangent line; the green graph below records its slope.',[['cx','f(x)'],['hot','tangent line at the point'],['cv','f′(x), the slope function']]];
+  TIPS['dv-x']=el=>`x = ${nz(+el.value)}. The green dot below is at height equal to the tangent's slope here.`;
+  GLOSS['differentiable']='A function is differentiable at x if its derivative exists there: the graph is smooth, with a single non-vertical tangent.';
+  GLOSS['derivative']='The slope of the tangent line, as a function of x. f′(x) = lim (f(x+h) − f(x))/h.';
+  TT.deriv='Ask students to sketch f′ below before revealing it. At x = 0 for |x| and ∛x ask which of the three conditions fails.';
+})();
+(function(){
+  PROBS.push({id:'dv-def',topic:'deriv',title:'Derivative from the definition',gen(){const a=ri(1,5),b=ri(-6,6),x0=ri(-3,3),ans=2*a*x0+b;
+    return {q:`Evaluate lim h→0 [f(${nz(x0)} + h) − f(${nz(x0)})]/h for f(x) = ${polyTxt([a,b,0])}.`,ans,unit:'',abs:.01,chk:D(x=>a*x*x+b*x,x0),hint:'That limit is f′(x0). Expand f(x0 + h) − f(x0) and divide by h before letting h → 0.',
+      sol:`The limit is f′(${nz(x0)}). Since f′(x) = ${2*a}x ${sgn(b)}, f′(${nz(x0)}) = <b>${nz(ans)}</b>.`};}});
+  PROBS.push({id:'dv-nodiff',topic:'deriv',title:'Where is it not differentiable?',gen(){const c=ri(-4,4),kind=pick(['abs','cbrt','piece']);let ex,why;
+    if(kind==='abs'){ex=`f(x) = |${lin(c)}|`;why='has a corner at x = '+nz(c);}else if(kind==='cbrt'){ex=`f(x) = (${lin(c)})<sup>1/3</sup>`;why='has a vertical tangent at x = '+nz(c);}else{ex=`f(x) = ${lin(c)} for x &lt; ${nz(c)} and f(x) = ${lin(c)} + 2 for x ≥ ${nz(c)}`;why='jumps at x = '+nz(c);}
+    const m=mcq(`x = ${nz(c)}`,[`x = ${nz(-c)}`,'x = 0','nowhere']);
+    return {q:`At which x is ${ex} not differentiable?`.replace('x = 0','x = 0'),choices:m.choices,ans:m.ans,hint:'Look for a corner, a vertical tangent or a discontinuity.',sol:`The function ${why}, so it is not differentiable at <b>x = ${nz(c)}</b>.`};}});
+  PROBS.push({id:'dv-concept',topic:'deriv',title:'Differentiable or continuous?',gen(){const Q=[['f is differentiable at x = a. Which must be true?','f is continuous at x = a',['f has a corner at x = a','f(a) = 0','f′(a) = 0'],'Differentiable implies continuous.'],
+      ['f is continuous at x = a. Which is true?','f might not be differentiable at x = a',['f must be differentiable at x = a','f′(a) = 0','f(a) = lim f(x) is false'],'Continuity does not guarantee a tangent: |x| is continuous at 0 and not differentiable.'],
+      ['The left-hand slope of f at a is 2 and the right-hand slope is −2. Which is true?','f is not differentiable at a',['f′(a) = 0','f′(a) = 2','f is not continuous at a'],'The one-sided slopes disagree, so the derivative does not exist (a corner). f can still be continuous.']],
+      [q,c,w,why]=pick(Q),m=mcq(c,w);return {q,choices:m.choices,ans:m.ans,hint:'Remember: differentiable ⇒ continuous, but not the other way around.',sol:why+` The answer: <b>${c}</b>.`};}});
+})();
+
+/* ===== modules/rules.js ===== */
+/* ---------------- Power, sum & constant-multiple rules ---------------- */
+(function rules(){
+  const cv=$('#ru-canvas');if(!cv)return;
+  let n=3,x0=1.5;
+  const f=x=>Math.pow(x,n),df=x=>n*Math.pow(x,n-1);
+  const sim=glab('ru-canvas',{view:()=>({xr:[0,3],yr:[-3,9]}),draw(ctx,P){curveD(ctx,P,f,.001,3,T.cx,2.8,400);curveD(ctx,P,df,.001,3,T.cv,2.8,400);const y=f(x0),m=df(x0);line(ctx,P,x0-1,y-m,x0+1,y+m,T.hot,2,[6,4]);dot(ctx,P.X(x0),P.Y(y),6,T.cx,T.surface);dot(ctx,P.X(x0),P.Y(m),6,T.cv,T.surface);vline(ctx,P,x0,T.muted,[3,4]);}});
+  function upd(){setText('ru-f','x^'+nz(n));setText('ru-d',`${nz(n)}·x^${nz(n-1)}`);setText('ru-num',`${fmt(D(f,x0),4)}  vs rule ${fmt(df(x0),4)}`);sim.render();}
+  bindRange('ru-n',v=>nz(v),v=>{n=v;upd();});bindRange('ru-x',v=>nz(v),v=>{x0=v;upd();});upd();
+  /* polynomial */
+  let a=.5,b=-1,c=-1,px=1;
+  const g=x=>a*x*x*x+b*x*x+c*x,dg=x=>3*a*x*x+2*b*x+c;
+  const sim2=glab('ru-canvas2',{view:()=>({xr:[-3,3],yr:[-8,8]}),draw(ctx,P){curveD(ctx,P,g,-3,3,T.cx,2.8,300);curveD(ctx,P,dg,-3,3,T.cv,2.8,300);const y=g(px),m=dg(px);line(ctx,P,px-1.2,y-1.2*m,px+1.2,y+1.2*m,T.hot,2,[6,4]);dot(ctx,P.X(px),P.Y(y),6,T.cx,T.surface);dot(ctx,P.X(px),P.Y(m),6,T.cv,T.surface);}});
+  function upd2(){setText('ru-eq',`f(x) = ${polyTxt([a,b,c,0])}      f′(x) = ${polyTxt([3*a,2*b,c])}`);setText('ru-fx',polyTxt([3*a,2*b,c]));setText('ru-slope',fmt(dg(px),3));sim2.render();}
+  [['a',v=>a=v],['b',v=>b=v],['c',v=>c=v]].forEach(([s,fn])=>bindRange('ru-'+s,v=>nz(v),v=>{fn(v);upd2();}));bindRange('ru-px',v=>nz(v),v=>{px=v;upd2();});upd2();
+  drawers.rules=()=>{sim.render();sim2.render();};
+  KEYS['ru-canvas']=['Move n and x. Blue is x^n, green is the rule\'s derivative, the dashed orange line is the tangent.',[['cx','f(x) = xⁿ'],['cv','f′(x) = n xⁿ⁻¹'],['hot','tangent at the point']]];
+  KEYS['ru-canvas2']=['Change a coefficient. Where the blue curve has a peak or valley, the green curve crosses zero.',[['cx','f(x)'],['cv','f′(x) from the rules'],['hot','tangent']]];
+  TIPS['ru-n']=el=>`n = ${nz(+el.value)}: the derivative is ${nz(+el.value)}·x^${nz(el.value-1)}. For n = 0.5 that is a square root's slope.`;
+  GLOSS['power rule']='d/dx [xⁿ] = n·xⁿ⁻¹ for any real n.';
+  TT.rules='Ask students to use the green curve to predict where the blue curve peaks. Then have them rewrite roots and reciprocals as powers by hand.';
+})();
+(function(){
+  const rnd=()=>{const ps=[[3,4,5,6],[2,1],[.5],[-1,-2],[0]];const ts=[[ri(1,6)*pick([1,-1]),pick([2,3,4,5])],[ri(1,6)*pick([1,-1]),pick([1,2])],[ri(1,6)*pick([1,-1]),pick([.5,-1,-2])],[ri(1,9)*pick([1,-1]),0]];return ts;};
+  PROBS.push({id:'ru-poly',topic:'rules',title:'Differentiate with the power rule',gen(){let ts;do{ts=rnd();}while(new Set(ts.map(t=>t[1])).size<4);const f=terms(ts),df=terms(tder(ts));
+    return {q:`Find f′(x) for f(x) = ${pretty(f)}. Type your answer, like 6x^2 − 4x + 5.`,expr:df,chkf:x=>D(x2=>tval(ts,x2),x),hint:'Rewrite roots and reciprocals as powers, then bring each exponent down and subtract 1. A constant differentiates to 0.',
+      sol:`Term by term: f′(x) = <b>${pretty(df)}</b>.`};}});
+  PROBS.push({id:'ru-eval',topic:'rules',title:'Evaluate a derivative',gen(){const a=ri(1,5),b=ri(1,6)*pick([1,-1]),c=ri(-8,8),x0=ri(-3,3),ts=[[a,3],[b,2],[c,1]],ans=tval(tder(ts),x0);
+    return {q:`If f(x) = ${pretty(terms(ts))}, find f′(${nz(x0)}).`,ans,unit:'',abs:.01,chk:D(x=>tval(ts,x),x0),hint:'Differentiate first, then substitute.',sol:`f′(x) = ${pretty(terms(tder(ts)))}. At x = ${nz(x0)}: <b>${nz(ans)}</b>.`};}});
+  PROBS.push({id:'ru-tangent',topic:'rules',title:'Tangent line',gen(){const a=ri(1,3),b=ri(-5,5),c=ri(-4,4),x0=ri(-2,3),x1=x0+ri(1,3),ts=[[a,2],[b,1],[c,0]],y0=tval(ts,x0),m=tval(tder(ts),x0),ans=y0+m*(x1-x0);
+    return {q:`The tangent line to f(x) = ${pretty(terms(ts))} at x = ${nz(x0)} is used to approximate f(${x1}). What is the tangent line's value at x = ${x1}?`,ans,unit:'',abs:.01,chk:y0+D(x=>tval(ts,x),x0)*(x1-x0),hint:'Tangent line: y = f(x0) + f′(x0)(x − x0).',sol:`f(${nz(x0)}) = ${nz(y0)}, f′(${nz(x0)}) = ${nz(m)}. At x = ${x1}: ${nz(y0)} + ${nz(m)}(${x1-x0}) = <b>${nz(ans)}</b>.`};}});
+  PROBS.push({id:'ru-flat',topic:'rules',title:'Horizontal tangent',gen(){const p=ri(1,4),k=ri(-6,6),ts=[[1,3],[-3*p*p,1],[k,0]];
+    return {q:`f(x) = ${pretty(terms(ts))} has horizontal tangents at x = ± r. Find the positive value r.`,ans:p,unit:'',abs:.01,chk:Math.abs(D(x=>tval(ts,x),p))<1e-6?p:NaN,hint:'Horizontal tangent means f′(x) = 0. Solve it.',sol:`f′(x) = 3x² − ${3*p*p} = 0, so x² = ${p*p} and x = ±${p}. The positive value is <b>${p}</b>.`};}});
+})();
+
+/* ===== modules/transder.js ===== */
+/* ---------------- Trig, e^x and ln x derivatives ---------------- */
+(function transder(){
+  const cv=$('#td-canvas');if(!cv)return;
+  const P2=Math.PI/2;
+  const F={sin:{f:Math.sin,d:Math.cos,xr:[-.3,6.6],yr:[-1.6,1.6],dr:[-1.6,1.6],form:'(sin x)′ = cos x',br:[]},cos:{f:Math.cos,d:x=>-Math.sin(x),xr:[-.3,6.6],yr:[-1.6,1.6],dr:[-1.6,1.6],form:'(cos x)′ = −sin x',br:[]},
+    exp:{f:Math.exp,d:Math.exp,xr:[-1,3.2],yr:[-1,22],dr:[-1,22],form:'(eˣ)′ = eˣ',br:[]},ln:{f:Math.log,d:x=>1/x,xr:[0,6],yr:[-3,3],dr:[-1,5],form:'(ln x)′ = 1/x',br:[]},
+    tan:{f:Math.tan,d:x=>1/(Math.cos(x)**2),xr:[-.2,3.3],yr:[-6,6],dr:[-1,12],form:'(tan x)′ = sec²x',br:[P2]}};
+  let k='sin',x0=1,shown=false;
+  const segs=(ctx,P,fn,col,w,lo,hi,br)=>{const pts=[lo,...br,hi],e=1e-5;for(let i=0;i<pts.length-1;i++)curveD(ctx,P,fn,pts[i]+(i?e:0),pts[i+1]-(i<pts.length-2?e:0),col,w,500);};
+  const sim=glab('td-canvas',{view:()=>({xr:F[k].xr,yr:F[k].yr}),draw(ctx,P){const A=F[k];segs(ctx,P,A.f,T.cx,2.8,A.xr[0]+(k==='ln'?1e-4:0),A.xr[1],A.br);const y=A.f(x0),m=A.d(x0);
+      if(isFinite(y)&&isFinite(m)&&Math.abs(m)<20)line(ctx,P,x0-.8,y-.8*m,x0+.8,y+.8*m,T.hot,2.2);if(isFinite(y))dot(ctx,P.X(x0),P.Y(y),6.5,T.hot,T.surface);}});
+  const sim2=glab('td-canvas2',{h:w=>clamp(w*.3,170,240),view:()=>({xr:F[k].xr,yr:F[k].dr}),draw(ctx,P){const A=F[k];
+      if(!shown){label(ctx,'f′ is hidden: sketch it in your head, then tick the box',P.box.x+P.box.w/2,P.box.y+P.box.h/2,T.muted,'center','middle',LABEL);return;}
+      segs(ctx,P,A.d,T.cv,2.8,A.xr[0]+(k==='ln'?1e-4:0),A.xr[1],A.br);const m=A.d(x0);if(isFinite(m))dot(ctx,P.X(x0),P.Y(m),6.5,T.cv,T.surface);label(ctx,'f′(x)',P.box.x+8,P.box.y+10,T.cv,'left','middle',LABEL);}});
+  function clampX(){const A=F[k],el=$('#td-x');el.min=A.xr[0]<=0?(k==='ln'?.2:0):A.xr[0];el.max=Math.min(A.xr[1]-.1,6.2);if(+el.value<+el.min)el.value=el.min;x0=+el.value;}
+  function upd(){const A=F[k];setText('td-sl',fmt(D(A.f,x0),4));setText('td-fx',Math.abs(Math.cos(x0))<2e-2&&k==='tan'?'undefined (cos x = 0)':fmt(A.d(x0),4));setText('td-form',A.form);sim.render();sim2.render();}
+  bindRange('td-x',v=>nz(v),v=>{x0=v;upd();});segBind('td-fn','k',v=>{k=v;clampX();upd();});$('#td-show').addEventListener('change',e=>{shown=e.target.checked;sim2.render();});
+  upd();drawers.transder=()=>{sim.render();sim2.render();};
+  KEYS['td-canvas']=['Slide x and watch the orange tangent. Before ticking the box, predict the shape of the slope function.',[['cx','f(x)'],['hot','tangent line'],['cv','f′(x), once shown']]];
+  TIPS['td-x']=el=>`x = ${nz(+el.value)}: tangent slope ${fmt(D(F[k].f,+el.value),3)}.`;
+  GLOSS['sec']='sec x = 1/cos x.';
+  TT.transder='Have students sketch the slope function for sine from the tangent lines before revealing it, then repeat for cosine and ln.';
+})();
+(function(){
+  PROBS.push({id:'td-expr',topic:'transder',title:'Differentiate a combination',gen(){const a=ri(1,6)*pick([1,-1]),b=ri(1,6)*pick([1,-1]),c=ri(1,6)*pick([1,-1]),pat=pick([0,1,2]);let f,df,fx;
+    if(pat===0){f=`${a}sin(x)${b<0?'-':'+'}${Math.abs(b)}cos(x)`;df=`${a}cos(x)${b<0?'+':'-'}${Math.abs(b)}sin(x)`;fx=x=>a*Math.sin(x)+b*Math.cos(x);}
+    else if(pat===1){f=`${a}e^x${b<0?'-':'+'}${Math.abs(b)}ln(x)`;df=`${a}e^x${b<0?'-':'+'}${Math.abs(b)}/x`;fx=x=>a*Math.exp(x)+b*Math.log(x);}
+    else{f=`${a}tan(x)${b<0?'-':'+'}${Math.abs(b)}x^2`;df=`${a}sec(x)^2${b<0?'-':'+'}${2*Math.abs(b)}x`;fx=x=>a*Math.tan(x)+b*x*x;}
+    return {q:`Find f′(x) for f(x) = ${pretty(f).replace(/sin\(x\)/g,'sin x').replace(/cos\(x\)/g,'cos x').replace(/tan\(x\)/g,'tan x').replace(/ln\(x\)/g,'ln x')}. Type your answer, like 3cos(x) − 2e^x.`,expr:df,chkf:x=>D(fx,x),hint:'Use (sin x)′ = cos x, (cos x)′ = −sin x, (tan x)′ = sec²x, (eˣ)′ = eˣ, (ln x)′ = 1/x, term by term.',sol:`Differentiating each term: f′(x) = <b>${pretty(df).replace(/sec\(x\)²/,'sec²x')}</b>.`};}});
+  PROBS.push({id:'td-eval',topic:'transder',title:'Evaluate a derivative',gen(){const a=ri(2,6),b=ri(1,5),x0=pick([0,Math.PI/2,Math.PI,Math.PI/3,Math.PI/4]),nm={0:'0',[Math.PI/2]:'π/2',[Math.PI]:'π',[Math.PI/3]:'π/3',[Math.PI/4]:'π/4'}[x0],f=x=>a*Math.sin(x)+b*Math.cos(x)+x,ans=a*Math.cos(x0)-b*Math.sin(x0)+1;
+    return {q:`If f(x) = ${a} sin x + ${b} cos x + x, find f′(${nm}). Give a decimal.`,ans,unit:'',abs:.01,chk:D(f,x0),hint:'f′(x) = a cos x − b sin x + 1. Then substitute.',sol:`f′(x) = ${a} cos x − ${b} sin x + 1. At x = ${nm}: ${a}(${fmt(Math.cos(x0),3)}) − ${b}(${fmt(Math.sin(x0),3)}) + 1 = <b>${fmt(ans,3)}</b>.`};}});
+  PROBS.push({id:'td-slope',topic:'transder',title:'Slope of eˣ and ln x',gen(){const a=ri(1,5),useExp=Math.random()<.5,x0=useExp?ri(0,2):ri(1,4),f=useExp?x=>a*Math.exp(x):x=>a*Math.log(x),ans=useExp?a*Math.exp(x0):a/x0;
+    return {q:`Find the slope of the tangent line to y = ${a===1?'':a}${useExp?'e<sup>x</sup>':'ln x'} at x = ${x0}. Give a decimal to three places.`,ans,unit:'',tol:.005,chk:D(f,x0),hint:useExp?'The derivative of a·eˣ is a·eˣ.':'The derivative of a·ln x is a/x.',sol:`f′(x) = ${useExp?`${a}e<sup>x</sup>`:`${a}/x`}. At x = ${x0}: <b>${fmt(ans,3)}</b>.`};}});
+})();
+
+/* ===== modules/prodquot.js ===== */
+/* ---------------- Product & quotient rules ---------------- */
+(function prodquot(){
+  const cv=$('#pq-canvas');if(!cv)return;
+  const C={a:{f:x=>x*x*Math.sin(x),d:x=>2*x*Math.sin(x)+x*x*Math.cos(x),bad:x=>2*x*Math.cos(x),xr:[0,4],yr:[-20,20],br:[],form:'f = u·v with u = x², v = sin x:  f′ = 2x sin x + x² cos x   (naive: u′v′ = 2x cos x)'},
+    b:{f:x=>x*Math.exp(x),d:x=>(1+x)*Math.exp(x),bad:x=>Math.exp(x),xr:[0,2.5],yr:[-5,45],br:[],form:'f = u·v with u = x, v = eˣ:  f′ = eˣ + x eˣ   (naive: u′v′ = eˣ)'},
+    c:{f:x=>Math.sin(x)/x,d:x=>(x*Math.cos(x)-Math.sin(x))/(x*x),bad:x=>Math.cos(x),xr:[.2,6.3],yr:[-1.2,1.5],br:[],form:'f = u/v with u = sin x, v = x:  f′ = (x cos x − sin x)/x²   (naive: u′/v′ = cos x)'},
+    d:{f:x=>(x*x+1)/(x-1),d:x=>(x*x-2*x-1)/((x-1)**2),bad:x=>2*x,xr:[-1,4],yr:[-8,12],br:[1],form:'f = u/v with u = x² + 1, v = x − 1:  f′ = (x² − 2x − 1)/(x − 1)²   (naive: u′/v′ = 2x)'}};
+  let k='a',x0=1.5;
+  const sim=glab('pq-canvas',{view:()=>({xr:C[k].xr,yr:C[k].yr}),draw(ctx,P){const A=C[k],pts=[A.xr[0],...A.br,A.xr[1]],e=1e-5;
+    const seg=(fn,col,w,dash)=>{for(let i=0;i<pts.length-1;i++)curveD(ctx,P,fn,pts[i]+(i?e:0),pts[i+1]-(i<pts.length-2?e:0),col,w,500,dash);};
+    seg(A.f,T.cx,2.6);seg(A.bad,T.hot,2,[6,4]);seg(A.d,T.cv,2.8);
+    [[A.f(x0),T.cx],[A.d(x0),T.cv],[A.bad(x0),T.hot]].forEach(([y,c])=>{if(isFinite(y))dot(ctx,P.X(x0),P.Y(y),5.5,c,T.surface);});vline(ctx,P,x0,T.muted,[3,4]);}});
+  function upd(){const A=C[k];setText('pq-form',A.form);setText('pq-ok',fmt(A.d(x0),4));setText('pq-num',fmt(D(A.f,x0),4));setText('pq-bad',fmt(A.bad(x0),4));sim.render();}
+  function clampX(){const A=C[k],el=$('#pq-x');el.min=A.xr[0]+(A.xr[0]===0?.1:0);el.max=A.xr[1]-.1;if(+el.value<+el.min||+el.value>+el.max)el.value=Math.min(Math.max(+el.min,k==='d'?2:1.5),+el.max);x0=+el.value;}
+  bindRange('pq-x',v=>nz(v),v=>{x0=v;upd();});segBind('pq-fn','k',v=>{k=v;clampX();upd();});upd();drawers.prodquot=()=>sim.render();
+  KEYS['pq-canvas']=['Compare the dots at the chosen x: green is the correct derivative, orange the tempting wrong one.',[['cx','f(x)'],['cv','correct f′ (product or quotient rule)'],['hot','naive u′v′ or u′/v′ (wrong)']]];
+  TIPS['pq-x']=el=>`At x = ${nz(+el.value)}: true slope ${fmt(D(C[k].f,+el.value),3)}, naive answer ${fmt(C[k].bad(+el.value),3)}.`;
+  GLOSS['product rule']='(uv)′ = u′v + uv′.';GLOSS['quotient rule']='(u/v)′ = (u′v − uv′)/v².';
+  TT.prodquot='Have students predict, for one case, whether the naive orange curve is above or below the true green curve before looking.';
+})();
+(function(){
+  PROBS.push({id:'pq-prod',topic:'prodquot',title:'Product rule',gen(){const a=ri(1,5),b=ri(-5,5),n=ri(2,4),pat=pick([0,1,2,3]);let f,df,fx;const lb=polyTxt([a,b]);
+    if(pat===0){f=`(${lb.replace(/−/g,'-')})e^x`;df=`e^x(${a}x${sgn(a+b).trim()===''?'':sgn(a+b)})`.replace('+ -','- ');df=`e^x*(${a}x+${a+b})`;fx=x=>(a*x+b)*Math.exp(x);}
+    else if(pat===1){f=`x^${n}sin(x)`;df=`${n}x^${n-1}sin(x)+x^${n}cos(x)`;fx=x=>Math.pow(x,n)*Math.sin(x);}
+    else if(pat===2){f=`(${a}x+${b})cos(x)`;df=`${a}cos(x)-(${a}x+${b})sin(x)`;fx=x=>(a*x+b)*Math.cos(x);}
+    else{f=`x^${n}ln(x)`;df=`${n}x^${n-1}ln(x)+x^${n-1}`;fx=x=>Math.pow(x,n)*Math.log(x);}
+    return {q:`Find f′(x) for f(x) = ${pretty(f).replace(/sin\(x\)/g,'sin x').replace(/cos\(x\)/g,'cos x').replace(/ln\(x\)/g,'ln x')}. Type your answer.`,expr:df,chkf:x=>D(fx,x),hint:'(uv)′ = u′v + uv′. Identify u and v first.',sol:`With u and v as the two factors: f′(x) = <b>${pretty(df).replace(/sin\(x\)/g,'sin x').replace(/cos\(x\)/g,'cos x').replace(/ln\(x\)/g,'ln x')}</b>.`};}});
+  PROBS.push({id:'pq-quot',topic:'prodquot',title:'Quotient rule',gen(){const a=ri(1,5),b=ri(1,5),n=ri(1,3),pat=pick([0,1,2,3]);let f,df,fx;
+    if(pat===0){f=`(x^2+${a})/(x+${b})`;df=`(x^2+${2*b}x-${a})/(x+${b})^2`;fx=x=>(x*x+a)/(x+b);}
+    else if(pat===1){f=`e^x/(x+${b})`;df=`e^x(x+${b-1})/(x+${b})^2`;fx=x=>Math.exp(x)/(x+b);}
+    else if(pat===2){f=`sin(x)/x^${n}`;df=`(x cos(x)-${n}sin(x))/x^${n+1}`;fx=x=>Math.sin(x)/Math.pow(x,n);}
+    else{f=`(${a}x+${b})/(x^2+1)`;df=`(-${a}x^2-${2*b}x+${a})/(x^2+1)^2`;fx=x=>(a*x+b)/(x*x+1);}
+    const disp=s=>pretty(s).replace(/sin\(x\)/g,'sin x').replace(/cos\(x\)/g,'cos x');
+    return {q:`Find f′(x) for f(x) = ${disp(f)}. Type your answer.`,expr:df,chkf:x=>D(fx,x),hint:'(u/v)′ = (u′v − uv′)/v². Identify u and v first, and square the denominator.',sol:`f′(x) = <b>${disp(df)}</b>.`};}});
+  PROBS.push({id:'pq-eval',topic:'prodquot',title:'Evaluate with the product rule',gen(){const a=ri(1,5),b=ri(-4,4),x0=ri(-3,3),f=x=>(x*x+a)*(x+b),ans=2*x0*(x0+b)+(x0*x0+a);
+    return {q:`If f(x) = (x² + ${a})(${lin(-b)}), find f′(${nz(x0)}).`.replace('(x + 0)','x'),ans,unit:'',abs:.01,chk:D(f,x0),hint:'Product rule: u = x² + a, v = x + b.',sol:`f′(x) = 2x(x ${sgn(b)}) + (x² + ${a}). At x = ${nz(x0)}: <b>${nz(ans)}</b>.`};}});
+})();
+
+/* ===== modules/chain.js ===== */
+/* ---------------- The chain rule ---------------- */
+(function chain(){
+  const cv=$('#ch-canvas');if(!cv)return;
+  const C={a:{g:x=>x*x,gp:x=>2*x,f:Math.sin,fp:Math.cos,y1:[-.5,3],x2:[-.3,2.6],y2:[-1.5,1.5],form:'y = sin(u), u = x²:  dy/dx = cos(x²)·2x'},
+    b:{g:x=>3*x+1,gp:()=>3,f:u=>u**4,fp:u=>4*u**3,y1:[-4,5],x2:[-3.5,5.5],y2:[-20,300],form:'y = u⁴, u = 3x + 1:  dy/dx = 4(3x + 1)³·3'},
+    c:{g:x=>2*x,gp:()=>2,f:Math.exp,fp:Math.exp,y1:[-3.5,3.5],x2:[-3.5,3.5],y2:[-2,22],form:'y = eᵘ, u = 2x:  dy/dx = e²ˣ·2'},
+    d:{g:x=>x*x+1,gp:x=>2*x,f:Math.sqrt,fp:u=>.5/Math.sqrt(u),y1:[0,3.5],x2:[0,3.6],y2:[-.2,2],form:'y = √u, u = x² + 1:  dy/dx = (1/(2√(x²+1)))·2x'}};
+  let k='a',x0=.8;
+  const sim=glab('ch-canvas',{h:w=>clamp(w*.4,230,300),view:()=>({xr:[-1.5,1.5],yr:C[k].y1,ylabel:'u = g(x)'}),draw(ctx,P){const A=C[k],u0=A.g(x0),m=A.gp(x0);curveD(ctx,P,A.g,-1.5,1.5,T.ca,2.8,200);line(ctx,P,x0-.5,u0-.5*m,x0+.5,u0+.5*m,T.hot,2.2);dot(ctx,P.X(x0),P.Y(u0),6.5,T.ca,T.surface);label(ctx,'slope '+fmt(m,2),P.box.x+P.box.w-6,P.box.y+14,T.hot,'right','middle',LABEL);}});
+  const sim2=glab('ch-canvas2',{h:w=>clamp(w*.4,230,300),view:()=>({xr:C[k].x2,yr:C[k].y2,ylabel:'y = f(u)'}),draw(ctx,P){const A=C[k],u0=A.g(x0),y0=A.f(u0),m=A.fp(u0),w=(A.x2[1]-A.x2[0])*.1;curveD(ctx,P,A.f,A.x2[0],A.x2[1],T.cx,2.8,300);line(ctx,P,u0-w,y0-w*m,u0+w,y0+w*m,T.hot,2.2);dot(ctx,P.X(u0),P.Y(y0),6.5,T.cx,T.surface);label(ctx,'slope '+fmt(m,2),P.box.x+P.box.w-6,P.box.y+14,T.hot,'right','middle',LABEL);label(ctx,'u = '+fmt(u0,2),P.X(u0),P.box.y+P.box.h-8,T.muted,'center','middle',MONO);}});
+  function clampX(){const el=$('#ch-x');const lim=k==='b'?1:1.5;el.min=-lim;el.max=lim;if(Math.abs(el.value)>lim)el.value=lim*.5;x0=+el.value;}
+  function upd(){const A=C[k],u0=A.g(x0),gp=A.gp(x0),fp=A.fp(u0);setText('ch-form',A.form);setText('ch-gp',fmt(gp,3));setText('ch-fp',fmt(fp,3));setText('ch-prod',fmt(gp*fp,3));setText('ch-num',fmt(D(x=>A.f(A.g(x)),x0),3));sim.render();sim2.render();}
+  bindRange('ch-x',v=>nz(v),v=>{x0=v;upd();});segBind('ch-fn','k',v=>{k=v;clampX();upd();});upd();drawers.chain=()=>{sim.render();sim2.render();};
+  KEYS['ch-canvas']=['Left: the inner function and its slope. Right: the outer function at the matching u. Multiply the two slopes.',[['ca','u = g(x), inner'],['cx','y = f(u), outer'],['hot','tangent lines']]];
+  TIPS['ch-x']=el=>`x = ${nz(+el.value)}: inner slope × outer slope = the slope of the whole composite.`;
+  GLOSS['chain rule']='d/dx f(g(x)) = f′(g(x))·g′(x): outer derivative (inside unchanged) times inner derivative.';
+  GLOSS['composite function']='A function inside another: f(g(x)).';
+  TT.chain='Have students multiply the two readouts themselves and compare with the numeric slope. Then ask what changes if the inner function is a straight line.';
+})();
+(function(){
+  const T0=[
+    ()=>{const n=ri(2,6),a=ri(1,5),b=ri(-5,5);return {f:`(${a}x${b<0?'':'+'}${b})^${n}`,df:`${n*a}(${a}x${b<0?'':'+'}${b})^${n-1}`,fx:x=>Math.pow(a*x+b,n)};},
+    ()=>{const a=ri(2,6);return {f:`sin(${a}x)`,df:`${a}cos(${a}x)`,fx:x=>Math.sin(a*x)};},
+    ()=>{const a=ri(1,4),b=ri(-3,3);return {f:`e^(${a}x^2${b<0?'':'+'}${b}x)`,df:`(${2*a}x${b<0?'':'+'}${b})e^(${a}x^2${b<0?'':'+'}${b}x)`,fx:x=>Math.exp(a*x*x+b*x)};},
+    ()=>{const a=ri(1,5);return {f:`ln(x^2+${a})`,df:`2x/(x^2+${a})`,fx:x=>Math.log(x*x+a)};},
+    ()=>{const a=ri(2,6),b=ri(1,6);return {f:`sqrt(${a}x+${b})`,df:`${a}/(2sqrt(${a}x+${b}))`,fx:x=>Math.sqrt(a*x+b)};},
+    ()=>{const a=ri(1,4);return {f:`cos(x^${a+1})`,df:`-${a+1}x^${a}sin(x^${a+1})`,fx:x=>Math.cos(Math.pow(x,a+1))};}];
+  const disp=s=>pretty(s).replace(/sin\(/g,'sin(').replace(/e\^\(([^)]*)\)/g,'e^($1)');
+  PROBS.push({id:'ch-expr',topic:'chain',title:'Differentiate with the chain rule',gen(){const t=pick(T0)();
+    return {q:`Find f′(x) for f(x) = ${disp(t.f)}. Type your answer.`,expr:t.df,chkf:x=>D(t.fx,x),hint:'Identify the outer and inner functions. Differentiate the outside (leave the inside alone), then multiply by the derivative of the inside.',sol:`Outer × inner derivative: f′(x) = <b>${disp(t.df)}</b>.`};}});
+  PROBS.push({id:'ch-eval',topic:'chain',title:'Evaluate a chain-rule derivative',gen(){const n=ri(2,5),a=ri(1,4),b=ri(-3,3),x0=ri(-2,2),f=x=>Math.pow(a*x+b,n),ans=n*a*Math.pow(a*x0+b,n-1);
+    return {q:`If f(x) = (${polyTxt([a,b])})<sup>${n}</sup>, find f′(${nz(x0)}).`,ans,unit:'',abs:.01,chk:D(f,x0),hint:'f′(x) = n(ax + b)^(n−1)·a.',sol:`f′(x) = ${n}(${polyTxt([a,b])})<sup>${n-1}</sup>·${a}. At x = ${nz(x0)}: <b>${nz(ans)}</b>.`};}});
+  PROBS.push({id:'ch-table',topic:'chain',title:'Chain rule from a table',gen(){const xs=[1,2,3,4],gv={},gpv={},fv={},fpv={};xs.forEach(x=>{gv[x]=pick(xs);gpv[x]=ri(-4,5)||2;fv[x]=ri(-5,8);fpv[x]=ri(-5,6)||3;});const a=pick(xs),u=gv[a],ans=fpv[u]*gpv[a];
+    const row=(nm,o)=>`<tr><th>${nm}</th>${xs.map(x=>`<td>${nz(o[x])}</td>`).join('')}</tr>`;
+    const tbl=`<table class="lmtbl"><thead><tr><th>x</th>${xs.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${row('g(x)',gv)}${row('g′(x)',gpv)}${row('f(x)',fv)}${row('f′(x)',fpv)}</tbody></table>`;
+    return {q:`Values of f, g and their derivatives are in the table. If h(x) = f(g(x)), find h′(${a}).${tbl}`,ans,unit:'',abs:.01,chk:ans,hint:'h′(a) = f′(g(a))·g′(a). Find g(a) first.',sol:`g(${a}) = ${u}, so f′(g(${a})) = f′(${u}) = ${nz(fpv[u])}. And g′(${a}) = ${nz(gpv[a])}. So h′(${a}) = (${nz(fpv[u])})(${nz(gpv[a])}) = <b>${nz(ans)}</b>.`};}});
+})();
+
+/* ===== modules/implicit.js ===== */
+/* ---------------- Implicit differentiation ---------------- */
+(function implicit(){
+  const cv=$('#im-canvas');if(!cv)return;
+  const C={circ:{br:(x,s)=>s*Math.sqrt(9-x*x),sl:(x,y)=>-x/y,dom:[-2.9,2.9],form:'2x + 2y·y′ = 0  ⇒  y′ = −x/y',two:true,seg:[[-3,3]]},
+    ell:{br:(x,s)=>s*Math.sqrt((4-x*x)/4),sl:(x,y)=>-x/(4*y),dom:[-1.9,1.9],form:'2x + 8y·y′ = 0  ⇒  y′ = −x/(4y)',two:true,seg:[[-2,2]]},
+    hyp:{br:(x)=>4/x,sl:(x,y)=>-y/x,dom:[-3,3],form:'y + x·y′ = 0  ⇒  y′ = −y/x',two:false,seg:[[-6,-.5],[.5,6]]},
+    cub:{br:(x,s)=>s*Math.sqrt(x*x*x-x+1),sl:(x,y)=>(3*x*x-1)/(2*y),dom:[-1.25,3],form:'2y·y′ = 3x² − 1  ⇒  y′ = (3x² − 1)/(2y)',two:true,seg:[[-1.3247,3.6]]}};
+  let k='circ',x0=1.5,low=false;
+  const s=()=>low?-1:1;
+  const sim=glab('im-canvas',{h:w=>clamp(w*.62,280,400),view:(w,h)=>{const sp=8*(h-36)/(w-60);return {xr:[-4,4],yr:[-sp/2,sp/2]};},draw(ctx,P){const A=C[k];
+      A.seg.forEach(([a,b])=>{const e=1e-6;[1,-1].forEach(sg=>{if(!A.two&&sg<0)return;const fn=x=>A.br(x,sg);curveD(ctx,P,fn,Math.max(a,k==='hyp'?a:a)+e,b-e,T.cx,2.8,400);});});
+      const y=A.br(x0,s()),m=A.sl(x0,y);if(isFinite(y)){line(ctx,P,x0-1.4,y-1.4*m,x0+1.4,y+1.4*m,T.hot,2.2);dot(ctx,P.X(x0),P.Y(y),6.5,T.hot,T.surface);}}});
+  function setDom(){const A=C[k],el=$('#im-x');el.min=A.dom[0];el.max=A.dom[1];if(+el.value<A.dom[0]||+el.value>A.dom[1])el.value=k==='circ'?1.5:k==='ell'?1:k==='hyp'?2:1.5;x0=+el.value;if(k==='hyp'&&Math.abs(x0)<.3){el.value=.3;x0=.3;}}
+  function upd(){const A=C[k];if(k==='hyp'&&Math.abs(x0)<.3)x0=.3*(x0<0?-1:1);const y=A.br(x0,s());setText('im-form',A.form);setText('im-pt',`(${fmt(x0,2)}, ${fmt(y,2)})`);setText('im-sl',fmt(A.sl(x0,y),4));setText('im-num',fmt(D(x=>A.br(x,s()),x0),4));sim.render();}
+  bindRange('im-x',v=>nz(v),v=>{x0=v;upd();});segBind('im-fn','k',v=>{k=v;setDom();upd();});$('#im-low').addEventListener('change',e=>{low=e.target.checked;upd();});upd();drawers.implicit=()=>sim.render();
+  KEYS['im-canvas']=['Slide x; the orange tangent uses the slope formula from implicit differentiation.',[['cx','the curve'],['hot','tangent line and point']]];
+  TIPS['im-x']=el=>`x = ${nz(+el.value)}. The slope formula needs y too, so it differs between the upper and lower branch.`;
+  GLOSS['implicit differentiation']='Differentiate both sides of an equation in x and y, treating y as a function of x, then solve for dy/dx.';
+  TT.implicit='Stress that every y-term picks up a dy/dx. Have students predict the sign of the slope on each quarter of the circle before sliding.';
+})();
+(function(){
+  PROBS.push({id:'im-conic',topic:'implicit',title:'Slope on a conic',gen(){const a=ri(1,4),b=ri(1,4),p=pick([-3,-2,-1,1,2,3]),q=pick([-3,-2,-1,1,2,3]),c=a*p*p+b*q*q,ans=-a*p/(b*q),g=gcd(a*p,b*q),nm=nz(-a*p/g*Math.sign(b*q)),dn=Math.abs(b*q/g);
+    return {q:`Find dy/dx at the point (${nz(p)}, ${nz(q)}) on the curve ${a===1?'':a}x² + ${b===1?'':b}y² = ${c}. Give a fraction or decimal.`,ans,unit:'',tol:.01,show:dn===1?nm:nm+'/'+dn,chk:-a*p/(b*q),hint:'Differentiate both sides: 2a·x + 2b·y·y′ = 0, then solve for y′.',sol:`${2*a}x + ${2*b}y·y′ = 0 ⇒ y′ = −${a}x/(${b}y). At (${nz(p)}, ${nz(q)}): −${a}(${nz(p)})/(${b}(${nz(q)})) = <b>${dn===1?nm:nm+'/'+dn}</b>.`};}});
+  PROBS.push({id:'im-xy',topic:'implicit',title:'Implicit differentiation with a product',gen(){const p=ri(1,3),q=ri(-3,3)||1,c=p*p+p*q+q*q,ans=-(2*p+q)/(p+2*q);if(p+2*q===0)return PROBS.find(z=>z.id==='im-xy').gen();
+    return {q:`Find dy/dx at (${p}, ${nz(q)}) on the curve x² + xy + y² = ${c}. Give a fraction or decimal.`,ans,unit:'',tol:.01,chk:-(2*p+q)/(p+2*q),hint:'d/dx[xy] = y + x·y′. Collect the y′ terms: y′(x + 2y) = −(2x + y).',sol:`2x + y + x·y′ + 2y·y′ = 0 ⇒ y′ = −(2x + y)/(x + 2y). At (${p}, ${nz(q)}): −${nz(2*p+q)}/${nz(p+2*q)} = <b>${fmt(ans,3)}</b>.`};}});
+  PROBS.push({id:'im-form',topic:'implicit',title:'Choose the derivative formula',gen(){const R=[['x² + y² = r²','−x/y',['x/y','−y/x','y/x']],['xy = k','−y/x',['−x/y','y/x','x/y']],['x² − y² = k','x/y',['−x/y','y/x','−y/x']],['y² = kx','k/(2y)',['k/y','2y/k','−k/(2y)']],['x³ + y³ = k','−x²/y²',['x²/y²','−y²/x²','−x/y']]],[eq,c,w]=pick(R),m=mcq(c,w);
+    return {q:`Which expression is dy/dx for ${eq}?`,choices:m.choices,ans:m.ans,hint:'Differentiate both sides with respect to x. Every y-term gets a factor of dy/dx.',sol:`Differentiating ${eq} implicitly and solving for y′ gives <b>${c}</b>.`};}});
+})();
+
+/* ===== modules/invfn.js ===== */
+/* ---------------- Inverse functions & inverse trig ---------------- */
+(function invfn(){
+  const cv=$('#iv-canvas');if(!cv)return;
+  const C={ex:{f:Math.exp,df:Math.exp,inv:Math.log,dom:[-3,3],a:[-1.5,1.5],a0:.6},cu:{f:x=>x**3+x,df:x=>3*x*x+1,inv:y=>solve(x=>x**3+x-y,-6,6),dom:[-2.2,2.2],a:[-1.4,1.4],a0:.7},
+    sn:{f:Math.sin,df:Math.cos,inv:Math.asin,dom:[-Math.PI/2,Math.PI/2],a:[-1.3,1.3],a0:.8},sq:{f:x=>x*x,df:x=>2*x,inv:Math.sqrt,dom:[0,3],a:[.2,1.6],a0:.9}};
+  let k='ex',a=.6;
+  const sim=glab('iv-canvas',{h:w=>clamp(w*.7,300,440),view:(w,h)=>{const sp=6*(h-36)/(w-60);return {xr:[-3,3],yr:[-sp/2,sp/2]};},draw(ctx,P){const A=C[k],b=A.f(a),m=A.df(a),big=Math.max(P.xr[1],P.yr[1])*3;
+      line(ctx,P,-9,-9,9,9,T.muted,1.4,[5,5]);curveD(ctx,P,A.f,A.dom[0],A.dom[1],T.cx,2.8,300);
+      ctx.save();clip(ctx,P);ctx.strokeStyle=T.ca;ctx.lineWidth=2.8;ctx.beginPath();for(let i=0;i<=300;i++){const t=A.dom[0]+(A.dom[1]-A.dom[0])*i/300,px=P.X(A.f(t)),py=P.Y(t);i?ctx.lineTo(px,py):ctx.moveTo(px,py);}ctx.stroke();ctx.restore();
+      line(ctx,P,a-1.6,b-1.6*m,a+1.6,b+1.6*m,T.hot,2.2);line(ctx,P,b-1.6*m,a-1.6,b+1.6*m,a+1.6,T.hot,2.2);
+      dot(ctx,P.X(a),P.Y(b),6.5,T.cx,T.surface);dot(ctx,P.X(b),P.Y(a),6.5,T.ca,T.surface);label(ctx,'(a, b)',P.X(a)+10,P.Y(b)+14,T.cx,'left','middle',MONO);label(ctx,'(b, a)',P.X(b)+10,P.Y(a)+14,T.ca,'left','middle',MONO);}});
+  function upd(){const A=C[k],m=A.df(a),b=A.f(a);setText('iv-m',fmt(m,4));setText('iv-mi',fmt(D(A.inv,b),4)+'  = 1/'+fmt(m,3));setText('iv-prod',fmt(m*D(A.inv,b),4));sim.render();}
+  function setA(){const A=C[k],el=$('#iv-a');el.min=A.a[0];el.max=A.a[1];el.value=A.a0;a=A.a0;}
+  bindRange('iv-a',v=>nz(v),v=>{a=v;upd();});segBind('iv-fn','k',v=>{k=v;setA();upd();});upd();
+  /* inverse trig */
+  const G={as:{f:Math.asin,d:x=>1/Math.sqrt(1-x*x),xr:[-1.15,1.15],yr:[-2,5],form:'(arcsin x)′ = 1/√(1 − x²)',r:[-.95,.95]},ac:{f:Math.acos,d:x=>-1/Math.sqrt(1-x*x),xr:[-1.15,1.15],yr:[-5,3.6],form:'(arccos x)′ = −1/√(1 − x²)',r:[-.95,.95]},at:{f:Math.atan,d:x=>1/(1+x*x),xr:[-3,3],yr:[-1.8,1.8],form:'(arctan x)′ = 1/(1 + x²)',r:[-3,3]}};
+  let g='as',x0=.5;
+  const sim2=glab('iv-canvas2',{view:()=>({xr:G[g].xr,yr:G[g].yr}),draw(ctx,P){const A=G[g],lo=Math.max(A.xr[0],-1+1e-6),hi=Math.min(A.xr[1],1-1e-6),r=g==='at'?[A.xr[0],A.xr[1]]:[lo,hi];curveD(ctx,P,A.f,r[0],r[1],T.cx,2.8,300);curveD(ctx,P,A.d,r[0],r[1],T.cv,2.8,300);
+      dot(ctx,P.X(x0),P.Y(A.f(x0)),6,T.cx,T.surface);dot(ctx,P.X(x0),P.Y(A.d(x0)),6,T.cv,T.surface);vline(ctx,P,x0,T.muted,[3,4]);}});
+  function setX(){const el=$('#iv-x'),A=G[g];el.min=A.r[0];el.max=A.r[1];if(+el.value<A.r[0]||+el.value>A.r[1])el.value=.5;x0=+el.value;}
+  function upd2(){const A=G[g];setText('iv-form',A.form);setText('iv-sl',fmt(D(A.f,x0),4));setText('iv-fm',fmt(A.d(x0),4));sim2.render();}
+  bindRange('iv-x',v=>nz(v),v=>{x0=v;upd2();});segBind('iv-tr','k',v=>{g=v;setX();upd2();});upd2();
+  drawers.invfn=()=>{sim.render();sim2.render();};
+  KEYS['iv-canvas']=['Blue is f, pink is f⁻¹ (its mirror image over the dashed y = x). Orange tangents have reciprocal slopes.',[['cx','f and the point (a, b)'],['ca','f⁻¹ and the point (b, a)'],['hot','tangent lines']]];
+  KEYS['iv-canvas2']=['Blue is the inverse trig function; green is its derivative.',[['cx','inverse trig function'],['cv','its derivative']]];
+  TIPS['iv-a']=el=>`a = ${nz(+el.value)}. The two tangent lines are mirror images, so one slope is the reciprocal of the other.`;
+  GLOSS['inverse function']='f⁻¹ undoes f: f⁻¹(f(x)) = x. Its graph is the reflection of f over y = x.';
+  TT.invfn='Have students predict the slope of the pink tangent from the blue one before reading it. Then connect to ln x as the inverse of eˣ.';
+})();
+(function(){
+  PROBS.push({id:'iv-deriv',topic:'invfn',title:'Derivative of an inverse',gen(){const a=ri(-3,3)||1,c=ri(1,4),f=x=>x**3+c*x,df=3*a*a+c,b=f(a),g=gcd(1,df);
+    return {q:`Let f(x) = x³ + ${c===1?'':c}x. Find (f<sup>−1</sup>)′(${nz(b)}). Give a fraction or decimal.`,ans:1/df,unit:'',tol:.01,show:'1/'+df,chk:1/D(f,a),hint:`Find a with f(a) = ${nz(b)} (try small integers), then use 1/f′(a).`,
+      sol:`f(${nz(a)}) = ${nz(b)}, so a = ${nz(a)}. f′(x) = 3x² + ${c}, so f′(${nz(a)}) = ${df}. Then (f⁻¹)′(${nz(b)}) = <b>1/${df}</b>.`};}});
+  PROBS.push({id:'iv-table',topic:'invfn',title:'Inverse derivative from a table',gen(){const xs=[1,2,3,4],ys=shuffle([2,5,7,9]),fp=xs.map(()=>ri(1,6)),i=ri(0,3),a=xs[i],b=ys[i],ans=1/fp[i];
+    const tbl=`<table class="lmtbl"><thead><tr><th>x</th>${xs.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody><tr><th>f(x)</th>${ys.map(y=>`<td>${y}</td>`).join('')}</tr><tr><th>f′(x)</th>${fp.map(y=>`<td>${y}</td>`).join('')}</tr></tbody></table>`;
+    return {q:`f is differentiable and invertible; values are in the table. Find (f<sup>−1</sup>)′(${b}). Give a fraction or decimal.${tbl}`,ans,unit:'',tol:.01,show:'1/'+fp[i],chk:ans,hint:`Which x has f(x) = ${b}? Then take 1/f′ at that x.`,sol:`f(${a}) = ${b}, so (f⁻¹)′(${b}) = 1/f′(${a}) = <b>1/${fp[i]}</b>.`};}});
+  PROBS.push({id:'iv-trig',topic:'invfn',title:'Differentiate inverse trig',gen(){const T1=[()=>{const a=ri(2,5);return {f:`atan(${a}x)`,df:`${a}/(1+${a*a}x^2)`,fx:x=>Math.atan(a*x)};},()=>({f:'asin(x^2)',df:'2x/sqrt(1-x^4)',fx:x=>Math.asin(x*x)}),()=>({f:'atan(x^2)',df:'2x/(1+x^4)',fx:x=>Math.atan(x*x)}),()=>{const a=ri(2,4);return {f:`x*atan(x)`,df:`atan(x)+x/(1+x^2)`,fx:x=>x*Math.atan(x)};},()=>({f:'acos(x/2)',df:'-1/sqrt(4-x^2)',fx:x=>Math.acos(x/2)})],t=pick(T1)();
+    const disp=s=>pretty(s).replace(/atan/g,'arctan').replace(/asin/g,'arcsin').replace(/acos/g,'arccos');
+    return {q:`Find f′(x) for f(x) = ${disp(t.f)}. Type your answer (write arctan as atan, arcsin as asin).`,expr:t.df,chkf:x=>D(t.fx,x),hint:'Use (arctan u)′ = u′/(1 + u²) and (arcsin u)′ = u′/√(1 − u²).',sol:`Chain rule with the inverse trig derivative: f′(x) = <b>${disp(t.df)}</b>.`};}});
+})();
+
+/* ===== modules/higher.js ===== */
+/* ---------------- Higher-order derivatives & choosing a rule ---------------- */
+(function higher(){
+  const cv=$('#hi-canvas');if(!cv)return;
+  const C={a:{f:x=>x**3-3*x,d:x=>3*x*x-3,dd:x=>6*x,y:[[-3.5,3.5],[-4,10],[-13,13]]},b:{f:Math.sin,d:Math.cos,dd:x=>-Math.sin(x),y:[[-1.5,1.5],[-1.5,1.5],[-1.5,1.5]]},
+    c:{f:x=>x**4-2*x*x,d:x=>4*x**3-4*x,dd:x=>12*x*x-4,y:[[-1.5,8.5],[-26,26],[-6,46]]},d:{f:Math.exp,d:Math.exp,dd:Math.exp,y:[[-1,8],[-1,8],[-1,8]]}};
+  let k='a',x0=.5;
+  const sim=sim2d(cv,{h:w=>clamp(w*.8,400,540),draw(ctx,w,h){const A=C[k],bh=Math.floor((h-44)/3)-6,cols=[T.cx,T.cv,T.ca],fns=[A.f,A.d,A.dd],names=['f(x): height','f′(x): slope','f″(x): bend'];
+      for(let i=0;i<3;i++){const P=gpanel(ctx,{x:46,y:6+i*(bh+20),w:w-60,h:bh},[-2,2],A.y[i],{xn:4,yn:3});curveD(ctx,P,fns[i],-2,2,cols[i],2.8,300);const v=fns[i](x0);dot(ctx,P.X(x0),P.Y(v),6,cols[i],T.surface);vline(ctx,P,x0,T.muted,[3,4]);label(ctx,names[i],P.box.x+8,P.box.y+11,cols[i],'left','middle',LABEL);hline(ctx,P,0,alpha(T.muted,.0));}}});
+  function upd(){const A=C[k];setText('hi-f',fmt(A.f(x0),3));setText('hi-d',fmt(A.d(x0),3));setText('hi-dd',fmt(A.dd(x0),3));sim.render();}
+  bindRange('hi-x',v=>nz(v),v=>{x0=v;upd();});segBind('hi-fn','k',v=>{k=v;upd();});upd();drawers.higher=()=>sim.render();
+  KEYS['hi-canvas']=['Slide x. Each graph is the derivative of the one above it: green is the slope of blue, pink is the slope of green.',[['cx','f'],['cv','f′ (slope of f)'],['ca','f″ (slope of f′)']]];
+  TIPS['hi-x']=el=>`x = ${nz(+el.value)}. Where f′ is zero f has a flat tangent; where f″ is zero the bend switches.`;
+  GLOSS['second derivative']='The derivative of the derivative: how fast the slope is changing. Positive means bending up.';
+  GLOSS['acceleration']='The derivative of velocity: the second derivative of position.';
+  TT.higher='Ask students to predict where each graph crosses zero from the one above before sliding.';
+})();
+(function(){
+  const nth=(n)=>[Math.sin,Math.cos,x=>-Math.sin(x),x=>-Math.cos(x)][n%4];
+  PROBS.push({id:'hi-second',topic:'higher',title:'Second derivative',gen(){const a=ri(1,3),b=ri(1,4),c=ri(-5,5),x0=ri(-2,2),ts=[[a,4],[b,3],[c,1]],ans=tval(tder(tder(ts)),x0);
+    return {q:`If f(x) = ${pretty(terms(ts))}, find f″(${nz(x0)}).`,ans,unit:'',abs:.01,chk:D2(x=>tval(ts,x),x0,1e-2),hint:'Differentiate twice, then substitute.',sol:`f′(x) = ${pretty(terms(tder(ts)))}, f″(x) = ${pretty(terms(tder(tder(ts))))}. At x = ${nz(x0)}: <b>${nz(ans)}</b>.`};}});
+  PROBS.push({id:'hi-expr',topic:'higher',title:'Second derivative of a function',gen(){const a=ri(2,4),T1=[()=>({f:`e^(${a}x)`,d2:`${a*a}e^(${a}x)`,fx:x=>Math.exp(a*x)}),()=>({f:`sin(${a}x)`,d2:`-${a*a}sin(${a}x)`,fx:x=>Math.sin(a*x)}),()=>({f:`x*e^(${a}x)`,d2:`e^(${a}x)(${a*a}x+${2*a})`,fx:x=>x*Math.exp(a*x)}),()=>({f:`ln(${a}x)`,d2:`-1/x^2`,fx:x=>Math.log(a*x)})],t=pick(T1)(),disp=s=>pretty(s).replace(/sin\(/g,'sin(');
+    return {q:`Find f″(x) for f(x) = ${disp(t.f)}. Type your answer.`,expr:t.d2,chkf:x=>D2(t.fx,x,5e-3),hint:'Differentiate twice. Simplify f′ before the second differentiation.',sol:`f″(x) = <b>${disp(t.d2)}</b>.`};}});
+  PROBS.push({id:'hi-nth',topic:'higher',title:'A repeating pattern',gen(){const n=ri(3,15),useCos=Math.random()<.5,x0=pick([0,Math.PI]),base=useCos?Math.cos:Math.sin,idx=useCos?n+1:n,fn=nth(idx),ans=Math.abs(fn(x0))<1e-9?0:fn(x0);
+    return {q:`Let f(x) = ${useCos?'cos':'sin'} x. Find the ${n}th derivative f<sup>(${n})</sup> evaluated at x = ${x0===0?'0':'π'}.`,ans,unit:'',abs:.01,hint:'The derivatives of sine and cosine repeat every four steps: sin, cos, −sin, −cos.',sol:`The pattern repeats every 4. ${n} mod 4 = ${n%4}, so f<sup>(${n})</sup>(x) = ${['','','−','−'][(idx%4)]}${[ 'sin','cos','sin','cos'][idx%4]} x, and at x = ${x0===0?'0':'π'} that is <b>${nz(ans)}</b>.`};}});
+  PROBS.push({id:'hi-which',topic:'higher',title:'Which rule first?',gen(){const R=[['x² sin(3x)','Product rule'],['(x² + 1)/(x − 3)','Quotient rule'],['sin(x² + 1)','Chain rule'],['x³ + 5x − 2','Sum and power rules'],['e<sup>x</sup> ln x','Product rule'],['√(1 + x³)','Chain rule'],['cos x / x²','Quotient rule'],['(3x + 1)<sup>7</sup>','Chain rule'],['x e<sup>−x</sup>','Product rule']],[ex,ans]=pick(R),m=mcq(ans,['Product rule','Quotient rule','Chain rule','Sum and power rules']);
+    return {q:`Which rule do you apply first to differentiate f(x) = ${ex}?`,choices:m.choices,ans:m.ans,hint:'Look at the outermost operation of the whole expression.',sol:`The outermost operation is the one to handle first: <b>${ans}</b>.`};}});
 })();
 
 /* ===== overview.js ===== */
@@ -2017,7 +3305,7 @@ const myExamDate=()=>{try{return localStorage.getItem('calc-examdate')||'';}catc
   document.addEventListener('click',e=>{const b=e.target.closest('[data-report]');if(b){e.preventDefault();open(b);}});
 })();
 
-if(/[?&]debug/.test(location.search))window.__calc={PROBS,FRQS,GROUPS,MODS,METHODS,fmt,sci};
+if(/[?&]debug/.test(location.search))window.__calc={PROBS,FRQS,GROUPS,MODS,METHODS,fmt,sci,parseExpr,sameFn,D,D2,integ,limit,riemann};
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{redraw();navSync(true);stepSync(true);});
 current='';route();
 })();

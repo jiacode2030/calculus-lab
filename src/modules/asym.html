@@ -1,0 +1,50 @@
+  <section class="view" id="v-asym" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 1</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Infinite limits & end behavior</h1>
+        <p class="lede">What happens when the function blows up near a point, or when x gets enormous? Both questions give asymptotes.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>A <b>vertical asymptote</b> at <span class="m">x = a</span> means the function grows without bound as x → a: <span class="m">lim f(x) = ±∞</span> from at least one side. In a fraction it happens where the bottom is 0 but the top is not. The limit "= ∞" is shorthand: it technically does not exist, but we say <i>how</i> it fails.</p>
+        <p>A <b>horizontal asymptote</b> comes from limits at infinity: <span class="m">lim<sub>x→∞</sub> f(x) = L</span>. For a ratio of polynomials compare the leading terms: a lower-degree top gives 0, equal degrees give the ratio of leading coefficients, a higher-degree top gives ±∞ (no horizontal asymptote).</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>limits were finite numbers at finite points</dd><dt>So we didn't need</dt><dd>a language for "grows without bound" and "as x gets huge"</dd><dt>Now</dt><dd>rational functions near their zeros and far from the origin</dd><dt>So we need</dt><dd>infinite limits and limits at infinity</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>lim<sub>x→a</sub> f(x) = ±∞</span><small>vertical asymptote x = a</small></div><div class="eqn"><span>lim<sub>x→±∞</sub> f(x) = L</span><small>horizontal asymptote y = L</small></div><div class="eqn"><span>deg top vs deg bottom</span><small>compare leading terms</small></div></div>
+      <div class="lab" id="ay-lab">
+        <div class="labbar"><span class="title">Zoom out to see the end behavior</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="ay-fn" role="group" aria-label="Function"><button type="button" data-k="lt" aria-pressed="true">top lower degree</button><button type="button" data-k="eq" aria-pressed="false">equal degrees</button><button type="button" data-k="gt" aria-pressed="false">top higher degree</button><button type="button" data-k="sin" aria-pressed="false">sin x / x</button></div></div>
+        <p class="small" id="ay-formula" style="margin:0"></p>
+        <canvas id="ay-canvas" aria-label="Graph of a rational function with its asymptotes drawn dashed; slider widens the x window."></canvas>
+        <div class="controls"><div class="ctl"><label for="ay-w"><span>Window half-width</span> <output id="ay-w-out"></output></label><input type="range" id="ay-w" min="0.7" max="3" step="0.05" value="1"></div></div>
+        <div class="readout"><div><span>f at the right edge</span><strong class="x" id="ay-fx">—</strong></div><div><span>as x → ±∞</span><strong class="a" id="ay-inf">—</strong></div><div><span>vertical asymptotes</span><strong class="v" id="ay-vert">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose <b>equal degrees</b> and zoom out. What height does the graph flatten to? <button type="button" class="btn link" data-show='[["click", "#ay-fn [data-k=eq]"], ["#ay-w", 3]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Toward 2, the ratio of leading coefficients (2x² over x²). The two vertical asymptotes at x = ±1 stay put while the ends level off.</p></details></li>
+        <li><p>Choose <b>top higher degree</b> and zoom out. Does it level off? <button type="button" class="btn link" data-show='[["click", "#ay-fn [data-k=gt]"], ["#ay-w", 3]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>No. It keeps growing, like the line y = x. A higher-degree top means no horizontal asymptote: the limit at infinity is ±∞.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find the asymptotes of f(x) = (3x² − 3)/(x² − 4).</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Vertical.</b> The bottom is 0 at x = ±2. The top at x = ±2 is 9, not 0, so both are vertical asymptotes.</li>
+          <li hidden><b>Horizontal.</b> The degrees match (2 and 2): divide the leading coefficients, 3/1 = 3.</li>
+          <li hidden><b>Check the limit.</b> lim<sub>x→∞</sub> (3 − 3/x²)/(1 − 4/x²) = 3/1 = 3. The same value at −∞.</li>
+          <li hidden><b>Answer.</b> Vertical: x = 2 and x = −2. Horizontal: y = <b>3</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Calling every zero of the bottom a vertical asymptote. If the factor also cancels with the top, it is a hole.</li>
+        <li>Writing lim = ∞ as if ∞ were a number you can substitute.</li>
+        <li>Using only the leading coefficient of the top for the horizontal asymptote.</li>
+        <li>Forgetting the limit at −∞ can differ from +∞ (for example, e<sup>x</sup> or an odd-degree ratio).</li>
+        <li>Thinking a graph cannot cross its horizontal asymptote. It can, near the origin; the asymptote describes the far ends.</li>
+      </ul></div>
+      <div class="prose"><h2>Reading the sign</h2>
+        <p>To get the sign of an infinite limit, check which side you approach from. Near x = 2, 1/(x − 2) is large positive from the right (positive denominator) and large negative from the left, so lim<sub>x→2⁺</sub> = ∞ and lim<sub>x→2⁻</sub> = −∞, and the two-sided limit does not exist.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="The bottom has the higher degree, so it wins and the ratio goes to 0.">
+        <p class="q">Check yourself: lim<sub>x→∞</sub> (5x + 1)/(2x² + 7) =</p>
+        <div class="opts"><button type="button">0</button><button type="button">5/2</button><button type="button">∞</button><button type="button">1/7</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

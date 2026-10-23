@@ -121,3 +121,27 @@ function svgG(o){const W=o.w||400,H=o.h||280,xr=o.xr||[-5,5],yr=o.yr||[-4,4],m={
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 /* four multiple-choice strings: the correct one plus distractors (deduplicated, shuffled); returns {choices, ans} */
 function mcq(correct,distract,n=4){const s=[correct];distract.forEach(d=>{if(d!=null&&!s.includes(d)&&s.length<n)s.push(d);});const ch=shuffle(s);return {choices:ch,ans:ch.indexOf(correct)};}
+
+/* ----- glab: a graph lab in a few lines -----
+   o.view(w,h) -> {xr,yr,xn?,yn?};  o.draw(ctx,P,w,h,t) draws on the panel P (P.X, P.Y, inv(P,px,py));
+   o.drag(kind,x,y) gets pointer positions in data coordinates (kind: down|move|up). Returns the sim2d handle. */
+function glab(id,o){const cv=$('#'+id);if(!cv)return null;let last=null;const mx=o.mx||46;
+  const sim=sim2d(cv,{h:o.h||(w=>clamp(w*.52,250,370)),draw(ctx,w,h,t){const v=o.view(w,h);const P=gpanel(ctx,{x:mx,y:12,w:w-mx-14,h:h-36},v.xr,v.yr,{xn:v.xn||6,yn:v.yn||4,ylabel:v.ylabel,xlabel:v.xlabel});last=P;o.draw(ctx,P,w,h,t);},
+    step:o.step,paused:o.paused,
+    drag:o.drag&&((k,e)=>{if(k==='up'){o.drag('up');return;}if(!last)return;const [px,py]=ptr(e,cv),[x,y]=inv(last,px,py);o.drag(k,x,y,e);})});
+  return sim;}
+/* signed number text for building expressions: sgn(3) -> " + 3", sgn(-3) -> " − 3" */
+const sgn=v=>(v<0?' − ':' + ')+Math.abs(+(+v).toFixed(4));
+/* number text with a true minus sign */
+const nz=v=>String(+(+v).toFixed(4)).replace('-','−');
+/* a draggable handle on a panel: returns true when the pointer is within r px of (x,y) */
+const near=(P,px,py,x,y,r=14)=>Math.hypot(P.X(x)-px,P.Y(y)-py)<r;
+/* text of the factor (x − r): lin(3) -> "x − 3", lin(-2) -> "x + 2", lin(0) -> "x" */
+const lin=(r,v='x')=>r===0?v:(r<0?v+' + '+(-r):v+' − '+r);
+/* expression text (parser syntax) from terms [[c,p],...]: c·x^p. terms([[4,3],[-6,.5],[5,-2],[7,0]]) -> "4x^3-6sqrt(x)+5x^(-2)+7". Integer coefficients. */
+function terms(ts){let s='';ts.forEach(([c,p])=>{if(!c)return;const m=Math.abs(c);const body=p===0?String(m):(m===1?'':String(m))+(p===1?'x':p===.5?'sqrt(x)':Number.isInteger(p)&&p>0?'x^'+p:'x^('+(Number.isInteger(p)?p:frac(p).replace('−','-'))+')');
+  s+=(s?(c<0?'-':'+'):(c<0?'-':''))+body;});return s||'0';}
+/* evaluate terms at x */
+const tval=(ts,x)=>ts.reduce((a,[c,p])=>a+c*Math.pow(x,p),0);
+/* derivative of terms */
+const tder=ts=>ts.filter(([c,p])=>p!==0).map(([c,p])=>[c*p,p-1]);

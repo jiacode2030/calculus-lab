@@ -1,0 +1,50 @@
+  <section class="view" id="v-linear" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 4</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Linearization & differentials</h1>
+        <p class="lede">Zoom in far enough and a curve is a line. Use the tangent line to estimate values you cannot compute by hand.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Near x = a, the curve is almost indistinguishable from its tangent line <span class="m">L(x) = f(a) + f′(a)(x − a)</span>. So to estimate f at a nearby point, use L instead: <span class="m">f(x) ≈ L(x)</span>. This is how a calculator first estimates square roots, and how physicists replace sin θ by θ for small angles.</p>
+        <p>Whether the estimate is too big or too small depends on bending. If the curve is <b>concave down</b> (f″ &lt; 0) the tangent line lies <i>above</i> the curve: the estimate is an <b>overestimate</b>. If concave up (f″ &gt; 0) the tangent lies below: an underestimate. Differentials write the same idea as <span class="m">dy = f′(x) dx</span>.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>a function value needed a calculator or a formula</dd><dt>So we didn't need</dt><dd>a fast, local approximation</dd><dt>Now</dt><dd>estimating √ and trig values, error propagation and later Taylor polynomials</dd><dt>So we need</dt><dd>the tangent-line approximation and differentials</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>L(x) = f(a) + f′(a)(x − a)</span><small>linearization at a</small></div><div class="eqn"><span>f(x) ≈ L(x) near a</span><small>good for x close to a</small></div><div class="eqn"><span>dy = f′(x) dx</span><small>differential</small></div></div>
+      <div class="lab" id="li-lab">
+        <div class="labbar"><span class="title">Tangent line vs the curve</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="li-fn" role="group" aria-label="Function"><button type="button" data-k="sq" aria-pressed="true">√x</button><button type="button" data-k="sn" aria-pressed="false">sin x</button><button type="button" data-k="ex" aria-pressed="false">eˣ</button><button type="button" data-k="ln" aria-pressed="false">ln x</button></div></div>
+        <canvas id="li-canvas" aria-label="A curve with its tangent line at a, and the estimate and true value at a target x."></canvas>
+        <div class="controls"><div class="ctl"><label for="li-a"><span>Tangent point a</span> <output id="li-a-out"></output></label><input type="range" id="li-a" min="0.5" max="4" step="0.1" value="1"></div><div class="ctl"><label for="li-x"><span>Target x</span> <output id="li-x-out"></output></label><input type="range" id="li-x" min="0.3" max="4.5" step="0.05" value="1.4"></div></div>
+        <div class="readout"><div><span>estimate L(x)</span><strong class="x" id="li-L">—</strong></div><div><span>true f(x)</span><strong class="v" id="li-f">—</strong></div><div><span>error (L − f)</span><strong class="a" id="li-e">—</strong></div><div><span>the tangent line is</span><strong class="" id="li-side">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>On √x with a = 1, estimate √1.2. <button type="button" class="btn link" data-show='[["click", "#li-fn [data-k=sq]"], ["#li-a", 1], ["#li-x", 1.2]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>L(x) = 1 + ½(x − 1), so L(1.2) = 1.1. The true √1.2 = 1.0954: a tiny overestimate, because √x is concave down.</p></details></li>
+        <li><p>Slide x far from a. What happens to the error? <button type="button" class="btn link" data-show='[["click", "#li-fn [data-k=sq]"], ["#li-a", 1], ["#li-x", 4]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The error grows quickly: L(4) = 2.5 but √4 = 2. A tangent line is only a good estimate close to a.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Use a linearization to estimate √26.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Pick a nearby easy point.</b> f(x) = √x, a = 25 (since √25 = 5).</li>
+          <li hidden><b>Slope.</b> f′(x) = 1/(2√x), so f′(25) = 1/10.</li>
+          <li hidden><b>Build L.</b> L(x) = 5 + (1/10)(x − 25).</li>
+          <li hidden><b>Estimate.</b> L(26) = 5 + 0.1 = 5.1.</li>
+          <li hidden><b>Answer.</b> √26 ≈ <b>5.1</b> (true value 5.0990). Overestimate, since √x is concave down.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Choosing a not close to x. The estimate is only good near a.</li>
+        <li>Evaluating f′ at x instead of at a.</li>
+        <li>Forgetting f(a) in L(x).</li>
+        <li>Saying overestimate/underestimate from the sign of f′. It depends on f″ (concavity).</li>
+        <li>Using degrees for trig linearizations. They require radians.</li>
+      </ul></div>
+      <div class="prose"><h2>Differentials</h2>
+        <p>The change in y along the tangent line is dy = f′(x) dx, while the true change is Δy. For a small dx they nearly agree. This is how measurement error spreads: if the radius of a sphere is measured with a small error dr, the error in volume is about dV = 4πr² dr.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Concave down means the curve bends away below its tangent line, so the tangent estimate is too large.">
+        <p class="q">Check yourself: The tangent line to f at a lies above the curve near a when</p>
+        <div class="opts"><button type="button">f″(a) < 0</button><button type="button">f″(a) > 0</button><button type="button">f′(a) < 0</button><button type="button">f′(a) > 0</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

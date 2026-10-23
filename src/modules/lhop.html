@@ -1,0 +1,51 @@
+  <section class="view" id="v-lhop" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 4</span><span class="tag">AB &amp; BC</span></div>
+        <h1>L'Hôpital's rule</h1>
+        <p class="lede">If a limit of a ratio is 0/0 or ∞/∞, you can differentiate the top and bottom separately and try again.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>When both f and g go to 0 at a, the ratio f/g depends on <i>how fast</i> each goes to 0. Near a, f ≈ f′(a)(x − a) and g ≈ g′(a)(x − a), so their ratio is about f′(a)/g′(a): the ratio of their <b>rates</b>. That is <b>L'Hôpital's rule</b>: <span class="m">lim f/g = lim f′/g′</span>, if the left side is 0/0 or ∞/∞ and the right side exists.</p>
+        <p>Check the form first. Never apply the rule to something that is not 0/0 or ∞/∞. Other indeterminate forms (0·∞, ∞ − ∞, 1<sup>∞</sup>) must be rewritten into a ratio first. You differentiate top and bottom <i>separately</i>: this is not the quotient rule.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>0/0 was solved by algebra when we were lucky</dd><dt>So we didn't need</dt><dd>a general tool for indeterminate quotients</dd><dt>Now</dt><dd>limits like sin x / x, (eˣ − 1)/x, x² / eˣ and ln x / x</dd><dt>So we need</dt><dd>L'Hôpital's rule</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>lim f/g = lim f′/g′</span><small>if 0/0 or ∞/∞</small></div><div class="eqn"><span>0/0 · ∞/∞</span><small>the two direct forms</small></div><div class="eqn"><span>0·∞ · ∞−∞ · 1^∞</span><small>rewrite first</small></div></div>
+      <div class="lab" id="lh-lab">
+        <div class="labbar"><span class="title">Ratio of functions vs ratio of derivatives</span></div>
+        <div class="ctl"><span class="lbl">Limit</span><div class="seg" id="lh-fn" role="group" aria-label="Limit"><button type="button" data-k="a" aria-pressed="true">(eˣ−1)/x at 0</button><button type="button" data-k="b" aria-pressed="false">(1−cos x)/x² at 0</button><button type="button" data-k="c" aria-pressed="false">ln x/(x−1) at 1</button><button type="button" data-k="d" aria-pressed="false">x²/eˣ as x→∞</button></div></div>
+        <p class="small" id="lh-form" style="margin:0"></p>
+        <canvas id="lh-canvas" aria-label="Graphs of f over g and of f prime over g prime near a; both approach the same limit."></canvas>
+        <div class="controls"><div class="ctl"><label for="lh-w"><span>Zoom (closer to a, or farther out)</span> <output id="lh-w-out"></output></label><input type="range" id="lh-w" min="0" max="3" step="0.05" value="0"></div></div>
+        <div class="readout"><div><span>f(x)/g(x) at the probe</span><strong class="x" id="lh-r">—</strong></div><div><span>f′(x)/g′(x) at the probe</span><strong class="v" id="lh-rp">—</strong></div><div><span>the limit</span><strong class="a" id="lh-lim">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose (eˣ − 1)/x and zoom in. Compare the two ratios. <button type="button" class="btn link" data-show='[["click", "#lh-fn [data-k=a]"], ["#lh-w", 3]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Both head to 1. The ratio of derivatives, eˣ/1, is already 1 at x = 0, so L'Hôpital gives the limit in one line.</p></details></li>
+        <li><p>Choose x²/eˣ and widen the window. Which grows faster, top or bottom? <button type="button" class="btn link" data-show='[["click", "#lh-fn [data-k=d]"], ["#lh-w", 3]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The exponential wins: the ratio heads to 0. Applying the rule twice: x²/eˣ → 2x/eˣ → 2/eˣ → 0.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find lim<sub>x→0</sub> (1 − cos x)/x².</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Check the form.</b> 1 − cos 0 = 0 and 0² = 0: the form 0/0, so the rule applies.</li>
+          <li hidden><b>Differentiate top and bottom.</b> (sin x)/(2x).</li>
+          <li hidden><b>Check again.</b> Still 0/0 at x = 0, so apply the rule once more.</li>
+          <li hidden><b>Differentiate again.</b> (cos x)/2, which at x = 0 is 1/2.</li>
+          <li hidden><b>Answer.</b> The limit is <b>1/2</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Using the quotient rule on f/g. Differentiate the top and bottom separately.</li>
+        <li>Applying the rule when the form is not 0/0 or ∞/∞ (for example 1/0 or 0/5).</li>
+        <li>Stopping after one step when the form is still 0/0.</li>
+        <li>Applying it to 0·∞ or ∞ − ∞ directly. Rewrite as a quotient first.</li>
+        <li>Concluding the original limit does not exist because f′/g′ oscillates: then the rule gives no information.</li>
+      </ul></div>
+      <div class="prose"><h2>Growth rates</h2>
+        <p>L'Hôpital settles a hierarchy: as x → ∞, ln x grows slower than any power of x, which grows slower than any exponential. So (ln x)/x → 0 and x<sup>n</sup>/e<sup>x</sup> → 0 for every n.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="It is 0/0, so the rule applies: 3cos(3x)/1 → 3.">
+        <p class="q">Check yourself: Which is the first step for lim<sub>x→0</sub> sin(3x)/x?</p>
+        <div class="opts"><button type="button">Check it is 0/0, then differentiate top and bottom</button><button type="button">Plug in 0 and say it is 0</button><button type="button">Apply the quotient rule</button><button type="button">Say it does not exist</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

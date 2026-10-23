@@ -1,0 +1,51 @@
+  <section class="view" id="v-deriv" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 2</span><span class="tag">AB &amp; BC</span></div>
+        <h1>The derivative & differentiability</h1>
+        <p class="lede">The derivative is a function: at every x it gives the slope of the tangent line. Some graphs have no tangent at certain points, and those are worth knowing.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Define <span class="m">f′(x) = lim<sub>h→0</sub> (f(x + h) − f(x))/h</span>. When this limit exists, f is <b>differentiable</b> at x and f′(x) is the slope of the tangent line there. Doing this at every x produces a new function f′, the <b>derivative function</b>, and its graph is built from the slopes of the original.</p>
+        <p>Differentiable means smooth: no corner, no cusp, no vertical tangent, no jump. A corner has two different one-sided slopes. A vertical tangent has an infinite slope. A discontinuity has no tangent at all. <b>Differentiable ⇒ continuous</b>, but not the other way: |x| is continuous at 0 and not differentiable there.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>the slope was a single number you got from two points</dd><dt>So we didn't need</dt><dd>the slope at every x, as a function</dd><dt>Now</dt><dd>this is the central object of Units 2–5</dd><dt>So we need</dt><dd>the derivative defined by a limit, and the idea of "differentiable"</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>f′(x) = lim<sub>h→0</sub> [f(x+h) − f(x)] / h</span><small>definition</small></div><div class="eqn"><span>f′(a) = lim<sub>x→a</sub> [f(x) − f(a)] / (x − a)</span><small>same, one point</small></div><div class="eqn"><span>differentiable ⇒ continuous</span><small>not the converse</small></div></div>
+      <div class="lab" id="dv-lab">
+        <div class="labbar"><span class="title">Slope at every point</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="dv-fn" role="group" aria-label="Function"><button type="button" data-k="sq" aria-pressed="true">x²</button><button type="button" data-k="abs" aria-pressed="false">|x|</button><button type="button" data-k="cr" aria-pressed="false">∛x</button><button type="button" data-k="st" aria-pressed="false">step</button></div></div>
+        <canvas id="dv-canvas" aria-label="Top graph: the function with a tangent line at a draggable point. Bottom graph: the slope function, with a matching point."></canvas>
+        <canvas id="dv-canvas2" aria-label="Graph of the derivative: the slope of the top graph at each x."></canvas>
+        <div class="controls"><div class="ctl"><label for="dv-x"><span>Point x</span> <output id="dv-x-out"></output></label><input type="range" id="dv-x" min="-2.5" max="2.5" step="0.05" value="1"></div></div>
+        <div class="readout"><div><span>slope from the left</span><strong class="x" id="dv-sl">—</strong></div><div><span>slope from the right</span><strong class="a" id="dv-sr">—</strong></div><div><span>differentiable here?</span><strong class="v" id="dv-ok">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose <b>|x|</b> and slide x through 0. What does the slope graph do at 0? <button type="button" class="btn link" data-show='[["click", "#dv-fn [data-k=abs]"], ["#dv-x", 0]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The left slope is −1 and the right slope is +1, so there is no single slope at 0: the derivative graph jumps. A corner is not differentiable.</p></details></li>
+        <li><p>Choose <b>∛x</b> and move toward 0. What happens to the slope? <button type="button" class="btn link" data-show='[["click", "#dv-fn [data-k=cr]"], ["#dv-x", 0.1]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The slope grows without bound as x → 0 (the tangent becomes vertical), so f′(0) does not exist even though the function is continuous.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Use the definition to find f′(x) for f(x) = x².</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Write the quotient.</b> f′(x) = lim (f(x + h) − f(x))/h = lim ((x + h)² − x²)/h.</li>
+          <li hidden><b>Expand.</b> (x + h)² − x² = 2xh + h².</li>
+          <li hidden><b>Factor out h.</b> (2xh + h²)/h = 2x + h (for h ≠ 0).</li>
+          <li hidden><b>Take the limit.</b> lim<sub>h→0</sub> (2x + h) = 2x.</li>
+          <li hidden><b>Answer.</b> f′(x) = <b>2x</b>. At x = 3 the slope is 6.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Plugging h = 0 into the quotient before simplifying: it is 0/0.</li>
+        <li>Forgetting to expand (x + h)² as x² + 2xh + h².</li>
+        <li>Believing continuous means differentiable (|x| is the counterexample).</li>
+        <li>Writing f′(x) = limit "= 0" when the numerator goes to zero: the denominator goes to zero too.</li>
+        <li>Calling the derivative at a point a function. f′(a) is a number; f′(x) is a function.</li>
+      </ul></div>
+      <div class="prose"><h2>Notation</h2>
+        <p>f′(x), y′, dy/dx and d/dx[f(x)] all mean the same derivative. Leibniz's dy/dx reminds you it is a ratio of tiny changes (change in y over change in x). f′(a) means "evaluate the derivative function at x = a".</p>
+      </div>
+      <div class="quiz" data-correct="1" data-explain="|x| has a corner at 0: the left slope is −1 and the right slope is 1.">
+        <p class="q">Check yourself: Which function is continuous at 0 but not differentiable at 0?</p>
+        <div class="opts"><button type="button">x²</button><button type="button">|x|</button><button type="button">x³</button><button type="button">sin x</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

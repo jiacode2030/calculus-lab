@@ -1,0 +1,51 @@
+  <section class="view" id="v-implicit" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 3</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Implicit differentiation</h1>
+        <p class="lede">Some curves, like a circle, cannot be written as y = f(x). You can still find their slopes by differentiating both sides and treating y as a function of x.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>The circle <span class="m">x² + y² = 25</span> is not a single function (each x has two y values), but near any point it <i>behaves</i> like one. Differentiate both sides with respect to x. The key: whenever you differentiate something with y in it, use the chain rule and write <b>dy/dx</b>, because y depends on x.</p>
+        <p>For the circle: <span class="m">2x + 2y·dy/dx = 0</span>, so <span class="m">dy/dx = −x/y</span>. The slope depends on both x and y: you need the point. At (3, 4) the slope is −3/4: the tangent heads down to the right, as a circle does in its upper right.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>y was always given as a formula in x</dd><dt>So we didn't need</dt><dd>a way to find slopes of curves without solving for y</dd><dt>Now</dt><dd>circles, ellipses and any equation tangled in x and y</dd><dt>So we need</dt><dd>implicit differentiation: differentiate, treat y as y(x), solve for dy/dx</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>d/dx [y²] = 2y · dy/dx</span><small>chain rule on y</small></div><div class="eqn"><span>d/dx [xy] = y + x · dy/dx</span><small>product rule</small></div><div class="eqn"><span>solve for dy/dx</span><small>collect the dy/dx terms</small></div></div>
+      <div class="lab" id="im-lab">
+        <div class="labbar"><span class="title">A slope you can see</span></div>
+        <div class="ctl"><span class="lbl">Curve</span><div class="seg" id="im-fn" role="group" aria-label="Curve"><button type="button" data-k="circ" aria-pressed="true">x² + y² = 9</button><button type="button" data-k="ell" aria-pressed="false">x² + 4y² = 4</button><button type="button" data-k="hyp" aria-pressed="false">xy = 4</button><button type="button" data-k="cub" aria-pressed="false">y² = x³ − x + 1</button></div></div>
+        <label class="check"><input type="checkbox" id="im-low"> Use the lower branch</label><p class="small" id="im-form" style="margin:0"></p>
+        <canvas id="im-canvas" aria-label="A curve defined by an equation, a point on it, and the tangent line with slope given by implicit differentiation."></canvas>
+        <div class="controls"><div class="ctl"><label for="im-x"><span>x of the point</span> <output id="im-x-out"></output></label><input type="range" id="im-x" min="-2" max="2.9" step="0.05" value="1.5"></div></div>
+        <div class="readout"><div><span>point (x, y)</span><strong class="x" id="im-pt">—</strong></div><div><span>dy/dx from the formula</span><strong class="v" id="im-sl">—</strong></div><div><span>slope measured on the curve</span><strong class="a" id="im-num">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>On the circle, move to x = 3 on the upper branch. What is the slope? <button type="button" class="btn link" data-show='[["click", "#im-fn [data-k=circ]"], ["#im-x", 2.4], ["#im-low", false]]'>x = 2.4</button></p><details><summary>What you should see</summary><p>At x = 2.4 the point is (2.4, 1.8), and dy/dx = −x/y = −2.4/1.8 = −1.33. The tangent falls to the right.</p></details></li>
+        <li><p>Switch to the lower branch at the same x. What happens to the slope? <button type="button" class="btn link" data-show='[["click", "#im-fn [data-k=circ]"], ["#im-x", 2.4], ["#im-low", true]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>y is now negative, so −x/y is positive: the lower right of a circle slopes up. Same x, opposite slope, because the formula needs y too.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find dy/dx for x² + y² = 25 and the slope at (3, 4). Then find dy/dx for x²y + y³ = 10.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Differentiate both sides.</b> d/dx[x²] + d/dx[y²] = d/dx[25] gives 2x + 2y·y′ = 0.</li>
+          <li hidden><b>Solve for y′.</b> 2y·y′ = −2x, so y′ = −x/y. At (3, 4): <b>−3/4</b>.</li>
+          <li hidden><b>Second curve, product rule on x²y.</b> 2xy + x²y′ + 3y²y′ = 0.</li>
+          <li hidden><b>Collect the y′ terms.</b> y′(x² + 3y²) = −2xy.</li>
+          <li hidden><b>Answer.</b> y′ = <b>−2xy/(x² + 3y²)</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Forgetting dy/dx after differentiating a y term: (y²)′ is 2y·y′, not 2y.</li>
+        <li>Not using the product rule on mixed terms like xy.</li>
+        <li>Dropping y from the answer. Leave it in; the formula depends on both coordinates.</li>
+        <li>Not isolating dy/dx: collect every y′ term on one side, factor and divide.</li>
+        <li>Substituting the point too early. Differentiate first, then substitute.</li>
+      </ul></div>
+      <div class="prose"><h2>Why it works</h2>
+        <p>Near a point on the curve, y is some function of x, even if you cannot write it down. Differentiating an equation that is true for all nearby (x, y) gives another true equation. The chain rule is just the way to differentiate y² = (y(x))² with respect to x.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Chain rule: derivative of the outside (3y²) times the derivative of the inside (dy/dx).">
+        <p class="q">Check yourself: d/dx [y³] with respect to x equals</p>
+        <div class="opts"><button type="button">3y² dy/dx</button><button type="button">3y²</button><button type="button">y³ dy/dx</button><button type="button">3y² dx/dy</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

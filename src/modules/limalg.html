@@ -1,0 +1,51 @@
+  <section class="view" id="v-limalg" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 1</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Algebraic limits</h1>
+        <p class="lede">When plugging in gives 0/0, the function is hiding something. Algebra rewrites it into a form that does not hide it.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Direct substitution works whenever the function is continuous at <span class="m">a</span>: just evaluate. The trouble is the form <span class="m">0/0</span>, which is not a number but a clue: the top and bottom share a factor that is going to zero. Remove the shared factor and what is left can be evaluated.</p>
+        <p>Three moves cover almost everything. <b>Factor and cancel</b> (polynomials). <b>Multiply by the conjugate</b> (square roots). <b>Combine fractions</b> (a fraction inside a fraction). When a function is trapped between two others that share a limit, the <b>squeeze</b> theorem gives the answer.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>a limit was something you read off a table or graph</dd><dt>So we didn't need</dt><dd>algebra</dd><dt>Now</dt><dd>most limits on the exam come as formulas, not pictures</dd><dt>So we need</dt><dd>a way to simplify the formula until the limit is just substitution</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>lim f = f(a)</span><small>if f is continuous at a</small></div><div class="eqn"><span>0/0</span><small>factor, rationalize or combine</small></div><div class="eqn"><span>g ≤ f ≤ h</span><small>and lim g = lim h = L ⇒ lim f = L</small></div></div>
+      <div class="lab" id="la-lab">
+        <div class="labbar"><span class="title">Same graph, simpler formula</span></div>
+        <div class="ctl"><span class="lbl">Case</span><div class="seg" id="la-fn" role="group" aria-label="Case"><button type="button" data-k="fac" aria-pressed="true">Factor</button><button type="button" data-k="rat" aria-pressed="false">Conjugate</button><button type="button" data-k="frc" aria-pressed="false">Fractions</button><button type="button" data-k="sq" aria-pressed="false">Squeeze</button></div></div>
+        <p class="small" id="la-formula" style="margin:0"></p>
+        <canvas id="la-canvas" aria-label="Graph of the original function with a hole, and the simplified function drawn dashed on top."></canvas>
+        <div class="readout"><div><span>plugging in gives</span><strong class="x" id="la-plug">—</strong></div><div><span>after algebra</span><strong class="a" id="la-simp">—</strong></div><div><span>the limit</span><strong class="v" id="la-lim">—</strong></div></div>
+        <div class="xpsteps"><div><b>The algebra</b><span id="la-alg">—</span></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose <b>Factor</b>. The orange dashed line is the simplified formula. Where do the two graphs differ? <button type="button" class="btn link" data-show='[["click", "#la-fn [data-k=fac]"]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Only at x = 3, where the original has a hole. Everywhere else they are the same graph, so they approach the same height: the simplified formula gives the limit.</p></details></li>
+        <li><p>Choose <b>Squeeze</b>. Why can't you just plug in x = 0? <button type="button" class="btn link" data-show='[["click", "#la-fn [data-k=sq]"]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>sin(1/0) is meaningless. But sin is always between −1 and 1, so x²·sin(1/x) is trapped between −x² and x². Both bounds go to 0, so the function is squeezed to 0.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find lim<sub>x→2</sub> (x² − x − 2)/(x − 2).</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Plug in.</b> 4 − 2 − 2 = 0 on top and 2 − 2 = 0 on the bottom: the form 0/0, so keep working.</li>
+          <li hidden><b>Factor the top.</b> x² − x − 2 = (x − 2)(x + 1).</li>
+          <li hidden><b>Cancel the common factor.</b> For x ≠ 2, (x − 2)(x + 1)/(x − 2) = x + 1. The limit only looks at x ≠ 2, so this is allowed.</li>
+          <li hidden><b>Substitute.</b> lim<sub>x→2</sub> (x + 1) = 3.</li>
+          <li hidden><b>Answer.</b> The limit is <b>3</b>. The original has a hole at (2, 3).</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Cancelling a factor that does not go to 0: only cancel the factor that is the cause of 0/0.</li>
+        <li>Stopping at 0/0 and writing "the limit does not exist". 0/0 means "do more work".</li>
+        <li>Multiplying only the top by the conjugate. Multiply top and bottom by the same thing.</li>
+        <li>Using the squeeze theorem with bounds that do not have the same limit.</li>
+        <li>Writing "= 3" after the first step. Keep "lim" until you substitute.</li>
+      </ul></div>
+      <div class="prose"><h2>Why algebra is allowed</h2>
+        <p>Two functions that agree everywhere except at <span class="m">a</span> have the same limit at <span class="m">a</span>, because a limit never looks at <span class="m">x = a</span> itself. That is why cancelling (x − 2)/(x − 2) is legal in a limit, even though 0/0 at x = 2 is not defined.</p>
+      </div>
+      <div class="quiz" data-correct="1" data-explain="The square root is the problem; multiplying by the conjugate gives x/(x(√(x+9)+3)), then cancel x. The limit is 1/6.">
+        <p class="q">Check yourself: which move turns (√(x + 9) − 3)/x into something you can evaluate at 0?</p>
+        <div class="opts"><button type="button">Factor the top</button><button type="button">Multiply top and bottom by √(x + 9) + 3</button><button type="button">Plug in 0 and divide</button><button type="button">Use the squeeze theorem</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

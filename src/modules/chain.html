@@ -1,0 +1,51 @@
+  <section class="view" id="v-chain" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 3</span><span class="tag">AB &amp; BC</span></div>
+        <h1>The chain rule</h1>
+        <p class="lede">When one function sits inside another, rates multiply: the speed of the outer function times the speed of the inner one.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Picture a chain of gears. If gear A turns 3 times as fast as gear B, and gear B turns twice as fast as gear C, then A turns 3 × 2 = 6 times as fast as C. A composite function <span class="m">y = f(g(x))</span> works the same way: as x changes, <span class="m">u = g(x)</span> changes at rate g′(x), and y changes with u at rate f′(u). Multiply them.</p>
+        <p>So <span class="m">d/dx f(g(x)) = f′(g(x)) · g′(x)</span>: <b>differentiate the outside, leave the inside alone, then multiply by the derivative of the inside</b>. Leibniz writes it so it looks like cancelling: dy/dx = (dy/du)(du/dx).</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>each rule handled one function at a time</dd><dt>So we didn't need</dt><dd>a way through nested functions</dd><dt>Now</dt><dd>sin(x²), e^{3x}, (2x + 1)⁵ and √(x² + 1) all need it</dd><dt>So we need</dt><dd>the chain rule</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>(f∘g)′(x) = f′(g(x)) · g′(x)</span><small>chain rule</small></div><div class="eqn"><span>dy/dx = (dy/du)(du/dx)</span><small>Leibniz form</small></div><div class="eqn"><span>d/dx [f(u)] = f′(u) · u′</span><small>shorthand</small></div></div>
+      <div class="lab" id="ch-lab">
+        <div class="labbar"><span class="title">Two rates, multiplied</span></div>
+        <div class="ctl"><span class="lbl">Composite</span><div class="seg" id="ch-fn" role="group" aria-label="Composite"><button type="button" data-k="a" aria-pressed="true">sin(x²)</button><button type="button" data-k="b" aria-pressed="false">(3x+1)⁴</button><button type="button" data-k="c" aria-pressed="false">e²ˣ</button><button type="button" data-k="d" aria-pressed="false">√(x²+1)</button></div></div>
+        <p class="small" id="ch-form" style="margin:0"></p>
+        <canvas id="ch-canvas" aria-label="Left graph: the inner function u = g(x) with its tangent. Right graph: the outer function f(u) with its tangent at the matching point."></canvas>
+        <canvas id="ch-canvas2" aria-label="The outer function f against u, with the tangent at u = g(x)."></canvas>
+        <div class="controls"><div class="ctl"><label for="ch-x"><span>Point x</span> <output id="ch-x-out"></output></label><input type="range" id="ch-x" min="-1.5" max="1.5" step="0.05" value="0.8"></div></div>
+        <div class="readout"><div><span>g′(x): inner rate</span><strong class="a" id="ch-gp">—</strong></div><div><span>f′(g(x)): outer rate</span><strong class="v" id="ch-fp">—</strong></div><div><span>product</span><strong class="x" id="ch-prod">—</strong></div><div><span>numeric slope of f(g(x))</span><strong class="" id="ch-num">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose <b>e²ˣ</b>. What are the two rates at any x, and what do they give? <button type="button" class="btn link" data-show='[["click", "#ch-fn [data-k=c]"], ["#ch-x", 0.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The inner rate is always 2, the outer rate is e<sup>2x</sup>: the product 2e<sup>2x</sup> matches the numeric slope. The factor 2 is what the chain rule adds.</p></details></li>
+        <li><p>Choose <b>(3x+1)⁴</b> and change x. Which factor is always the same? <button type="button" class="btn link" data-show='[["click", "#ch-fn [data-k=b]"]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The inner rate 3. The outer rate 4u³ depends on x, but the inner rate does not, so the derivative is 4(3x+1)³·3 = 12(3x + 1)³.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Differentiate f(x) = sin(x²) and g(x) = (3x + 1)⁵.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Name the layers.</b> For f: outer = sin u, inner = u = x². For g: outer = u⁵, inner = u = 3x + 1.</li>
+          <li hidden><b>Differentiate the outside, keep the inside.</b> f′ = cos(x²) · (x²)′. g′ = 5(3x + 1)⁴ · (3x + 1)′.</li>
+          <li hidden><b>Multiply by the derivative of the inside.</b> (x²)′ = 2x and (3x + 1)′ = 3.</li>
+          <li hidden><b>Answer.</b> f′(x) = <b>2x cos(x²)</b>; g′(x) = <b>15(3x + 1)⁴</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Forgetting the inside derivative: (sin x²)′ is not cos x².</li>
+        <li>Changing the inside when differentiating the outside. cos(x²) keeps x² as it is.</li>
+        <li>Applying the power rule to eˣ-type functions: (e<sup>3x</sup>)′ = 3e<sup>3x</sup>, not 3x e<sup>3x−1</sup>.</li>
+        <li>Stopping early on layers: √(sin(x²)) has three layers.</li>
+        <li>Mixing up the order of composition when evaluating at a point: you need g(a) first, then f′(g(a)).</li>
+      </ul></div>
+      <div class="prose"><h2>Several layers</h2>
+        <p>For three layers, y = f(g(h(x))), multiply three rates: f′(g(h(x)))·g′(h(x))·h′(x). Work from the outside in, one layer at a time, and write each step.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Outer e^u gives e^(x²); the inside x² has derivative 2x.">
+        <p class="q">Check yourself: d/dx [e<sup>x²</sup>] =</p>
+        <div class="opts"><button type="button">2x e<sup>x²</sup></button><button type="button">e<sup>x²</sup></button><button type="button">x² e<sup>x²−1</sup></button><button type="button">2e<sup>x</sup></button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

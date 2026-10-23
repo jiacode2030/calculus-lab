@@ -1,0 +1,54 @@
+  <section class="view" id="v-trigexp" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag na">Math</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Trig, exponentials & logs</h1>
+        <p class="lede">Sine, cosine, e<sup>x</sup> and ln x: four functions you will differentiate and integrate constantly. Here is what each one looks like and why.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>On the unit circle, the point at angle <span class="m">θ</span> (measured in radians from the positive x-axis) is <span class="m">(cos θ, sin θ)</span>. That one picture gives you the graphs of sine and cosine, their values at the special angles, and the identity <span class="m">sin²θ + cos²θ = 1</span>. Calculus uses radians because then the arc length equals the angle.</p>
+        <p>An <b>exponential</b> <span class="m">b<sup>x</sup></span> multiplies by b for every step in x. The special base <b>e ≈ 2.718</b> is the one whose slope equals its height at every point. Its inverse is the <b>natural log</b> <span class="m">ln x</span>: <span class="m">ln(e<sup>x</sup>) = x</span> and <span class="m">e<sup>ln x</sup> = x</span>.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>angles were degrees and growth was a table</dd><dt>So we didn't need</dt><dd>radians, and one special exponential base</dd><dt>Now</dt><dd>the derivative of sin x is only cos x in radians, and e<sup>x</sup> is its own derivative</dd><dt>So we need</dt><dd>the unit circle in radians, and e and ln</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>(cos θ, sin θ)</span><small>point on the unit circle</small></div><div class="eqn"><span>sin²θ + cos²θ = 1</span><small>identity</small></div><div class="eqn"><span>ln(ab) = ln a + ln b · ln(a<sup>n</sup>) = n ln a</span><small>log rules</small></div><div class="eqn"><span>e<sup>ln x</sup> = x · ln e<sup>x</sup> = x</span><small>inverses</small></div></div>
+      <div class="lab" id="te-lab">
+        <div class="labbar"><span class="title">The unit circle</span></div>
+        <canvas id="te-canvas" aria-label="Unit circle with a point at the chosen angle, and its sine and cosine drawn as segments."></canvas>
+        <div class="controls"><div class="ctl"><label for="te-ang"><span>Angle θ (radians)</span> <output id="te-ang-out"></output></label><input type="range" id="te-ang" min="0" max="6.2832" step="0.0524" value="0.7854"></div></div>
+        <div class="readout"><div><span>sin θ (blue)</span><strong class="x" id="te-sin">—</strong></div><div><span>cos θ (green)</span><strong class="v" id="te-cos">—</strong></div><div><span>tan θ = sin θ / cos θ</span><strong class="" id="te-tan">—</strong></div><div><span>in degrees</span><strong class="" id="te-deg">—</strong></div></div>
+      </div>
+      <div class="lab" id="te-lab2">
+        <div class="labbar"><span class="title">e and ln are inverses</span></div>
+        <canvas id="te-canvas2" aria-label="Graphs of b to the x, its inverse log, and the line y = x."></canvas>
+        <div class="controls"><div class="ctl"><label for="te-base"><span>Base b</span> <output id="te-base-out"></output></label><input type="range" id="te-base" min="1.2" max="6" step="0.05" value="2.718"></div></div>
+        <div class="readout"><div><span>slope of b^x at x = 0</span><strong class="x" id="te-slope">—</strong></div><div><span>ln b</span><strong class="a" id="te-ln">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Set θ = π/4 (about 0.785). What are sine and cosine? <button type="button" class="btn link" data-show='[["#te-ang", 0.7854]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Both are √2/2 ≈ 0.707: at 45° the point sits on the diagonal, so its x and y coordinates are equal.</p></details></li>
+        <li><p>Slide the base b to e (2.718). What is the slope of b<sup>x</sup> at x = 0? <button type="button" class="btn link" data-show='[["#te-base", 2.718]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>1. For other bases the slope at 0 is ln b: below 1 for b &lt; e, above 1 for b &gt; e. Only e makes the slope exactly equal to the height (1) at x = 0.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Solve e<sup>2x</sup> = 7 for x.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Undo e with ln.</b> Take the natural log of both sides: ln(e<sup>2x</sup>) = ln 7.</li>
+          <li hidden><b>Simplify.</b> ln(e<sup>2x</sup>) = 2x, so 2x = ln 7.</li>
+          <li hidden><b>Solve.</b> x = (ln 7)/2.</li>
+          <li hidden><b>Answer.</b> x ≈ <b>0.973</b>. Check: e<sup>1.946</sup> ≈ 7.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Using degrees in calculus formulas. Set your calculator to radians.</li>
+        <li>Writing ln(a + b) = ln a + ln b. The rule is for products: ln(ab) = ln a + ln b.</li>
+        <li>Forgetting ln x is only defined for x &gt; 0.</li>
+        <li>Thinking e<sup>x</sup> can be zero or negative: it is always positive.</li>
+        <li>Mixing up sin²θ with sin(θ²).</li>
+      </ul></div>
+      <div class="prose"><h2>The special angles</h2>
+        <p>Memorize the first-quadrant values: sin 0 = 0, sin π/6 = 1/2, sin π/4 = √2/2, sin π/3 = √3/2, sin π/2 = 1, and cosine runs the other way (1, √3/2, √2/2, 1/2, 0). The signs in the other quadrants follow from which coordinate is negative.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="ln undoes e to a power: ln(e^5) = 5.">
+        <p class="q">Check yourself: ln(e<sup>5</sup>) =</p>
+        <div class="opts"><button type="button">5</button><button type="button">e<sup>5</sup></button><button type="button">1/5</button><button type="button">ln 5</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

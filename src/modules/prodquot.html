@@ -1,0 +1,50 @@
+  <section class="view" id="v-prodquot" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 2</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Product & quotient rules</h1>
+        <p class="lede">The derivative of a product is not the product of the derivatives. Here is what it is, and why the naive answer fails.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>If f = u·v, change in f has two parts: u changes while v stays, and v changes while u stays. That gives <span class="m">(uv)′ = u′v + uv′</span>: "derivative of the first times the second, plus the first times the derivative of the second". For a quotient, <span class="m">(u/v)′ = (u′v − uv′)/v²</span>: low d-high minus high d-low over low squared.</p>
+        <p>You can check that (uv)′ ≠ u′v′ with any example: for u = v = x, uv = x² has derivative 2x, but u′v′ = 1. Watch the lab: the naive answer drifts away from the true slope.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>we differentiated one term at a time</dd><dt>So we didn't need</dt><dd>a rule for products and for quotients</dd><dt>Now</dt><dd>functions like x² sin x and (x + 1)/(x − 2)</dd><dt>So we need</dt><dd>the product and quotient rules</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>(uv)′ = u′v + uv′</span><small>product</small></div><div class="eqn"><span>(u/v)′ = (u′v − uv′) / v²</span><small>quotient</small></div><div class="eqn"><span>(uv)′ ≠ u′v′</span><small>the common error</small></div></div>
+      <div class="lab" id="pq-lab">
+        <div class="labbar"><span class="title">True derivative vs the tempting wrong one</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="pq-fn" role="group" aria-label="Function"><button type="button" data-k="a" aria-pressed="true">x²·sin x</button><button type="button" data-k="b" aria-pressed="false">x·eˣ</button><button type="button" data-k="c" aria-pressed="false">sin x / x</button><button type="button" data-k="d" aria-pressed="false">(x²+1)/(x−1)</button></div></div>
+        <p class="small" id="pq-form" style="margin:0"></p>
+        <canvas id="pq-canvas" aria-label="Graph of the function in blue, the correct derivative in green and the incorrect product of derivatives in orange dashed."></canvas>
+        <div class="controls"><div class="ctl"><label for="pq-x"><span>Point x</span> <output id="pq-x-out"></output></label><input type="range" id="pq-x" min="0.3" max="3" step="0.05" value="1.5"></div></div>
+        <div class="readout"><div><span>correct rule</span><strong class="v" id="pq-ok">—</strong></div><div><span>slope from the graph (numeric)</span><strong class="x" id="pq-num">—</strong></div><div><span>naive u′·v′ (or u′/v′)</span><strong class="a" id="pq-bad">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose <b>x·eˣ</b> at x = 1.5. Compare the three numbers. <button type="button" class="btn link" data-show='[["click", "#pq-fn [data-k=b]"], ["#pq-x", 1.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The product rule matches the numeric slope (about 11.2); the naive u′v′ gives e<sup>1.5</sup> ≈ 4.48. Only the product rule is right.</p></details></li>
+        <li><p>Choose the quotient <b>sin x / x</b> and compare. <button type="button" class="btn link" data-show='[["click", "#pq-fn [data-k=c]"], ["#pq-x", 2]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>(x cos x − sin x)/x² agrees with the numeric slope. Dividing the derivatives (cos x / 1) does not.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Differentiate f(x) = x² eˣ and g(x) = (x + 1)/(x − 2).</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Product rule on f.</b> u = x², v = eˣ, so u′ = 2x, v′ = eˣ. f′ = 2x·eˣ + x²·eˣ = eˣ(x² + 2x).</li>
+          <li hidden><b>Quotient rule on g.</b> u = x + 1, v = x − 2, so u′ = 1, v′ = 1. g′ = (1·(x − 2) − (x + 1)·1)/(x − 2)².</li>
+          <li hidden><b>Simplify the top.</b> (x − 2) − (x + 1) = −3.</li>
+          <li hidden><b>Answer.</b> f′(x) = <b>eˣ(x² + 2x)</b> and g′(x) = <b>−3/(x − 2)²</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Writing (uv)′ = u′v′. It misses half of the change.</li>
+        <li>Getting the quotient numerator in the wrong order: it is u′v − uv′ (low d-high minus high d-low).</li>
+        <li>Forgetting to square the denominator.</li>
+        <li>Using the quotient rule when the denominator is a constant. Just pull the constant out.</li>
+        <li>Not simplifying: factor and cancel if you can.</li>
+      </ul></div>
+      <div class="prose"><h2>Why the product rule has two terms</h2>
+        <p>A rectangle with sides u and v has area uv. If both sides grow, the area gains a strip along each side: u′v from stretching one side and uv′ from stretching the other. The tiny corner u′v′ is second order and vanishes in the limit.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="(x)′ sin x + x (sin x)′ = sin x + x cos x.">
+        <p class="q">Check yourself: d/dx [x sin x] =</p>
+        <div class="opts"><button type="button">sin x + x cos x</button><button type="button">cos x</button><button type="button">x cos x</button><button type="button">sin x + cos x</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

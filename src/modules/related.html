@@ -1,0 +1,51 @@
+  <section class="view" id="v-related" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 4</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Related rates</h1>
+        <p class="lede">When two quantities are tied together by an equation and both change in time, their rates are tied together too.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>A ladder slides down a wall. The foot moves out at a steady 2 ft/s, but the top does not move down at a steady rate: it starts slowly and speeds up. The lengths x and y are linked by <span class="m">x² + y² = L²</span>, so their <i>rates</i> are linked by the derivative of that equation with respect to time.</p>
+        <p>The method: <b>draw and label</b>; write an <b>equation</b> that holds at every moment; <b>differentiate with respect to t</b> (chain rule on every variable); only <b>then substitute</b> the numbers of the moment you care about. Substituting before differentiating freezes the variables and gives 0.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>quantities changed one at a time with x</dd><dt>So we didn't need</dt><dd>a way to connect the rates of several changing quantities</dd><dt>Now</dt><dd>ladders, balloons, shadows, cones, flows</dd><dt>So we need</dt><dd>differentiate an equation in time</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>d/dt [x²] = 2x · dx/dt</span><small>chain rule in t</small></div><div class="eqn"><span>differentiate first</span><small>then plug in</small></div><div class="eqn"><span>draw · equation · d/dt · substitute</span><small>the four steps</small></div></div>
+      <div class="lab" id="rr-lab">
+        <div class="labbar"><span class="title">Same equation, linked rates</span></div>
+        <div class="ctl"><span class="lbl">Situation</span><div class="seg" id="rr-fn" role="group" aria-label="Situation"><button type="button" data-k="lad" aria-pressed="true">Ladder</button><button type="button" data-k="cir" aria-pressed="false">Ripple</button><button type="button" data-k="sph" aria-pressed="false">Balloon</button></div></div>
+        <p class="small" id="rr-form" style="margin:0"></p>
+        <canvas id="rr-canvas" aria-label="A diagram of the chosen situation with a slider for the main variable and the linked rate computed beneath."></canvas>
+        <div class="controls"><div class="ctl"><label for="rr-v"><span>Variable</span> <output id="rr-v-out"></output></label><input type="range" id="rr-v" min="1" max="9" step="0.1" value="6"></div></div>
+        <div class="readout"><div><span>given rate</span><strong class="x" id="rr-given">—</strong></div><div><span>the rate you want</span><strong class="v" id="rr-ans">—</strong></div><div><span>the derivative</span><strong class="" id="rr-eq">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>On the ladder (10 ft, foot moving out at 2 ft/s) set x = 6. How fast is the top sliding down? <button type="button" class="btn link" data-show='[["click", "#rr-fn [data-k=lad]"], ["#rr-v", 6]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>y = 8, and dy/dt = −(x/y)(2) = −(6/8)(2) = −1.5 ft/s: the top drops 1.5 ft/s.</p></details></li>
+        <li><p>Now slide x up to 9. What happens to the speed of the top? <button type="button" class="btn link" data-show='[["click", "#rr-fn [data-k=lad]"], ["#rr-v", 9]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>y ≈ 4.36 and dy/dt ≈ −4.13 ft/s: it speeds up a lot as the ladder nears the floor, even though the foot moves at a steady 2 ft/s.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">A 10 ft ladder leans on a wall. Its foot slides away at 2 ft/s. How fast is the top sliding down when the foot is 6 ft from the wall?</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Draw and equation.</b> x = distance of foot from wall, y = height of top: x² + y² = 100.</li>
+          <li hidden><b>Differentiate with respect to t.</b> 2x·dx/dt + 2y·dy/dt = 0, so dy/dt = −(x/y)·dx/dt.</li>
+          <li hidden><b>Substitute the moment.</b> x = 6 gives y = √(100 − 36) = 8, and dx/dt = 2.</li>
+          <li hidden><b>Compute.</b> dy/dt = −(6/8)(2) = −1.5.</li>
+          <li hidden><b>Answer.</b> The top is sliding down at <b>1.5 ft/s</b> (dy/dt = −1.5 ft/s).</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Substituting numbers before differentiating. Constants have derivative 0, so you lose the rates.</li>
+        <li>Forgetting dx/dt: 2x alone is not d/dt of x².</li>
+        <li>Treating a changing quantity as constant (for example the ladder's length is constant, but x and y are not).</li>
+        <li>Ignoring signs: a decreasing quantity has a negative rate. Report it with the right direction.</li>
+        <li>Dropping units. Rates have units of quantity per time.</li>
+      </ul></div>
+      <div class="prose"><h2>A checklist</h2>
+        <p>Name every variable with units. Write what is constant and what changes. Use a relationship that is true at all times (Pythagoras, similar triangles, a volume or area formula), not just at the moment asked about. Differentiate. Substitute known values. Solve. Include units and a sentence.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="A = πr², so dA/dt = 2πr·dr/dt = 2πr·2.">
+        <p class="q">Check yourself: A circle's radius grows at 2 cm/s. dA/dt = ?</p>
+        <div class="opts"><button type="button">2πr·(2)</button><button type="button">πr²·(2)</button><button type="button">2πr</button><button type="button">2</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

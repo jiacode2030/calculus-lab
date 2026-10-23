@@ -1,0 +1,49 @@
+  <section class="view" id="v-functions" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag na">Math</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Functions & transformations</h1>
+        <p class="lede">Before derivatives: how to read a formula as a graph. Shift, stretch and flip a parent function and see exactly what each number does.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Every graph in calculus is a familiar parent function that has been moved. <span class="m">y = a·f(b(x − h)) + k</span> says: shift right by <b>h</b>, shift up by <b>k</b>, stretch vertically by <b>a</b> (flip if negative) and squeeze horizontally by <b>b</b>. Changes <i>inside</i> the parentheses act on x and act backwards (x − h moves right); changes <i>outside</i> act on y and do what they say.</p>
+        <p>Functions can also be composed, <span class="m">f(g(x))</span> (do g first), and many have inverses that reflect the graph over the line y = x. Composition is what the chain rule differentiates.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>you read each graph as its own formula</dd><dt>So we didn't need</dt><dd>a way to see families of graphs at once</dd><dt>Now</dt><dd>derivatives of shifted and stretched functions come straight from the parent</dd><dt>So we need</dt><dd>a transformation toolkit and composition</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>y = a·f(b(x − h)) + k</span><small>general transformation</small></div><div class="eqn"><span>(f∘g)(x) = f(g(x))</span><small>composition: g first</small></div><div class="eqn"><span>f(f⁻¹(x)) = x</span><small>inverse</small></div></div>
+      <div class="lab" id="fn-lab">
+        <div class="labbar"><span class="title">Move the parent function</span></div>
+        <div class="ctl"><span class="lbl">Parent</span><div class="seg" id="fn-base" role="group" aria-label="Parent"><button type="button" data-k="sq" aria-pressed="true">x²</button><button type="button" data-k="abs" aria-pressed="false">|x|</button><button type="button" data-k="rt" aria-pressed="false">√x</button><button type="button" data-k="sin" aria-pressed="false">sin x</button></div></div>
+        <p class="small" id="fn-eq" style="margin:0"></p>
+        <canvas id="fn-canvas" aria-label="Graph of a parent function (faint) and its transformed version (solid)."></canvas>
+        <div class="controls"><div class="ctl"><label for="fn-a"><span>a (vertical stretch / flip)</span> <output id="fn-a-out"></output></label><input type="range" id="fn-a" min="-3" max="3" step="0.25" value="1"></div><div class="ctl"><label for="fn-b"><span>b (horizontal squeeze)</span> <output id="fn-b-out"></output></label><input type="range" id="fn-b" min="0.25" max="3" step="0.25" value="1"></div><div class="ctl"><label for="fn-h"><span>h (right)</span> <output id="fn-h-out"></output></label><input type="range" id="fn-h" min="-4" max="4" step="0.5" value="0"></div><div class="ctl"><label for="fn-k"><span>k (up)</span> <output id="fn-k-out"></output></label><input type="range" id="fn-k" min="-4" max="4" step="0.5" value="0"></div></div>
+        <div class="readout"><div><span>key point moves from</span><strong class="x" id="fn-ho">—</strong></div><div><span>to</span><strong class="a" id="fn-hn">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Set h = 2 and k = 1 on x². Where is the vertex? <button type="button" class="btn link" data-show='[["click", "#fn-base [data-k=sq]"], ["#fn-h", 2], ["#fn-k", 1]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>At (2, 1): right 2 because of (x − 2), up 1 because of + 1.</p></details></li>
+        <li><p>Set a = −1 on x². What happens? <button type="button" class="btn link" data-show='[["click", "#fn-base [data-k=sq]"], ["#fn-a", -1]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The parabola flips upside down: a negative a reflects the graph across the x-axis.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">If f(x) = x² + 1 and g(x) = 2x − 3, find f(g(2)) and g(f(2)).</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Inside first.</b> For f(g(2)) work out g(2) = 2·2 − 3 = 1.</li>
+          <li hidden><b>Then f.</b> f(1) = 1² + 1 = 2.</li>
+          <li hidden><b>Now the other order.</b> f(2) = 4 + 1 = 5, then g(5) = 10 − 3 = 7.</li>
+          <li hidden><b>Answer.</b> f(g(2)) = <b>2</b> and g(f(2)) = <b>7</b>. Composition is not commutative.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Moving the wrong way: (x + 2) shifts the graph left, not right.</li>
+        <li>Applying h before the stretch b when b is inside: in y = f(b(x − h)) the shift is h, not h/b.</li>
+        <li>Mixing up f(g(x)) and g(f(x)).</li>
+        <li>Treating f<sup>−1</sup>(x) as 1/f(x). It is the inverse function, not the reciprocal.</li>
+      </ul></div>
+      <div class="prose"><h2>Even, odd and inverses</h2>
+        <p>Even functions satisfy f(−x) = f(x) (mirror in the y-axis, like x²). Odd functions satisfy f(−x) = −f(x) (turn 180° about the origin, like x³ and sin x). A function has an inverse only if it passes the horizontal line test; the inverse graph is the reflection over y = x.</p>
+      </div>
+      <div class="quiz" data-correct="1" data-explain="Inside shifts act backwards: x − 3 moves right 3; + 2 outside moves up 2.">
+        <p class="q">Check yourself: The graph of y = (x − 3)² + 2 is the graph of y = x² moved:</p>
+        <div class="opts"><button type="button">left 3, up 2</button><button type="button">right 3, up 2</button><button type="button">right 3, down 2</button><button type="button">left 3, down 2</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

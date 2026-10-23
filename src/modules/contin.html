@@ -1,0 +1,56 @@
+  <section class="view" id="v-contin" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 1</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Continuity & the IVT</h1>
+        <p class="lede">A function is continuous if you can draw it without lifting your pencil. Calculus needs a sharper test, and one big consequence: continuous functions cannot skip values.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Continuity at a point means three things hold: <b>f(a) exists</b>, <b>the limit as x → a exists</b>, and <b>they are equal</b>. A hole, a jump or a blow-up each breaks one of the three. Continuous on an interval means continuous at every point of it.</p>
+        <p>If a function is continuous on <span class="m">[a, b]</span> it cannot skip over any value between <span class="m">f(a)</span> and <span class="m">f(b)</span>. That is the <b>Intermediate Value Theorem</b>. It is why you can say a root exists in an interval without finding it.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>a graph was just a picture you could sketch</dd><dt>So we didn't need</dt><dd>a precise test for "no breaks"</dd><dt>Now</dt><dd>continuity underpins differentiation and integration theorems</dd><dt>So we need</dt><dd>continuity defined with limits, and the IVT</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>lim<sub>x→a</sub> f(x) = f(a)</span><small>continuous at a</small></div><div class="eqn"><span>f(c) = N</span><small>IVT: some c in (a, b) for any N between f(a) and f(b)</small></div><div class="eqn"><span>removable · jump · infinite</span><small>types of discontinuity</small></div></div>
+      <div class="lab" id="ct-lab">
+        <div class="labbar"><span class="title">Make it continuous</span></div>
+        <p class="small" style="margin:0">f(x) = x + 1 for x &lt; 2 and f(x) = kx − 3 for x ≥ 2. Slide k until the graph has no break.</p>
+        <canvas id="ct-canvas" aria-label="Graph of a piecewise function with a slider-controlled slope on the right piece."></canvas>
+        <div class="controls"><div class="ctl"><label for="ct-k"><span>k</span> <output id="ct-k-out"></output></label><input type="range" id="ct-k" min="-1" max="5" step="0.25" value="1"></div></div>
+        <div class="readout"><div><span>1. f(2) is defined</span><strong class="x" id="ct-defd">—</strong></div><div><span>2. the limit exists</span><strong class="a" id="ct-lim">—</strong></div><div><span>3. limit = f(2)</span><strong class="v" id="ct-eq">—</strong></div><div><span>verdict</span><strong class="" id="ct-verdict">—</strong></div></div>
+      </div>
+      <div class="lab" id="ct-lab2">
+        <div class="labbar"><span class="title">The Intermediate Value Theorem</span></div>
+        <label class="check"><input type="checkbox" id="ct-brk"> Break the function (add a jump at x = 1.5)</label>
+        <canvas id="ct-canvas2" aria-label="A graph on [0, 3] with a horizontal line at a chosen height; the crossing is marked, or not found if the function jumps."></canvas>
+        <div class="controls"><div class="ctl"><label for="ct-c"><span>height N</span> <output id="ct-c-out"></output></label><input type="range" id="ct-c" min="-2" max="7" step="0.1" value="3"></div></div>
+        <div class="readout"><div><span>where f(x) = N</span><strong class="x" id="ct-ivt">—</strong></div><div><span>what this shows</span><strong class="" id="ct-ivt2">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Slide k to 3. What changes in the three-part checklist? <button type="button" class="btn link" data-show='[["#ct-k", 3]]'>k = 3</button></p><details><summary>What you should see</summary><p>At k = 3 the right piece starts at 3·2 − 3 = 3, exactly where the left piece is heading (2 + 1 = 3). All three conditions pass: f(2) = 3, the limit is 3, and they match.</p></details></li>
+        <li><p>Tick <b>Break the function</b> and set N = 2. Does any x give f(x) = 2? <button type="button" class="btn link" data-show='[["#ct-brk", true], ["#ct-c", 2]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>No. The jump skips from height 0.25 to 3.25, so heights in between are never reached. The IVT does not apply because the function is not continuous.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find k so that f(x) = x² for x ≤ 1 and f(x) = kx + 2 for x &gt; 1 is continuous at x = 1.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Left piece at 1.</b> f(1) = 1² = 1, and the left limit is also 1.</li>
+          <li hidden><b>Right limit.</b> As x → 1⁺ the function is kx + 2, so the right limit is k + 2.</li>
+          <li hidden><b>Match.</b> Continuity needs left = right = f(1): k + 2 = 1.</li>
+          <li hidden><b>Solve.</b> k = <b>−1</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Checking only that the limit exists and forgetting f(a) must be defined and equal to it.</li>
+        <li>Calling a hole a "jump". A hole (removable) has matching sides; a jump does not.</li>
+        <li>Using the IVT without checking the function is continuous on the whole closed interval.</li>
+        <li>Thinking the IVT finds the number: it only guarantees one exists.</li>
+        <li>Assuming "continuous" means "differentiable". A corner is continuous but not differentiable (Unit 2).</li>
+      </ul></div>
+      <div class="prose"><h2>Types of discontinuity</h2>
+        <p><b>Removable</b>: the limit exists but f(a) is missing or different. <b>Jump</b>: the one-sided limits are different numbers. <b>Infinite</b>: the function blows up (a vertical asymptote). <b>Oscillating</b>: the function swings forever. A removable discontinuity can be "repaired" by redefining f(a) as the limit.</p>
+      </div>
+      <div class="quiz" data-correct="1" data-explain="0 lies between −2 and 5, so the IVT guarantees it. The others are outside the interval from −2 to 5.">
+        <p class="q">Check yourself: f is continuous on [1, 4] with f(1) = −2 and f(4) = 5. Which value must f take somewhere in [1, 4]?</p>
+        <div class="opts"><button type="button">6</button><button type="button">0</button><button type="button">−3</button><button type="button">8</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

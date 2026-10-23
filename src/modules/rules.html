@@ -1,0 +1,54 @@
+  <section class="view" id="v-rules" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 2</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Power, sum & constant-multiple rules</h1>
+        <p class="lede">You will not use the limit definition every time. A few rules let you differentiate polynomials, roots and reciprocals almost instantly.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p><b>Power rule:</b> <span class="m">d/dx [x<sup>n</sup>] = n x<sup>n−1</sup></span>. Bring the exponent down in front and lower the exponent by one. It works for every real n: x³, √x = x<sup>1/2</sup>, and 1/x² = x<sup>−2</sup>.</p>
+        <p><b>Constants and sums:</b> constants multiply through, <span class="m">(c·f)′ = c·f′</span>, and sums differentiate term by term, <span class="m">(f + g)′ = f′ + g′</span>. The derivative of a constant is 0, because a flat line has slope 0. Rewrite roots and fractions as powers first.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>every derivative needed the limit definition</dd><dt>So we didn't need</dt><dd>a shortcut for powers of x</dd><dt>Now</dt><dd>polynomials, roots and reciprocals everywhere</dd><dt>So we need</dt><dd>the power, sum and constant-multiple rules</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>d/dx [x<sup>n</sup>] = n x<sup>n−1</sup></span><small>power rule</small></div><div class="eqn"><span>(c f)′ = c f′</span><small>constant multiple</small></div><div class="eqn"><span>(f ± g)′ = f′ ± g′</span><small>sum</small></div><div class="eqn"><span>d/dx [c] = 0</span><small>constant</small></div></div>
+      <div class="lab" id="ru-lab">
+        <div class="labbar"><span class="title">The power rule, checked</span></div>
+        <canvas id="ru-canvas" aria-label="Graph of x to the n in blue, its derivative n x to the n minus 1 in green, and the tangent at a point."></canvas>
+        <div class="controls"><div class="ctl"><label for="ru-n"><span>Exponent n</span> <output id="ru-n-out"></output></label><input type="range" id="ru-n" min="-2" max="4" step="0.5" value="3"></div><div class="ctl"><label for="ru-x"><span>Point x</span> <output id="ru-x-out"></output></label><input type="range" id="ru-x" min="0.3" max="2.5" step="0.05" value="1.5"></div></div>
+        <div class="readout"><div><span>f(x) = xⁿ</span><strong class="x" id="ru-f">—</strong></div><div><span>f′(x) = n·xⁿ⁻¹</span><strong class="v" id="ru-d">—</strong></div><div><span>slope from the graph (numeric)</span><strong class="a" id="ru-num">—</strong></div></div>
+      </div>
+      <div class="lab" id="ru-lab2">
+        <div class="labbar"><span class="title">Build a polynomial, differentiate it</span></div>
+        <p class="small" id="ru-eq" style="margin:0"></p>
+        <canvas id="ru-canvas2" aria-label="A cubic polynomial with adjustable coefficients, its derivative, and the tangent at a point."></canvas>
+        <div class="controls"><div class="ctl"><label for="ru-a"><span>a (x³ coefficient)</span> <output id="ru-a-out"></output></label><input type="range" id="ru-a" min="-2" max="2" step="0.25" value="0.5"></div><div class="ctl"><label for="ru-b"><span>b (x² coefficient)</span> <output id="ru-b-out"></output></label><input type="range" id="ru-b" min="-3" max="3" step="0.5" value="-1"></div><div class="ctl"><label for="ru-c"><span>c (x coefficient)</span> <output id="ru-c-out"></output></label><input type="range" id="ru-c" min="-4" max="4" step="0.5" value="-1"></div><div class="ctl"><label for="ru-px"><span>Point x</span> <output id="ru-px-out"></output></label><input type="range" id="ru-px" min="-3" max="3" step="0.1" value="1"></div></div>
+        <div class="readout"><div><span>f′(x) by the rules</span><strong class="v" id="ru-fx">—</strong></div><div><span>f′ at the point</span><strong class="x" id="ru-slope">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Set n = 2 and x = 1.5. What are the formula and the graph's slope? <button type="button" class="btn link" data-show='[["#ru-n", 2], ["#ru-x", 1.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>f′(x) = 2x, so the slope at 1.5 is 3. The numeric slope agrees: the rule is the shortcut for the limit.</p></details></li>
+        <li><p>Set n = 0.5 (a square root). What is f′ at x = 1? <button type="button" class="btn link" data-show='[["#ru-n", 0.5], ["#ru-x", 1]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>f′(x) = ½x<sup>−1/2</sup> = 1/(2√x), so f′(1) = 0.5. The square root flattens as x grows.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Differentiate f(x) = 4x³ − 6√x + 5/x² + 7.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Rewrite as powers.</b> f(x) = 4x³ − 6x<sup>1/2</sup> + 5x<sup>−2</sup> + 7.</li>
+          <li hidden><b>Differentiate each term.</b> 4·3x² = 12x²; −6·(1/2)x<sup>−1/2</sup> = −3x<sup>−1/2</sup>; 5·(−2)x<sup>−3</sup> = −10x<sup>−3</sup>; the constant 7 goes to 0.</li>
+          <li hidden><b>Answer.</b> f′(x) = <b>12x² − 3x<sup>−1/2</sup> − 10x<sup>−3</sup></b>, or 12x² − 3/√x − 10/x³.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 3</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Differentiating a constant as if it had an x: the derivative of 7 is 0, and of 7x is 7.</li>
+        <li>Forgetting to lower the exponent, writing (x³)′ = 3x³.</li>
+        <li>Applying the power rule to eˣ or 2ˣ. The variable is in the exponent there: a different rule.</li>
+        <li>Not rewriting 1/x² or √x as powers before differentiating.</li>
+        <li>Splitting a product or quotient term by term. (x²·x³)′ is not (x²)′·(x³)′.</li>
+      </ul></div>
+      <div class="prose"><h2>Why it works</h2>
+        <p>The derivative of x² is 2x (you saw it from the definition). For x³ expand (x + h)³ = x³ + 3x²h + 3xh² + h³, subtract x³, divide by h and let h → 0: 3x². The pattern n x<sup>n−1</sup> comes from the binomial expansion, and it holds for every real n.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="4·3 = 12 on x³; the derivative of −2x is −2; the derivative of 9 is 0.">
+        <p class="q">Check yourself: d/dx [3x⁴ − 2x + 9] =</p>
+        <div class="opts"><button type="button">12x³ − 2</button><button type="button">12x³ − 2x</button><button type="button">3x³ − 2</button><button type="button">12x³ − 2 + 9</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
