@@ -7,7 +7,7 @@ const path = require('path');
   for (const scheme of ['light', 'dark']) {
     const p = await b.newPage({ viewport: { width: 390, height: 800 }, colorScheme: scheme });
     await p.goto('file://' + path.join(__dirname, '..', 'index.html') + '?debug'); await p.waitForTimeout(500);
-    for (const v of ['overview', 'rates', 'titration', 'galvanic', 'practice', 'frq']) {
+    for (const v of ['overview', 'limits', 'deriv', 'ftc', 'taylorpoly', 'practice', 'frq', 'methods', 'exam']) {
       await p.evaluate(v => location.hash = v, v); await p.waitForTimeout(500);
       const r = await p.evaluate(() => {
         const parse = s => (s.match(/[\d.]+/g) || []).map(Number);

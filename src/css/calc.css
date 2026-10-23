@@ -244,3 +244,13 @@ body.is-ab .prob.bc{display:none!important}
 .eqgrid .eqn{flex-wrap:wrap;white-space:normal}.eqgrid .eqn small{text-align:right}
 .readout strong{white-space:normal;overflow-wrap:anywhere;font-size:clamp(13px,1.6vw,17px);line-height:1.3}
 body.is-ab .mitem.bc,body.is-ab .frq.bc,body.is-ab tr.bc{display:none!important}
+
+/* tables inside problem text, and long FRQ headers on phones */
+.lmtbl{min-width:0;width:auto;border-collapse:collapse;font:500 13px var(--f-mono);margin-top:8px}
+.lmtbl th,.lmtbl td{border:1px solid var(--line);padding:5px 9px;text-align:right;white-space:nowrap}
+.lmtbl th{background:var(--sunk);font-weight:600}
+.prob .q .lmtbl{display:block;max-width:100%;overflow-x:auto}
+.frq .fh .row{flex-wrap:wrap}
+.frq .fh .tag{white-space:normal}
+.ap-set{padding:0;min-height:0}
+@media (max-width:900px){.ap-set{padding:12px 8px;min-height:44px}}
