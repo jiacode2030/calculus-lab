@@ -6,7 +6,7 @@ Interactive, intuition-first AP Calculus AB and BC study site. One self-containe
 - Edit `src/`, never `index.html` directly. Run `python3 build.py` (needs Python 3 and Node for the JS syntax check), then commit both `src/` and the rebuilt `index.html`.
 - Module = `src/modules/<id>.html` + `<id>.js`. The HTML is **generated** from `tools/units/*.py` by `python3 tools/mk.py` (one `mod(...)` call per module; edit the Python, not the HTML). The JS is hand-written. Add new modules to `src/groups.json` (unit order, `bc:true` for BC-only groups) and `src/mods.json` (title, description, `bc`).
 - Shared engine: `src/js/core.js` (helpers, panels), `calclib.js` (`sim2d`, `glab` graph labs, `parseExpr`/`sameFn` expression checker, numerics `D`, `D2`, `integ`, `limit`, `roots`, `argmax`, `svgG` static graphs, `mcq`, `terms`), `teach.js` (Coach, Reset, Set-it-up buttons), `practice.js` (problem cards, FRQs, "Which method?"). Data banks: `src/data/*.js` (FRQs, method clues).
-- Theme tokens: end of `src/css/calc.css` (indigo layer). Color roles stay fixed on every graph: **f(x) blue, f′ green, f″ pink, tangent/secant orange, area/accumulation gold**.
+- Theme tokens: end of `src/css/calc.css` (ocean aqua accent plus the physics-style skin with the `--g1`/`--g2` gradient). Color roles stay fixed on every graph: **f(x) blue, f′ green, f″ pink, tangent/secant orange, area/accumulation gold**.
 
 ## AB / BC
 - BC-only content carries class `bc` (modules, nav links, problem cards, FRQs, clue rows); BC extension boxes inside shared modules are `.bcx`. The toggle `COURSE()` is stored in `calc-course` (default BC); `body.is-ab` hides everything marked `bc`. A problem is BC if `p.bc` or its module is in a BC group (`isBC(p)`).
