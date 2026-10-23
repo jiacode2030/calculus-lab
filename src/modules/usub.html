@@ -1,0 +1,52 @@
+  <section class="view" id="v-usub" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 6</span><span class="tag">AB &amp; BC</span></div>
+        <h1>u-substitution</h1>
+        <p class="lede">The chain rule run backwards: when an integral contains a function and its derivative, rename the inside as u and the integral becomes simple.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>The chain rule gave <span class="m">d/dx f(g(x)) = f′(g(x))·g′(x)</span>. Reverse it: <span class="m">∫ f′(g(x))·g′(x) dx = f(g(x)) + C</span>. In practice, look for an <b>inside function whose derivative also appears</b>: in <span class="m">∫ 2x cos(x²) dx</span> the inside is x² and 2x is its derivative. Let <span class="m">u = x²</span>, so <span class="m">du = 2x dx</span>, and the integral becomes <span class="m">∫ cos u du = sin u + C</span>.</p>
+        <p>For a <b>definite integral</b> either change back to x at the end, or (better) change the limits: when x goes from a to b, u goes from g(a) to g(b). The areas are equal, which the lab shows.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>antiderivatives of simple functions only</dd><dt>So we didn't need</dt><dd>a way to undo the chain rule</dd><dt>Now</dt><dd>integrals like ∫ x e^{x²} dx or ∫ (3x + 1)⁴ dx</dd><dt>So we need</dt><dd>u-substitution</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>u = g(x), du = g′(x) dx</span><small>substitution</small></div><div class="eqn"><span>∫ f(g(x)) g′(x) dx = ∫ f(u) du</span><small>indefinite</small></div><div class="eqn"><span>limits: x = a, b → u = g(a), g(b)</span><small>definite</small></div></div>
+      <div class="lab" id="us-lab">
+        <div class="labbar"><span class="title">The same area in two coordinates</span></div>
+        <div class="ctl"><span class="lbl">Integral</span><div class="seg" id="us-fn" role="group" aria-label="Integral"><button type="button" data-k="a" aria-pressed="true">∫ 2x cos(x²) dx</button><button type="button" data-k="b" aria-pressed="false">∫ x eˣ² dx</button><button type="button" data-k="c" aria-pressed="false">∫ x/(x²+1) dx</button></div></div>
+        <p class="small" id="us-form" style="margin:0"></p>
+        <canvas id="us-canvas" aria-label="Left graph: the integrand in x with its area. Right graph: the simplified integrand in u with the equal area."></canvas>
+        <canvas id="us-canvas2" aria-label="The integrand after substitution, as a function of u, with its area."></canvas>
+        <div class="controls"><div class="ctl"><label for="us-b"><span>Upper limit b</span> <output id="us-b-out"></output></label><input type="range" id="us-b" min="0.2" max="1.6" step="0.05" value="1"></div></div>
+        <div class="readout"><div><span>∫₀ᵇ in x</span><strong class="x" id="us-i1">—</strong></div><div><span>∫ in u over [g(0), g(b)]</span><strong class="v" id="us-i2">—</strong></div><div><span>equal?</span><strong class="" id="us-eq">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose 2x cos(x²). What are the new limits when b = 1? <button type="button" class="btn link" data-show='[["click", "#us-fn [data-k=a]"], ["#us-b", 1]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>u = x², so u runs from 0² = 0 to 1² = 1. The right graph is cos u on [0, 1]; both areas equal sin 1 ≈ 0.841.</p></details></li>
+        <li><p>Choose x/(x²+1). Why u = x² + 1? <button type="button" class="btn link" data-show='[["click", "#us-fn [data-k=c]"], ["#us-b", 1.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Its derivative 2x is almost the numerator x (off by a factor of 2), so x dx = du/2 and the integral is (1/2)∫ du/u = (1/2) ln u.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Evaluate ∫<sub>0</sub><sup>2</sup> x(x² + 1)³ dx.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Choose u.</b> The inside is x² + 1, whose derivative 2x nearly matches the extra factor x. Let u = x² + 1.</li>
+          <li hidden><b>Find du.</b> du = 2x dx, so x dx = du/2.</li>
+          <li hidden><b>Change the limits.</b> x = 0 → u = 1; x = 2 → u = 5.</li>
+          <li hidden><b>Rewrite and integrate.</b> ∫<sub>1</sub><sup>5</sup> u³ (du/2) = (1/2)(u⁴/4) |<sub>1</sub><sup>5</sup> = (1/8)(625 − 1).</li>
+          <li hidden><b>Answer.</b> 624/8 = <b>78</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Forgetting to change the limits (or to change back to x at the end).</li>
+        <li>Leaving some x in the integral after substituting. Everything must be in u.</li>
+        <li>Not adjusting for a constant: if du = 2x dx you must replace x dx by du/2.</li>
+        <li>Choosing u that does not make the rest cancel: u should be the inside whose derivative appears.</li>
+        <li>Dropping + C in an indefinite integral.</li>
+      </ul></div>
+      <div class="prose"><h2>Choosing u</h2>
+        <p>Good candidates: the inside of a power (3x + 1)⁵, the exponent of e, the argument of sin or cos, the denominator of a fraction when its derivative is in the numerator, or the inside of a square root. If a constant factor is missing, it is fine: just divide by it.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="The exponent x² has derivative 2x, and x is almost 2x: x dx = du/2.">
+        <p class="q">Check yourself: For ∫ x e<sup>x²</sup> dx, which substitution works?</p>
+        <div class="opts"><button type="button">u = x²</button><button type="button">u = x</button><button type="button">u = e<sup>x</sup></button><button type="button">u = x e<sup>x</sup></button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

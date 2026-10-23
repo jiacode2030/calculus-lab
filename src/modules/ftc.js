@@ -1,0 +1,33 @@
+/* ---------------- The definite integral & the Fundamental Theorem ---------------- */
+(function ftc(){
+  const cv=$('#fc-canvas');if(!cv)return;
+  const C={a:{f:t=>t*t-2*t,yr:[-1.5,3.6]},b:{f:Math.cos,yr:[-1.3,1.3]},c:{f:t=>Math.exp(-t*t),yr:[-.3,1.2]}};
+  let k='a',x0=1.5;
+  const A=x=>integ(C[k].f,0,x,300);
+  const sim=glab('fc-canvas',{h:w=>clamp(w*.36,230,300),view:()=>({xr:[0,3.2],yr:C[k].yr}),draw(ctx,P){const f=C[k].f;areaSigned(ctx,P,f,0,x0,T.ce,T.ca);curveD(ctx,P,f,0,3.2,T.cx,2.8,300);vline(ctx,P,x0,T.hot,[4,4]);dot(ctx,P.X(x0),P.Y(f(x0)),6,T.cx,T.surface);label(ctx,'f(t)',P.box.x+8,P.box.y+10,T.cx,'left','middle',LABEL);}});
+  const sim2=glab('fc-canvas2',{h:w=>clamp(w*.3,190,250),view:()=>{let lo=0,hi=0;for(let i=0;i<=60;i++){const v=A(3.2*i/60);lo=Math.min(lo,v);hi=Math.max(hi,v);}const p=Math.max((hi-lo)*.15,.1);return {xr:[0,3.2],yr:[lo-p,hi+p]};},draw(ctx,P){curveD(ctx,P,A,0,3.2,T.ce,2.8,160);const y=A(x0),m=C[k].f(x0);line(ctx,P,x0-.8,y-.8*m,x0+.8,y+.8*m,T.hot,2.2);dot(ctx,P.X(x0),P.Y(y),6,T.ce,T.surface);label(ctx,'A(x) = area accumulated so far',P.box.x+8,P.box.y+10,T.ce,'left','middle',LABEL);}});
+  function upd(){const f=C[k].f;setText('fc-A',fmt(A(x0),4));setText('fc-f',fmt(f(x0),4));setText('fc-slope',fmt(D(A,x0,2e-3),4));sim.render();sim2.render();}
+  bindRange('fc-x',v=>nz(v),v=>{x0=v;upd();});segBind('fc-fn','k',v=>{k=v;upd();});upd();drawers.ftc=()=>{sim.render();sim2.render();};
+  KEYS['fc-canvas']=['Slide x. Gold area (pink where f is negative) is A(x); the lower graph records it. The orange tangent has slope f(x).',[['cx','f(t)'],['ce','A(x), accumulated area'],['ca','area below the axis (negative)'],['hot','tangent to A at x']]];
+  TIPS['fc-x']=el=>`x = ${nz(+el.value)}: A is ${C[k].f(+el.value)>0?'increasing':'decreasing'} because f(x) is ${C[k].f(+el.value)>0?'positive':'negative'}, and its slope equals f(x).`;
+  GLOSS['accumulation function']='A(x) = ∫ₐˣ f(t) dt: the signed area from a up to x. Its derivative is f(x).';GLOSS['Fundamental Theorem']='Differentiation and integration undo each other: A′(x) = f(x), and ∫ₐᵇ f = F(b) − F(a).';
+  TT.ftc='Have students predict where A is increasing, decreasing and has its minimum from the graph of f alone.';
+})();
+(function(){
+  PROBS.push({id:'fc-eval',topic:'ftc',title:'Evaluate a definite integral',gen(){const fam=pick(['poly','trig','exp']);let q,ans,chk;
+    if(fam==='poly'){const a=ri(0,2),b=a+ri(1,3),ts=[[ri(1,6),pick([2,3])],[ri(-5,5),1],[ri(-4,6),0]],F=tint(ts);q=`Evaluate ∫<sub>${a}</sub><sup>${b}</sup> (${pretty(terms(ts))}) dx. Give a decimal.`;ans=tval(F,b)-tval(F,a);chk=integ(x=>tval(ts,x),a,b,2000);}
+    else if(fam==='trig'){const c=ri(1,5),pick2=pick(['sin','cos']);q=pick2==='sin'?`Evaluate ∫<sub>0</sub><sup>π</sup> ${c} sin x dx. Give a decimal.`:`Evaluate ∫<sub>0</sub><sup>π/2</sup> ${c} cos x dx. Give a decimal.`;ans=pick2==='sin'?2*c:c;chk=pick2==='sin'?integ(x=>c*Math.sin(x),0,Math.PI,2000):integ(x=>c*Math.cos(x),0,Math.PI/2,2000);}
+    else{const c=ri(1,4),b=ri(1,3);q=`Evaluate ∫<sub>0</sub><sup>${b}</sup> ${c}e<sup>x</sup> dx. Give a decimal to three places.`;ans=c*(Math.exp(b)-1);chk=integ(x=>c*Math.exp(x),0,b,2000);}
+    return {q,ans,unit:'',tol:.003,chk,hint:'Find an antiderivative F, then compute F(b) − F(a).',sol:`With an antiderivative F, F(b) − F(a) = <b>${fmt(ans,3)}</b>.`};}});
+  const T1=[()=>({f:'sin(t)',g:'x^2',gd:'2x',fx:t=>Math.sin(t),gx:x=>x*x,ans:'2x*sin(x^2)'}),()=>({f:'e^t',g:'x^2',gd:'2x',fx:Math.exp,gx:x=>x*x,ans:'2x*e^(x^2)'}),()=>{const a=ri(2,4);return {f:'sqrt(t^2+1)',g:`${a}x`,gd:String(a),fx:t=>Math.sqrt(t*t+1),gx:x=>a*x,ans:`${a}sqrt(${a*a}x^2+1)`};},()=>({f:'cos(t)',g:'x^3',gd:'3x^2',fx:Math.cos,gx:x=>x**3,ans:'3x^2cos(x^3)'}),()=>({f:'ln(t^2+1)',g:'x',gd:'1',fx:t=>Math.log(t*t+1),gx:x=>x,ans:'ln(x^2+1)'})];
+  PROBS.push({id:'fc-ftc1',topic:'ftc',title:'FTC Part 1 with the chain rule',gen(){const t=pick(T1)();
+    return {q:`Find d/dx ∫<sub>1</sub><sup>${pretty(t.g)}</sup> ${pretty(t.f).replace(/e\^t/,'e^t')} dt. Type your answer.`,expr:t.ans,chkf:x=>D(y=>integ(t.fx,1,t.gx(y),400),x,2e-3),hint:'FTC Part 1: replace t by the upper limit in the integrand, then multiply by the derivative of the upper limit.',sol:`d/dx ∫<sub>1</sub><sup>g(x)</sup> f(t) dt = f(g(x))·g′(x) = <b>${pretty(t.ans)}</b>.`};}});
+  PROBS.push({id:'fc-prop',topic:'ftc',title:'Properties of the integral',gen(){const p=ri(2,9),q=ri(-8,8)||3,pat=pick([0,1,2,3]);let text,ans;
+    if(pat===0){text=`If ∫<sub>1</sub><sup>3</sup> f(x) dx = ${p} and ∫<sub>3</sub><sup>7</sup> f(x) dx = ${nz(q)}, find ∫<sub>1</sub><sup>7</sup> f(x) dx.`;ans=p+q;}
+    else if(pat===1){text=`If ∫<sub>1</sub><sup>7</sup> f(x) dx = ${p} and ∫<sub>1</sub><sup>3</sup> f(x) dx = ${nz(q)}, find ∫<sub>3</sub><sup>7</sup> f(x) dx.`;ans=p-q;}
+    else if(pat===2){text=`If ∫<sub>2</sub><sup>6</sup> f(x) dx = ${p}, find ∫<sub>2</sub><sup>6</sup> (3f(x) + 2) dx.`;ans=3*p+8;}
+    else{text=`If ∫<sub>0</sub><sup>4</sup> f(x) dx = ${p}, find ∫<sub>4</sub><sup>0</sup> f(x) dx.`;ans=-p;}
+    return {q:text,ans,unit:'',abs:.01,chk:ans,hint:'Use: splitting intervals, constant multiples and swapping limits (which changes the sign).',sol:`Using the properties of the definite integral the result is <b>${nz(ans)}</b>.`};}});
+  PROBS.push({id:'fc-net',topic:'ftc',title:'Net change from a derivative',gen(){const a=ri(0,3),b=a+ri(2,5),fa=ri(-6,10),fb=ri(-6,10);
+    return {q:`f is differentiable with f(${a}) = ${nz(fa)} and f(${b}) = ${nz(fb)}. Find ∫<sub>${a}</sub><sup>${b}</sup> f′(x) dx.`,ans:fb-fa,unit:'',abs:.01,chk:fb-fa,hint:'FTC: the integral of a derivative is the net change of the function.',sol:`∫ f′ = f(${b}) − f(${a}) = ${nz(fb)} − (${nz(fa)}) = <b>${nz(fb-fa)}</b>.`};}});
+})();

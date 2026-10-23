@@ -2284,6 +2284,211 @@ body.is-ab .prob.bc{display:none!important}
     </div>
   </section>
 
+  <section class="view" id="v-accum" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 6</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Accumulation & Riemann sums</h1>
+        <p class="lede">How much water flowed into the tank? Add up the rate over time. When the rate changes, slice the time into short pieces and add rate × time for each.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>If water flows at a constant 5 gallons per minute for 10 minutes, the amount is 5 × 10 = 50 gallons: <b>rate × time</b>, which is the area of a rectangle on a graph of rate against time. When the rate <i>changes</i>, slice the time into thin strips, treat the rate as nearly constant on each strip, and add up the rectangle areas. That is a <b>Riemann sum</b>.</p>
+        <p>Thinner strips give a better answer. In the limit as the number of strips goes to infinity the sum becomes the <b>definite integral</b> <span class="m">∫<sub>a</sub><sup>b</sup> f(x) dx</span>: the net accumulation of f from a to b, with area above the axis counted positive and below counted negative. Left, right, midpoint and trapezoid sums choose the height differently.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>rates multiplied by time only when the rate was constant</dd><dt>So we didn't need</dt><dd>a method for changing rates</dd><dt>Now</dt><dd>distance from velocity, volume from flow, total change</dd><dt>So we need</dt><dd>Riemann sums and the idea of the definite integral</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>Σ f(x<sub>i</sub>*) Δx</span><small>Riemann sum, Δx = (b − a)/n</small></div><div class="eqn"><span>∫<sub>a</sub><sup>b</sup> f(x) dx = lim Σ f(x<sub>i</sub>*) Δx</span><small>definite integral</small></div><div class="eqn"><span>rate × time = amount</span><small>units: (units of f) × (units of x)</small></div></div>
+      <div class="lab" id="ac-lab">
+        <div class="labbar"><span class="title">Add up the rectangles</span></div>
+        <div class="ctl"><span class="lbl">Rate f(x)</span><div class="seg" id="ac-fn" role="group" aria-label="Rate f(x)"><button type="button" data-k="a" aria-pressed="true">x²</button><button type="button" data-k="b" aria-pressed="false">sin x</button><button type="button" data-k="c" aria-pressed="false">4 − x²</button><button type="button" data-k="d" aria-pressed="false">eˣ</button></div></div>
+        <div class="ctl"><span class="lbl">Method</span><div class="seg" id="ac-m" role="group" aria-label="Riemann sum method"><button type="button" data-k="L" aria-pressed="true">Left</button><button type="button" data-k="R" aria-pressed="false">Right</button><button type="button" data-k="M" aria-pressed="false">Midpoint</button><button type="button" data-k="T" aria-pressed="false">Trapezoid</button></div></div>
+        <canvas id="ac-canvas" aria-label="A rate graph with rectangles under it for the chosen Riemann sum method, and the exact area for comparison."></canvas>
+        <div class="controls"><div class="ctl"><label for="ac-n"><span>Number of strips n</span> <output id="ac-n-out"></output></label><input type="range" id="ac-n" min="1" max="60" step="1" value="4"></div></div>
+        <div class="readout"><div><span>sum</span><strong class="x" id="ac-sum">—</strong></div><div><span>exact integral</span><strong class="v" id="ac-ex">—</strong></div><div><span>sum − exact</span><strong class="a" id="ac-err">—</strong></div><div><span>bias</span><strong class="" id="ac-note">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>On x² with left sums and n = 4, is the estimate too big or too small? <button type="button" class="btn link" data-show='[["click", "#ac-fn [data-k=a]"], ["click", "#ac-m [data-k=L]"], ["#ac-n", 4]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Too small: x² is increasing, so the left edge of each strip is the lowest point and every rectangle sits under the curve. Right sums would overestimate.</p></details></li>
+        <li><p>Increase n to 60. What happens to the error? <button type="button" class="btn link" data-show='[["#ac-n", 60]]'>n = 60</button></p><details><summary>What you should see</summary><p>It shrinks toward 0: the sum approaches the integral as n → ∞. The error of a left or right sum falls roughly in proportion to 1/n.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Use a left Riemann sum with n = 3 to estimate ∫<sub>0</sub><sup>3</sup> x² dx.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Strip width.</b> Δx = (3 − 0)/3 = 1.</li>
+          <li hidden><b>Left endpoints.</b> x = 0, 1, 2, so f = 0, 1, 4.</li>
+          <li hidden><b>Add rate × width.</b> L₃ = (0 + 1 + 4)(1) = 5.</li>
+          <li hidden><b>Compare.</b> The exact value is 9, so L₃ is an underestimate (f is increasing).</li>
+          <li hidden><b>Answer.</b> <b>5</b>. Right sum: (1 + 4 + 9)(1) = 14, an overestimate.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Using the wrong number of heights: n strips use n heights, not n + 1 (except in the trapezoid rule's endpoints).</li>
+        <li>Using Δx = b − a instead of (b − a)/n.</li>
+        <li>Calling a left sum an overestimate for an increasing function. It underestimates.</li>
+        <li>Forgetting that area below the axis counts negative in a definite integral.</li>
+        <li>Dropping units: (liters/minute) × minutes = liters.</li>
+      </ul></div>
+      <div class="prose"><h2>Which sum is high or low?</h2>
+        <p>For an <b>increasing</b> function, left sums underestimate and right sums overestimate; for a <b>decreasing</b> function it reverses. The trapezoid rule overestimates when f is concave up (the chords lie above the curve) and underestimates when concave down; the midpoint rule does the opposite. Averaging left and right sums gives the trapezoid sum.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="On a decreasing function the right edge is the lowest point of each strip, so the rectangles are under the curve.">
+        <p class="q">Check yourself: For a decreasing function, a right Riemann sum is</p>
+        <div class="opts"><button type="button">an underestimate</button><button type="button">an overestimate</button><button type="button">exact</button><button type="button">impossible to tell</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-ftc" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 6</span><span class="tag">AB &amp; BC</span></div>
+        <h1>The definite integral & the Fundamental Theorem</h1>
+        <p class="lede">Differentiating and integrating are opposites. This theorem is why antiderivatives can find areas.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Define the <b>accumulation function</b> <span class="m">A(x) = ∫<sub>a</sub><sup>x</sup> f(t) dt</span>: the signed area from a up to x. Slide x to the right and the area grows at a rate equal to the height of f at the edge. That is <b>FTC Part 1</b>: <span class="m">A′(x) = f(x)</span>. Integration undoes differentiation.</p>
+        <p><b>FTC Part 2</b> turns that into a method: if F is any antiderivative of f, then <span class="m">∫<sub>a</sub><sup>b</sup> f(x) dx = F(b) − F(a)</span>. No more adding rectangles. A related fact: the net change of a quantity equals the integral of its rate, <span class="m">∫<sub>a</sub><sup>b</sup> f′(x) dx = f(b) − f(a)</span>.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>the definite integral was a limit of sums</dd><dt>So we didn't need</dt><dd>a shortcut through antiderivatives</dd><dt>Now</dt><dd>areas, accumulated quantities and almost every integral problem</dd><dt>So we need</dt><dd>the Fundamental Theorem of Calculus</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>d/dx ∫<sub>a</sub><sup>x</sup> f(t) dt = f(x)</span><small>Part 1</small></div><div class="eqn"><span>∫<sub>a</sub><sup>b</sup> f(x) dx = F(b) − F(a)</span><small>Part 2, F′ = f</small></div><div class="eqn"><span>d/dx ∫<sub>a</sub><sup>g(x)</sup> f(t) dt = f(g(x))·g′(x)</span><small>with the chain rule</small></div></div>
+      <div class="lab" id="fc-lab">
+        <div class="labbar"><span class="title">Area so far, and its slope</span></div>
+        <div class="ctl"><span class="lbl">f(t)</span><div class="seg" id="fc-fn" role="group" aria-label="f(t)"><button type="button" data-k="a" aria-pressed="true">t² − 2t</button><button type="button" data-k="b" aria-pressed="false">cos t</button><button type="button" data-k="c" aria-pressed="false">e^(−t²)</button></div></div>
+        <canvas id="fc-canvas" aria-label="Top graph: f with the signed area from 0 to x shaded. Bottom graph: the accumulated area A(x) with a point at x."></canvas>
+        <canvas id="fc-canvas2" aria-label="The accumulation function A of x."></canvas>
+        <div class="controls"><div class="ctl"><label for="fc-x"><span>x</span> <output id="fc-x-out"></output></label><input type="range" id="fc-x" min="0" max="3" step="0.05" value="1.5"></div></div>
+        <div class="readout"><div><span>A(x) = ∫₀ˣ f(t) dt</span><strong class="x" id="fc-A">—</strong></div><div><span>f(x), the height at the edge</span><strong class="v" id="fc-f">—</strong></div><div><span>slope of A at x (numeric)</span><strong class="a" id="fc-slope">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose t² − 2t and slide x to 2. What is happening to A? <button type="button" class="btn link" data-show='[["click", "#fc-fn [data-k=a]"], ["#fc-x", 2]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>A is at its lowest point (A(2) = −4/3): f is negative until x = 2 (area below the axis counts negative), so A decreases, and f(2) = 0 where A turns around.</p></details></li>
+        <li><p>Compare f(x) with the slope of A at several x. What do you see? <button type="button" class="btn link" data-show='[["click", "#fc-fn [data-k=b]"], ["#fc-x", 1]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>They are equal everywhere: the slope of the accumulation graph is the height of f. That is FTC Part 1.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Evaluate ∫<sub>1</sub><sup>3</sup> (2x + 1) dx, and find d/dx ∫<sub>0</sub><sup>x²</sup> sin t dt.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Antiderivative.</b> F(x) = x² + x.</li>
+          <li hidden><b>FTC Part 2.</b> F(3) − F(1) = (9 + 3) − (1 + 1) = 10. The integral is <b>10</b>.</li>
+          <li hidden><b>Second problem: chain rule.</b> The upper limit is g(x) = x², so d/dx ∫<sub>0</sub><sup>x²</sup> sin t dt = sin(x²)·(x²)′.</li>
+          <li hidden><b>Answer.</b> <b>2x sin(x²)</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Forgetting to subtract: F(b) − F(a), not F(b) + F(a).</li>
+        <li>Adding + C in a definite integral. It cancels, so leave it out.</li>
+        <li>Forgetting the chain rule factor g′(x) when the upper limit is not just x.</li>
+        <li>Treating area below the axis as positive. The integral is net (signed) area.</li>
+        <li>Swapping limits without changing the sign: ∫<sub>b</sub><sup>a</sup> = −∫<sub>a</sub><sup>b</sup>.</li>
+      </ul></div>
+      <div class="prose"><h2>Properties worth knowing</h2>
+        <p>∫<sub>a</sub><sup>a</sup> f = 0; ∫<sub>a</sub><sup>b</sup> f = −∫<sub>b</sub><sup>a</sup> f; ∫<sub>a</sub><sup>c</sup> f = ∫<sub>a</sub><sup>b</sup> f + ∫<sub>b</sub><sup>c</sup> f; constants pull out and sums split. If f is the rate of change of a quantity, ∫<sub>a</sub><sup>b</sup> f is the total change in that quantity from a to b.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="FTC Part 1 with upper limit x: the answer is the integrand evaluated at x.">
+        <p class="q">Check yourself: d/dx ∫<sub>1</sub><sup>x</sup> √(t<sup>3</sup> + 1) dt =</p>
+        <div class="opts"><button type="button">√(x³ + 1)</button><button type="button">x√(x³ + 1)</button><button type="button">3x²/(2√(x³ + 1))</button><button type="button">0</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-antider" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 6</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Antiderivatives</h1>
+        <p class="lede">An antiderivative undoes a derivative. Because constants vanish when you differentiate, every function has a whole family of antiderivatives.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>F is an <b>antiderivative</b> of f if F′ = f. The antiderivative of 2x is x², but so are x² + 5 and x² − 100: they all have slope 2x. The family is written <span class="m">∫ f(x) dx = F(x) + C</span>, and C is the constant of integration. Graphically, the antiderivatives are the same curve shifted up and down.</p>
+        <p>Run your derivative rules backwards. <span class="m">∫ x<sup>n</sup> dx = x<sup>n+1</sup>/(n+1) + C</span> (n ≠ −1), <span class="m">∫ 1/x dx = ln|x| + C</span>, <span class="m">∫ e<sup>x</sup> dx = e<sup>x</sup> + C</span>, <span class="m">∫ cos x dx = sin x + C</span>. An <b>initial condition</b> like F(1) = 3 picks out the one curve in the family.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>every derivative had one answer</dd><dt>So we didn't need</dt><dd>a family of answers, picked out by a starting value</dd><dt>Now</dt><dd>solving for position from velocity, and every integral</dd><dt>So we need</dt><dd>the indefinite integral and the constant of integration</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>∫ x<sup>n</sup> dx = x<sup>n+1</sup>/(n+1) + C</span><small>n ≠ −1</small></div><div class="eqn"><span>F′ = f ⇒ ∫ f = F + C</span><small>check by differentiating</small></div><div class="eqn"><span>F(a) = b</span><small>initial condition fixes C</small></div></div>
+      <div class="lab" id="an-lab">
+        <div class="labbar"><span class="title">A family of curves with the same slope</span></div>
+        <div class="ctl"><span class="lbl">f(x)</span><div class="seg" id="an-fn" role="group" aria-label="f(x)"><button type="button" data-k="a" aria-pressed="true">2x</button><button type="button" data-k="b" aria-pressed="false">cos x</button><button type="button" data-k="c" aria-pressed="false">eˣ</button><button type="button" data-k="d" aria-pressed="false">3x² − 3</button></div></div>
+        <canvas id="an-canvas" aria-label="Several vertical shifts of an antiderivative in light blue, with the chosen one highlighted and the integrand in green."></canvas>
+        <div class="controls"><div class="ctl"><label for="an-c"><span>Constant C</span> <output id="an-c-out"></output></label><input type="range" id="an-c" min="-3" max="3" step="0.25" value="1"></div><div class="ctl"><label for="an-x"><span>Point x</span> <output id="an-x-out"></output></label><input type="range" id="an-x" min="-2" max="2" step="0.05" value="0.5"></div></div>
+        <div class="readout"><div><span>the highlighted F(x)</span><strong class="x" id="an-big">—</strong></div><div><span>slope of F at the point</span><strong class="a" id="an-chk">—</strong></div><div><span>f at the point</span><strong class="v" id="an-f">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Change C. What changes about the curve, and what stays the same? <button type="button" class="btn link" data-show='[["#an-c", 2]]'>C = 2</button></p><details><summary>What you should see</summary><p>The curve slides up or down, but the slope at each x is identical: the slope readout does not change with C. That is why C is arbitrary until an initial condition fixes it.</p></details></li>
+        <li><p>Choose cos x. The slope of the highlighted curve at x = 0.5 matches what? <button type="button" class="btn link" data-show='[["click", "#an-fn [data-k=b]"], ["#an-x", 0.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>cos(0.5) = 0.878: F = sin x + C has slope cos x, so F is an antiderivative of cos x for every C.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find the function F with F′(x) = 6x² − 4x and F(1) = 5.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Antiderivative.</b> F(x) = 2x³ − 2x² + C.</li>
+          <li hidden><b>Apply the condition.</b> F(1) = 2 − 2 + C = C = 5.</li>
+          <li hidden><b>Answer.</b> F(x) = <b>2x³ − 2x² + 5</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 3</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Forgetting + C in an indefinite integral.</li>
+        <li>Using the power rule on 1/x: ∫ 1/x dx = ln|x| + C, not x⁰/0.</li>
+        <li>Differentiating instead of integrating: raise the exponent, then divide by the new exponent.</li>
+        <li>Forgetting to divide by the coefficient inside, for example ∫ cos(3x) dx = sin(3x)/3 + C.</li>
+        <li>Using F(a) = b with the wrong sign when solving for C.</li>
+      </ul></div>
+      <div class="prose"><h2>Check by differentiating</h2>
+        <p>An antiderivative can always be checked: differentiate your answer; you must get the original integrand back. If it does not match, the integral is wrong. This check catches most mistakes on the exam.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Raise each power by one and divide by the new power: 4x⁴/4 = x⁴, and 2 becomes 2x.">
+        <p class="q">Check yourself: ∫ (4x³ + 2) dx =</p>
+        <div class="opts"><button type="button">x⁴ + 2x + C</button><button type="button">12x² + C</button><button type="button">x⁴ + 2 + C</button><button type="button">4x⁴ + 2x + C</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-usub" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 6</span><span class="tag">AB &amp; BC</span></div>
+        <h1>u-substitution</h1>
+        <p class="lede">The chain rule run backwards: when an integral contains a function and its derivative, rename the inside as u and the integral becomes simple.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>The chain rule gave <span class="m">d/dx f(g(x)) = f′(g(x))·g′(x)</span>. Reverse it: <span class="m">∫ f′(g(x))·g′(x) dx = f(g(x)) + C</span>. In practice, look for an <b>inside function whose derivative also appears</b>: in <span class="m">∫ 2x cos(x²) dx</span> the inside is x² and 2x is its derivative. Let <span class="m">u = x²</span>, so <span class="m">du = 2x dx</span>, and the integral becomes <span class="m">∫ cos u du = sin u + C</span>.</p>
+        <p>For a <b>definite integral</b> either change back to x at the end, or (better) change the limits: when x goes from a to b, u goes from g(a) to g(b). The areas are equal, which the lab shows.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>antiderivatives of simple functions only</dd><dt>So we didn't need</dt><dd>a way to undo the chain rule</dd><dt>Now</dt><dd>integrals like ∫ x e^{x²} dx or ∫ (3x + 1)⁴ dx</dd><dt>So we need</dt><dd>u-substitution</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>u = g(x), du = g′(x) dx</span><small>substitution</small></div><div class="eqn"><span>∫ f(g(x)) g′(x) dx = ∫ f(u) du</span><small>indefinite</small></div><div class="eqn"><span>limits: x = a, b → u = g(a), g(b)</span><small>definite</small></div></div>
+      <div class="lab" id="us-lab">
+        <div class="labbar"><span class="title">The same area in two coordinates</span></div>
+        <div class="ctl"><span class="lbl">Integral</span><div class="seg" id="us-fn" role="group" aria-label="Integral"><button type="button" data-k="a" aria-pressed="true">∫ 2x cos(x²) dx</button><button type="button" data-k="b" aria-pressed="false">∫ x eˣ² dx</button><button type="button" data-k="c" aria-pressed="false">∫ x/(x²+1) dx</button></div></div>
+        <p class="small" id="us-form" style="margin:0"></p>
+        <canvas id="us-canvas" aria-label="Left graph: the integrand in x with its area. Right graph: the simplified integrand in u with the equal area."></canvas>
+        <canvas id="us-canvas2" aria-label="The integrand after substitution, as a function of u, with its area."></canvas>
+        <div class="controls"><div class="ctl"><label for="us-b"><span>Upper limit b</span> <output id="us-b-out"></output></label><input type="range" id="us-b" min="0.2" max="1.6" step="0.05" value="1"></div></div>
+        <div class="readout"><div><span>∫₀ᵇ in x</span><strong class="x" id="us-i1">—</strong></div><div><span>∫ in u over [g(0), g(b)]</span><strong class="v" id="us-i2">—</strong></div><div><span>equal?</span><strong class="" id="us-eq">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose 2x cos(x²). What are the new limits when b = 1? <button type="button" class="btn link" data-show='[["click", "#us-fn [data-k=a]"], ["#us-b", 1]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>u = x², so u runs from 0² = 0 to 1² = 1. The right graph is cos u on [0, 1]; both areas equal sin 1 ≈ 0.841.</p></details></li>
+        <li><p>Choose x/(x²+1). Why u = x² + 1? <button type="button" class="btn link" data-show='[["click", "#us-fn [data-k=c]"], ["#us-b", 1.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Its derivative 2x is almost the numerator x (off by a factor of 2), so x dx = du/2 and the integral is (1/2)∫ du/u = (1/2) ln u.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Evaluate ∫<sub>0</sub><sup>2</sup> x(x² + 1)³ dx.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Choose u.</b> The inside is x² + 1, whose derivative 2x nearly matches the extra factor x. Let u = x² + 1.</li>
+          <li hidden><b>Find du.</b> du = 2x dx, so x dx = du/2.</li>
+          <li hidden><b>Change the limits.</b> x = 0 → u = 1; x = 2 → u = 5.</li>
+          <li hidden><b>Rewrite and integrate.</b> ∫<sub>1</sub><sup>5</sup> u³ (du/2) = (1/2)(u⁴/4) |<sub>1</sub><sup>5</sup> = (1/8)(625 − 1).</li>
+          <li hidden><b>Answer.</b> 624/8 = <b>78</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Forgetting to change the limits (or to change back to x at the end).</li>
+        <li>Leaving some x in the integral after substituting. Everything must be in u.</li>
+        <li>Not adjusting for a constant: if du = 2x dx you must replace x dx by du/2.</li>
+        <li>Choosing u that does not make the rest cancel: u should be the inside whose derivative appears.</li>
+        <li>Dropping + C in an indefinite integral.</li>
+      </ul></div>
+      <div class="prose"><h2>Choosing u</h2>
+        <p>Good candidates: the inside of a power (3x + 1)⁵, the exponent of e, the argument of sin or cos, the denominator of a fraction when its derivative is in the numerator, or the inside of a square root. If a constant factor is missing, it is fine: just divide by it.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="The exponent x² has derivative 2x, and x is almost 2x: x dx = du/2.">
+        <p class="q">Check yourself: For ∫ x e<sup>x²</sup> dx, which substitution works?</p>
+        <div class="opts"><button type="button">u = x²</button><button type="button">u = x</button><button type="button">u = e<sup>x</sup></button><button type="button">u = x e<sup>x</sup></button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
   <section class="view" id="v-practice" hidden>
     <div class="wrap">
       <div class="head">
@@ -2522,8 +2727,8 @@ function view3d(cv,o){
 
 /* ---------------- Roster and registries (the data blocks are injected by build.py) ---------------- */
 const MODS={"functions": {"t": "Functions & transformations", "d": "Shift, stretch and flip a graph, and read what a formula is doing.", "bc": false}, "trigexp": {"t": "Trig, exponentials & logs", "d": "The unit circle, e^x and ln x: the functions calculus keeps using.", "bc": false}, "limits": {"t": "Limits from graphs & tables", "d": "What a function is heading toward, even where it never gets there.", "bc": false}, "limalg": {"t": "Algebraic limits", "d": "Factor, rationalize or squeeze when plugging in gives 0/0.", "bc": false}, "contin": {"t": "Continuity & the IVT", "d": "Where a graph breaks, and why continuous functions can't skip values.", "bc": false}, "asym": {"t": "Infinite limits & end behavior", "d": "Vertical and horizontal asymptotes, and what happens as x gets huge.", "bc": false}, "rates": {"t": "Average vs instantaneous rate", "d": "A secant line closing in on a tangent line.", "bc": false}, "deriv": {"t": "The derivative & differentiability", "d": "The limit definition, and where a graph has no slope.", "bc": false}, "rules": {"t": "Power, sum & constant-multiple rules", "d": "Differentiate polynomials and roots in your head.", "bc": false}, "transder": {"t": "Trig, e^x and ln x derivatives", "d": "The derivatives you memorize once.", "bc": false}, "prodquot": {"t": "Product & quotient rules", "d": "When two functions are multiplied or divided.", "bc": false}, "chain": {"t": "The chain rule", "d": "Derivatives of functions inside functions.", "bc": false}, "implicit": {"t": "Implicit differentiation", "d": "Slopes of curves that are not functions of x.", "bc": false}, "invfn": {"t": "Inverse functions & inverse trig", "d": "Derivatives of inverses, arcsin, arctan and friends.", "bc": false}, "higher": {"t": "Higher-order derivatives & choosing a rule", "d": "Second derivatives, and picking the right tool.", "bc": false}, "motion": {"t": "Derivatives in context & motion", "d": "Position, velocity, acceleration and units of a rate.", "bc": false}, "related": {"t": "Related rates", "d": "Two quantities change together: how fast is the other one moving?", "bc": false}, "linear": {"t": "Linearization & differentials", "d": "Approximate a curve by its tangent line.", "bc": false}, "lhop": {"t": "L'Hôpital's rule", "d": "Resolve 0/0 and ∞/∞ by comparing derivatives.", "bc": false}, "mvt": {"t": "Extreme values & the Mean Value Theorem", "d": "Why a continuous function on [a, b] has a max, and a point with the average slope.", "bc": false}, "incdec": {"t": "Increasing, decreasing & the first derivative test", "d": "Read the sign of f′ to find peaks and valleys.", "bc": false}, "concav": {"t": "Concavity & the second derivative test", "d": "Read the sign of f″ to see bending.", "bc": false}, "sketch": {"t": "Connecting f, f′ and f″", "d": "Go between a graph and the graphs of its derivatives.", "bc": false}, "optim": {"t": "Optimization", "d": "Biggest, smallest, cheapest, fastest: set up and solve.", "bc": false}, "accum": {"t": "Accumulation & Riemann sums", "d": "Add up a changing rate with thin slices.", "bc": false}, "ftc": {"t": "The definite integral & the FTC", "d": "Area, accumulation functions and the theorem that ties derivatives to integrals.", "bc": false}, "antider": {"t": "Antiderivatives", "d": "Undo a derivative, and don't forget the + C.", "bc": false}, "usub": {"t": "u-substitution", "d": "Undo the chain rule, including definite integrals.", "bc": false}, "slope": {"t": "Slope fields", "d": "Draw the solutions without solving anything.", "bc": false}, "sepvar": {"t": "Separation of variables & exponential models", "d": "Solve dy/dx = ky and other separable equations.", "bc": false}, "avgval": {"t": "Average value & motion with integrals", "d": "Average of a function, and displacement vs distance.", "bc": false}, "area": {"t": "Area between curves", "d": "Top minus bottom, or right minus left.", "bc": false}, "vols": {"t": "Volumes from cross sections", "d": "Stack slices of a known shape.", "bc": false}, "volrev": {"t": "Volumes of revolution", "d": "Discs and washers around an axis.", "bc": false}, "parts": {"t": "Integration by parts", "d": "Undo the product rule: ∫u dv = uv − ∫v du.", "bc": true}, "partial": {"t": "Partial fractions & long division", "d": "Split a rational function into pieces you can integrate.", "bc": true}, "improper": {"t": "Improper integrals", "d": "Areas that stretch to infinity, or past an asymptote.", "bc": true}, "euler": {"t": "Euler's method", "d": "Step along a slope field to approximate a solution.", "bc": true}, "logistic": {"t": "Logistic models", "d": "Growth that levels off at a carrying capacity.", "bc": true}, "arclen": {"t": "Arc length", "d": "How long is the curve?", "bc": true}, "param": {"t": "Parametric equations", "d": "x and y both depend on t: slope, concavity and length.", "bc": true}, "vector": {"t": "Vector-valued functions & motion", "d": "Velocity, speed and acceleration in the plane.", "bc": true}, "polar": {"t": "Polar curves & area", "d": "Graph with r and θ, and find areas of petals.", "bc": true}, "seriesbasic": {"t": "Series, geometric series & the nth-term test", "d": "When does an infinite sum add up to a number?", "bc": true}, "pseries": {"t": "p-series & the integral test", "d": "Compare a sum to an area.", "bc": true}, "convtests": {"t": "Comparison & ratio tests", "d": "Decide convergence without finding the sum.", "bc": true}, "altser": {"t": "Alternating series & error bounds", "d": "Alternating signs, absolute vs conditional convergence.", "bc": true}, "taylorpoly": {"t": "Taylor polynomials & Lagrange error", "d": "Approximate a function near a point, and bound the error.", "bc": true}, "powser": {"t": "Power series: radius & interval", "d": "Where a series in x converges.", "bc": true}, "maclaurin": {"t": "Maclaurin series & operations", "d": "e^x, sin x, cos x, 1/(1−x), and building new series from them.", "bc": true}};
-const GROUPS=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"]}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"]}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"]}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"]}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": ["motion", "related", "linear", "lhop"]}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": ["mvt", "incdec", "concav", "sketch", "optim"]}];
-const ROADMAP=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"], "soon": []}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"], "soon": []}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"], "soon": []}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"], "soon": []}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": ["motion", "related", "linear", "lhop"], "soon": []}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": ["mvt", "incdec", "concav", "sketch", "optim"], "soon": []}, {"w": "Unit 6", "name": "Integration and accumulation of change", "tag": "AP Unit 6", "bc": false, "ids": [], "soon": ["accum", "ftc", "antider", "usub"]}, {"w": "Unit 7", "name": "Differential equations", "tag": "AP Unit 7", "bc": false, "ids": [], "soon": ["slope", "sepvar"]}, {"w": "Unit 8", "name": "Applications of integration", "tag": "AP Unit 8", "bc": false, "ids": [], "soon": ["avgval", "area", "vols", "volrev"]}, {"w": "BC", "name": "Integration techniques (BC)", "tag": "AP Unit 6 · BC", "bc": true, "ids": [], "soon": ["parts", "partial", "improper"]}, {"w": "BC", "name": "More differential equations & applications (BC)", "tag": "AP Units 7–8 · BC", "bc": true, "ids": [], "soon": ["euler", "logistic", "arclen"]}, {"w": "Unit 9", "name": "Parametric equations, polar coordinates and vector-valued functions (BC)", "tag": "AP Unit 9 · BC", "bc": true, "ids": [], "soon": ["param", "vector", "polar"]}, {"w": "Unit 10", "name": "Infinite sequences and series (BC)", "tag": "AP Unit 10 · BC", "bc": true, "ids": [], "soon": ["seriesbasic", "pseries", "convtests", "altser", "taylorpoly", "powser", "maclaurin"]}]; /* every unit, with ids (built) and soon (planned, not built yet) */
+const GROUPS=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"]}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"]}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"]}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"]}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": ["motion", "related", "linear", "lhop"]}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": ["mvt", "incdec", "concav", "sketch", "optim"]}, {"w": "Unit 6", "name": "Integration and accumulation of change", "tag": "AP Unit 6", "bc": false, "ids": ["accum", "ftc", "antider", "usub"]}];
+const ROADMAP=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"], "soon": []}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"], "soon": []}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"], "soon": []}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"], "soon": []}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": ["motion", "related", "linear", "lhop"], "soon": []}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": ["mvt", "incdec", "concav", "sketch", "optim"], "soon": []}, {"w": "Unit 6", "name": "Integration and accumulation of change", "tag": "AP Unit 6", "bc": false, "ids": ["accum", "ftc", "antider", "usub"], "soon": []}, {"w": "Unit 7", "name": "Differential equations", "tag": "AP Unit 7", "bc": false, "ids": [], "soon": ["slope", "sepvar"]}, {"w": "Unit 8", "name": "Applications of integration", "tag": "AP Unit 8", "bc": false, "ids": [], "soon": ["avgval", "area", "vols", "volrev"]}, {"w": "BC", "name": "Integration techniques (BC)", "tag": "AP Unit 6 · BC", "bc": true, "ids": [], "soon": ["parts", "partial", "improper"]}, {"w": "BC", "name": "More differential equations & applications (BC)", "tag": "AP Units 7–8 · BC", "bc": true, "ids": [], "soon": ["euler", "logistic", "arclen"]}, {"w": "Unit 9", "name": "Parametric equations, polar coordinates and vector-valued functions (BC)", "tag": "AP Unit 9 · BC", "bc": true, "ids": [], "soon": ["param", "vector", "polar"]}, {"w": "Unit 10", "name": "Infinite sequences and series (BC)", "tag": "AP Unit 10 · BC", "bc": true, "ids": [], "soon": ["seriesbasic", "pseries", "convtests", "altser", "taylorpoly", "powser", "maclaurin"]}]; /* every unit, with ids (built) and soon (planned, not built yet) */
 const TIPS={},TT={},GLOSS={},KEYS={},PROBS=[],FRQS=[],GLYPH={};
 const METHODS={clues:[],items:[]};
 Object.keys(MODS).forEach(id=>{const g=ROADMAP.find(g=>g.ids.includes(id)||g.soon.includes(id));MODS[id].ap=g?g.tag:'';MODS[id].w=g?g.w:'';});
@@ -2706,6 +2911,11 @@ function roots(g,a,b,n=2000){const out=[];let x0=a,v0=g(x0);for(let i=1;i<=n;i++
 /* shade the panel background by the sign of s(x): posCol where s > 0, negCol where s < 0 (runs are merged so there are no seams) */
 function signBands(ctx,P,xr,s,posCol,negCol,n=400){let run=null;const flush=x=>{if(run){const a=P.X(run.x0),b=P.X(x);ctx.fillStyle=run.c;ctx.fillRect(a,P.box.y,b-a,P.box.h);run=null;}};
   for(let i=0;i<n;i++){const x0=xr[0]+(xr[1]-xr[0])*i/n,v=s(x0+(xr[1]-xr[0])/n/2),c=!isFinite(v)?null:v>0?posCol:negCol;if(!run||run.c!==c){flush(x0);if(c)run={x0,c};}}flush(xr[1]);}
+/* area between f and the x-axis from a to b: gold above the axis, pink below (signed area) */
+function areaSigned(ctx,P,f,a,b,posCol,negCol,n=300,al=.35){if(b<=a)return;const y0=P.Y(0);const poly=()=>{ctx.beginPath();ctx.moveTo(P.X(a),y0);for(let i=0;i<=n;i++){const t=a+(b-a)*i/n;ctx.lineTo(P.X(t),P.Y(f(t)));}ctx.lineTo(P.X(b),y0);ctx.closePath();};
+  ctx.save();clip(ctx,P);[[posCol,P.box.y,y0],[negCol,y0,P.box.y+P.box.h]].forEach(([c,t,bt])=>{ctx.save();ctx.beginPath();ctx.rect(P.box.x,t,P.box.w,bt-t);ctx.clip();poly();ctx.fillStyle=alpha(c,al);ctx.fill();ctx.restore();});ctx.restore();}
+/* integrate terms [[c,p],...] (p ≠ −1) */
+const tint=ts=>ts.map(([c,p])=>[c/(p+1),p+1]);
 
 
 /* ===== modules/functions.js ===== */
@@ -3640,6 +3850,137 @@ const lmN=v=>v===null?'does not exist':String(v).replace('-','−');
     return {q:`Find the x-coordinate of the point on the curve y = √x that is closest to the point (${a}, 0). Give a decimal.`,ans,unit:'',abs:.01,chk:argmin(d2,0,a+3),hint:'Minimize the squared distance d² = (x − a)² + x.',sol:`d² = (x − ${a})² + x. Setting its derivative 2(x − ${a}) + 1 = 0 gives x = <b>${fmt(ans,1)}</b>.`};}});
   PROBS.push({id:'op-sum',topic:'optim',title:'Two numbers',gen(){const S=ri(5,30),prodMax=Math.random()<.5,ans=prodMax?S*S/4:S*S/2;
     return {q:`Two positive numbers add to ${S}. ${prodMax?'What is the largest possible value of their product?':'What is the smallest possible value of the sum of their squares?'}`,ans,unit:'',tol:.005,chk:prodMax?(S/2)*(S/2):2*(S/2)**2,hint:'Write y = S − x and the quantity in terms of x alone, then find where its derivative is 0.',sol:`${prodMax?`P = x(${S} − x), P′ = ${S} − 2x = 0 ⇒ x = ${S/2}, P = <b>${ans}</b>.`:`Q = x² + (${S} − x)², Q′ = 4x − ${2*S} = 0 ⇒ x = ${S/2}, Q = <b>${ans}</b>.`}`};}});
+})();
+
+/* ===== modules/accum.js ===== */
+/* ---------------- Accumulation & Riemann sums ---------------- */
+(function accum(){
+  const cv=$('#ac-canvas');if(!cv)return;
+  const C={a:{f:x=>x*x,a:0,b:3},b:{f:Math.sin,a:0,b:Math.PI},c:{f:x=>4-x*x,a:0,b:3},d:{f:Math.exp,a:0,b:2}};
+  let k='a',m='L',n=4;
+  const yr=()=>{const A=C[k];let lo=0,hi=0;for(let i=0;i<=100;i++){const v=A.f(A.a+(A.b-A.a)*i/100);lo=Math.min(lo,v);hi=Math.max(hi,v);}const p=(hi-lo)*.12;return [lo-p,hi+p];};
+  const sim=glab('ac-canvas',{view:()=>({xr:[C[k].a-.15,C[k].b+.25],yr:yr()}),draw(ctx,P){const A=C[k],h=(A.b-A.a)/n;ctx.save();clip(ctx,P);
+      for(let i=0;i<n;i++){const x0=A.a+i*h,x1=x0+h;const col=T.ce;let hgt=m==='L'?A.f(x0):m==='R'?A.f(x1):A.f(x0+h/2);
+        if(m==='T'){const y0=A.f(x0),y1=A.f(x1);ctx.beginPath();ctx.moveTo(P.X(x0),P.Y(0));ctx.lineTo(P.X(x0),P.Y(y0));ctx.lineTo(P.X(x1),P.Y(y1));ctx.lineTo(P.X(x1),P.Y(0));ctx.closePath();ctx.fillStyle=alpha((y0+y1)<0?T.ca:col,.35);ctx.fill();ctx.strokeStyle=alpha((y0+y1)<0?T.ca:col,.9);ctx.lineWidth=n>30?.6:1.2;ctx.stroke();}
+        else{ctx.fillStyle=alpha(hgt<0?T.ca:col,.35);ctx.strokeStyle=alpha(hgt<0?T.ca:col,.9);ctx.lineWidth=n>30?.6:1.2;ctx.beginPath();ctx.rect(P.X(x0),Math.min(P.Y(0),P.Y(hgt)),P.X(x1)-P.X(x0),Math.abs(P.Y(hgt)-P.Y(0)));ctx.fill();ctx.stroke();}}
+      ctx.restore();curveD(ctx,P,A.f,A.a-.15,A.b+.25,T.cx,2.8,400);}});
+  function upd(){const A=C[k],s=riemann(A.f,A.a,A.b,n,m),ex=integ(A.f,A.a,A.b,2000);setText('ac-sum',fmt(s,4));setText('ac-ex',fmt(ex,4));setText('ac-err',fmt(s-ex,4));
+    setText('ac-note',Math.abs(s-ex)<2e-3*(1+Math.abs(ex))?'essentially exact':s>ex?'overestimate':'underestimate');sim.render();}
+  bindRange('ac-n',v=>String(v),v=>{n=v;upd();});segBind('ac-fn','k',v=>{k=v;upd();});segBind('ac-m','k',v=>{m=v;upd();});upd();drawers.accum=()=>sim.render();
+  KEYS['ac-canvas']=['Choose a method and n. Gold rectangles (or trapezoids) add up to the estimate; pink ones lie below the axis and count negative.',[['cx','the rate f(x)'],['ce','strips: rate × width'],['ca','area below the axis']]];
+  TIPS['ac-n']=el=>`n = ${el.value} strips, each ${fmt((C[k].b-C[k].a)/el.value,3)} wide. More strips → a better estimate.`;
+  GLOSS['Riemann sum']='A sum of rate × width over thin strips; it estimates the definite integral.';GLOSS['definite integral']='The limit of Riemann sums: net signed area under f from a to b.';
+  TT.accum='Ask students to say, before changing n, whether each method over- or under-estimates for the chosen function.';
+})();
+(function(){
+  const L={L:'left',R:'right',M:'midpoint',T:'trapezoid'};
+  PROBS.push({id:'ac-riemann',topic:'accum',title:'Compute a Riemann sum',gen(){const a=ri(0,2),n=pick([3,4,5]),b=a+n*pick([1,2]),meth=pick(['L','R','M','T']),A=ri(1,3),B=ri(0,5),f=x=>A*x*x+B,ans=riemann(f,a,b,n,meth),h=(b-a)/n;
+    let man=0;for(let i=0;i<n;i++){const x0=a+i*h;man+=meth==='L'?f(x0):meth==='R'?f(x0+h):meth==='M'?f(x0+h/2):(f(x0)+f(x0+h))/2;}man*=h;
+    return {q:`Use a ${L[meth]} Riemann sum with n = ${n} equal subintervals to estimate ∫<sub>${a}</sub><sup>${b}</sup> (${polyTxt([A,0,B])}) dx. Give a decimal.`,ans,unit:'',abs:.01,chk:man,hint:`Δx = (b − a)/n = ${h}. Evaluate f at the ${L[meth]} points and add, then multiply by Δx.`,sol:`Δx = ${h}. The ${L[meth]} sum is Δx × (sum of heights) = <b>${nz(+ans.toFixed(4))}</b>.`};}});
+  PROBS.push({id:'ac-table',topic:'accum',title:'Estimate from a table',gen(){const ts=[0,2,5,9,10].slice(0,ri(4,5)),meth=pick(['L','R','T']),vals=ts.map(t=>ri(2,14)+t%3),ans=(()=>{let s=0;for(let i=0;i<ts.length-1;i++){const w=ts[i+1]-ts[i];s+=w*(meth==='L'?vals[i]:meth==='R'?vals[i+1]:(vals[i]+vals[i+1])/2);}return s;})();
+    const tbl=`<table class="lmtbl"><thead><tr><th>t (min)</th>${ts.map(t=>`<th>${t}</th>`).join('')}</tr></thead><tbody><tr><th>r(t) (L/min)</th>${vals.map(v=>`<td>${v}</td>`).join('')}</tr></tbody></table>`;
+    return {q:`Water flows into a tank at rate r(t) liters per minute, measured at the times shown. Use a ${L[meth]} sum with the subintervals given by the table to estimate the total liters over [0, ${ts[ts.length-1]}].${tbl}`,ans,unit:'L',abs:.01,chk:ans,hint:'The strips have different widths. Use (width) × (height) for each, then add.',sol:`Sum of width × ${meth==='T'?'average of the two heights':meth==='L'?'left height':'right height'} over each subinterval = <b>${nz(ans)} L</b>.`};}});
+  PROBS.push({id:'ac-bias',topic:'accum',title:'Over- or underestimate?',gen(){const inc=Math.random()<.5,meth=pick(['L','R']),ans=(inc?meth==='L':meth==='R')?'underestimate':'overestimate',m=mcq(ans,['underestimate','overestimate','exact','cannot be determined']);
+    return {q:`f is ${inc?'increasing':'decreasing'} on [a, b]. A ${L[meth]} Riemann sum for ∫<sub>a</sub><sup>b</sup> f(x) dx is an ___.`,choices:m.choices,ans:m.ans,hint:'On each strip, is the chosen edge the highest or lowest point of the graph?',sol:`For a ${inc?'increasing':'decreasing'} function the ${L[meth]} edge is the ${(inc?meth==='L':meth==='R')?'lowest':'highest'} point of each strip: an <b>${ans}</b>.`};}});
+  PROBS.push({id:'ac-units',topic:'accum',title:'Meaning of an integral',gen(){const R=[['r(t) is the rate water flows into a pool in gallons per minute','∫<sub>0</sub><sup>10</sup> r(t) dt','the gallons that flowed in during the first 10 minutes'],['v(t) is velocity in meters per second','∫<sub>2</sub><sup>6</sup> v(t) dt','the displacement in meters between t = 2 and t = 6 seconds'],['P′(t) is the rate a population changes in thousands per year','∫<sub>0</sub><sup>5</sup> P′(t) dt','the change in population, in thousands, over 5 years'],['c(x) is the marginal cost in dollars per item','∫<sub>100</sub><sup>150</sup> c(x) dx','the added cost in dollars of making items 100 through 150']],[ctx,ig,ans]=pick(R),m=mcq(ans,R.map(r=>r[2]));
+    return {q:`${ctx}. What does ${ig} represent?`,choices:m.choices,ans:m.ans,hint:'An integral of a rate gives the total change in the quantity. Check the units.',sol:`Integrating a rate over an interval gives the net change: <b>${ans}</b>.`};}});
+  PROBS.push({id:'ac-net',topic:'accum',title:'Net change',gen(){const V0=ri(50,200),a=ri(1,3),b=ri(0,6),T0=ri(2,6),rt=t=>a*t*t+b,ans=V0+(a*T0**3/3+b*T0);
+    return {q:`A tank holds ${V0} liters at t = 0. Water flows in at rate r(t) = ${polyTxt([a,0,b],'t')} liters per minute. How many liters are in the tank at t = ${T0}? Give a decimal.`,ans,unit:'L',tol:.002,chk:V0+integ(rt,0,T0,2000),hint:'Amount at t = initial amount + ∫ rate dt.',sol:`V(${T0}) = ${V0} + ∫<sub>0</sub><sup>${T0}</sup> r(t) dt = ${V0} + ${nz(+(a*T0**3/3).toFixed(4))} + ${b*T0} = <b>${fmt(ans,2)} L</b>.`};}});
+})();
+
+/* ===== modules/ftc.js ===== */
+/* ---------------- The definite integral & the Fundamental Theorem ---------------- */
+(function ftc(){
+  const cv=$('#fc-canvas');if(!cv)return;
+  const C={a:{f:t=>t*t-2*t,yr:[-1.5,3.6]},b:{f:Math.cos,yr:[-1.3,1.3]},c:{f:t=>Math.exp(-t*t),yr:[-.3,1.2]}};
+  let k='a',x0=1.5;
+  const A=x=>integ(C[k].f,0,x,300);
+  const sim=glab('fc-canvas',{h:w=>clamp(w*.36,230,300),view:()=>({xr:[0,3.2],yr:C[k].yr}),draw(ctx,P){const f=C[k].f;areaSigned(ctx,P,f,0,x0,T.ce,T.ca);curveD(ctx,P,f,0,3.2,T.cx,2.8,300);vline(ctx,P,x0,T.hot,[4,4]);dot(ctx,P.X(x0),P.Y(f(x0)),6,T.cx,T.surface);label(ctx,'f(t)',P.box.x+8,P.box.y+10,T.cx,'left','middle',LABEL);}});
+  const sim2=glab('fc-canvas2',{h:w=>clamp(w*.3,190,250),view:()=>{let lo=0,hi=0;for(let i=0;i<=60;i++){const v=A(3.2*i/60);lo=Math.min(lo,v);hi=Math.max(hi,v);}const p=Math.max((hi-lo)*.15,.1);return {xr:[0,3.2],yr:[lo-p,hi+p]};},draw(ctx,P){curveD(ctx,P,A,0,3.2,T.ce,2.8,160);const y=A(x0),m=C[k].f(x0);line(ctx,P,x0-.8,y-.8*m,x0+.8,y+.8*m,T.hot,2.2);dot(ctx,P.X(x0),P.Y(y),6,T.ce,T.surface);label(ctx,'A(x) = area accumulated so far',P.box.x+8,P.box.y+10,T.ce,'left','middle',LABEL);}});
+  function upd(){const f=C[k].f;setText('fc-A',fmt(A(x0),4));setText('fc-f',fmt(f(x0),4));setText('fc-slope',fmt(D(A,x0,2e-3),4));sim.render();sim2.render();}
+  bindRange('fc-x',v=>nz(v),v=>{x0=v;upd();});segBind('fc-fn','k',v=>{k=v;upd();});upd();drawers.ftc=()=>{sim.render();sim2.render();};
+  KEYS['fc-canvas']=['Slide x. Gold area (pink where f is negative) is A(x); the lower graph records it. The orange tangent has slope f(x).',[['cx','f(t)'],['ce','A(x), accumulated area'],['ca','area below the axis (negative)'],['hot','tangent to A at x']]];
+  TIPS['fc-x']=el=>`x = ${nz(+el.value)}: A is ${C[k].f(+el.value)>0?'increasing':'decreasing'} because f(x) is ${C[k].f(+el.value)>0?'positive':'negative'}, and its slope equals f(x).`;
+  GLOSS['accumulation function']='A(x) = ∫ₐˣ f(t) dt: the signed area from a up to x. Its derivative is f(x).';GLOSS['Fundamental Theorem']='Differentiation and integration undo each other: A′(x) = f(x), and ∫ₐᵇ f = F(b) − F(a).';
+  TT.ftc='Have students predict where A is increasing, decreasing and has its minimum from the graph of f alone.';
+})();
+(function(){
+  PROBS.push({id:'fc-eval',topic:'ftc',title:'Evaluate a definite integral',gen(){const fam=pick(['poly','trig','exp']);let q,ans,chk;
+    if(fam==='poly'){const a=ri(0,2),b=a+ri(1,3),ts=[[ri(1,6),pick([2,3])],[ri(-5,5),1],[ri(-4,6),0]],F=tint(ts);q=`Evaluate ∫<sub>${a}</sub><sup>${b}</sup> (${pretty(terms(ts))}) dx. Give a decimal.`;ans=tval(F,b)-tval(F,a);chk=integ(x=>tval(ts,x),a,b,2000);}
+    else if(fam==='trig'){const c=ri(1,5),pick2=pick(['sin','cos']);q=pick2==='sin'?`Evaluate ∫<sub>0</sub><sup>π</sup> ${c} sin x dx. Give a decimal.`:`Evaluate ∫<sub>0</sub><sup>π/2</sup> ${c} cos x dx. Give a decimal.`;ans=pick2==='sin'?2*c:c;chk=pick2==='sin'?integ(x=>c*Math.sin(x),0,Math.PI,2000):integ(x=>c*Math.cos(x),0,Math.PI/2,2000);}
+    else{const c=ri(1,4),b=ri(1,3);q=`Evaluate ∫<sub>0</sub><sup>${b}</sup> ${c}e<sup>x</sup> dx. Give a decimal to three places.`;ans=c*(Math.exp(b)-1);chk=integ(x=>c*Math.exp(x),0,b,2000);}
+    return {q,ans,unit:'',tol:.003,chk,hint:'Find an antiderivative F, then compute F(b) − F(a).',sol:`With an antiderivative F, F(b) − F(a) = <b>${fmt(ans,3)}</b>.`};}});
+  const T1=[()=>({f:'sin(t)',g:'x^2',gd:'2x',fx:t=>Math.sin(t),gx:x=>x*x,ans:'2x*sin(x^2)'}),()=>({f:'e^t',g:'x^2',gd:'2x',fx:Math.exp,gx:x=>x*x,ans:'2x*e^(x^2)'}),()=>{const a=ri(2,4);return {f:'sqrt(t^2+1)',g:`${a}x`,gd:String(a),fx:t=>Math.sqrt(t*t+1),gx:x=>a*x,ans:`${a}sqrt(${a*a}x^2+1)`};},()=>({f:'cos(t)',g:'x^3',gd:'3x^2',fx:Math.cos,gx:x=>x**3,ans:'3x^2cos(x^3)'}),()=>({f:'ln(t^2+1)',g:'x',gd:'1',fx:t=>Math.log(t*t+1),gx:x=>x,ans:'ln(x^2+1)'})];
+  PROBS.push({id:'fc-ftc1',topic:'ftc',title:'FTC Part 1 with the chain rule',gen(){const t=pick(T1)();
+    return {q:`Find d/dx ∫<sub>1</sub><sup>${pretty(t.g)}</sup> ${pretty(t.f).replace(/e\^t/,'e^t')} dt. Type your answer.`,expr:t.ans,chkf:x=>D(y=>integ(t.fx,1,t.gx(y),400),x,2e-3),hint:'FTC Part 1: replace t by the upper limit in the integrand, then multiply by the derivative of the upper limit.',sol:`d/dx ∫<sub>1</sub><sup>g(x)</sup> f(t) dt = f(g(x))·g′(x) = <b>${pretty(t.ans)}</b>.`};}});
+  PROBS.push({id:'fc-prop',topic:'ftc',title:'Properties of the integral',gen(){const p=ri(2,9),q=ri(-8,8)||3,pat=pick([0,1,2,3]);let text,ans;
+    if(pat===0){text=`If ∫<sub>1</sub><sup>3</sup> f(x) dx = ${p} and ∫<sub>3</sub><sup>7</sup> f(x) dx = ${nz(q)}, find ∫<sub>1</sub><sup>7</sup> f(x) dx.`;ans=p+q;}
+    else if(pat===1){text=`If ∫<sub>1</sub><sup>7</sup> f(x) dx = ${p} and ∫<sub>1</sub><sup>3</sup> f(x) dx = ${nz(q)}, find ∫<sub>3</sub><sup>7</sup> f(x) dx.`;ans=p-q;}
+    else if(pat===2){text=`If ∫<sub>2</sub><sup>6</sup> f(x) dx = ${p}, find ∫<sub>2</sub><sup>6</sup> (3f(x) + 2) dx.`;ans=3*p+8;}
+    else{text=`If ∫<sub>0</sub><sup>4</sup> f(x) dx = ${p}, find ∫<sub>4</sub><sup>0</sup> f(x) dx.`;ans=-p;}
+    return {q:text,ans,unit:'',abs:.01,chk:ans,hint:'Use: splitting intervals, constant multiples and swapping limits (which changes the sign).',sol:`Using the properties of the definite integral the result is <b>${nz(ans)}</b>.`};}});
+  PROBS.push({id:'fc-net',topic:'ftc',title:'Net change from a derivative',gen(){const a=ri(0,3),b=a+ri(2,5),fa=ri(-6,10),fb=ri(-6,10);
+    return {q:`f is differentiable with f(${a}) = ${nz(fa)} and f(${b}) = ${nz(fb)}. Find ∫<sub>${a}</sub><sup>${b}</sup> f′(x) dx.`,ans:fb-fa,unit:'',abs:.01,chk:fb-fa,hint:'FTC: the integral of a derivative is the net change of the function.',sol:`∫ f′ = f(${b}) − f(${a}) = ${nz(fb)} − (${nz(fa)}) = <b>${nz(fb-fa)}</b>.`};}});
+})();
+
+/* ===== modules/antider.js ===== */
+/* ---------------- Antiderivatives ---------------- */
+(function antider(){
+  const cv=$('#an-canvas');if(!cv)return;
+  const C={a:{f:x=>2*x,F:x=>x*x,t:'x²',yr:[-5,8]},b:{f:Math.cos,F:Math.sin,t:'sin x',yr:[-4.5,4.5]},c:{f:Math.exp,F:Math.exp,t:'eˣ',yr:[-4,10]},d:{f:x=>3*x*x-3,F:x=>x**3-3*x,t:'x³ − 3x',yr:[-7,9]}};
+  let k='a',c0=1,x0=.5;
+  const sim=glab('an-canvas',{view:()=>({xr:[-2.5,2.5],yr:C[k].yr}),draw(ctx,P){const A=C[k];for(let c=-3;c<=3;c++)curveD(ctx,P,x=>A.F(x)+c,-2.5,2.5,alpha(T.cx,.28),1.6,300);
+      curveD(ctx,P,x=>A.F(x)+c0,-2.5,2.5,T.cx,3,300);curveD(ctx,P,A.f,-2.5,2.5,T.cv,2.2,300,[6,4]);const y=A.F(x0)+c0,m=A.f(x0);line(ctx,P,x0-.7,y-.7*m,x0+.7,y+.7*m,T.hot,2.2);dot(ctx,P.X(x0),P.Y(y),6.5,T.cx,T.surface);}});
+  function upd(){const A=C[k];setText('an-big',`${A.t} ${c0<0?'−':'+'} ${Math.abs(c0)}`);setText('an-chk',fmt(D(x=>A.F(x)+c0,x0),4));setText('an-f',fmt(A.f(x0),4));sim.render();}
+  bindRange('an-c',v=>nz(v),v=>{c0=v;upd();});bindRange('an-x',v=>nz(v),v=>{x0=v;upd();});segBind('an-fn','k',v=>{k=v;upd();});upd();drawers.antider=()=>sim.render();
+  KEYS['an-canvas']=['Light blue: the family F + C. Bold blue: your choice of C. Green dashed: f. The orange tangent has slope f at the point.',[['cx','F(x) + C, the antiderivatives'],['cv','f(x), the integrand'],['hot','tangent to the chosen curve']]];
+  TIPS['an-c']=el=>`C = ${nz(+el.value)}: shifts the whole curve vertically; the slope at each x is unchanged.`;
+  GLOSS['antiderivative']='A function F with F′ = f. If F is one, so is F + C for any constant C.';GLOSS['constant of integration']='The + C: the arbitrary vertical shift of an antiderivative.';
+  TT.antider='Have students change C and say what stays the same, then pick C to pass through a given point.';
+})();
+(function(){
+  const dfn=ts=>x=>tval(ts,x);
+  PROBS.push({id:'an-expr',topic:'antider',title:'Find an antiderivative',gen(){const pat=pick([0,1,2]);let f,F,fx;
+    if(pat===0){const ts=[[ri(1,4)*3,pick([3,2])],[ri(-6,6)||2,1],[ri(-5,5)||1,0]],I=tint(ts);f=terms(ts);F=terms(I.map(([c,p])=>[+c.toFixed(6),p]));fx=dfn(ts);}
+    else if(pat===1){const a=ri(1,6),b=ri(1,6);f=`${a}cos(x)+${b}e^x`;F=`${a}sin(x)+${b}e^x`;fx=x=>a*Math.cos(x)+b*Math.exp(x);}
+    else{const n=ri(2,5),a=ri(2,6)*n;f=`${a}x^${n-1}`;F=`${a/n}x^${n}`;fx=x=>a*Math.pow(x,n-1);}
+    return {q:`Find an antiderivative of f(x) = ${pretty(f).replace(/cos\(x\)/,'cos x')}. Type your answer (the + C is optional).`,expr:F,c:true,chkf:fx,hint:'Run the derivative rules backwards, and check by differentiating your answer.',sol:`An antiderivative is F(x) = <b>${pretty(F)} + C</b>.`};}});
+  PROBS.push({id:'an-init',topic:'antider',title:'Initial value problem',gen(){const a=ri(1,3),b=ri(-5,5),x1=ri(0,2),y1=ri(-6,8),x2=x1+ri(1,2),ts=[[a*3,2],[2*b,1]],I=tint(ts),C0=y1-tval(I,x1),ans=tval(I,x2)+C0;
+    return {q:`F′(x) = ${pretty(terms(ts))} and F(${x1}) = ${nz(y1)}. Find F(${x2}).`,ans,unit:'',abs:.01,chk:y1+integ(x=>tval(ts,x),x1,x2,2000),hint:'Find the family F(x) = … + C, use F(x1) to get C, then evaluate.',sol:`F(x) = ${pretty(terms(I))} + C. F(${x1}) = ${nz(y1)} gives C = ${nz(+C0.toFixed(4))}. So F(${x2}) = <b>${nz(+ans.toFixed(4))}</b>.`};}});
+  PROBS.push({id:'an-which',topic:'antider',title:'Pick the antiderivative',gen(){const n=ri(2,6),correct=`x<sup>${n+1}</sup>/${n+1} + C`,m=mcq(correct,[`${n}x<sup>${n-1}</sup> + C`,`x<sup>${n+1}</sup> + C`,`x<sup>${n+1}</sup>/${n} + C`,`(${n+1})x<sup>${n}</sup> + C`]);
+    return {q:`Which is ∫ x<sup>${n}</sup> dx?`,choices:m.choices,ans:m.ans,hint:'Raise the power by 1, then divide by the new power.',sol:`<b>${correct}</b>. Check: its derivative is x<sup>${n}</sup>.`};}});
+})();
+
+/* ===== modules/usub.js ===== */
+/* ---------------- u-substitution ---------------- */
+(function usub(){
+  const cv=$('#us-canvas');if(!cv)return;
+  const C={a:{h:x=>2*x*Math.cos(x*x),f:Math.cos,g:x=>x*x,form:'u = x²,  du = 2x dx:   ∫ 2x cos(x²) dx = ∫ cos u du',ur:[0,3.3]},
+    b:{h:x=>x*Math.exp(x*x),f:u=>Math.exp(u)/2,g:x=>x*x,form:'u = x²,  x dx = du/2:   ∫ x e^(x²) dx = ½ ∫ eᵘ du',ur:[0,3.3]},
+    c:{h:x=>x/(x*x+1),f:u=>1/(2*u),g:x=>x*x+1,form:'u = x² + 1,  x dx = du/2:   ∫ x/(x²+1) dx = ½ ∫ du/u',ur:[.8,4.2]}};
+  let k='a',b=1;
+  const yr=(fn,lo,hi)=>{let a=0,z=0;for(let i=0;i<=80;i++){const v=fn(lo+(hi-lo)*i/80);if(isFinite(v)){a=Math.min(a,v);z=Math.max(z,v);}}const p=Math.max((z-a)*.12,.05);return [a-p,z+p];};
+  const sim=glab('us-canvas',{h:w=>clamp(w*.34,220,280),view:()=>({xr:[0,1.8],yr:yr(C[k].h,0,1.8)}),draw(ctx,P){const A=C[k];areaSigned(ctx,P,A.h,0,b,T.ce,T.ca);curveD(ctx,P,A.h,0,1.8,T.cx,2.8,300);vline(ctx,P,b,T.hot,[4,4]);label(ctx,'integrand in x',P.box.x+8,P.box.y+10,T.cx,'left','middle',LABEL);}});
+  const sim2=glab('us-canvas2',{h:w=>clamp(w*.3,200,260),view:()=>({xr:C[k].ur,yr:yr(C[k].f,C[k].ur[0],C[k].ur[1])}),draw(ctx,P){const A=C[k];areaSigned(ctx,P,A.f,A.g(0),A.g(b),T.ce,T.ca);curveD(ctx,P,A.f,A.ur[0],A.ur[1],T.cv,2.8,300);vline(ctx,P,A.g(b),T.hot,[4,4]);label(ctx,'integrand in u, area over [g(0), g(b)]',P.box.x+8,P.box.y+10,T.cv,'left','middle',LABEL);}});
+  function upd(){const A=C[k],i1=integ(A.h,0,b,800),i2=integ(A.f,A.g(0),A.g(b),800);setText('us-form',A.form);setText('us-i1',fmt(i1,5));setText('us-i2',fmt(i2,5));setText('us-eq',Math.abs(i1-i2)<1e-6?'yes: the same area ✓':'no');sim.render();sim2.render();}
+  bindRange('us-b',v=>nz(v),v=>{b=v;upd();});segBind('us-fn','k',v=>{k=v;upd();});upd();drawers.usub=()=>{sim.render();sim2.render();};
+  KEYS['us-canvas']=['Move b. The area under the x-integrand equals the area under the u-integrand between the new limits.',[['cx','integrand in x'],['cv','integrand in u'],['ce','the equal areas'],['hot','upper limit']]];
+  TIPS['us-b']=el=>`b = ${nz(+el.value)} becomes u = ${fmt(C[k].g(+el.value),3)}.`;
+  GLOSS['substitution']='Replace an inside function by u (and dx by du) so the integral becomes simpler; change the limits too.';
+  TT.usub='Ask students which part is the inside function and whether its derivative appears, before reading the formula.';
+})();
+(function(){
+  PROBS.push({id:'us-def',topic:'usub',title:'Definite integral by substitution',gen(){const pat=pick([0,1,2,3]);let q,ans,chk;
+    if(pat===0){const c=ri(1,3),n=ri(2,4);q=`Evaluate ∫<sub>0</sub><sup>1</sup> 2x(x² + ${c})<sup>${n}</sup> dx. Give a decimal.`;ans=(Math.pow(1+c,n+1)-Math.pow(c,n+1))/(n+1);chk=integ(x=>2*x*Math.pow(x*x+c,n),0,1,2000);}
+    else if(pat===1){const k2=ri(1,4);q=`Evaluate ∫<sub>0</sub><sup>1</sup> ${k2===1?'':k2}x e<sup>x²</sup> dx. Give a decimal to three places.`;ans=k2*(Math.E-1)/2;chk=integ(x=>k2*x*Math.exp(x*x),0,1,2000);}
+    else if(pat===2){const n=ri(2,5);q=`Evaluate ∫<sub>0</sub><sup>π/2</sup> sin<sup>${n}</sup>x cos x dx. Give a fraction or decimal.`;ans=1/(n+1);chk=integ(x=>Math.pow(Math.sin(x),n)*Math.cos(x),0,Math.PI/2,2000);}
+    else{const n=ri(1,4);q=`Evaluate ∫<sub>1</sub><sup>e</sup> (ln x)<sup>${n}</sup>/x dx. Give a fraction or decimal.`;ans=1/(n+1);chk=integ(x=>Math.pow(Math.log(x),n)/x,1,Math.E,3000);}
+    return {q,ans,unit:'',tol:.005,chk,hint:'Choose u as the inside function whose derivative appears, and change the limits of integration.',sol:`After substituting u and changing the limits, the integral equals <b>${fmt(ans,4)}</b>.`};}});
+  const T2=[()=>{const a=ri(2,5),b=ri(1,6),n=ri(2,5);return {f:`(${a}x+${b})^${n}`,F:`(${a}x+${b})^${n+1}/${a*(n+1)}`,fx:x=>Math.pow(a*x+b,n)};},()=>{const a=ri(1,4);return {f:`${2*a}x*e^(x^2)`,F:`${a}e^(x^2)`,fx:x=>2*a*x*Math.exp(x*x)};},()=>{const a=ri(2,6);return {f:`sin(${a}x)`,F:`-cos(${a}x)/${a}`,fx:x=>Math.sin(a*x)};},()=>{const c=ri(1,5);return {f:`2x/(x^2+${c})`,F:`ln(x^2+${c})`,fx:x=>2*x/(x*x+c)};},()=>{const n=ri(2,4);return {f:`cos(x)sin(x)^${n}`,F:`sin(x)^${n+1}/${n+1}`,fx:x=>Math.cos(x)*Math.pow(Math.sin(x),n)};}];
+  PROBS.push({id:'us-expr',topic:'usub',title:'Indefinite integral by substitution',gen(){const t=pick(T2)();
+    return {q:`Find ∫ ${pretty(t.f).replace(/sin\(/g,'sin(').replace(/cos\(x\)/g,'cos x')} dx. Type your answer (the + C is optional).`,expr:t.F,c:true,chkf:t.fx,hint:'Look for an inside function whose derivative (up to a constant) is also in the integrand.',sol:`With the right substitution: <b>${pretty(t.F)} + C</b>. Check by differentiating.`};}});
+  PROBS.push({id:'us-choice',topic:'usub',title:'Choose u',gen(){const R=[['x(x² + 3)<sup>5</sup>','x² + 3'],['e<sup>3x</sup>','3x'],['x²cos(x³)','x³'],['sin x · e<sup>cos x</sup>','cos x'],['(ln x)/x','ln x'],['x/√(x² + 4)','x² + 4'],['sec²x · tan<sup>3</sup>x','tan x'],['1/(x ln x)','ln x']],[ex,ans]=pick(R),m=mcq(ans,R.map(r=>r[1]));
+    return {q:`Which substitution u simplifies ∫ ${ex} dx?`,choices:m.choices,ans:m.ans,hint:'Find the inside function whose derivative (up to a constant factor) also appears.',sol:`Take <b>u = ${ans}</b>; its derivative appears in the integrand.`};}});
 })();
 
 /* ===== overview.js ===== */

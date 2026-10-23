@@ -156,3 +156,5 @@ function signBands(ctx,P,xr,s,posCol,negCol,n=400){let run=null;const flush=x=>{
 /* area between f and the x-axis from a to b: gold above the axis, pink below (signed area) */
 function areaSigned(ctx,P,f,a,b,posCol,negCol,n=300,al=.35){if(b<=a)return;const y0=P.Y(0);const poly=()=>{ctx.beginPath();ctx.moveTo(P.X(a),y0);for(let i=0;i<=n;i++){const t=a+(b-a)*i/n;ctx.lineTo(P.X(t),P.Y(f(t)));}ctx.lineTo(P.X(b),y0);ctx.closePath();};
   ctx.save();clip(ctx,P);[[posCol,P.box.y,y0],[negCol,y0,P.box.y+P.box.h]].forEach(([c,t,bt])=>{ctx.save();ctx.beginPath();ctx.rect(P.box.x,t,P.box.w,bt-t);ctx.clip();poly();ctx.fillStyle=alpha(c,al);ctx.fill();ctx.restore();});ctx.restore();}
+/* integrate terms [[c,p],...] (p ≠ −1) */
+const tint=ts=>ts.map(([c,p])=>[c/(p+1),p+1]);

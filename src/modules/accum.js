@@ -1,0 +1,34 @@
+/* ---------------- Accumulation & Riemann sums ---------------- */
+(function accum(){
+  const cv=$('#ac-canvas');if(!cv)return;
+  const C={a:{f:x=>x*x,a:0,b:3},b:{f:Math.sin,a:0,b:Math.PI},c:{f:x=>4-x*x,a:0,b:3},d:{f:Math.exp,a:0,b:2}};
+  let k='a',m='L',n=4;
+  const yr=()=>{const A=C[k];let lo=0,hi=0;for(let i=0;i<=100;i++){const v=A.f(A.a+(A.b-A.a)*i/100);lo=Math.min(lo,v);hi=Math.max(hi,v);}const p=(hi-lo)*.12;return [lo-p,hi+p];};
+  const sim=glab('ac-canvas',{view:()=>({xr:[C[k].a-.15,C[k].b+.25],yr:yr()}),draw(ctx,P){const A=C[k],h=(A.b-A.a)/n;ctx.save();clip(ctx,P);
+      for(let i=0;i<n;i++){const x0=A.a+i*h,x1=x0+h;const col=T.ce;let hgt=m==='L'?A.f(x0):m==='R'?A.f(x1):A.f(x0+h/2);
+        if(m==='T'){const y0=A.f(x0),y1=A.f(x1);ctx.beginPath();ctx.moveTo(P.X(x0),P.Y(0));ctx.lineTo(P.X(x0),P.Y(y0));ctx.lineTo(P.X(x1),P.Y(y1));ctx.lineTo(P.X(x1),P.Y(0));ctx.closePath();ctx.fillStyle=alpha((y0+y1)<0?T.ca:col,.35);ctx.fill();ctx.strokeStyle=alpha((y0+y1)<0?T.ca:col,.9);ctx.lineWidth=n>30?.6:1.2;ctx.stroke();}
+        else{ctx.fillStyle=alpha(hgt<0?T.ca:col,.35);ctx.strokeStyle=alpha(hgt<0?T.ca:col,.9);ctx.lineWidth=n>30?.6:1.2;ctx.beginPath();ctx.rect(P.X(x0),Math.min(P.Y(0),P.Y(hgt)),P.X(x1)-P.X(x0),Math.abs(P.Y(hgt)-P.Y(0)));ctx.fill();ctx.stroke();}}
+      ctx.restore();curveD(ctx,P,A.f,A.a-.15,A.b+.25,T.cx,2.8,400);}});
+  function upd(){const A=C[k],s=riemann(A.f,A.a,A.b,n,m),ex=integ(A.f,A.a,A.b,2000);setText('ac-sum',fmt(s,4));setText('ac-ex',fmt(ex,4));setText('ac-err',fmt(s-ex,4));
+    setText('ac-note',Math.abs(s-ex)<2e-3*(1+Math.abs(ex))?'essentially exact':s>ex?'overestimate':'underestimate');sim.render();}
+  bindRange('ac-n',v=>String(v),v=>{n=v;upd();});segBind('ac-fn','k',v=>{k=v;upd();});segBind('ac-m','k',v=>{m=v;upd();});upd();drawers.accum=()=>sim.render();
+  KEYS['ac-canvas']=['Choose a method and n. Gold rectangles (or trapezoids) add up to the estimate; pink ones lie below the axis and count negative.',[['cx','the rate f(x)'],['ce','strips: rate × width'],['ca','area below the axis']]];
+  TIPS['ac-n']=el=>`n = ${el.value} strips, each ${fmt((C[k].b-C[k].a)/el.value,3)} wide. More strips → a better estimate.`;
+  GLOSS['Riemann sum']='A sum of rate × width over thin strips; it estimates the definite integral.';GLOSS['definite integral']='The limit of Riemann sums: net signed area under f from a to b.';
+  TT.accum='Ask students to say, before changing n, whether each method over- or under-estimates for the chosen function.';
+})();
+(function(){
+  const L={L:'left',R:'right',M:'midpoint',T:'trapezoid'};
+  PROBS.push({id:'ac-riemann',topic:'accum',title:'Compute a Riemann sum',gen(){const a=ri(0,2),n=pick([3,4,5]),b=a+n*pick([1,2]),meth=pick(['L','R','M','T']),A=ri(1,3),B=ri(0,5),f=x=>A*x*x+B,ans=riemann(f,a,b,n,meth),h=(b-a)/n;
+    let man=0;for(let i=0;i<n;i++){const x0=a+i*h;man+=meth==='L'?f(x0):meth==='R'?f(x0+h):meth==='M'?f(x0+h/2):(f(x0)+f(x0+h))/2;}man*=h;
+    return {q:`Use a ${L[meth]} Riemann sum with n = ${n} equal subintervals to estimate ∫<sub>${a}</sub><sup>${b}</sup> (${polyTxt([A,0,B])}) dx. Give a decimal.`,ans,unit:'',abs:.01,chk:man,hint:`Δx = (b − a)/n = ${h}. Evaluate f at the ${L[meth]} points and add, then multiply by Δx.`,sol:`Δx = ${h}. The ${L[meth]} sum is Δx × (sum of heights) = <b>${nz(+ans.toFixed(4))}</b>.`};}});
+  PROBS.push({id:'ac-table',topic:'accum',title:'Estimate from a table',gen(){const ts=[0,2,5,9,10].slice(0,ri(4,5)),meth=pick(['L','R','T']),vals=ts.map(t=>ri(2,14)+t%3),ans=(()=>{let s=0;for(let i=0;i<ts.length-1;i++){const w=ts[i+1]-ts[i];s+=w*(meth==='L'?vals[i]:meth==='R'?vals[i+1]:(vals[i]+vals[i+1])/2);}return s;})();
+    const tbl=`<table class="lmtbl"><thead><tr><th>t (min)</th>${ts.map(t=>`<th>${t}</th>`).join('')}</tr></thead><tbody><tr><th>r(t) (L/min)</th>${vals.map(v=>`<td>${v}</td>`).join('')}</tr></tbody></table>`;
+    return {q:`Water flows into a tank at rate r(t) liters per minute, measured at the times shown. Use a ${L[meth]} sum with the subintervals given by the table to estimate the total liters over [0, ${ts[ts.length-1]}].${tbl}`,ans,unit:'L',abs:.01,chk:ans,hint:'The strips have different widths. Use (width) × (height) for each, then add.',sol:`Sum of width × ${meth==='T'?'average of the two heights':meth==='L'?'left height':'right height'} over each subinterval = <b>${nz(ans)} L</b>.`};}});
+  PROBS.push({id:'ac-bias',topic:'accum',title:'Over- or underestimate?',gen(){const inc=Math.random()<.5,meth=pick(['L','R']),ans=(inc?meth==='L':meth==='R')?'underestimate':'overestimate',m=mcq(ans,['underestimate','overestimate','exact','cannot be determined']);
+    return {q:`f is ${inc?'increasing':'decreasing'} on [a, b]. A ${L[meth]} Riemann sum for ∫<sub>a</sub><sup>b</sup> f(x) dx is an ___.`,choices:m.choices,ans:m.ans,hint:'On each strip, is the chosen edge the highest or lowest point of the graph?',sol:`For a ${inc?'increasing':'decreasing'} function the ${L[meth]} edge is the ${(inc?meth==='L':meth==='R')?'lowest':'highest'} point of each strip: an <b>${ans}</b>.`};}});
+  PROBS.push({id:'ac-units',topic:'accum',title:'Meaning of an integral',gen(){const R=[['r(t) is the rate water flows into a pool in gallons per minute','∫<sub>0</sub><sup>10</sup> r(t) dt','the gallons that flowed in during the first 10 minutes'],['v(t) is velocity in meters per second','∫<sub>2</sub><sup>6</sup> v(t) dt','the displacement in meters between t = 2 and t = 6 seconds'],['P′(t) is the rate a population changes in thousands per year','∫<sub>0</sub><sup>5</sup> P′(t) dt','the change in population, in thousands, over 5 years'],['c(x) is the marginal cost in dollars per item','∫<sub>100</sub><sup>150</sup> c(x) dx','the added cost in dollars of making items 100 through 150']],[ctx,ig,ans]=pick(R),m=mcq(ans,R.map(r=>r[2]));
+    return {q:`${ctx}. What does ${ig} represent?`,choices:m.choices,ans:m.ans,hint:'An integral of a rate gives the total change in the quantity. Check the units.',sol:`Integrating a rate over an interval gives the net change: <b>${ans}</b>.`};}});
+  PROBS.push({id:'ac-net',topic:'accum',title:'Net change',gen(){const V0=ri(50,200),a=ri(1,3),b=ri(0,6),T0=ri(2,6),rt=t=>a*t*t+b,ans=V0+(a*T0**3/3+b*T0);
+    return {q:`A tank holds ${V0} liters at t = 0. Water flows in at rate r(t) = ${polyTxt([a,0,b],'t')} liters per minute. How many liters are in the tank at t = ${T0}? Give a decimal.`,ans,unit:'L',tol:.002,chk:V0+integ(rt,0,T0,2000),hint:'Amount at t = initial amount + ∫ rate dt.',sol:`V(${T0}) = ${V0} + ∫<sub>0</sub><sup>${T0}</sup> r(t) dt = ${V0} + ${nz(+(a*T0**3/3).toFixed(4))} + ${b*T0} = <b>${fmt(ans,2)} L</b>.`};}});
+})();

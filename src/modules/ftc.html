@@ -1,0 +1,50 @@
+  <section class="view" id="v-ftc" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 6</span><span class="tag">AB &amp; BC</span></div>
+        <h1>The definite integral & the Fundamental Theorem</h1>
+        <p class="lede">Differentiating and integrating are opposites. This theorem is why antiderivatives can find areas.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Define the <b>accumulation function</b> <span class="m">A(x) = ∫<sub>a</sub><sup>x</sup> f(t) dt</span>: the signed area from a up to x. Slide x to the right and the area grows at a rate equal to the height of f at the edge. That is <b>FTC Part 1</b>: <span class="m">A′(x) = f(x)</span>. Integration undoes differentiation.</p>
+        <p><b>FTC Part 2</b> turns that into a method: if F is any antiderivative of f, then <span class="m">∫<sub>a</sub><sup>b</sup> f(x) dx = F(b) − F(a)</span>. No more adding rectangles. A related fact: the net change of a quantity equals the integral of its rate, <span class="m">∫<sub>a</sub><sup>b</sup> f′(x) dx = f(b) − f(a)</span>.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>the definite integral was a limit of sums</dd><dt>So we didn't need</dt><dd>a shortcut through antiderivatives</dd><dt>Now</dt><dd>areas, accumulated quantities and almost every integral problem</dd><dt>So we need</dt><dd>the Fundamental Theorem of Calculus</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>d/dx ∫<sub>a</sub><sup>x</sup> f(t) dt = f(x)</span><small>Part 1</small></div><div class="eqn"><span>∫<sub>a</sub><sup>b</sup> f(x) dx = F(b) − F(a)</span><small>Part 2, F′ = f</small></div><div class="eqn"><span>d/dx ∫<sub>a</sub><sup>g(x)</sup> f(t) dt = f(g(x))·g′(x)</span><small>with the chain rule</small></div></div>
+      <div class="lab" id="fc-lab">
+        <div class="labbar"><span class="title">Area so far, and its slope</span></div>
+        <div class="ctl"><span class="lbl">f(t)</span><div class="seg" id="fc-fn" role="group" aria-label="f(t)"><button type="button" data-k="a" aria-pressed="true">t² − 2t</button><button type="button" data-k="b" aria-pressed="false">cos t</button><button type="button" data-k="c" aria-pressed="false">e^(−t²)</button></div></div>
+        <canvas id="fc-canvas" aria-label="Top graph: f with the signed area from 0 to x shaded. Bottom graph: the accumulated area A(x) with a point at x."></canvas>
+        <canvas id="fc-canvas2" aria-label="The accumulation function A of x."></canvas>
+        <div class="controls"><div class="ctl"><label for="fc-x"><span>x</span> <output id="fc-x-out"></output></label><input type="range" id="fc-x" min="0" max="3" step="0.05" value="1.5"></div></div>
+        <div class="readout"><div><span>A(x) = ∫₀ˣ f(t) dt</span><strong class="x" id="fc-A">—</strong></div><div><span>f(x), the height at the edge</span><strong class="v" id="fc-f">—</strong></div><div><span>slope of A at x (numeric)</span><strong class="a" id="fc-slope">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose t² − 2t and slide x to 2. What is happening to A? <button type="button" class="btn link" data-show='[["click", "#fc-fn [data-k=a]"], ["#fc-x", 2]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>A is at its lowest point (A(2) = −4/3): f is negative until x = 2 (area below the axis counts negative), so A decreases, and f(2) = 0 where A turns around.</p></details></li>
+        <li><p>Compare f(x) with the slope of A at several x. What do you see? <button type="button" class="btn link" data-show='[["click", "#fc-fn [data-k=b]"], ["#fc-x", 1]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>They are equal everywhere: the slope of the accumulation graph is the height of f. That is FTC Part 1.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Evaluate ∫<sub>1</sub><sup>3</sup> (2x + 1) dx, and find d/dx ∫<sub>0</sub><sup>x²</sup> sin t dt.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Antiderivative.</b> F(x) = x² + x.</li>
+          <li hidden><b>FTC Part 2.</b> F(3) − F(1) = (9 + 3) − (1 + 1) = 10. The integral is <b>10</b>.</li>
+          <li hidden><b>Second problem: chain rule.</b> The upper limit is g(x) = x², so d/dx ∫<sub>0</sub><sup>x²</sup> sin t dt = sin(x²)·(x²)′.</li>
+          <li hidden><b>Answer.</b> <b>2x sin(x²)</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Forgetting to subtract: F(b) − F(a), not F(b) + F(a).</li>
+        <li>Adding + C in a definite integral. It cancels, so leave it out.</li>
+        <li>Forgetting the chain rule factor g′(x) when the upper limit is not just x.</li>
+        <li>Treating area below the axis as positive. The integral is net (signed) area.</li>
+        <li>Swapping limits without changing the sign: ∫<sub>b</sub><sup>a</sup> = −∫<sub>a</sub><sup>b</sup>.</li>
+      </ul></div>
+      <div class="prose"><h2>Properties worth knowing</h2>
+        <p>∫<sub>a</sub><sup>a</sup> f = 0; ∫<sub>a</sub><sup>b</sup> f = −∫<sub>b</sub><sup>a</sup> f; ∫<sub>a</sub><sup>c</sup> f = ∫<sub>a</sub><sup>b</sup> f + ∫<sub>b</sub><sup>c</sup> f; constants pull out and sums split. If f is the rate of change of a quantity, ∫<sub>a</sub><sup>b</sup> f is the total change in that quantity from a to b.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="FTC Part 1 with upper limit x: the answer is the integrand evaluated at x.">
+        <p class="q">Check yourself: d/dx ∫<sub>1</sub><sup>x</sup> √(t<sup>3</sup> + 1) dt =</p>
+        <div class="opts"><button type="button">√(x³ + 1)</button><button type="button">x√(x³ + 1)</button><button type="button">3x²/(2√(x³ + 1))</button><button type="button">0</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

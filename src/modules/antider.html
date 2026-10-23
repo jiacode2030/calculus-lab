@@ -1,0 +1,48 @@
+  <section class="view" id="v-antider" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 6</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Antiderivatives</h1>
+        <p class="lede">An antiderivative undoes a derivative. Because constants vanish when you differentiate, every function has a whole family of antiderivatives.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>F is an <b>antiderivative</b> of f if F′ = f. The antiderivative of 2x is x², but so are x² + 5 and x² − 100: they all have slope 2x. The family is written <span class="m">∫ f(x) dx = F(x) + C</span>, and C is the constant of integration. Graphically, the antiderivatives are the same curve shifted up and down.</p>
+        <p>Run your derivative rules backwards. <span class="m">∫ x<sup>n</sup> dx = x<sup>n+1</sup>/(n+1) + C</span> (n ≠ −1), <span class="m">∫ 1/x dx = ln|x| + C</span>, <span class="m">∫ e<sup>x</sup> dx = e<sup>x</sup> + C</span>, <span class="m">∫ cos x dx = sin x + C</span>. An <b>initial condition</b> like F(1) = 3 picks out the one curve in the family.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>every derivative had one answer</dd><dt>So we didn't need</dt><dd>a family of answers, picked out by a starting value</dd><dt>Now</dt><dd>solving for position from velocity, and every integral</dd><dt>So we need</dt><dd>the indefinite integral and the constant of integration</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>∫ x<sup>n</sup> dx = x<sup>n+1</sup>/(n+1) + C</span><small>n ≠ −1</small></div><div class="eqn"><span>F′ = f ⇒ ∫ f = F + C</span><small>check by differentiating</small></div><div class="eqn"><span>F(a) = b</span><small>initial condition fixes C</small></div></div>
+      <div class="lab" id="an-lab">
+        <div class="labbar"><span class="title">A family of curves with the same slope</span></div>
+        <div class="ctl"><span class="lbl">f(x)</span><div class="seg" id="an-fn" role="group" aria-label="f(x)"><button type="button" data-k="a" aria-pressed="true">2x</button><button type="button" data-k="b" aria-pressed="false">cos x</button><button type="button" data-k="c" aria-pressed="false">eˣ</button><button type="button" data-k="d" aria-pressed="false">3x² − 3</button></div></div>
+        <canvas id="an-canvas" aria-label="Several vertical shifts of an antiderivative in light blue, with the chosen one highlighted and the integrand in green."></canvas>
+        <div class="controls"><div class="ctl"><label for="an-c"><span>Constant C</span> <output id="an-c-out"></output></label><input type="range" id="an-c" min="-3" max="3" step="0.25" value="1"></div><div class="ctl"><label for="an-x"><span>Point x</span> <output id="an-x-out"></output></label><input type="range" id="an-x" min="-2" max="2" step="0.05" value="0.5"></div></div>
+        <div class="readout"><div><span>the highlighted F(x)</span><strong class="x" id="an-big">—</strong></div><div><span>slope of F at the point</span><strong class="a" id="an-chk">—</strong></div><div><span>f at the point</span><strong class="v" id="an-f">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Change C. What changes about the curve, and what stays the same? <button type="button" class="btn link" data-show='[["#an-c", 2]]'>C = 2</button></p><details><summary>What you should see</summary><p>The curve slides up or down, but the slope at each x is identical: the slope readout does not change with C. That is why C is arbitrary until an initial condition fixes it.</p></details></li>
+        <li><p>Choose cos x. The slope of the highlighted curve at x = 0.5 matches what? <button type="button" class="btn link" data-show='[["click", "#an-fn [data-k=b]"], ["#an-x", 0.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>cos(0.5) = 0.878: F = sin x + C has slope cos x, so F is an antiderivative of cos x for every C.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find the function F with F′(x) = 6x² − 4x and F(1) = 5.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Antiderivative.</b> F(x) = 2x³ − 2x² + C.</li>
+          <li hidden><b>Apply the condition.</b> F(1) = 2 − 2 + C = C = 5.</li>
+          <li hidden><b>Answer.</b> F(x) = <b>2x³ − 2x² + 5</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 3</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Forgetting + C in an indefinite integral.</li>
+        <li>Using the power rule on 1/x: ∫ 1/x dx = ln|x| + C, not x⁰/0.</li>
+        <li>Differentiating instead of integrating: raise the exponent, then divide by the new exponent.</li>
+        <li>Forgetting to divide by the coefficient inside, for example ∫ cos(3x) dx = sin(3x)/3 + C.</li>
+        <li>Using F(a) = b with the wrong sign when solving for C.</li>
+      </ul></div>
+      <div class="prose"><h2>Check by differentiating</h2>
+        <p>An antiderivative can always be checked: differentiate your answer; you must get the original integrand back. If it does not match, the integral is wrong. This check catches most mistakes on the exam.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Raise each power by one and divide by the new power: 4x⁴/4 = x⁴, and 2 becomes 2x.">
+        <p class="q">Check yourself: ∫ (4x³ + 2) dx =</p>
+        <div class="opts"><button type="button">x⁴ + 2x + C</button><button type="button">12x² + C</button><button type="button">x⁴ + 2 + C</button><button type="button">4x⁴ + 2x + C</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

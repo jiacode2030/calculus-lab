@@ -1,0 +1,30 @@
+/* ---------------- u-substitution ---------------- */
+(function usub(){
+  const cv=$('#us-canvas');if(!cv)return;
+  const C={a:{h:x=>2*x*Math.cos(x*x),f:Math.cos,g:x=>x*x,form:'u = x²,  du = 2x dx:   ∫ 2x cos(x²) dx = ∫ cos u du',ur:[0,3.3]},
+    b:{h:x=>x*Math.exp(x*x),f:u=>Math.exp(u)/2,g:x=>x*x,form:'u = x²,  x dx = du/2:   ∫ x e^(x²) dx = ½ ∫ eᵘ du',ur:[0,3.3]},
+    c:{h:x=>x/(x*x+1),f:u=>1/(2*u),g:x=>x*x+1,form:'u = x² + 1,  x dx = du/2:   ∫ x/(x²+1) dx = ½ ∫ du/u',ur:[.8,4.2]}};
+  let k='a',b=1;
+  const yr=(fn,lo,hi)=>{let a=0,z=0;for(let i=0;i<=80;i++){const v=fn(lo+(hi-lo)*i/80);if(isFinite(v)){a=Math.min(a,v);z=Math.max(z,v);}}const p=Math.max((z-a)*.12,.05);return [a-p,z+p];};
+  const sim=glab('us-canvas',{h:w=>clamp(w*.34,220,280),view:()=>({xr:[0,1.8],yr:yr(C[k].h,0,1.8)}),draw(ctx,P){const A=C[k];areaSigned(ctx,P,A.h,0,b,T.ce,T.ca);curveD(ctx,P,A.h,0,1.8,T.cx,2.8,300);vline(ctx,P,b,T.hot,[4,4]);label(ctx,'integrand in x',P.box.x+8,P.box.y+10,T.cx,'left','middle',LABEL);}});
+  const sim2=glab('us-canvas2',{h:w=>clamp(w*.3,200,260),view:()=>({xr:C[k].ur,yr:yr(C[k].f,C[k].ur[0],C[k].ur[1])}),draw(ctx,P){const A=C[k];areaSigned(ctx,P,A.f,A.g(0),A.g(b),T.ce,T.ca);curveD(ctx,P,A.f,A.ur[0],A.ur[1],T.cv,2.8,300);vline(ctx,P,A.g(b),T.hot,[4,4]);label(ctx,'integrand in u, area over [g(0), g(b)]',P.box.x+8,P.box.y+10,T.cv,'left','middle',LABEL);}});
+  function upd(){const A=C[k],i1=integ(A.h,0,b,800),i2=integ(A.f,A.g(0),A.g(b),800);setText('us-form',A.form);setText('us-i1',fmt(i1,5));setText('us-i2',fmt(i2,5));setText('us-eq',Math.abs(i1-i2)<1e-6?'yes: the same area ✓':'no');sim.render();sim2.render();}
+  bindRange('us-b',v=>nz(v),v=>{b=v;upd();});segBind('us-fn','k',v=>{k=v;upd();});upd();drawers.usub=()=>{sim.render();sim2.render();};
+  KEYS['us-canvas']=['Move b. The area under the x-integrand equals the area under the u-integrand between the new limits.',[['cx','integrand in x'],['cv','integrand in u'],['ce','the equal areas'],['hot','upper limit']]];
+  TIPS['us-b']=el=>`b = ${nz(+el.value)} becomes u = ${fmt(C[k].g(+el.value),3)}.`;
+  GLOSS['substitution']='Replace an inside function by u (and dx by du) so the integral becomes simpler; change the limits too.';
+  TT.usub='Ask students which part is the inside function and whether its derivative appears, before reading the formula.';
+})();
+(function(){
+  PROBS.push({id:'us-def',topic:'usub',title:'Definite integral by substitution',gen(){const pat=pick([0,1,2,3]);let q,ans,chk;
+    if(pat===0){const c=ri(1,3),n=ri(2,4);q=`Evaluate ∫<sub>0</sub><sup>1</sup> 2x(x² + ${c})<sup>${n}</sup> dx. Give a decimal.`;ans=(Math.pow(1+c,n+1)-Math.pow(c,n+1))/(n+1);chk=integ(x=>2*x*Math.pow(x*x+c,n),0,1,2000);}
+    else if(pat===1){const k2=ri(1,4);q=`Evaluate ∫<sub>0</sub><sup>1</sup> ${k2===1?'':k2}x e<sup>x²</sup> dx. Give a decimal to three places.`;ans=k2*(Math.E-1)/2;chk=integ(x=>k2*x*Math.exp(x*x),0,1,2000);}
+    else if(pat===2){const n=ri(2,5);q=`Evaluate ∫<sub>0</sub><sup>π/2</sup> sin<sup>${n}</sup>x cos x dx. Give a fraction or decimal.`;ans=1/(n+1);chk=integ(x=>Math.pow(Math.sin(x),n)*Math.cos(x),0,Math.PI/2,2000);}
+    else{const n=ri(1,4);q=`Evaluate ∫<sub>1</sub><sup>e</sup> (ln x)<sup>${n}</sup>/x dx. Give a fraction or decimal.`;ans=1/(n+1);chk=integ(x=>Math.pow(Math.log(x),n)/x,1,Math.E,3000);}
+    return {q,ans,unit:'',tol:.005,chk,hint:'Choose u as the inside function whose derivative appears, and change the limits of integration.',sol:`After substituting u and changing the limits, the integral equals <b>${fmt(ans,4)}</b>.`};}});
+  const T2=[()=>{const a=ri(2,5),b=ri(1,6),n=ri(2,5);return {f:`(${a}x+${b})^${n}`,F:`(${a}x+${b})^${n+1}/${a*(n+1)}`,fx:x=>Math.pow(a*x+b,n)};},()=>{const a=ri(1,4);return {f:`${2*a}x*e^(x^2)`,F:`${a}e^(x^2)`,fx:x=>2*a*x*Math.exp(x*x)};},()=>{const a=ri(2,6);return {f:`sin(${a}x)`,F:`-cos(${a}x)/${a}`,fx:x=>Math.sin(a*x)};},()=>{const c=ri(1,5);return {f:`2x/(x^2+${c})`,F:`ln(x^2+${c})`,fx:x=>2*x/(x*x+c)};},()=>{const n=ri(2,4);return {f:`cos(x)sin(x)^${n}`,F:`sin(x)^${n+1}/${n+1}`,fx:x=>Math.cos(x)*Math.pow(Math.sin(x),n)};}];
+  PROBS.push({id:'us-expr',topic:'usub',title:'Indefinite integral by substitution',gen(){const t=pick(T2)();
+    return {q:`Find ∫ ${pretty(t.f).replace(/sin\(/g,'sin(').replace(/cos\(x\)/g,'cos x')} dx. Type your answer (the + C is optional).`,expr:t.F,c:true,chkf:t.fx,hint:'Look for an inside function whose derivative (up to a constant) is also in the integrand.',sol:`With the right substitution: <b>${pretty(t.F)} + C</b>. Check by differentiating.`};}});
+  PROBS.push({id:'us-choice',topic:'usub',title:'Choose u',gen(){const R=[['x(x² + 3)<sup>5</sup>','x² + 3'],['e<sup>3x</sup>','3x'],['x²cos(x³)','x³'],['sin x · e<sup>cos x</sup>','cos x'],['(ln x)/x','ln x'],['x/√(x² + 4)','x² + 4'],['sec²x · tan<sup>3</sup>x','tan x'],['1/(x ln x)','ln x']],[ex,ans]=pick(R),m=mcq(ans,R.map(r=>r[1]));
+    return {q:`Which substitution u simplifies ∫ ${ex} dx?`,choices:m.choices,ans:m.ans,hint:'Find the inside function whose derivative (up to a constant factor) also appears.',sol:`Take <b>u = ${ans}</b>; its derivative appears in the integrand.`};}});
+})();

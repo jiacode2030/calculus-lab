@@ -1,0 +1,51 @@
+  <section class="view" id="v-accum" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 6</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Accumulation & Riemann sums</h1>
+        <p class="lede">How much water flowed into the tank? Add up the rate over time. When the rate changes, slice the time into short pieces and add rate × time for each.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>If water flows at a constant 5 gallons per minute for 10 minutes, the amount is 5 × 10 = 50 gallons: <b>rate × time</b>, which is the area of a rectangle on a graph of rate against time. When the rate <i>changes</i>, slice the time into thin strips, treat the rate as nearly constant on each strip, and add up the rectangle areas. That is a <b>Riemann sum</b>.</p>
+        <p>Thinner strips give a better answer. In the limit as the number of strips goes to infinity the sum becomes the <b>definite integral</b> <span class="m">∫<sub>a</sub><sup>b</sup> f(x) dx</span>: the net accumulation of f from a to b, with area above the axis counted positive and below counted negative. Left, right, midpoint and trapezoid sums choose the height differently.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>rates multiplied by time only when the rate was constant</dd><dt>So we didn't need</dt><dd>a method for changing rates</dd><dt>Now</dt><dd>distance from velocity, volume from flow, total change</dd><dt>So we need</dt><dd>Riemann sums and the idea of the definite integral</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>Σ f(x<sub>i</sub>*) Δx</span><small>Riemann sum, Δx = (b − a)/n</small></div><div class="eqn"><span>∫<sub>a</sub><sup>b</sup> f(x) dx = lim Σ f(x<sub>i</sub>*) Δx</span><small>definite integral</small></div><div class="eqn"><span>rate × time = amount</span><small>units: (units of f) × (units of x)</small></div></div>
+      <div class="lab" id="ac-lab">
+        <div class="labbar"><span class="title">Add up the rectangles</span></div>
+        <div class="ctl"><span class="lbl">Rate f(x)</span><div class="seg" id="ac-fn" role="group" aria-label="Rate f(x)"><button type="button" data-k="a" aria-pressed="true">x²</button><button type="button" data-k="b" aria-pressed="false">sin x</button><button type="button" data-k="c" aria-pressed="false">4 − x²</button><button type="button" data-k="d" aria-pressed="false">eˣ</button></div></div>
+        <div class="ctl"><span class="lbl">Method</span><div class="seg" id="ac-m" role="group" aria-label="Riemann sum method"><button type="button" data-k="L" aria-pressed="true">Left</button><button type="button" data-k="R" aria-pressed="false">Right</button><button type="button" data-k="M" aria-pressed="false">Midpoint</button><button type="button" data-k="T" aria-pressed="false">Trapezoid</button></div></div>
+        <canvas id="ac-canvas" aria-label="A rate graph with rectangles under it for the chosen Riemann sum method, and the exact area for comparison."></canvas>
+        <div class="controls"><div class="ctl"><label for="ac-n"><span>Number of strips n</span> <output id="ac-n-out"></output></label><input type="range" id="ac-n" min="1" max="60" step="1" value="4"></div></div>
+        <div class="readout"><div><span>sum</span><strong class="x" id="ac-sum">—</strong></div><div><span>exact integral</span><strong class="v" id="ac-ex">—</strong></div><div><span>sum − exact</span><strong class="a" id="ac-err">—</strong></div><div><span>bias</span><strong class="" id="ac-note">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>On x² with left sums and n = 4, is the estimate too big or too small? <button type="button" class="btn link" data-show='[["click", "#ac-fn [data-k=a]"], ["click", "#ac-m [data-k=L]"], ["#ac-n", 4]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Too small: x² is increasing, so the left edge of each strip is the lowest point and every rectangle sits under the curve. Right sums would overestimate.</p></details></li>
+        <li><p>Increase n to 60. What happens to the error? <button type="button" class="btn link" data-show='[["#ac-n", 60]]'>n = 60</button></p><details><summary>What you should see</summary><p>It shrinks toward 0: the sum approaches the integral as n → ∞. The error of a left or right sum falls roughly in proportion to 1/n.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Use a left Riemann sum with n = 3 to estimate ∫<sub>0</sub><sup>3</sup> x² dx.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Strip width.</b> Δx = (3 − 0)/3 = 1.</li>
+          <li hidden><b>Left endpoints.</b> x = 0, 1, 2, so f = 0, 1, 4.</li>
+          <li hidden><b>Add rate × width.</b> L₃ = (0 + 1 + 4)(1) = 5.</li>
+          <li hidden><b>Compare.</b> The exact value is 9, so L₃ is an underestimate (f is increasing).</li>
+          <li hidden><b>Answer.</b> <b>5</b>. Right sum: (1 + 4 + 9)(1) = 14, an overestimate.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Using the wrong number of heights: n strips use n heights, not n + 1 (except in the trapezoid rule's endpoints).</li>
+        <li>Using Δx = b − a instead of (b − a)/n.</li>
+        <li>Calling a left sum an overestimate for an increasing function. It underestimates.</li>
+        <li>Forgetting that area below the axis counts negative in a definite integral.</li>
+        <li>Dropping units: (liters/minute) × minutes = liters.</li>
+      </ul></div>
+      <div class="prose"><h2>Which sum is high or low?</h2>
+        <p>For an <b>increasing</b> function, left sums underestimate and right sums overestimate; for a <b>decreasing</b> function it reverses. The trapezoid rule overestimates when f is concave up (the chords lie above the curve) and underestimates when concave down; the midpoint rule does the opposite. Averaging left and right sums gives the trapezoid sum.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="On a decreasing function the right edge is the lowest point of each strip, so the rectangles are under the curve.">
+        <p class="q">Check yourself: For a decreasing function, a right Riemann sum is</p>
+        <div class="opts"><button type="button">an underestimate</button><button type="button">an overestimate</button><button type="button">exact</button><button type="button">impossible to tell</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
