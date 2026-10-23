@@ -240,3 +240,4 @@ h1{letter-spacing:-.03em}
 .bcx>b:first-child,.bcx>.k{font:600 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ca)}
 body.is-ab .bc,body.is-ab .bcx{display:none!important}
 .modgroup.bc .mod{border-style:dashed}
+body.is-ab .prob.bc{display:none!important}

@@ -1,11 +1,11 @@
 (function exam(){const box=$('#ex-weeks');let N=10,timed=false,timer=null,cards=[];
-  GROUPS.forEach((g,i)=>{const b=document.createElement('button');b.type='button';b.dataset.i=i;b.setAttribute('aria-pressed','false');b.textContent=g.w==='Optional'?'Math toolkit':g.w;b.title=g.name;b.addEventListener('click',()=>b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true')));box.appendChild(b);});
+  GROUPS.forEach((g,i)=>{const b=document.createElement('button');b.type='button';b.dataset.i=i;b.setAttribute('aria-pressed','false');b.textContent=g.w==='Optional'?'Math toolkit':g.w==='BC'?'BC extras':g.w;b.title=g.name;if(g.bc)b.classList.add('bc');b.addEventListener('click',()=>b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true')));box.appendChild(b);});
   segBind('ex-n','n',v=>N=+v);segBind('ex-t','t',v=>timed=v==='on');
   $('#ex-all').addEventListener('click',()=>$$('#ex-weeks button').forEach(b=>b.setAttribute('aria-pressed','true')));
   $('#ex-none').addEventListener('click',()=>$$('#ex-weeks button').forEach(b=>b.setAttribute('aria-pressed','false')));
   function start(){const sel=$$('#ex-weeks button').filter(b=>b.getAttribute('aria-pressed')==='true').map(b=>GROUPS[+b.dataset.i]),msg=$('#ex-msg');
     if(!sel.length){msg.textContent='Pick at least one unit first.';return;}
-    const ids=new Set(sel.flatMap(g=>g.ids));let pool=PROBS.filter(p=>ids.has(p.topic));if(!pool.length){msg.textContent='No practice problems in those units yet. Add another unit.';return;}
+    const ids=new Set(sel.flatMap(g=>g.ids));let pool=PROBS.filter(p=>ids.has(p.topic)&&!(COURSE()==='AB'&&isBC(p)));if(!pool.length){msg.textContent='No practice problems in those units yet. Add another unit.';return;}
     pool=pool.map(p=>[Math.random(),p]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]).slice(0,N);msg.textContent=pool.length<N?`Only ${pool.length} problems exist for those units, so the set has ${pool.length}.`:'';
     const list=$('#ex-list');list.innerHTML='';cards=pool.map((p,i)=>{const c=probCard(p,{mode:'exam',badge:`<span class="tag ap">Q${i+1}</span>`});list.appendChild(c);return c;});
     $('#ex-run').hidden=false;$('#ex-result').hidden=true;$('#ex-submit').hidden=false;$('#ex-setup').hidden=true;clearInterval(timer);const tEl=$('#ex-timer');

@@ -100,3 +100,24 @@ function frac(x,maxd=64){if(Number.isInteger(x))return String(x).replace('-','�
 const COURSE=()=>{const c=store('calc-course');return c==='AB'?'AB':'BC';};
 function setCourse(c){store('calc-course',c);applyCourse();document.dispatchEvent(new CustomEvent('coursechange'));}
 function applyCourse(){const ab=COURSE()==='AB';document.body.classList.toggle('is-ab',ab);$$('#course-seg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.c===COURSE()));}
+/* is this problem (or its module) BC-only? */
+const isBC=p=>!!(p&&(p.bc||(MODS[p.topic]&&MODS[p.topic].bc)));
+
+/* ----- svgG: a small static graph as an SVG string, for problems that show a picture -----
+   o: {xr,yr, pieces:[{f,x0,x1,color?,dash?}], pts:[{x,y,open?,color?}], vlines:[x], hlines:[y], labels:[{x,y,t}], w,h} (axes drawn with integer ticks) */
+function svgG(o){const W=o.w||400,H=o.h||280,xr=o.xr||[-5,5],yr=o.yr||[-4,4],m={l:24,r:10,t:10,b:20};
+  const X=x=>m.l+(x-xr[0])/(xr[1]-xr[0])*(W-m.l-m.r),Y=y=>m.t+(yr[1]-y)/(yr[1]-yr[0])*(H-m.t-m.b);let s=`<svg class="svgg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${o.alt||'A graph. Read the values from the picture.'}" style="width:100%;max-width:${W}px;height:auto;display:block;font:10px 'IBM Plex Mono',monospace">`;
+  for(let x=Math.ceil(xr[0]);x<=xr[1];x++){s+=`<line x1="${X(x)}" y1="${m.t}" x2="${X(x)}" y2="${H-m.b}" stroke="var(--grid)"/>`;if(x&&x%1===0&&(xr[1]-xr[0]<=12||x%2===0))s+=`<text x="${X(x)}" y="${H-6}" text-anchor="middle" fill="var(--muted)">${String(x).replace('-','−')}</text>`;}
+  for(let y=Math.ceil(yr[0]);y<=yr[1];y++){s+=`<line x1="${m.l}" y1="${Y(y)}" x2="${W-m.r}" y2="${Y(y)}" stroke="var(--grid)"/>`;if(y&&(yr[1]-yr[0]<=12||y%2===0))s+=`<text x="${m.l-4}" y="${Y(y)+3}" text-anchor="end" fill="var(--muted)">${String(y).replace('-','−')}</text>`;}
+  if(xr[0]<=0&&xr[1]>=0)s+=`<line x1="${X(0)}" y1="${m.t}" x2="${X(0)}" y2="${H-m.b}" stroke="var(--muted)" stroke-width="1.2"/>`;
+  if(yr[0]<=0&&yr[1]>=0)s+=`<line x1="${m.l}" y1="${Y(0)}" x2="${W-m.r}" y2="${Y(0)}" stroke="var(--muted)" stroke-width="1.2"/>`;
+  (o.vlines||[]).forEach(x=>s+=`<line x1="${X(x)}" y1="${m.t}" x2="${X(x)}" y2="${H-m.b}" stroke="var(--hot)" stroke-dasharray="5 4"/>`);
+  (o.hlines||[]).forEach(y=>s+=`<line x1="${m.l}" y1="${Y(y)}" x2="${W-m.r}" y2="${Y(y)}" stroke="var(--hot)" stroke-dasharray="5 4"/>`);
+  (o.pieces||[]).forEach(p=>{let d='',pen=false,prev=0;const n=160;for(let i=0;i<=n;i++){const x=p.x0+(p.x1-p.x0)*i/n,y=p.f(x);if(!isFinite(y)){pen=false;continue;}const py=Y(y);if(pen&&Math.abs(py-prev)>H){pen=false;}d+=(pen?'L':'M')+X(x).toFixed(1)+' '+py.toFixed(1);pen=true;prev=py;}
+    s+=`<path d="${d}" fill="none" stroke="${p.color||'var(--cx)'}" stroke-width="2.4" stroke-linecap="round"${p.dash?' stroke-dasharray="6 4"':''}/>`;});
+  (o.pts||[]).forEach(q=>s+=`<circle cx="${X(q.x)}" cy="${Y(q.y)}" r="4.2" fill="${q.open?'var(--surface)':(q.color||'var(--cx)')}" stroke="${q.color||'var(--cx)'}" stroke-width="2"/>`);
+  (o.labels||[]).forEach(l=>s+=`<text x="${X(l.x)}" y="${Y(l.y)}" fill="${l.color||'var(--ink)'}" font-size="11" font-weight="600">${l.t}</text>`);
+  return s+'</svg>';}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+/* four multiple-choice strings: the correct one plus distractors (deduplicated, shuffled); returns {choices, ans} */
+function mcq(correct,distract,n=4){const s=[correct];distract.forEach(d=>{if(d!=null&&!s.includes(d)&&s.length<n)s.push(d);});const ch=shuffle(s);return {choices:ch,ans:ch.indexOf(correct)};}

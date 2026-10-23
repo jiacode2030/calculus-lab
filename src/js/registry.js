@@ -25,6 +25,6 @@ function coachSay(sel,text){const el=typeof sel==='string'?$(sel):sel;const lab=
 function parseNum(raw){let s=String(raw).trim();const sup={'⁻':'-','⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9'};
   s=s.replace(/[⁻⁰¹²³⁴⁵⁶⁷⁸⁹]/g,c=>sup[c]).replace(/[−–]/g,'-').replace(/,/g,'').replace(/\s+/g,'');
   s=s.replace(/^([-+]?[\d.]+)[×x*]10\^?\(?([-+]?\d+)\)?$/i,'$1e$2');
-  if(!/^[-+]?(\d+\.?\d*|\.\d+)(e[-+]?\d+)?$/i.test(s))return NaN;return parseFloat(s);}
+  if(!/^[-+]?(\d+\.?\d*|\.\d+)(e[-+]?\d+)?$/i.test(s)){const c=exprConst(raw);return isFinite(c)?c:NaN;}return parseFloat(s);}
 /* a problem's answer is right if it is within d.tol (relative, default 2%) or d.abs (absolute) */
 function ansOK(x,d){const t=d.abs!=null?d.abs:Math.max((d.tol??.02)*Math.abs(d.ans),d.floor||0);return Math.abs(x-d.ans)<=t;}

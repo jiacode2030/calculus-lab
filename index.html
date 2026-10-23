@@ -889,6 +889,7 @@ h1{letter-spacing:-.03em}
 .bcx>b:first-child,.bcx>.k{font:600 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ca)}
 body.is-ab .bc,body.is-ab .bcx{display:none!important}
 .modgroup.bc .mod{border-style:dashed}
+body.is-ab .prob.bc{display:none!important}
 
 </style>
 
@@ -1008,6 +1009,78 @@ body.is-ab .bc,body.is-ab .bcx{display:none!important}
     </div>
   </section>
 
+  <section class="view" id="v-limits" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 1</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Limits from graphs &amp; tables</h1>
+        <p class="lede">A limit asks where a function is <i>heading</i> as x gets close to a number, not what the function does at that number. That one change lets calculus talk about a tangent line, a speed at an instant, and an area under a curve.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Walk toward a doorway along a hallway whose floor is the graph of <span class="m">f</span>. As you get closer to the doorway at <span class="m">x = a</span>, your height settles toward some value <span class="m">L</span>. That height is the limit. It does not matter whether there is a floor tile <i>exactly</i> at the doorway, or whether the tile there is at a different height. The limit only cares about the approach.</p>
+        <p>You can approach from the left or from the right. The limit exists only when both approaches head to the same height. If the floor has a step in it, the two sides disagree and the limit does not exist.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>to know what a function does at <i>a</i>, plug in <i>a</i></dd><dt>So we didn't need</dt><dd>anything but substitution</dd><dt>Now</dt><dd>(x² − 1)/(x − 1) at x = 1 gives 0/0, and a speedometer needs "speed at one instant"</dd><dt>So we need</dt><dd>a way to describe what a function approaches without ever reaching it</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>lim<sub>x→a</sub> f(x) = L</span><small>f(x) gets as close to L as you like</small></div><div class="eqn"><span>lim<sub>x→a⁻</sub> f(x)</span><small>approach from the left</small></div><div class="eqn"><span>lim<sub>x→a⁺</sub> f(x)</span><small>approach from the right</small></div><div class="eqn"><span>left = right = L</span><small>the limit exists and equals L</small></div></div>
+
+      <div class="lab" id="lm-lab">
+        <div class="labbar"><span class="title">Zoom in on a limit</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="lm-fn" role="group" aria-label="Choose a function">
+          <button type="button" data-k="hole" aria-pressed="true">Hole</button><button type="button" data-k="jump" aria-pressed="false">Jump</button><button type="button" data-k="sinc" aria-pressed="false">sin x / x</button><button type="button" data-k="osc" aria-pressed="false">sin(1/x)</button><button type="button" data-k="cont" aria-pressed="false">Smooth</button></div></div>
+        <p class="small" id="lm-formula" style="margin:0"></p>
+        <canvas id="lm-canvas" aria-label="Graph of the chosen function near x = a with two probe points, one on each side. Use the zoom slider to bring the probes toward a."></canvas>
+        <div class="controls"><div class="ctl"><label for="lm-zoom"><span>Zoom in</span> <output id="lm-zoom-out"></output></label><input type="range" id="lm-zoom" min="0" max="3" step="0.05" value="0"></div></div>
+        <div class="readout"><div><span>left probe f(a − w)</span><strong class="x" id="lm-l">—</strong></div><div><span>right probe f(a + w)</span><strong class="a" id="lm-r">—</strong></div><div><span>f(a) itself</span><strong id="lm-fa">—</strong></div><div><span>the limit</span><strong class="v" id="lm-lim" style="white-space:normal;font-size:15px">—</strong></div></div>
+        <div class="tablewrap"><table class="lmtbl" id="lm-tbl" aria-label="Table of values on each side of a"></table></div>
+      </div>
+
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose <b>Hole</b> and zoom all the way in. What do both probes head toward, and what is f(a)? <button type="button" class="btn link" data-show='[["click","#lm-fn [data-k=hole]"],["#lm-zoom",3]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Both probes squeeze toward 2, so the limit is 2. But f(1) has no value (0/0): there is a hole in the graph. A limit can exist where the function has no value at all.</p></details></li>
+        <li><p>Choose <b>Jump</b> and zoom in. Do the two probes ever meet? <button type="button" class="btn link" data-show='[["click","#lm-fn [data-k=jump]"],["#lm-zoom",3]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The left probe heads to 3 and the right probe heads to −1, no matter how far you zoom. Left ≠ right, so the limit does not exist. Notice f(2) = 1 is neither of them: the value at the point is irrelevant to the limit.</p></details></li>
+        <li><p>Choose <b>sin(1/x)</b> and zoom in. Is there any value both probes settle toward? <button type="button" class="btn link" data-show='[["click","#lm-fn [data-k=osc]"],["#lm-zoom",3]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>No. The graph keeps swinging between −1 and 1 faster and faster as x nears 0, so the probes keep jumping around. The limit does not exist, and not because of a jump: the function never settles.</p></details></li>
+      </ol></div>
+
+      <div class="lab" id="lm-lab2" data-reset="own">
+        <div class="labbar"><span class="title">Read a limit from a graph</span></div>
+        <p class="small" style="margin:0">Open circle = the graph does not include that point. Filled dot = the graph's value there. Tap a question to see what the graph says, then make a new graph.</p>
+        <div class="lmgraph" id="lm-g"></div>
+        <div class="seg" id="lm-q" role="group" aria-label="Which quantity"><button type="button" data-q="lm" aria-pressed="false">lim x→a⁻</button><button type="button" data-q="lp" aria-pressed="false">lim x→a⁺</button><button type="button" data-q="l" aria-pressed="false">lim x→a</button><button type="button" data-q="fa" aria-pressed="false">f(a)</button></div>
+        <p class="fb" id="lm-gfb" aria-live="polite" style="min-height:1.6em"></p>
+        <div class="row"><button type="button" class="btn" id="lm-gnew">New graph</button></div>
+      </div>
+
+      <div class="example"><h3>Worked example</h3><p class="prob">Estimate lim<sub>x→2</sub> (x² − 4)/(x − 2) from a table, then say why plugging in fails.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Plug in.</b> At x = 2 the expression is 0/0, which tells us nothing. The function has no value at 2, so we look at nearby values.</li>
+          <li hidden><b>Left side.</b> f(1.9) = (3.61 − 4)/(−0.1) = 3.9, f(1.99) = 3.99, f(1.999) = 3.999.</li>
+          <li hidden><b>Right side.</b> f(2.1) = (4.41 − 4)/0.1 = 4.1, f(2.01) = 4.01, f(2.001) = 4.001.</li>
+          <li hidden><b>Compare.</b> Both sides head toward 4, from below on the left and above on the right. So <b>lim<sub>x→2</sub> (x² − 4)/(x − 2) = 4</b>.</li>
+          <li hidden><b>Check with a graph.</b> (x² − 4)/(x − 2) = x + 2 everywhere except x = 2, so its graph is the line y = x + 2 with a hole at (2, 4). A table gives a good estimate; the algebra in the next module will prove it.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Thinking the limit equals f(a). It often does (for smooth graphs), but it need not: the limit ignores the value at a.</li>
+        <li>Saying a limit "doesn't exist" because f(a) has no value. A hole still has a limit.</li>
+        <li>Reading a graph's limit from the filled dot instead of from the heights the two sides approach.</li>
+        <li>Believing a table proves a limit. It gives a strong estimate; oscillating functions can fool a short table.</li>
+        <li>Writing "lim = 3 and −1". If the two sides disagree, the two-sided limit does not exist (DNE); the one-sided limits are separate answers.</li>
+      </ul></div>
+      <div class="prose"><h2>When a limit fails to exist</h2>
+        <p>There are three common ways. A <b>jump</b>: the one-sided limits are both numbers but unequal. <b>Unbounded growth</b>: the function blows up toward ∞ or −∞ near a (the next modules call this an infinite limit; the AP exam says the limit does not exist but may describe it as ∞). <b>Oscillation</b>: the function keeps swinging without settling, like sin(1/x) at 0.</p>
+        <p>The formal definition (every tolerance around L is met once x is close enough to a) is what makes this rigorous. AP Calculus works with the idea rather than the proof, but it is the reason limits can be added, multiplied and divided safely, which the next module uses.</p></div>
+      <div class="quiz" data-correct="1" data-explain="Left and right limits are 3 and −1. They disagree, so the two-sided limit does not exist, whatever f(2) is.">
+        <p class="q">Check yourself: as x → 2 the graph approaches 3 from the left and −1 from the right, and f(2) = 1. What is lim<sub>x→2</sub> f(x)?</p>
+        <div class="opts"><button type="button">1</button><button type="button">It does not exist</button><button type="button">3</button><button type="button">1 (the average of the sides)</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="A hole means f(a) has no value, but both sides still head toward the same height, so the limit exists.">
+        <p class="q">Check yourself: the graph has an open circle at (3, 5) and approaches height 5 from both sides. Does lim<sub>x→3</sub> f(x) exist?</p>
+        <div class="opts"><button type="button">Yes, it equals 5</button><button type="button">No, because f(3) has no value</button><button type="button">No, because the graph has a hole</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
 
   <section class="view" id="v-practice" hidden>
     <div class="wrap">
@@ -1247,8 +1320,8 @@ function view3d(cv,o){
 
 /* ---------------- Roster and registries (the data blocks are injected by build.py) ---------------- */
 const MODS={"functions": {"t": "Functions & transformations", "d": "Shift, stretch and flip a graph, and read what a formula is doing.", "bc": false}, "trigexp": {"t": "Trig, exponentials & logs", "d": "The unit circle, e^x and ln x: the functions calculus keeps using.", "bc": false}, "limits": {"t": "Limits from graphs & tables", "d": "What a function is heading toward, even where it never gets there.", "bc": false}, "limalg": {"t": "Algebraic limits", "d": "Factor, rationalize or squeeze when plugging in gives 0/0.", "bc": false}, "contin": {"t": "Continuity & the IVT", "d": "Where a graph breaks, and why continuous functions can't skip values.", "bc": false}, "asym": {"t": "Infinite limits & end behavior", "d": "Vertical and horizontal asymptotes, and what happens as x gets huge.", "bc": false}, "rates": {"t": "Average vs instantaneous rate", "d": "A secant line closing in on a tangent line.", "bc": false}, "deriv": {"t": "The derivative & differentiability", "d": "The limit definition, and where a graph has no slope.", "bc": false}, "rules": {"t": "Power, sum & constant-multiple rules", "d": "Differentiate polynomials and roots in your head.", "bc": false}, "transder": {"t": "Trig, e^x and ln x derivatives", "d": "The derivatives you memorize once.", "bc": false}, "prodquot": {"t": "Product & quotient rules", "d": "When two functions are multiplied or divided.", "bc": false}, "chain": {"t": "The chain rule", "d": "Derivatives of functions inside functions.", "bc": false}, "implicit": {"t": "Implicit differentiation", "d": "Slopes of curves that are not functions of x.", "bc": false}, "invfn": {"t": "Inverse functions & inverse trig", "d": "Derivatives of inverses, arcsin, arctan and friends.", "bc": false}, "higher": {"t": "Higher-order derivatives & choosing a rule", "d": "Second derivatives, and picking the right tool.", "bc": false}, "motion": {"t": "Derivatives in context & motion", "d": "Position, velocity, acceleration and units of a rate.", "bc": false}, "related": {"t": "Related rates", "d": "Two quantities change together: how fast is the other one moving?", "bc": false}, "linear": {"t": "Linearization & differentials", "d": "Approximate a curve by its tangent line.", "bc": false}, "lhop": {"t": "L'Hôpital's rule", "d": "Resolve 0/0 and ∞/∞ by comparing derivatives.", "bc": false}, "mvt": {"t": "Extreme values & the Mean Value Theorem", "d": "Why a continuous function on [a, b] has a max, and a point with the average slope.", "bc": false}, "incdec": {"t": "Increasing, decreasing & the first derivative test", "d": "Read the sign of f′ to find peaks and valleys.", "bc": false}, "concav": {"t": "Concavity & the second derivative test", "d": "Read the sign of f″ to see bending.", "bc": false}, "sketch": {"t": "Connecting f, f′ and f″", "d": "Go between a graph and the graphs of its derivatives.", "bc": false}, "optim": {"t": "Optimization", "d": "Biggest, smallest, cheapest, fastest: set up and solve.", "bc": false}, "accum": {"t": "Accumulation & Riemann sums", "d": "Add up a changing rate with thin slices.", "bc": false}, "ftc": {"t": "The definite integral & the FTC", "d": "Area, accumulation functions and the theorem that ties derivatives to integrals.", "bc": false}, "antider": {"t": "Antiderivatives", "d": "Undo a derivative, and don't forget the + C.", "bc": false}, "usub": {"t": "u-substitution", "d": "Undo the chain rule, including definite integrals.", "bc": false}, "slope": {"t": "Slope fields", "d": "Draw the solutions without solving anything.", "bc": false}, "sepvar": {"t": "Separation of variables & exponential models", "d": "Solve dy/dx = ky and other separable equations.", "bc": false}, "avgval": {"t": "Average value & motion with integrals", "d": "Average of a function, and displacement vs distance.", "bc": false}, "area": {"t": "Area between curves", "d": "Top minus bottom, or right minus left.", "bc": false}, "vols": {"t": "Volumes from cross sections", "d": "Stack slices of a known shape.", "bc": false}, "volrev": {"t": "Volumes of revolution", "d": "Discs and washers around an axis.", "bc": false}, "parts": {"t": "Integration by parts", "d": "Undo the product rule: ∫u dv = uv − ∫v du.", "bc": true}, "partial": {"t": "Partial fractions & long division", "d": "Split a rational function into pieces you can integrate.", "bc": true}, "improper": {"t": "Improper integrals", "d": "Areas that stretch to infinity, or past an asymptote.", "bc": true}, "euler": {"t": "Euler's method", "d": "Step along a slope field to approximate a solution.", "bc": true}, "logistic": {"t": "Logistic models", "d": "Growth that levels off at a carrying capacity.", "bc": true}, "arclen": {"t": "Arc length", "d": "How long is the curve?", "bc": true}, "param": {"t": "Parametric equations", "d": "x and y both depend on t: slope, concavity and length.", "bc": true}, "vector": {"t": "Vector-valued functions & motion", "d": "Velocity, speed and acceleration in the plane.", "bc": true}, "polar": {"t": "Polar curves & area", "d": "Graph with r and θ, and find areas of petals.", "bc": true}, "seriesbasic": {"t": "Series, geometric series & the nth-term test", "d": "When does an infinite sum add up to a number?", "bc": true}, "pseries": {"t": "p-series & the integral test", "d": "Compare a sum to an area.", "bc": true}, "convtests": {"t": "Comparison & ratio tests", "d": "Decide convergence without finding the sum.", "bc": true}, "altser": {"t": "Alternating series & error bounds", "d": "Alternating signs, absolute vs conditional convergence.", "bc": true}, "taylorpoly": {"t": "Taylor polynomials & Lagrange error", "d": "Approximate a function near a point, and bound the error.", "bc": true}, "powser": {"t": "Power series: radius & interval", "d": "Where a series in x converges.", "bc": true}, "maclaurin": {"t": "Maclaurin series & operations", "d": "e^x, sin x, cos x, 1/(1−x), and building new series from them.", "bc": true}};
-const GROUPS=[];
-const ROADMAP=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": [], "soon": ["functions", "trigexp"]}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": [], "soon": ["limits", "limalg", "contin", "asym"]}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": [], "soon": ["rates", "deriv", "rules", "transder", "prodquot"]}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": [], "soon": ["chain", "implicit", "invfn", "higher"]}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": [], "soon": ["motion", "related", "linear", "lhop"]}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": [], "soon": ["mvt", "incdec", "concav", "sketch", "optim"]}, {"w": "Unit 6", "name": "Integration and accumulation of change", "tag": "AP Unit 6", "bc": false, "ids": [], "soon": ["accum", "ftc", "antider", "usub"]}, {"w": "Unit 7", "name": "Differential equations", "tag": "AP Unit 7", "bc": false, "ids": [], "soon": ["slope", "sepvar"]}, {"w": "Unit 8", "name": "Applications of integration", "tag": "AP Unit 8", "bc": false, "ids": [], "soon": ["avgval", "area", "vols", "volrev"]}, {"w": "BC", "name": "Integration techniques (BC)", "tag": "AP Unit 6 · BC", "bc": true, "ids": [], "soon": ["parts", "partial", "improper"]}, {"w": "BC", "name": "More differential equations & applications (BC)", "tag": "AP Units 7–8 · BC", "bc": true, "ids": [], "soon": ["euler", "logistic", "arclen"]}, {"w": "Unit 9", "name": "Parametric equations, polar coordinates and vector-valued functions (BC)", "tag": "AP Unit 9 · BC", "bc": true, "ids": [], "soon": ["param", "vector", "polar"]}, {"w": "Unit 10", "name": "Infinite sequences and series (BC)", "tag": "AP Unit 10 · BC", "bc": true, "ids": [], "soon": ["seriesbasic", "pseries", "convtests", "altser", "taylorpoly", "powser", "maclaurin"]}]; /* every unit, with ids (built) and soon (planned, not built yet) */
+const GROUPS=[{"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits"]}];
+const ROADMAP=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": [], "soon": ["functions", "trigexp"]}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits"], "soon": ["limalg", "contin", "asym"]}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": [], "soon": ["rates", "deriv", "rules", "transder", "prodquot"]}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": [], "soon": ["chain", "implicit", "invfn", "higher"]}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": [], "soon": ["motion", "related", "linear", "lhop"]}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": [], "soon": ["mvt", "incdec", "concav", "sketch", "optim"]}, {"w": "Unit 6", "name": "Integration and accumulation of change", "tag": "AP Unit 6", "bc": false, "ids": [], "soon": ["accum", "ftc", "antider", "usub"]}, {"w": "Unit 7", "name": "Differential equations", "tag": "AP Unit 7", "bc": false, "ids": [], "soon": ["slope", "sepvar"]}, {"w": "Unit 8", "name": "Applications of integration", "tag": "AP Unit 8", "bc": false, "ids": [], "soon": ["avgval", "area", "vols", "volrev"]}, {"w": "BC", "name": "Integration techniques (BC)", "tag": "AP Unit 6 · BC", "bc": true, "ids": [], "soon": ["parts", "partial", "improper"]}, {"w": "BC", "name": "More differential equations & applications (BC)", "tag": "AP Units 7–8 · BC", "bc": true, "ids": [], "soon": ["euler", "logistic", "arclen"]}, {"w": "Unit 9", "name": "Parametric equations, polar coordinates and vector-valued functions (BC)", "tag": "AP Unit 9 · BC", "bc": true, "ids": [], "soon": ["param", "vector", "polar"]}, {"w": "Unit 10", "name": "Infinite sequences and series (BC)", "tag": "AP Unit 10 · BC", "bc": true, "ids": [], "soon": ["seriesbasic", "pseries", "convtests", "altser", "taylorpoly", "powser", "maclaurin"]}]; /* every unit, with ids (built) and soon (planned, not built yet) */
 const TIPS={},TT={},GLOSS={},KEYS={},PROBS=[],FRQS=[],GLYPH={};
 const METHODS={clues:[],items:[]};
 Object.keys(MODS).forEach(id=>{const g=ROADMAP.find(g=>g.ids.includes(id)||g.soon.includes(id));MODS[id].ap=g?g.tag:'';MODS[id].w=g?g.w:'';});
@@ -1271,7 +1344,7 @@ function coachSay(sel,text){const el=typeof sel==='string'?$(sel):sel;const lab=
 function parseNum(raw){let s=String(raw).trim();const sup={'⁻':'-','⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9'};
   s=s.replace(/[⁻⁰¹²³⁴⁵⁶⁷⁸⁹]/g,c=>sup[c]).replace(/[−–]/g,'-').replace(/,/g,'').replace(/\s+/g,'');
   s=s.replace(/^([-+]?[\d.]+)[×x*]10\^?\(?([-+]?\d+)\)?$/i,'$1e$2');
-  if(!/^[-+]?(\d+\.?\d*|\.\d+)(e[-+]?\d+)?$/i.test(s))return NaN;return parseFloat(s);}
+  if(!/^[-+]?(\d+\.?\d*|\.\d+)(e[-+]?\d+)?$/i.test(s)){const c=exprConst(raw);return isFinite(c)?c:NaN;}return parseFloat(s);}
 /* a problem's answer is right if it is within d.tol (relative, default 2%) or d.abs (absolute) */
 function ansOK(x,d){const t=d.abs!=null?d.abs:Math.max((d.tol??.02)*Math.abs(d.ans),d.floor||0);return Math.abs(x-d.ans)<=t;}
 
@@ -1378,7 +1451,115 @@ function frac(x,maxd=64){if(Number.isInteger(x))return String(x).replace('-','�
 const COURSE=()=>{const c=store('calc-course');return c==='AB'?'AB':'BC';};
 function setCourse(c){store('calc-course',c);applyCourse();document.dispatchEvent(new CustomEvent('coursechange'));}
 function applyCourse(){const ab=COURSE()==='AB';document.body.classList.toggle('is-ab',ab);$$('#course-seg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.c===COURSE()));}
+/* is this problem (or its module) BC-only? */
+const isBC=p=>!!(p&&(p.bc||(MODS[p.topic]&&MODS[p.topic].bc)));
 
+/* ----- svgG: a small static graph as an SVG string, for problems that show a picture -----
+   o: {xr,yr, pieces:[{f,x0,x1,color?,dash?}], pts:[{x,y,open?,color?}], vlines:[x], hlines:[y], labels:[{x,y,t}], w,h} (axes drawn with integer ticks) */
+function svgG(o){const W=o.w||400,H=o.h||280,xr=o.xr||[-5,5],yr=o.yr||[-4,4],m={l:24,r:10,t:10,b:20};
+  const X=x=>m.l+(x-xr[0])/(xr[1]-xr[0])*(W-m.l-m.r),Y=y=>m.t+(yr[1]-y)/(yr[1]-yr[0])*(H-m.t-m.b);let s=`<svg class="svgg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${o.alt||'A graph. Read the values from the picture.'}" style="width:100%;max-width:${W}px;height:auto;display:block;font:10px 'IBM Plex Mono',monospace">`;
+  for(let x=Math.ceil(xr[0]);x<=xr[1];x++){s+=`<line x1="${X(x)}" y1="${m.t}" x2="${X(x)}" y2="${H-m.b}" stroke="var(--grid)"/>`;if(x&&x%1===0&&(xr[1]-xr[0]<=12||x%2===0))s+=`<text x="${X(x)}" y="${H-6}" text-anchor="middle" fill="var(--muted)">${String(x).replace('-','−')}</text>`;}
+  for(let y=Math.ceil(yr[0]);y<=yr[1];y++){s+=`<line x1="${m.l}" y1="${Y(y)}" x2="${W-m.r}" y2="${Y(y)}" stroke="var(--grid)"/>`;if(y&&(yr[1]-yr[0]<=12||y%2===0))s+=`<text x="${m.l-4}" y="${Y(y)+3}" text-anchor="end" fill="var(--muted)">${String(y).replace('-','−')}</text>`;}
+  if(xr[0]<=0&&xr[1]>=0)s+=`<line x1="${X(0)}" y1="${m.t}" x2="${X(0)}" y2="${H-m.b}" stroke="var(--muted)" stroke-width="1.2"/>`;
+  if(yr[0]<=0&&yr[1]>=0)s+=`<line x1="${m.l}" y1="${Y(0)}" x2="${W-m.r}" y2="${Y(0)}" stroke="var(--muted)" stroke-width="1.2"/>`;
+  (o.vlines||[]).forEach(x=>s+=`<line x1="${X(x)}" y1="${m.t}" x2="${X(x)}" y2="${H-m.b}" stroke="var(--hot)" stroke-dasharray="5 4"/>`);
+  (o.hlines||[]).forEach(y=>s+=`<line x1="${m.l}" y1="${Y(y)}" x2="${W-m.r}" y2="${Y(y)}" stroke="var(--hot)" stroke-dasharray="5 4"/>`);
+  (o.pieces||[]).forEach(p=>{let d='',pen=false,prev=0;const n=160;for(let i=0;i<=n;i++){const x=p.x0+(p.x1-p.x0)*i/n,y=p.f(x);if(!isFinite(y)){pen=false;continue;}const py=Y(y);if(pen&&Math.abs(py-prev)>H){pen=false;}d+=(pen?'L':'M')+X(x).toFixed(1)+' '+py.toFixed(1);pen=true;prev=py;}
+    s+=`<path d="${d}" fill="none" stroke="${p.color||'var(--cx)'}" stroke-width="2.4" stroke-linecap="round"${p.dash?' stroke-dasharray="6 4"':''}/>`;});
+  (o.pts||[]).forEach(q=>s+=`<circle cx="${X(q.x)}" cy="${Y(q.y)}" r="4.2" fill="${q.open?'var(--surface)':(q.color||'var(--cx)')}" stroke="${q.color||'var(--cx)'}" stroke-width="2"/>`);
+  (o.labels||[]).forEach(l=>s+=`<text x="${X(l.x)}" y="${Y(l.y)}" fill="${l.color||'var(--ink)'}" font-size="11" font-weight="600">${l.t}</text>`);
+  return s+'</svg>';}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+/* four multiple-choice strings: the correct one plus distractors (deduplicated, shuffled); returns {choices, ans} */
+function mcq(correct,distract,n=4){const s=[correct];distract.forEach(d=>{if(d!=null&&!s.includes(d)&&s.length<n)s.push(d);});const ch=shuffle(s);return {choices:ch,ans:ch.indexOf(correct)};}
+
+
+/* ===== modules/limits.js ===== */
+/* ---------------- Limits from graphs & tables ---------------- */
+/* a random piecewise graph with a, the one-sided limits and f(a): shared by the graph-reading lab and the problems */
+function limGraph(){const a=ri(-2,2),Lm=ri(-2,2),kind=pick(['cont','hole','off','jumpL','jumpR','jumpU']);let Lp=Lm,fa=Lm;
+  if(kind==='hole')fa=null;
+  if(kind==='off'){do{fa=ri(-3,3);}while(fa===Lm);}
+  if(kind.startsWith('jump')){do{Lp=ri(-3,3);}while(Lp===Lm);fa=kind==='jumpL'?Lm:kind==='jumpR'?Lp:null;}
+  const sl=pick([-1,0,1]),sr=pick([-1,0,1]),pts=[];
+  if(fa!==null)pts.push({x:a,y:fa});
+  [...new Set([Lm,Lp])].forEach(v=>{if(v!==fa)pts.push({x:a,y:v,open:true});});
+  const svg=svgG({xr:[-5,5],yr:[-4,4],pieces:[{f:x=>Lm+sl*(x-a),x0:-5,x1:a},{f:x=>Lp+sr*(x-a),x0:a,x1:5}],pts,alt:'Piecewise graph with open and filled circles at x = '+a+'. Read the limits from the picture.'});
+  return {a,Lm,Lp,fa,svg,kind,L:Lm===Lp?Lm:null};}
+const lmN=v=>v===null?'does not exist':String(v).replace('-','−');
+(function limits(){
+  const cv=$('#lm-canvas');if(!cv)return;
+  const FN={
+    hole:{a:1,f:x=>x===1?NaN:(x*x-1)/(x-1),Lm:2,Lp:2,fa:null,txt:'f(x) = (x² − 1)/(x − 1),  a = 1'},
+    jump:{a:2,f:x=>x<2?x+1:x>2?x-3:1,Lm:3,Lp:-1,fa:1,txt:'f(x) = x + 1 for x < 2;  f(2) = 1;  f(x) = x − 3 for x > 2,  a = 2'},
+    sinc:{a:0,f:x=>x===0?NaN:Math.sin(x)/x,Lm:1,Lp:1,fa:null,txt:'f(x) = sin x / x,  a = 0'},
+    osc:{a:0,f:x=>x===0?NaN:Math.sin(1/x),Lm:null,Lp:null,fa:null,txt:'f(x) = sin(1/x),  a = 0',osc:true},
+    cont:{a:1,f:x=>x*x,Lm:1,Lp:1,fa:1,txt:'f(x) = x²,  a = 1'}};
+  let k='hole',z=0;
+  const win=()=>2*Math.pow(10,-z);
+  const sim=sim2d(cv,{h:w=>clamp(w*.55,260,360),draw(ctx,w,h){const F=FN[k],a=F.a,W=win();const xr=[a-W,a+W];let lo=Infinity,hi=-Infinity;
+      if(F.osc){lo=-1.3;hi=1.3;}else{for(let i=0;i<=200;i++){const v=F.f(xr[0]+2*W*i/200);if(isFinite(v)){lo=Math.min(lo,v);hi=Math.max(hi,v);}}
+        [F.Lm,F.Lp,F.fa].forEach(v=>{if(v!=null&&isFinite(v)){lo=Math.min(lo,v);hi=Math.max(hi,v);}});const pad=Math.max((hi-lo)*.3,1e-9*Math.max(1,Math.abs(hi)));lo-=pad;hi+=pad;}
+      const P=gpanel(ctx,{x:48,y:12,w:w-62,h:h-38},xr,[lo,hi],{xn:4,yn:4});
+      const L=a-W/2,R=a+W/2,n=F.osc?3000:600;
+      const e=W*1e-6;curveD(ctx,P,F.f,xr[0],a-e,T.cx,2.6,n/2);curveD(ctx,P,F.f,a+e,xr[1],T.cx,2.6,n/2);
+      vline(ctx,P,a,T.muted);
+      if(F.Lm!=null&&F.Lm===F.Lp)hline(ctx,P,F.Lm,T.hot);else if(F.Lm!=null){hline(ctx,P,F.Lm,T.hot,[2,4]);hline(ctx,P,F.Lp,T.hot,[2,4]);}
+      if(!F.osc){if(F.Lm===F.Lp&&F.fa!==F.Lm)hole(ctx,P.X(a),P.Y(F.Lm),5,T.cx,false);if(F.Lm!==F.Lp){hole(ctx,P.X(a),P.Y(F.Lm),5,T.cx,false);hole(ctx,P.X(a),P.Y(F.Lp),5,T.cx,false);}if(F.fa!=null)hole(ctx,P.X(a),P.Y(F.fa),5,T.ink,true);}
+      [[L,T.cx],[R,T.ca]].forEach(([x,c])=>{const y=F.f(x);if(isFinite(y)){line(ctx,P,x,P.yr[0],x,y,c,1,[3,3]);dot(ctx,P.X(x),P.Y(y),6,c,T.surface);}});
+      label(ctx,'a = '+fmt(a,0),P.X(a)+6,P.box.y+10,T.muted,'left','middle',MONO);},
+    });
+  function fv(x){const v=FN[k].f(x);return isFinite(v)?fmt(v,Math.abs(v)<10?4:2):'—';}
+  function update(){const F=FN[k],a=F.a,W=win();setText('lm-l',fv(a-W/2));setText('lm-r',fv(a+W/2));setText('lm-fa',F.fa==null?'not defined':fmt(F.fa,0));
+    setText('lm-lim',F.osc?'does not exist: it oscillates':F.Lm===F.Lp?`${fmt(F.Lm,0)} (left and right agree)`:`does not exist: left → ${fmt(F.Lm,0)}, right → ${fmt(F.Lp,0)}`);
+    setText('lm-formula',F.txt);const w0=W;setText('lm-zoom-out','probes at a ± '+(w0>=.01?fmt(w0/2,3):sci(w0/2,1)));sim.render();}
+  function table(){const F=FN[k],a=F.a,ds=[1,.1,.01,.001];const row=(sg)=>ds.map(d=>`<td>${fv(a+sg*d)}</td>`).join('');
+    $('#lm-tbl').innerHTML=`<thead><tr><th>x − a</th>${ds.map(d=>`<th>−${d}</th>`).join('')}<th></th>${ds.slice().reverse().map(d=>`<th>+${d}</th>`).join('')}</tr></thead>`.replace(/<th>−/g,'<th>−')+
+      `<tbody><tr><th>f(x)</th>${row(-1)}<td class="mid">a</td>${ds.slice().reverse().map(d=>`<td>${fv(a+d)}</td>`).join('')}</tr></tbody>`;}
+  bindRange('lm-zoom',v=>'',v=>{z=v;update();});
+  segBind('lm-fn','k',v=>{k=v;z=0;const r=$('#lm-zoom');r.value=0;table();update();coachSay('#lm-canvas',({hole:'A hole: the graph skips one point, but both sides head to the same height.',jump:'A jump: the two sides head to different heights, so there is no single limit.',sinc:'sin x / x has no value at 0, yet both sides head to 1. This limit is worth remembering.',osc:'The probes never settle: this function swings forever near 0.',cont:'A smooth graph: the limit and the value agree.'})[v]);});
+  table();update();
+  drawers.limits=()=>sim.render();
+  TIPS['lm-zoom']=el=>{const W=2*Math.pow(10,-(+el.value));return `The probes sit ${W>=.02?fmt(W/2,2):sci(W/2,1)} on either side of a. Zooming in squeezes them toward a: watch the two values.`;};
+  KEYS['lm-canvas']=[ 'Slide the zoom. The two coloured dots are the probes; compare their heights.',[['cx','left probe and graph'],['ca','right probe'],['hot','the height each side approaches'],['ink','f(a), the filled dot']]];
+  GLOSS['limit']='The height a function approaches as x gets close to a, whether or not it reaches it.';
+  GLOSS['one-sided limit']='A limit taken from only one side: x → a⁻ is from the left, x → a⁺ from the right.';
+  GLOSS['DNE']='Does not exist: the two sides disagree, the function oscillates, or it is unbounded.';
+  TT.limits='Have students predict each limit before zooming. The most useful discussion is the jump function: ask which number would be a fair answer, and why none is.';
+  /* graph reading lab */
+  let G=null,shown=null;
+  function newG(){G=limGraph();$('#lm-g').innerHTML=G.svg;$$('#lm-q button').forEach(b=>b.setAttribute('aria-pressed','false'));setText('lm-gfb','');}
+  function ans(q){return q==='lm'?G.Lm:q==='lp'?G.Lp:q==='l'?G.L:G.fa;}
+  $$('#lm-q button').forEach(b=>b.addEventListener('click',()=>{$$('#lm-q button').forEach(x=>x.setAttribute('aria-pressed',x===b));const q=b.dataset.q,v=ans(q);
+    const nm={lm:`lim x→${G.a<0?'−'+(-G.a):G.a}⁻`,lp:`lim x→${G.a<0?'−'+(-G.a):G.a}⁺`,l:`lim x→${G.a<0?'−'+(-G.a):G.a}`,fa:`f(${G.a<0?'−'+(-G.a):G.a})`}[q];
+    setText('lm-gfb',q==='fa'?`${nm} = ${v===null?'not defined (no filled dot at that x)':lmN(v)}`:`${nm} f(x) ${v===null?'does not exist: the sides head to different heights':'= '+lmN(v)}`);}));
+  $('#lm-gnew').addEventListener('click',newG);
+  $('#lm-lab2').addEventListener('labreset',newG);newG();
+})();
+(function(){
+  PROBS.push({id:'lim-graph',topic:'limits',title:'Read a limit from a graph',gen(){const G=limGraph(),A=G.a<0?'−'+(-G.a):String(G.a),qs=[
+      ['lim x→'+A+'⁻ f(x)',G.Lm,'The left-hand limit: the height the graph approaches from the left of x = '+A+', ignoring the dot at x = '+A+'.'],
+      ['lim x→'+A+'⁺ f(x)',G.Lp,'The right-hand limit: the height the graph approaches from the right.'],
+      ['lim x→'+A+' f(x)',G.L,G.L!==null?'Left and right agree, so the limit is that common height, whatever f('+A+') is.':'The left and right limits differ, so the two-sided limit does not exist.']];
+    const [txt,val,why]=pick(qs),S=v=>String(v).replace('-','−'),DNE='does not exist',correct=val===null?DNE:S(val);
+    const m=mcq(correct,[S(G.Lm),S(G.Lp),G.fa===null?null:S(G.fa),DNE,S(ri(-3,3)),S(ri(-3,3)+0.5)]);
+    return {q:`The graph of f is shown. What is ${txt}?`,fig:G.svg,choices:m.choices,ans:m.ans,hint:'Cover the dot at x = '+A+' and ask where the graph is heading from each side. Open circles are not part of the graph.',sol:why+` Here the answer is <b>${correct}</b>.`};}});
+  PROBS.push({id:'lim-table',topic:'limits',title:'Estimate a limit from a table',gen(){const fam=pick(['quad','sin','exp']);let f,a,L,txt;
+    if(fam==='quad'){const kk=pick([-5,-4,-3,-2,-1,1,2,3,4,5,6]);a=kk;f=x=>(x*x-kk*kk)/(x-kk);L=2*kk;txt=`(x² − ${kk*kk})/(x − ${kk<0?'('+String(kk).replace('-','−')+')':kk})`;}
+    else if(fam==='sin'){const b=ri(2,7);a=0;f=x=>Math.sin(b*x)/x;L=b;txt=`sin(${b}x)/x`;}
+    else{const b=pick([2,3,4,5,-2,-3]);a=0;f=x=>(Math.exp(b*x)-1)/x;L=b;txt=`(e^(${b<0?'−'+(-b):b}x) − 1)/x`;}
+    const row=sg=>[.1,.01,.001].map(d=>{const x=a+sg*d;return `<td>${fmt(x,3)}</td><td>${fmt(f(x),4)}</td>`;});
+    const tbl=`<table class="lmtbl"><thead><tr><th colspan="2">x → ${fmt(a,0)}⁻</th><th colspan="2">x → ${fmt(a,0)}⁺</th></tr><tr><th>x</th><th>f(x)</th><th>x</th><th>f(x)</th></tr></thead><tbody>${[0,1,2].map(i=>`<tr>${row(-1)[i]}${row(1)[i]}</tr>`).join('')}</tbody></table>`;
+    return {q:`Use the table of values of f(x) = ${txt} to estimate lim x→${fmt(a,0)} f(x). Give a whole number.${tbl}`,ans:L,unit:'',abs:.2,hint:'Look at both columns: what number are the f(x) values getting close to as x gets close to '+fmt(a,0)+'?',
+      sol:`The values on the left (${fmt(f(a-.001),4)} at x = ${fmt(a-.001,3)}) and on the right (${fmt(f(a+.001),4)} at x = ${fmt(a+.001,3)}) are both close to ${L}, so the limit is <b>${L}</b>.`};}});
+  PROBS.push({id:'lim-onesided',topic:'limits',title:'One-sided limits of a piecewise function',gen(){const c=ri(-3,3),m1=ri(-3,3)||1,b1=ri(-4,4),m2=ri(-3,3)||-1,b2=ri(-4,4),right=Math.random()<.5;
+    const P=(m,b)=>polyTxt([m,b]),Lm=m1*c+b1,Lp=m2*c+b2,ans=right?Lp:Lm,cs=c<0?'−'+(-c):String(c);
+    return {q:`Let f(x) = ${P(m1,b1)} for x &lt; ${cs} and f(x) = ${P(m2,b2)} for x ≥ ${cs}. Find lim x→${cs}${right?'⁺':'⁻'} f(x).`,ans,unit:'',abs:.01,hint:`For the ${right?'right-hand':'left-hand'} limit use the piece that applies to x ${right?'slightly greater than':'slightly less than'} ${cs}, and substitute ${cs}.`,
+      sol:`Approaching from the ${right?'right':'left'} uses ${P(right?m2:m1,right?b2:b1)}. At x = ${cs} that is <b>${fmt(ans,0)}</b>.`};}});
+  PROBS.push({id:'lim-k',topic:'limits',title:'Make a limit exist',gen(){const c=pick([-3,-2,-1,1,2,3]),p=ri(-3,3),kk=ri(-4,4)||2,q=c*c+p-kk*c,cs=c<0?'−'+(-c):String(c);
+    return {q:`Let f(x) = x² ${p<0?'−':'+'} ${Math.abs(p)} for x &lt; ${cs}, and f(x) = kx ${q<0?'−':'+'} ${Math.abs(q)} for x ≥ ${cs}. For what value of k does lim x→${cs} f(x) exist?`,ans:kk,unit:'',abs:.01,hint:'The limit exists when the left-hand and right-hand limits are equal. Set the two pieces equal at x = '+cs+'.',
+      sol:`Left: ${c}² ${p<0?'−':'+'} ${Math.abs(p)} = ${c*c+p}. Right: ${cs}k ${q<0?'−':'+'} ${Math.abs(q)}. Setting ${cs}k ${q<0?'−':'+'} ${Math.abs(q)} = ${c*c+p} gives k = <b>${kk}</b>.`};}});
+})();
 
 /* ===== overview.js ===== */
 
@@ -1432,27 +1613,27 @@ function renderMods(){const solved=store('calc-solved')||{};const cnt={};let k=0
 function probCard(p,o={}){
   const mode=o.mode||'practice',exam=mode==='exam',d=p.gen(),uid='q'+Math.random().toString(36).slice(2,9),el=document.createElement('article');
   const solvedMap=store('calc-solved')||{};
-  el.className='prob'+(mode==='practice'&&solvedMap[p.id]?' solved':'');el.pid=p.id;el.dataset.topic=p.topic;if(mode==='practice')el.id='prob-'+p.id;
+  el.className='prob'+(isBC(p)?' bc':'')+(mode==='practice'&&solvedMap[p.id]?' solved':'');el.pid=p.id;el.dataset.topic=p.topic;if(mode==='practice')el.id='prob-'+p.id;
   el.rpCtx={pid:p.id,title:p.title,ans:d.choices?d.choices[d.ans]:d.ans,unit:d.unit||'',exam};
   const ch=d.choices;let sel=-1;
   const input=ch?`<div class="sopts" role="group" aria-label="Choices">${ch.map((c,i)=>`<button type="button" data-i="${i}">${c}</button>`).join('')}</div>`
     :`<form class="ans"><label class="small" for="${uid}">Answer</label><input type="text" inputmode="text" id="${uid}" autocomplete="off" spellcheck="false"><span class="unit">${d.unit||''}</span>${exam?'':'<button type="submit" class="btn primary">Check</button>'}</form>`;
-  el.innerHTML=`<header><span class="tag">${MODS[p.topic].t}</span>${o.badge||`<span class="tag ${apTag(p.topic)}">${MODS[p.topic].ap}</span>`}${p.calc?'<span class="tag calc">Algebra-heavy</span>':''}<span class="done">${mode==='practice'&&solvedMap[p.id]?'Solved':''}</span></header>
+  el.innerHTML=`<header><span class="tag">${MODS[p.topic].t}</span>${o.badge||`<span class="tag ${apTag(p.topic)}">${MODS[p.topic].ap}</span>`}${isBC(p)?'<span class="bcbadge" style="margin:0">BC</span>':''}<span class="done">${mode==='practice'&&solvedMap[p.id]?'Solved':''}</span></header>
     <h3>${p.title}</h3><p class="q">${d.q}</p>${d.fig?`<div class="pfig">${d.fig}</div>`:''}${input}
     <p class="fb" aria-live="polite"></p>
     <div class="row">${exam?'':'<button type="button" class="btn link" data-act="hint">Hint</button>'}<button type="button" class="btn link" data-act="sol"${exam?' hidden':''}>Show solution</button>${mode==='practice'?'<button type="button" class="btn link" data-act="new">New numbers</button>':''}<button type="button" class="btn link rp-link" data-report="${p.topic}" style="margin-left:auto">Report this problem</button></div>
     <div class="box" data-box="hint" hidden><p>${d.hint}</p></div><div class="box" data-box="sol" hidden><p>${d.sol}</p></div>`;
   const fb=$('.fb',el),inp=$('input',el);
-  const ansText=ch?ch[d.ans]:`${d.show||fmt(d.ans,3)}${d.unit?' '+d.unit:''}`;
-  function evaluate(){if(ch)return {blank:sel<0,ok:sel===d.ans};const x=parseNum(inp.value);if(!isFinite(x))return {blank:true,ok:false};
+  const ansText=ch?ch[d.ans]:d.expr?pretty(d.expr)+(d.c?' + C':''):`${d.show||fmt(d.ans,3)}${d.unit?' '+d.unit:''}`;
+  function evaluate(){if(ch)return {blank:sel<0,ok:sel===d.ans};if(d.expr){const s=inp.value.replace(/\+\s*C\s*$/i,'').trim();if(!s)return {blank:true,ok:false};try{parseExpr(s);}catch(e){return {blank:true,ok:false};}return {blank:false,ok:sameFn(s,d.expr,{c:d.c})};}const x=parseNum(inp.value);if(!isFinite(x))return {blank:true,ok:false};
     return {blank:false,ok:ansOK(x,d),flip:!ansOK(x,d)&&ansOK(-x,d)};}
   function lock(){if(inp)inp.disabled=true;$$('.sopts button',el).forEach(b=>b.disabled=true);const s=$('button[type=submit]',el);if(s)s.disabled=true;}
   el.grade=()=>{const r=evaluate();fb.className='fb '+(r.ok?'ok':'no');fb.textContent=r.ok?`Correct: ${ansText}.`:`${r.blank?'No answer.':'Not quite.'} The answer is ${ansText}.`;lock();$('[data-act=sol]',el).hidden=false;return r.ok;};
   function right(){fb.className='fb ok';fb.textContent=`Correct: ${ansText}.`;lock();if(mode==='practice'){const s=store('calc-solved')||{};s[p.id]=1;store('calc-solved',s);el.classList.add('solved');$('.done',el).textContent='Solved';o.onSolved&&o.onSolved();}o.onRight&&o.onRight(el);}
-  function wrong(r){fb.className='fb no';fb.textContent=(r.flip?'Check your sign. ':'Not yet. Try the hint, or check your units and significant figures. ')+(mode==='practice'?'(Added to Review my mistakes.)':'');if(mode==='practice')reviewMiss(p.id);o.onWrong&&o.onWrong(el);}
+  function wrong(r){fb.className='fb no';fb.textContent=(r.flip?'Check your sign. ':'Not yet. Try the hint, or check your algebra and your rounding (three decimal places unless told otherwise). ')+(mode==='practice'?'(Added to Review my mistakes.)':'');if(mode==='practice')reviewMiss(p.id);o.onWrong&&o.onWrong(el);}
   if(ch){$$('.sopts button',el).forEach(b=>b.addEventListener('click',()=>{sel=+b.dataset.i;$$('.sopts button',el).forEach(x=>x.classList.toggle('picked',x===b));
       if(exam)return;const r=evaluate();b.classList.add(r.ok?'right':'wrong');if(r.ok)right();else{wrong(r);b.disabled=true;}}));}
-  else $('form',el).addEventListener('submit',e=>{e.preventDefault();if(exam)return;const r=evaluate();if(r.blank){fb.className='fb no';fb.textContent='Enter a number (like 0.25, 1.8e-5 or 1.8 x 10^-5), without units.';return;}r.ok?right():wrong(r);});
+  else $('form',el).addEventListener('submit',e=>{e.preventDefault();if(exam)return;const r=evaluate();if(r.blank){fb.className='fb no';fb.textContent=d.expr?'Type an expression like 3x^2 + 2x, sin(x) or e^(2x). Use ^ for powers and * or a space for times.':'Enter a number or exact value (like 0.25, 3/4, 2pi, ln(2) or sqrt(3)/2), without units.';return;}r.ok?right():wrong(r);});
   $$('[data-act]',el).forEach(b=>b.addEventListener('click',()=>{const a=b.dataset.act;if(a==='new'){el.replaceWith(o.again?o.again():probCard(p,o));return;}
     const bx=$(`[data-box="${a}"]`,el);bx.hidden=!bx.hidden;if(a==='sol')b.textContent=bx.hidden?'Show solution':'Hide solution';}));
   return el;}
@@ -1460,12 +1641,14 @@ function probCard(p,o={}){
 /* ---------------- Practice set ---------------- */
 (function practice(){
   const list=$('#pr-list');if(!list)return;let filter='all';const inGroup=(f,tp)=>f==='all'||GROUPS[+f].ids.includes(tp);
-  function score(){const s=store('calc-solved')||{};const n=PROBS.filter(p=>s[p.id]).length;setText('pr-score',`${n} of ${PROBS.length} solved`);const m=$('#pr-meter');if(m)m.style.width=(PROBS.length?100*n/PROBS.length:0)+'%';renderMods();}
+  const vis=()=>PROBS.filter(p=>!(COURSE()==='AB'&&isBC(p)));
+  function score(){const s=store('calc-solved')||{};const V=vis(),n=V.filter(p=>s[p.id]).length;setText('pr-score',`${n} of ${V.length} solved`);const m=$('#pr-meter');if(m)m.style.width=(V.length?100*n/V.length:0)+'%';renderMods();}
+  document.addEventListener('coursechange',score);
   function card(p){const el=probCard(p,{mode:'practice',onSolved:score,again:()=>card(p)});el.hidden=!inGroup(filter,p.topic);return el;}
   PROBS.forEach(p=>list.appendChild(card(p)));
-  $('#pr-filter').innerHTML='<button type="button" data-f="all" aria-pressed="true">All</button>'+GROUPS.map((g,i)=>`<button type="button" data-f="${i}" aria-pressed="false">${g.w==='Optional'?'Math':g.w}</button>`).join('');
+  $('#pr-filter').innerHTML='<button type="button" data-f="all" aria-pressed="true">All</button>'+GROUPS.map((g,i)=>`<button type="button" data-f="${i}" aria-pressed="false">${g.w==='Optional'?'Math':g.w==='BC'?'BC':g.w.replace('Unit ','U')}</button>`).join('');
   $$('#pr-filter button').forEach(b=>b.addEventListener('click',()=>{filter=b.dataset.f;$$('#pr-filter button').forEach(x=>x.setAttribute('aria-pressed',x===b));$$('.prob',list).forEach(el=>el.hidden=!inGroup(filter,el.dataset.topic));}));
-  setText('pr-count',PROBS.length);
+  setText('pr-count',vis().length);document.addEventListener('coursechange',()=>setText('pr-count',vis().length));
   $('#pr-reset').addEventListener('click',()=>{store('calc-solved',{});$$('.prob',list).forEach(el=>{el.classList.remove('solved');$('.done',el).textContent='';});score();});
   score();
 })();
@@ -1596,13 +1779,13 @@ function reviewBadge(){const r=reviewGet(),now=Date.now(),due=Object.keys(r).fil
 
 /* ===== exam_review.js ===== */
 (function exam(){const box=$('#ex-weeks');let N=10,timed=false,timer=null,cards=[];
-  GROUPS.forEach((g,i)=>{const b=document.createElement('button');b.type='button';b.dataset.i=i;b.setAttribute('aria-pressed','false');b.textContent=g.w==='Optional'?'Math toolkit':g.w;b.title=g.name;b.addEventListener('click',()=>b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true')));box.appendChild(b);});
+  GROUPS.forEach((g,i)=>{const b=document.createElement('button');b.type='button';b.dataset.i=i;b.setAttribute('aria-pressed','false');b.textContent=g.w==='Optional'?'Math toolkit':g.w==='BC'?'BC extras':g.w;b.title=g.name;if(g.bc)b.classList.add('bc');b.addEventListener('click',()=>b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true')));box.appendChild(b);});
   segBind('ex-n','n',v=>N=+v);segBind('ex-t','t',v=>timed=v==='on');
   $('#ex-all').addEventListener('click',()=>$$('#ex-weeks button').forEach(b=>b.setAttribute('aria-pressed','true')));
   $('#ex-none').addEventListener('click',()=>$$('#ex-weeks button').forEach(b=>b.setAttribute('aria-pressed','false')));
   function start(){const sel=$$('#ex-weeks button').filter(b=>b.getAttribute('aria-pressed')==='true').map(b=>GROUPS[+b.dataset.i]),msg=$('#ex-msg');
     if(!sel.length){msg.textContent='Pick at least one unit first.';return;}
-    const ids=new Set(sel.flatMap(g=>g.ids));let pool=PROBS.filter(p=>ids.has(p.topic));if(!pool.length){msg.textContent='No practice problems in those units yet. Add another unit.';return;}
+    const ids=new Set(sel.flatMap(g=>g.ids));let pool=PROBS.filter(p=>ids.has(p.topic)&&!(COURSE()==='AB'&&isBC(p)));if(!pool.length){msg.textContent='No practice problems in those units yet. Add another unit.';return;}
     pool=pool.map(p=>[Math.random(),p]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]).slice(0,N);msg.textContent=pool.length<N?`Only ${pool.length} problems exist for those units, so the set has ${pool.length}.`:'';
     const list=$('#ex-list');list.innerHTML='';cards=pool.map((p,i)=>{const c=probCard(p,{mode:'exam',badge:`<span class="tag ap">Q${i+1}</span>`});list.appendChild(c);return c;});
     $('#ex-run').hidden=false;$('#ex-result').hidden=true;$('#ex-submit').hidden=false;$('#ex-setup').hidden=true;clearInterval(timer);const tEl=$('#ex-timer');

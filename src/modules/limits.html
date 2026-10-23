@@ -1,0 +1,72 @@
+  <section class="view" id="v-limits" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 1</span><span class="tag">AB &amp; BC</span></div>
+        <h1>Limits from graphs &amp; tables</h1>
+        <p class="lede">A limit asks where a function is <i>heading</i> as x gets close to a number, not what the function does at that number. That one change lets calculus talk about a tangent line, a speed at an instant, and an area under a curve.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Walk toward a doorway along a hallway whose floor is the graph of <span class="m">f</span>. As you get closer to the doorway at <span class="m">x = a</span>, your height settles toward some value <span class="m">L</span>. That height is the limit. It does not matter whether there is a floor tile <i>exactly</i> at the doorway, or whether the tile there is at a different height. The limit only cares about the approach.</p>
+        <p>You can approach from the left or from the right. The limit exists only when both approaches head to the same height. If the floor has a step in it, the two sides disagree and the limit does not exist.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>to know what a function does at <i>a</i>, plug in <i>a</i></dd><dt>So we didn't need</dt><dd>anything but substitution</dd><dt>Now</dt><dd>(x² − 1)/(x − 1) at x = 1 gives 0/0, and a speedometer needs "speed at one instant"</dd><dt>So we need</dt><dd>a way to describe what a function approaches without ever reaching it</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>lim<sub>x→a</sub> f(x) = L</span><small>f(x) gets as close to L as you like</small></div><div class="eqn"><span>lim<sub>x→a⁻</sub> f(x)</span><small>approach from the left</small></div><div class="eqn"><span>lim<sub>x→a⁺</sub> f(x)</span><small>approach from the right</small></div><div class="eqn"><span>left = right = L</span><small>the limit exists and equals L</small></div></div>
+
+      <div class="lab" id="lm-lab">
+        <div class="labbar"><span class="title">Zoom in on a limit</span></div>
+        <div class="ctl"><span class="lbl">Function</span><div class="seg" id="lm-fn" role="group" aria-label="Choose a function">
+          <button type="button" data-k="hole" aria-pressed="true">Hole</button><button type="button" data-k="jump" aria-pressed="false">Jump</button><button type="button" data-k="sinc" aria-pressed="false">sin x / x</button><button type="button" data-k="osc" aria-pressed="false">sin(1/x)</button><button type="button" data-k="cont" aria-pressed="false">Smooth</button></div></div>
+        <p class="small" id="lm-formula" style="margin:0"></p>
+        <canvas id="lm-canvas" aria-label="Graph of the chosen function near x = a with two probe points, one on each side. Use the zoom slider to bring the probes toward a."></canvas>
+        <div class="controls"><div class="ctl"><label for="lm-zoom"><span>Zoom in</span> <output id="lm-zoom-out"></output></label><input type="range" id="lm-zoom" min="0" max="3" step="0.05" value="0"></div></div>
+        <div class="readout"><div><span>left probe f(a − w)</span><strong class="x" id="lm-l">—</strong></div><div><span>right probe f(a + w)</span><strong class="a" id="lm-r">—</strong></div><div><span>f(a) itself</span><strong id="lm-fa">—</strong></div><div><span>the limit</span><strong class="v" id="lm-lim" style="white-space:normal;font-size:15px">—</strong></div></div>
+        <div class="tablewrap"><table class="lmtbl" id="lm-tbl" aria-label="Table of values on each side of a"></table></div>
+      </div>
+
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose <b>Hole</b> and zoom all the way in. What do both probes head toward, and what is f(a)? <button type="button" class="btn link" data-show='[["click","#lm-fn [data-k=hole]"],["#lm-zoom",3]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Both probes squeeze toward 2, so the limit is 2. But f(1) has no value (0/0): there is a hole in the graph. A limit can exist where the function has no value at all.</p></details></li>
+        <li><p>Choose <b>Jump</b> and zoom in. Do the two probes ever meet? <button type="button" class="btn link" data-show='[["click","#lm-fn [data-k=jump]"],["#lm-zoom",3]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>The left probe heads to 3 and the right probe heads to −1, no matter how far you zoom. Left ≠ right, so the limit does not exist. Notice f(2) = 1 is neither of them: the value at the point is irrelevant to the limit.</p></details></li>
+        <li><p>Choose <b>sin(1/x)</b> and zoom in. Is there any value both probes settle toward? <button type="button" class="btn link" data-show='[["click","#lm-fn [data-k=osc]"],["#lm-zoom",3]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>No. The graph keeps swinging between −1 and 1 faster and faster as x nears 0, so the probes keep jumping around. The limit does not exist, and not because of a jump: the function never settles.</p></details></li>
+      </ol></div>
+
+      <div class="lab" id="lm-lab2" data-reset="own">
+        <div class="labbar"><span class="title">Read a limit from a graph</span></div>
+        <p class="small" style="margin:0">Open circle = the graph does not include that point. Filled dot = the graph's value there. Tap a question to see what the graph says, then make a new graph.</p>
+        <div class="lmgraph" id="lm-g"></div>
+        <div class="seg" id="lm-q" role="group" aria-label="Which quantity"><button type="button" data-q="lm" aria-pressed="false">lim x→a⁻</button><button type="button" data-q="lp" aria-pressed="false">lim x→a⁺</button><button type="button" data-q="l" aria-pressed="false">lim x→a</button><button type="button" data-q="fa" aria-pressed="false">f(a)</button></div>
+        <p class="fb" id="lm-gfb" aria-live="polite" style="min-height:1.6em"></p>
+        <div class="row"><button type="button" class="btn" id="lm-gnew">New graph</button></div>
+      </div>
+
+      <div class="example"><h3>Worked example</h3><p class="prob">Estimate lim<sub>x→2</sub> (x² − 4)/(x − 2) from a table, then say why plugging in fails.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Plug in.</b> At x = 2 the expression is 0/0, which tells us nothing. The function has no value at 2, so we look at nearby values.</li>
+          <li hidden><b>Left side.</b> f(1.9) = (3.61 − 4)/(−0.1) = 3.9, f(1.99) = 3.99, f(1.999) = 3.999.</li>
+          <li hidden><b>Right side.</b> f(2.1) = (4.41 − 4)/0.1 = 4.1, f(2.01) = 4.01, f(2.001) = 4.001.</li>
+          <li hidden><b>Compare.</b> Both sides head toward 4, from below on the left and above on the right. So <b>lim<sub>x→2</sub> (x² − 4)/(x − 2) = 4</b>.</li>
+          <li hidden><b>Check with a graph.</b> (x² − 4)/(x − 2) = x + 2 everywhere except x = 2, so its graph is the line y = x + 2 with a hole at (2, 4). A table gives a good estimate; the algebra in the next module will prove it.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Thinking the limit equals f(a). It often does (for smooth graphs), but it need not: the limit ignores the value at a.</li>
+        <li>Saying a limit "doesn't exist" because f(a) has no value. A hole still has a limit.</li>
+        <li>Reading a graph's limit from the filled dot instead of from the heights the two sides approach.</li>
+        <li>Believing a table proves a limit. It gives a strong estimate; oscillating functions can fool a short table.</li>
+        <li>Writing "lim = 3 and −1". If the two sides disagree, the two-sided limit does not exist (DNE); the one-sided limits are separate answers.</li>
+      </ul></div>
+      <div class="prose"><h2>When a limit fails to exist</h2>
+        <p>There are three common ways. A <b>jump</b>: the one-sided limits are both numbers but unequal. <b>Unbounded growth</b>: the function blows up toward ∞ or −∞ near a (the next modules call this an infinite limit; the AP exam says the limit does not exist but may describe it as ∞). <b>Oscillation</b>: the function keeps swinging without settling, like sin(1/x) at 0.</p>
+        <p>The formal definition (every tolerance around L is met once x is close enough to a) is what makes this rigorous. AP Calculus works with the idea rather than the proof, but it is the reason limits can be added, multiplied and divided safely, which the next module uses.</p></div>
+      <div class="quiz" data-correct="1" data-explain="Left and right limits are 3 and −1. They disagree, so the two-sided limit does not exist, whatever f(2) is.">
+        <p class="q">Check yourself: as x → 2 the graph approaches 3 from the left and −1 from the right, and f(2) = 1. What is lim<sub>x→2</sub> f(x)?</p>
+        <div class="opts"><button type="button">1</button><button type="button">It does not exist</button><button type="button">3</button><button type="button">1 (the average of the sides)</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="A hole means f(a) has no value, but both sides still head toward the same height, so the limit exists.">
+        <p class="q">Check yourself: the graph has an open circle at (3, 5) and approaches height 5 from both sides. Does lim<sub>x→3</sub> f(x) exist?</p>
+        <div class="opts"><button type="button">Yes, it equals 5</button><button type="button">No, because f(3) has no value</button><button type="button">No, because the graph has a hole</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
