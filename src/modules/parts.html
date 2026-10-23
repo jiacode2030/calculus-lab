@@ -1,0 +1,51 @@
+  <section class="view bc" id="v-parts" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 6 · BC</span><span class="tag">BC only</span></div>
+        <h1>Integration by parts</h1>
+        <p class="lede">The product rule, run backwards. It trades a hard integral of a product for a (hopefully easier) one.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>The product rule says <span class="m">(uv)′ = u′v + uv′</span>. Integrate both sides and rearrange: <span class="m">∫ u dv = uv − ∫ v du</span>. You split the integrand into a part <b>u</b> to differentiate and a part <b>dv</b> to integrate. It pays off when differentiating u makes it simpler (x becomes 1, ln x becomes 1/x) and integrating dv is easy (eˣ, sin x, cos x).</p>
+        <p>A good rule of thumb for choosing u is <b>LIATE</b>: Logarithmic, Inverse trig, Algebraic (powers of x), Trig, Exponential: pick u as the one that comes first. Some integrals need parts twice (x²eˣ), and a few circle back to themselves (eˣ sin x), which you solve algebraically.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>substitution handled products only when one factor was the derivative of the inside</dd><dt>So we didn't need</dt><dd>a second tool for products, and for ∫ ln x</dd><dt>Now</dt><dd>∫ x eˣ dx, ∫ x sin x dx, ∫ ln x dx</dd><dt>So we need</dt><dd>integration by parts</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>∫ u dv = uv − ∫ v du</span><small>by parts</small></div><div class="eqn"><span>LIATE</span><small>choose u: Log, Inverse trig, Algebra, Trig, Exp</small></div><div class="eqn"><span>∫<sub>a</sub><sup>b</sup> u dv = [uv]<sub>a</sub><sup>b</sup> − ∫ v du</span><small>definite</small></div></div>
+      <div class="lab" id="pa-lab">
+        <div class="labbar"><span class="title">Check the formula against the area</span></div>
+        <div class="ctl"><span class="lbl">Integral</span><div class="seg" id="pa-fn" role="group" aria-label="Integral"><button type="button" data-k="a" aria-pressed="true">∫ x eˣ dx</button><button type="button" data-k="b" aria-pressed="false">∫ x sin x dx</button><button type="button" data-k="c" aria-pressed="false">∫ ln x dx</button><button type="button" data-k="d" aria-pressed="false">∫ x² eˣ dx</button></div></div>
+        <p class="small" id="pa-form" style="margin:0"></p>
+        <canvas id="pa-canvas" aria-label="A function with its area shaded from the lower limit to b, and readouts comparing the numeric area with the by-parts answer."></canvas>
+        <div class="controls"><div class="ctl"><label for="pa-b"><span>Upper limit b</span> <output id="pa-b-out"></output></label><input type="range" id="pa-b" min="0.3" max="3" step="0.05" value="1.5"></div></div>
+        <div class="readout"><div><span>area, found numerically</span><strong class="x" id="pa-num">—</strong></div><div><span>by parts: [uv − ∫v du] from a to b</span><strong class="v" id="pa-fm">—</strong></div><div><span>agree?</span><strong class="" id="pa-eq">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose ∫ x eˣ dx. Which choice of u makes the new integral easier: u = x or u = eˣ? Think, then read the formula line. <button type="button" class="btn link" data-show='[["click", "#pa-fn [data-k=a]"], ["#pa-b", 1.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>u = x: then du = dx and v = eˣ, so ∫ v du = ∫ eˣ dx, trivial. With u = eˣ you would get ∫ (x²/2) eˣ dx, which is harder than the original.</p></details></li>
+        <li><p>Choose ∫ ln x dx. There is only one function; where is the product? <button type="button" class="btn link" data-show='[["click", "#pa-fn [data-k=c]"], ["#pa-b", 2]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Write ln x = ln x · 1: u = ln x, dv = dx. Then du = dx/x, v = x, and ∫ ln x dx = x ln x − ∫ 1 dx = x ln x − x.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Evaluate ∫ x e<sup>x</sup> dx and ∫<sub>0</sub><sup>1</sup> x e<sup>x</sup> dx.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Choose u and dv (LIATE).</b> u = x (algebraic), dv = eˣ dx.</li>
+          <li hidden><b>Differentiate and integrate.</b> du = dx, v = eˣ.</li>
+          <li hidden><b>Apply the formula.</b> ∫ x eˣ dx = x eˣ − ∫ eˣ dx = x eˣ − eˣ + C.</li>
+          <li hidden><b>Definite integral.</b> [x eˣ − eˣ]<sub>0</sub><sup>1</sup> = (e − e) − (0 − 1) = 1.</li>
+          <li hidden><b>Answer.</b> <b>(x − 1)eˣ + C</b>, and the definite integral is <b>1</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Choosing u badly (making the new integral harder). Try the other choice.</li>
+        <li>Forgetting to subtract ∫ v du, or its sign.</li>
+        <li>Dropping the product uv in a definite integral: evaluate [uv] at the limits too.</li>
+        <li>Not recognizing ln x needs u = ln x, dv = dx.</li>
+        <li>Forgetting + C in an indefinite integral.</li>
+      </ul></div>
+      <div class="prose"><h2>Twice, or circular</h2>
+        <p>For ∫ x² eˣ dx, apply parts twice: the power of x drops from 2 to 1 to 0. For ∫ eˣ sin x dx, applying parts twice returns the original integral: I = (…) − I, so I = (…)/2. The tabular method (a column of derivatives of u and a column of integrals of dv) organizes repeated parts.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Differentiating x gives 1; integrating cos x gives sin x. Easy.">
+        <p class="q">Check yourself: To find ∫ x cos x dx by parts, a good choice is</p>
+        <div class="opts"><button type="button">u = x, dv = cos x dx</button><button type="button">u = cos x, dv = x dx</button><button type="button">u = x cos x, dv = dx</button><button type="button">u = 1, dv = x cos x dx</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

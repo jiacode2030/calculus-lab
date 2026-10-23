@@ -1,0 +1,49 @@
+  <section class="view bc" id="v-arclen" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Units 7–8 · BC</span><span class="tag">BC only</span></div>
+        <h1>Arc length</h1>
+        <p class="lede">How long is a curve? Approximate it with tiny straight pieces and use the Pythagorean theorem on each.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>A tiny piece of the curve over a width dx rises by dy, so its length is <span class="m">√(dx² + dy²) = √(1 + (dy/dx)²) dx</span>. Adding them up: <span class="m">L = ∫<sub>a</sub><sup>b</sup> √(1 + (f′(x))²) dx</span>. The polygon with more and more short segments approaches this length.</p>
+        <p>The integrand rarely has a nice antiderivative, which is why exam problems are chosen so that 1 + (f′)² is a perfect square, or ask you to evaluate with a calculator. Always differentiate first, then square f′ (not f), and then integrate.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>area and volume were integrals of lengths or areas</dd><dt>So we didn't need</dt><dd>the length of a curve itself</dd><dt>Now</dt><dd>cables, roads and paths</dd><dt>So we need</dt><dd>the arc length formula</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>L = ∫ √(1 + (f′(x))²) dx</span><small>arc length of y = f(x)</small></div><div class="eqn"><span>ds = √(dx² + dy²)</span><small>a tiny piece</small></div><div class="eqn"><span>f′ first, then square</span><small></small></div></div>
+      <div class="lab" id="al-lab">
+        <div class="labbar"><span class="title">Straight pieces along a curve</span></div>
+        <div class="ctl"><span class="lbl">Curve</span><div class="seg" id="al-fn" role="group" aria-label="Curve"><button type="button" data-k="a" aria-pressed="true">y = x² on [0, 2]</button><button type="button" data-k="b" aria-pressed="false">y = sin x on [0, π]</button><button type="button" data-k="c" aria-pressed="false">y = (2/3)x^(3/2) on [0, 3]</button></div></div>
+        <canvas id="al-canvas" aria-label="A curve with a polygon of n straight segments along it, compared with the arc length integral."></canvas>
+        <div class="controls"><div class="ctl"><label for="al-n"><span>Segments n</span> <output id="al-n-out"></output></label><input type="range" id="al-n" min="1" max="40" step="1" value="4"></div></div>
+        <div class="readout"><div><span>length of the polygon</span><strong class="x" id="al-poly">—</strong></div><div><span>∫ √(1 + f′²) dx</span><strong class="v" id="al-int">—</strong></div><div><span>difference</span><strong class="a" id="al-diff">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Set n = 1 on y = x². How does the one-chord length compare with the arc length? <button type="button" class="btn link" data-show='[["click", "#al-fn [data-k=a]"], ["#al-n", 1]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>A straight chord is always shorter than the curve through the same end points. Chord: √(4 + 16) = 4.47; the curve is 4.65.</p></details></li>
+        <li><p>Increase n to 40. What happens? <button type="button" class="btn link" data-show='[["#al-n", 40]]'>n = 40</button></p><details><summary>What you should see</summary><p>The polygon length climbs toward the integral from below. The integral is the limit of polygon lengths as the pieces shrink.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find the length of y = (2/3)x<sup>3/2</sup> from x = 0 to x = 3.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Derivative first.</b> f′(x) = x<sup>1/2</sup>, so (f′)² = x.</li>
+          <li hidden><b>Set up.</b> L = ∫<sub>0</sub><sup>3</sup> √(1 + x) dx.</li>
+          <li hidden><b>Integrate.</b> (2/3)(1 + x)<sup>3/2</sup> from 0 to 3 = (2/3)(8 − 1).</li>
+          <li hidden><b>Answer.</b> <b>14/3</b> ≈ 4.667.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Squaring f instead of f′ in 1 + (f′)².</li>
+        <li>Forgetting the square root or the 1.</li>
+        <li>Leaving the derivative inside √ without squaring: it is (f′)², not f′.</li>
+        <li>Using the area formula by mistake.</li>
+        <li>Not simplifying: look for 1 + (f′)² as a perfect square.</li>
+      </ul></div>
+      <div class="prose"><h2>Parametric arc length</h2>
+        <p>If x = x(t) and y = y(t), the length is ∫ √((dx/dt)² + (dy/dt)²) dt. The speed of a particle is the same square root, so arc length is the integral of speed.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Pythagoras on dx and dy: √(dx² + dy²) = √(1 + (dy/dx)²) dx.">
+        <p class="q">Check yourself: The arc length of y = f(x) on [a, b] is</p>
+        <div class="opts"><button type="button">∫ √(1 + (f′)²) dx</button><button type="button">∫ √(1 + f²) dx</button><button type="button">∫ (1 + f′²) dx</button><button type="button">∫ √(f′) dx</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

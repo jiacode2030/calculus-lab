@@ -1,0 +1,49 @@
+  <section class="view bc" id="v-euler" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Units 7–8 · BC</span><span class="tag">BC only</span></div>
+        <h1>Euler's method</h1>
+        <p class="lede">When you cannot solve a differential equation, you can still follow its slopes in small steps.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Start at the initial point <span class="m">(x₀, y₀)</span>. The differential equation gives the slope there. Walk along that tangent line for a short step <span class="m">Δx = h</span>, arrive at a new point, find the new slope, and repeat. The rule is <span class="m">y<sub>n+1</sub> = y<sub>n</sub> + h·F(x<sub>n</sub>, y<sub>n</sub>)</span> with <span class="m">x<sub>n+1</sub> = x<sub>n</sub> + h</span>.</p>
+        <p>Smaller steps follow the true curve more closely. Euler's method underestimates when the solution is concave up (it follows tangent lines, which lie below), and overestimates when concave down. It is a numerical approximation of a solution you could trace by hand on a slope field.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>a tangent line gave one estimate</dd><dt>So we didn't need</dt><dd>a chain of tangent-line steps</dd><dt>Now</dt><dd>solving equations that have no closed form</dd><dt>So we need</dt><dd>Euler's method</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>y<sub>n+1</sub> = y<sub>n</sub> + h·F(x<sub>n</sub>, y<sub>n</sub>)</span><small>Euler step</small></div><div class="eqn"><span>x<sub>n+1</sub> = x<sub>n</sub> + h</span><small>move right</small></div><div class="eqn"><span>smaller h → better estimate</span><small>but never exact</small></div></div>
+      <div class="lab" id="eu-lab">
+        <div class="labbar"><span class="title">Step along the slopes</span></div>
+        <div class="ctl"><span class="lbl">Equation</span><div class="seg" id="eu-fn" role="group" aria-label="Equation"><button type="button" data-k="a" aria-pressed="true">dy/dx = y, y(0) = 1</button><button type="button" data-k="b" aria-pressed="false">dy/dx = x − y, y(0) = 1</button><button type="button" data-k="c" aria-pressed="false">dy/dx = −2xy, y(0) = 1</button></div></div>
+        <div class="ctl"><span class="lbl">Step size h</span><div class="seg" id="eu-h" role="group" aria-label="Step size"><button type="button" data-k="h1" aria-pressed="false">1</button><button type="button" data-k="h05" aria-pressed="true">0.5</button><button type="button" data-k="h025" aria-pressed="false">0.25</button><button type="button" data-k="h01" aria-pressed="false">0.1</button><button type="button" data-k="h005" aria-pressed="false">0.05</button></div></div>
+        <canvas id="eu-canvas" aria-label="The true solution curve with the polyline from Euler&#x27;s method for a chosen step size."></canvas>
+        <div class="readout"><div><span>Euler estimate at x = 2</span><strong class="x" id="eu-est">—</strong></div><div><span>exact value</span><strong class="v" id="eu-ex">—</strong></div><div><span>error</span><strong class="a" id="eu-err">—</strong></div></div>
+        <div class="tablewrap"><table class="lmtbl" id="eu-tbl" aria-label="Euler steps"></table></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Use h = 1 on dy/dx = y. Is the estimate too high or too low? <button type="button" class="btn link" data-show='[["click", "#eu-fn [data-k=a]"], ["click", "#eu-h [data-k=h1]"]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Too low: the exact y = eˣ is concave up, so each tangent line lies below it. With h = 1 the estimate at x = 2 is 4 versus the exact 7.39.</p></details></li>
+        <li><p>Now shrink h to 0.05. What happens to the error? <button type="button" class="btn link" data-show='[["click", "#eu-fn [data-k=a]"], ["click", "#eu-h [data-k=h005]"]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>It shrinks a lot: more, shorter steps hug the curve. The error is roughly proportional to h.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Use Euler's method with h = 0.5 to estimate y(1) if dy/dx = x + y and y(0) = 1.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Step 1 from (0, 1).</b> slope = 0 + 1 = 1, so y₁ = 1 + 0.5(1) = 1.5 at x = 0.5.</li>
+          <li hidden><b>Step 2 from (0.5, 1.5).</b> slope = 0.5 + 1.5 = 2, so y₂ = 1.5 + 0.5(2) = 2.5 at x = 1.</li>
+          <li hidden><b>Answer.</b> y(1) ≈ <b>2.5</b>. (The exact solution is 2e − 2 ≈ 3.44: Euler underestimates since y is concave up.)</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 3</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Using the slope at the old point for the wrong coordinates: use both x<sub>n</sub> and y<sub>n</sub>.</li>
+        <li>Forgetting to move x by h each step.</li>
+        <li>Stopping at the wrong number of steps: (x<sub>end</sub> − x₀)/h steps.</li>
+        <li>Believing Euler is exact. It is only an approximation.</li>
+        <li>Mixing up over- and under-estimates: tangent lines lie below a concave-up curve.</li>
+      </ul></div>
+      <div class="prose"><h2>Why it works</h2>
+        <p>Near a point the solution is almost its tangent line, whose slope the differential equation gives exactly. Each step makes a small error; many small steps keep the total error small. The smaller the step, the closer you stay to the true curve.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="slope at (0, 2) is 2, so y₁ = 2 + 0.1(2) = 2.2.">
+        <p class="q">Check yourself: Euler's method for dy/dx = x + y, y(0) = 2, h = 0.1 gives y₁ =</p>
+        <div class="opts"><button type="button">2.2</button><button type="button">2.1</button><button type="button">2.0</button><button type="button">2.3</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

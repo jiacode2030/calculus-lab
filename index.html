@@ -2801,6 +2801,310 @@ body.is-ab .prob.bc{display:none!important}
     </div>
   </section>
 
+  <section class="view bc" id="v-parts" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 6 · BC</span><span class="tag">BC only</span></div>
+        <h1>Integration by parts</h1>
+        <p class="lede">The product rule, run backwards. It trades a hard integral of a product for a (hopefully easier) one.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>The product rule says <span class="m">(uv)′ = u′v + uv′</span>. Integrate both sides and rearrange: <span class="m">∫ u dv = uv − ∫ v du</span>. You split the integrand into a part <b>u</b> to differentiate and a part <b>dv</b> to integrate. It pays off when differentiating u makes it simpler (x becomes 1, ln x becomes 1/x) and integrating dv is easy (eˣ, sin x, cos x).</p>
+        <p>A good rule of thumb for choosing u is <b>LIATE</b>: Logarithmic, Inverse trig, Algebraic (powers of x), Trig, Exponential: pick u as the one that comes first. Some integrals need parts twice (x²eˣ), and a few circle back to themselves (eˣ sin x), which you solve algebraically.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>substitution handled products only when one factor was the derivative of the inside</dd><dt>So we didn't need</dt><dd>a second tool for products, and for ∫ ln x</dd><dt>Now</dt><dd>∫ x eˣ dx, ∫ x sin x dx, ∫ ln x dx</dd><dt>So we need</dt><dd>integration by parts</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>∫ u dv = uv − ∫ v du</span><small>by parts</small></div><div class="eqn"><span>LIATE</span><small>choose u: Log, Inverse trig, Algebra, Trig, Exp</small></div><div class="eqn"><span>∫<sub>a</sub><sup>b</sup> u dv = [uv]<sub>a</sub><sup>b</sup> − ∫ v du</span><small>definite</small></div></div>
+      <div class="lab" id="pa-lab">
+        <div class="labbar"><span class="title">Check the formula against the area</span></div>
+        <div class="ctl"><span class="lbl">Integral</span><div class="seg" id="pa-fn" role="group" aria-label="Integral"><button type="button" data-k="a" aria-pressed="true">∫ x eˣ dx</button><button type="button" data-k="b" aria-pressed="false">∫ x sin x dx</button><button type="button" data-k="c" aria-pressed="false">∫ ln x dx</button><button type="button" data-k="d" aria-pressed="false">∫ x² eˣ dx</button></div></div>
+        <p class="small" id="pa-form" style="margin:0"></p>
+        <canvas id="pa-canvas" aria-label="A function with its area shaded from the lower limit to b, and readouts comparing the numeric area with the by-parts answer."></canvas>
+        <div class="controls"><div class="ctl"><label for="pa-b"><span>Upper limit b</span> <output id="pa-b-out"></output></label><input type="range" id="pa-b" min="0.3" max="3" step="0.05" value="1.5"></div></div>
+        <div class="readout"><div><span>area, found numerically</span><strong class="x" id="pa-num">—</strong></div><div><span>by parts: [uv − ∫v du] from a to b</span><strong class="v" id="pa-fm">—</strong></div><div><span>agree?</span><strong class="" id="pa-eq">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Choose ∫ x eˣ dx. Which choice of u makes the new integral easier: u = x or u = eˣ? Think, then read the formula line. <button type="button" class="btn link" data-show='[["click", "#pa-fn [data-k=a]"], ["#pa-b", 1.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>u = x: then du = dx and v = eˣ, so ∫ v du = ∫ eˣ dx, trivial. With u = eˣ you would get ∫ (x²/2) eˣ dx, which is harder than the original.</p></details></li>
+        <li><p>Choose ∫ ln x dx. There is only one function; where is the product? <button type="button" class="btn link" data-show='[["click", "#pa-fn [data-k=c]"], ["#pa-b", 2]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Write ln x = ln x · 1: u = ln x, dv = dx. Then du = dx/x, v = x, and ∫ ln x dx = x ln x − ∫ 1 dx = x ln x − x.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Evaluate ∫ x e<sup>x</sup> dx and ∫<sub>0</sub><sup>1</sup> x e<sup>x</sup> dx.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Choose u and dv (LIATE).</b> u = x (algebraic), dv = eˣ dx.</li>
+          <li hidden><b>Differentiate and integrate.</b> du = dx, v = eˣ.</li>
+          <li hidden><b>Apply the formula.</b> ∫ x eˣ dx = x eˣ − ∫ eˣ dx = x eˣ − eˣ + C.</li>
+          <li hidden><b>Definite integral.</b> [x eˣ − eˣ]<sub>0</sub><sup>1</sup> = (e − e) − (0 − 1) = 1.</li>
+          <li hidden><b>Answer.</b> <b>(x − 1)eˣ + C</b>, and the definite integral is <b>1</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Choosing u badly (making the new integral harder). Try the other choice.</li>
+        <li>Forgetting to subtract ∫ v du, or its sign.</li>
+        <li>Dropping the product uv in a definite integral: evaluate [uv] at the limits too.</li>
+        <li>Not recognizing ln x needs u = ln x, dv = dx.</li>
+        <li>Forgetting + C in an indefinite integral.</li>
+      </ul></div>
+      <div class="prose"><h2>Twice, or circular</h2>
+        <p>For ∫ x² eˣ dx, apply parts twice: the power of x drops from 2 to 1 to 0. For ∫ eˣ sin x dx, applying parts twice returns the original integral: I = (…) − I, so I = (…)/2. The tabular method (a column of derivatives of u and a column of integrals of dv) organizes repeated parts.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Differentiating x gives 1; integrating cos x gives sin x. Easy.">
+        <p class="q">Check yourself: To find ∫ x cos x dx by parts, a good choice is</p>
+        <div class="opts"><button type="button">u = x, dv = cos x dx</button><button type="button">u = cos x, dv = x dx</button><button type="button">u = x cos x, dv = dx</button><button type="button">u = 1, dv = x cos x dx</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view bc" id="v-partial" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 6 · BC</span><span class="tag">BC only</span></div>
+        <h1>Partial fractions & long division</h1>
+        <p class="lede">A fraction of polynomials can be split into simpler fractions you can integrate with logarithms.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>A rational function like <span class="m">(3x + 1)/((x − 1)(x + 2))</span> is hard to integrate, but it is the sum of two simple fractions, <span class="m">A/(x − 1) + B/(x + 2)</span>, each integrating to a logarithm. To find A and B, clear the denominators and match: use convenient x-values (the roots of the denominator), or compare coefficients.</p>
+        <p>First check the degrees. If the top has degree ≥ the bottom, do <b>long division</b> first (a polynomial plus a proper fraction). For repeated or irreducible factors the pieces are A/(x − a) + B/(x − a)² and (Cx + D)/(quadratic); the AP course sticks mostly to distinct linear factors. Also useful here: completing the square for ∫ 1/(x² + bx + c) gives an arctangent.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>integrals of quotients needed a lucky substitution</dd><dt>So we didn't need</dt><dd>a systematic way to integrate rational functions</dd><dt>Now</dt><dd>∫ (3x + 1)/(x² + x − 2) dx and population models</dd><dt>So we need</dt><dd>partial fraction decomposition</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>(px+q)/((x−a)(x−b)) = A/(x−a) + B/(x−b)</span><small>distinct roots</small></div><div class="eqn"><span>A = (pa+q)/(a−b) · B = (pb+q)/(b−a)</span><small>cover-up</small></div><div class="eqn"><span>∫ A/(x−a) dx = A ln|x−a| + C</span><small></small></div></div>
+      <div class="lab" id="pf-lab">
+        <div class="labbar"><span class="title">Split a fraction</span></div>
+        <p class="small" id="pf-form" style="margin:0"></p>
+        <canvas id="pf-canvas" aria-label="Graphs of a rational function and its two partial fractions, with their sum matching the original."></canvas>
+        <div class="controls"><div class="ctl"><label for="pf-a"><span>a (first root)</span> <output id="pf-a-out"></output></label><input type="range" id="pf-a" min="-3" max="0" step="1" value="-1"></div><div class="ctl"><label for="pf-b"><span>b (second root)</span> <output id="pf-b-out"></output></label><input type="range" id="pf-b" min="1" max="3" step="1" value="2"></div><div class="ctl"><label for="pf-p"><span>p</span> <output id="pf-p-out"></output></label><input type="range" id="pf-p" min="-4" max="4" step="1" value="3"></div><div class="ctl"><label for="pf-q"><span>q</span> <output id="pf-q-out"></output></label><input type="range" id="pf-q" min="-4" max="4" step="1" value="1"></div><div class="ctl"><label for="pf-x"><span>Probe x</span> <output id="pf-x-out"></output></label><input type="range" id="pf-x" min="-4" max="5" step="0.05" value="3.5"></div></div>
+        <div class="readout"><div><span>A</span><strong class="x" id="pf-ca">—</strong></div><div><span>B</span><strong class="a" id="pf-cb">—</strong></div><div><span>f(x) at the probe vs A/(x−a) + B/(x−b)</span><strong class="v" id="pf-chk">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Use the default values. What do A and B equal, and what is the check? <button type="button" class="btn link" data-show='[["#pf-a", -1], ["#pf-b", 2], ["#pf-p", 3], ["#pf-q", 1]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>(3x + 1)/((x + 1)(x − 2)) = A/(x + 1) + B/(x − 2) with A = (3(−1) + 1)/(−1 − 2) = 2/3 and B = (6 + 1)/(2 + 1) = 7/3. The two sides agree at every probe x.</p></details></li>
+        <li><p>Change the probe x. Does the equality ever fail? <button type="button" class="btn link" data-show='[["#pf-x", -3]]'>x = −3</button></p><details><summary>What you should see</summary><p>No: it is an identity, true for every x except the roots a and b where the original is undefined.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find ∫ (3x + 1)/((x + 1)(x − 2)) dx.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Decompose.</b> (3x + 1)/((x + 1)(x − 2)) = A/(x + 1) + B/(x − 2).</li>
+          <li hidden><b>Clear denominators.</b> 3x + 1 = A(x − 2) + B(x + 1).</li>
+          <li hidden><b>Cover-up.</b> x = 2: 7 = 3B, so B = 7/3. x = −1: −2 = −3A, so A = 2/3.</li>
+          <li hidden><b>Integrate each piece.</b> ∫ [ (2/3)/(x + 1) + (7/3)/(x − 2) ] dx.</li>
+          <li hidden><b>Answer.</b> <b>(2/3) ln|x + 1| + (7/3) ln|x − 2| + C</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Forgetting long division when the top has degree ≥ the bottom.</li>
+        <li>Mixing up A and B when substituting the roots.</li>
+        <li>Dropping the absolute value in ln|x − a|.</li>
+        <li>Using partial fractions on ∫ 1/(x² + 1), which is arctan.</li>
+        <li>Splitting a sum in the denominator: 1/(x + y) ≠ 1/x + 1/y.</li>
+      </ul></div>
+      <div class="prose"><h2>Long division</h2>
+        <p>If the degree of the numerator is at least the degree of the denominator, divide first. For example (x² + 3x + 5)/(x + 1) = x + 2 + 3/(x + 1), and the integral is x²/2 + 2x + 3 ln|x + 1| + C.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Cover-up at x = 1: (5·1 + 1)/(1 + 1) = 3.">
+        <p class="q">Check yourself: (5x + 1)/((x − 1)(x + 1)) = A/(x − 1) + B/(x + 1). Then A =</p>
+        <div class="opts"><button type="button">3</button><button type="button">2</button><button type="button">−2</button><button type="button">5</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view bc" id="v-improper" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 6 · BC</span><span class="tag">BC only</span></div>
+        <h1>Improper integrals</h1>
+        <p class="lede">What if the area stretches out forever, or the function blows up inside the interval? Sometimes the area is still finite.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>An integral is <b>improper</b> if one limit is ∞ or the integrand blows up on the interval. Replace the troublesome point by a variable and take a limit: <span class="m">∫<sub>1</sub><sup>∞</sup> f dx = lim<sub>b→∞</sub> ∫<sub>1</sub><sup>b</sup> f dx</span>. If the limit is a number the integral <b>converges</b> to it; if not, it <b>diverges</b>.</p>
+        <p>The benchmark: <span class="m">∫<sub>1</sub><sup>∞</sup> 1/x<sup>p</sup> dx</span> converges iff <b>p &gt; 1</b> (to 1/(p − 1)); and <span class="m">∫<sub>0</sub><sup>1</sup> 1/x<sup>p</sup> dx</span> converges iff <b>p &lt; 1</b> (to 1/(1 − p)). So 1/x² has finite area from 1 to ∞, but 1/x does not, narrowly.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>definite integrals had finite limits and a continuous integrand</dd><dt>So we didn't need</dt><dd>a limit definition for unbounded cases</dd><dt>Now</dt><dd>∫ e^{−x} dx from 0 to ∞, and the p-test for series</dd><dt>So we need</dt><dd>improper integrals</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>∫<sub>a</sub><sup>∞</sup> f = lim<sub>b→∞</sub> ∫<sub>a</sub><sup>b</sup> f</span><small>infinite limit</small></div><div class="eqn"><span>∫<sub>1</sub><sup>∞</sup> x<sup>−p</sup> dx converges iff p &gt; 1</span><small>value 1/(p − 1)</small></div><div class="eqn"><span>∫<sub>0</sub><sup>1</sup> x<sup>−p</sup> dx converges iff p &lt; 1</span><small>value 1/(1 − p)</small></div></div>
+      <div class="lab" id="ip-lab">
+        <div class="labbar"><span class="title">Area that never stops, or does</span></div>
+        <div class="ctl"><span class="lbl">Type</span><div class="seg" id="ip-ty" role="group" aria-label="Type"><button type="button" data-k="inf" aria-pressed="true">∫₁^∞ 1/xᵖ dx</button><button type="button" data-k="pt" aria-pressed="false">∫₀¹ 1/xᵖ dx</button></div></div>
+        <canvas id="ip-canvas" aria-label="A graph of one over x to the p with shaded area out to a growing limit, and the area so far compared with the limiting value."></canvas>
+        <div class="controls"><div class="ctl"><label for="ip-p"><span>p</span> <output id="ip-p-out"></output></label><input type="range" id="ip-p" min="0.4" max="3" step="0.05" value="2"></div><div class="ctl"><label for="ip-z"><span>How far out (or how close to 0)</span> <output id="ip-z-out"></output></label><input type="range" id="ip-z" min="0" max="3" step="0.05" value="1"></div></div>
+        <div class="readout"><div><span>area so far</span><strong class="x" id="ip-area">—</strong></div><div><span>the limit</span><strong class="v" id="ip-lim">—</strong></div><div><span>converges?</span><strong class="" id="ip-ver">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Set p = 2 and push the slider out. What does the area approach? <button type="button" class="btn link" data-show='[["click", "#ip-ty [data-k=inf]"], ["#ip-p", 2], ["#ip-z", 3]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>1: the area from 1 to b is 1 − 1/b → 1. The infinite tail has finite area.</p></details></li>
+        <li><p>Set p = 1 and push out. Does it level off? <button type="button" class="btn link" data-show='[["click", "#ip-ty [data-k=inf]"], ["#ip-p", 1], ["#ip-z", 3]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>No: the area is ln b, which grows forever (slowly). ∫ 1/x from 1 to ∞ diverges.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Decide whether ∫<sub>1</sub><sup>∞</sup> 1/x² dx and ∫<sub>1</sub><sup>∞</sup> 1/x dx converge, and evaluate any that do.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Replace ∞ by b.</b> ∫<sub>1</sub><sup>b</sup> x<sup>−2</sup> dx = [−1/x]<sub>1</sub><sup>b</sup> = 1 − 1/b.</li>
+          <li hidden><b>Take the limit.</b> lim<sub>b→∞</sub> (1 − 1/b) = 1. Converges to <b>1</b>.</li>
+          <li hidden><b>The other.</b> ∫<sub>1</sub><sup>b</sup> 1/x dx = ln b, and lim<sub>b→∞</sub> ln b = ∞.</li>
+          <li hidden><b>Answer.</b> The first converges to <b>1</b>; the second <b>diverges</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Plugging ∞ in as a number. Always take a limit of an integral with a variable limit.</li>
+        <li>Forgetting the integrand can be unbounded at an interior point, which also makes it improper.</li>
+        <li>Thinking a tail that gets small must have finite area: 1/x → 0 but its area diverges.</li>
+        <li>Reversing the p-conditions for the two types (p &gt; 1 at ∞; p &lt; 1 at 0).</li>
+        <li>Forgetting to split an integral with a problem point inside.</li>
+      </ul></div>
+      <div class="prose"><h2>Comparison</h2>
+        <p>If 0 ≤ f ≤ g and ∫ g converges, then ∫ f converges; if ∫ f diverges, so does ∫ g. This lets you decide convergence without finding the value, and it returns in the series tests.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="p = 3/2 &gt; 1: value 1/(p − 1) = 2.">
+        <p class="q">Check yourself: ∫<sub>1</sub><sup>∞</sup> 1/x<sup>3/2</sup> dx</p>
+        <div class="opts"><button type="button">converges to 2</button><button type="button">converges to 1</button><button type="button">diverges</button><button type="button">converges to 3/2</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view bc" id="v-euler" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Units 7–8 · BC</span><span class="tag">BC only</span></div>
+        <h1>Euler's method</h1>
+        <p class="lede">When you cannot solve a differential equation, you can still follow its slopes in small steps.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>Start at the initial point <span class="m">(x₀, y₀)</span>. The differential equation gives the slope there. Walk along that tangent line for a short step <span class="m">Δx = h</span>, arrive at a new point, find the new slope, and repeat. The rule is <span class="m">y<sub>n+1</sub> = y<sub>n</sub> + h·F(x<sub>n</sub>, y<sub>n</sub>)</span> with <span class="m">x<sub>n+1</sub> = x<sub>n</sub> + h</span>.</p>
+        <p>Smaller steps follow the true curve more closely. Euler's method underestimates when the solution is concave up (it follows tangent lines, which lie below), and overestimates when concave down. It is a numerical approximation of a solution you could trace by hand on a slope field.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>a tangent line gave one estimate</dd><dt>So we didn't need</dt><dd>a chain of tangent-line steps</dd><dt>Now</dt><dd>solving equations that have no closed form</dd><dt>So we need</dt><dd>Euler's method</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>y<sub>n+1</sub> = y<sub>n</sub> + h·F(x<sub>n</sub>, y<sub>n</sub>)</span><small>Euler step</small></div><div class="eqn"><span>x<sub>n+1</sub> = x<sub>n</sub> + h</span><small>move right</small></div><div class="eqn"><span>smaller h → better estimate</span><small>but never exact</small></div></div>
+      <div class="lab" id="eu-lab">
+        <div class="labbar"><span class="title">Step along the slopes</span></div>
+        <div class="ctl"><span class="lbl">Equation</span><div class="seg" id="eu-fn" role="group" aria-label="Equation"><button type="button" data-k="a" aria-pressed="true">dy/dx = y, y(0) = 1</button><button type="button" data-k="b" aria-pressed="false">dy/dx = x − y, y(0) = 1</button><button type="button" data-k="c" aria-pressed="false">dy/dx = −2xy, y(0) = 1</button></div></div>
+        <div class="ctl"><span class="lbl">Step size h</span><div class="seg" id="eu-h" role="group" aria-label="Step size"><button type="button" data-k="h1" aria-pressed="false">1</button><button type="button" data-k="h05" aria-pressed="true">0.5</button><button type="button" data-k="h025" aria-pressed="false">0.25</button><button type="button" data-k="h01" aria-pressed="false">0.1</button><button type="button" data-k="h005" aria-pressed="false">0.05</button></div></div>
+        <canvas id="eu-canvas" aria-label="The true solution curve with the polyline from Euler&#x27;s method for a chosen step size."></canvas>
+        <div class="readout"><div><span>Euler estimate at x = 2</span><strong class="x" id="eu-est">—</strong></div><div><span>exact value</span><strong class="v" id="eu-ex">—</strong></div><div><span>error</span><strong class="a" id="eu-err">—</strong></div></div>
+        <div class="tablewrap"><table class="lmtbl" id="eu-tbl" aria-label="Euler steps"></table></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Use h = 1 on dy/dx = y. Is the estimate too high or too low? <button type="button" class="btn link" data-show='[["click", "#eu-fn [data-k=a]"], ["click", "#eu-h [data-k=h1]"]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>Too low: the exact y = eˣ is concave up, so each tangent line lies below it. With h = 1 the estimate at x = 2 is 4 versus the exact 7.39.</p></details></li>
+        <li><p>Now shrink h to 0.05. What happens to the error? <button type="button" class="btn link" data-show='[["click", "#eu-fn [data-k=a]"], ["click", "#eu-h [data-k=h005]"]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>It shrinks a lot: more, shorter steps hug the curve. The error is roughly proportional to h.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Use Euler's method with h = 0.5 to estimate y(1) if dy/dx = x + y and y(0) = 1.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Step 1 from (0, 1).</b> slope = 0 + 1 = 1, so y₁ = 1 + 0.5(1) = 1.5 at x = 0.5.</li>
+          <li hidden><b>Step 2 from (0.5, 1.5).</b> slope = 0.5 + 1.5 = 2, so y₂ = 1.5 + 0.5(2) = 2.5 at x = 1.</li>
+          <li hidden><b>Answer.</b> y(1) ≈ <b>2.5</b>. (The exact solution is 2e − 2 ≈ 3.44: Euler underestimates since y is concave up.)</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 3</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Using the slope at the old point for the wrong coordinates: use both x<sub>n</sub> and y<sub>n</sub>.</li>
+        <li>Forgetting to move x by h each step.</li>
+        <li>Stopping at the wrong number of steps: (x<sub>end</sub> − x₀)/h steps.</li>
+        <li>Believing Euler is exact. It is only an approximation.</li>
+        <li>Mixing up over- and under-estimates: tangent lines lie below a concave-up curve.</li>
+      </ul></div>
+      <div class="prose"><h2>Why it works</h2>
+        <p>Near a point the solution is almost its tangent line, whose slope the differential equation gives exactly. Each step makes a small error; many small steps keep the total error small. The smaller the step, the closer you stay to the true curve.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="slope at (0, 2) is 2, so y₁ = 2 + 0.1(2) = 2.2.">
+        <p class="q">Check yourself: Euler's method for dy/dx = x + y, y(0) = 2, h = 0.1 gives y₁ =</p>
+        <div class="opts"><button type="button">2.2</button><button type="button">2.1</button><button type="button">2.0</button><button type="button">2.3</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view bc" id="v-logistic" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Units 7–8 · BC</span><span class="tag">BC only</span></div>
+        <h1>Logistic models</h1>
+        <p class="lede">Real populations do not grow forever. A logistic model grows fast when small, slows as it approaches a carrying capacity, and levels off.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p><span class="m">dP/dt = kP(1 − P/L)</span>. When P is small the factor (1 − P/L) is near 1, so growth is almost exponential. As P approaches the <b>carrying capacity L</b>, the factor shrinks to 0 and growth stops. P = 0 and P = L are equilibria; L is stable. The solution is an S-shaped curve with limit L.</p>
+        <p>The growth rate dP/dt is a parabola in P: zero at P = 0 and P = L, and <b>largest at P = L/2</b>, where the S-curve has its inflection point and steepest slope. The maximum rate is kL/4. Everything here (limit, max rate, inflection) can be read from the differential equation without solving it.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>exponential growth forever</dd><dt>So we didn't need</dt><dd>growth that levels off at a limit</dd><dt>Now</dt><dd>populations, spread of disease, adoption of technology</dd><dt>So we need</dt><dd>the logistic differential equation</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>dP/dt = kP(1 − P/L)</span><small>logistic</small></div><div class="eqn"><span>lim P = L</span><small>carrying capacity</small></div><div class="eqn"><span>max growth at P = L/2, rate kL/4</span><small>inflection of the S-curve</small></div></div>
+      <div class="lab" id="lg-lab">
+        <div class="labbar"><span class="title">The S-curve and its rate</span></div>
+        <canvas id="lg-canvas" aria-label="Top: population against time, an S-shaped curve with a dashed line at the carrying capacity. Bottom: growth rate against population, a parabola."></canvas>
+        <canvas id="lg-canvas2" aria-label="Growth rate dP over dt against P, with the current population marked."></canvas>
+        <div class="controls"><div class="ctl"><label for="lg-k"><span>k</span> <output id="lg-k-out"></output></label><input type="range" id="lg-k" min="0.1" max="1" step="0.05" value="0.5"></div><div class="ctl"><label for="lg-L"><span>Carrying capacity L</span> <output id="lg-L-out"></output></label><input type="range" id="lg-L" min="2" max="10" step="0.5" value="8"></div><div class="ctl"><label for="lg-p0"><span>Start P₀</span> <output id="lg-p0-out"></output></label><input type="range" id="lg-p0" min="0.2" max="10" step="0.2" value="1"></div><div class="ctl"><label for="lg-t"><span>Time t</span> <output id="lg-t-out"></output></label><input type="range" id="lg-t" min="0" max="20" step="0.1" value="6"></div></div>
+        <div class="readout"><div><span>P(t)</span><strong class="x" id="lg-P">—</strong></div><div><span>dP/dt now</span><strong class="v" id="lg-dP">—</strong></div><div><span>fastest growth</span><strong class="a" id="lg-max">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Set P₀ = 1, L = 8. When is the population growing fastest? <button type="button" class="btn link" data-show='[["#lg-p0", 1], ["#lg-L", 8], ["#lg-k", 0.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>When P = L/2 = 4 (the steepest part of the S, and the top of the parabola below). The maximum rate is kL/4 = 0.5·8/4 = 1.</p></details></li>
+        <li><p>Start P₀ above L (try P₀ = 10, L = 8). What does P do? <button type="button" class="btn link" data-show='[["#lg-p0", 10], ["#lg-L", 8]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>It decreases toward L: (1 − P/L) is negative, so the model pulls the population back down to the carrying capacity.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">dP/dt = 0.02P(1 − P/500), P(0) = 50. Find lim<sub>t→∞</sub> P, the P at which growth is fastest, and the fastest rate.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Compare with kP(1 − P/L).</b> k = 0.02, L = 500.</li>
+          <li hidden><b>Limit.</b> The carrying capacity: lim P = 500 (since 0 &lt; P(0) &lt; L).</li>
+          <li hidden><b>Fastest growth.</b> At P = L/2 = 250.</li>
+          <li hidden><b>Rate.</b> kL/4 = 0.02(500)/4 = 2.5 per time unit.</li>
+          <li hidden><b>Answer.</b> Limit <b>500</b>; fastest at <b>P = 250</b> with rate <b>2.5</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Using L = the limit of dP/dt. L is the limit of P itself.</li>
+        <li>Reading the maximum growth at P = L instead of L/2.</li>
+        <li>Forgetting the sign: for P &gt; L the population decreases.</li>
+        <li>Confusing logistic with exponential growth.</li>
+        <li>Mixing up P (population) and dP/dt (growth rate) when reading graphs.</li>
+      </ul></div>
+      <div class="prose"><h2>Solving it</h2>
+        <p>Separating variables with partial fractions gives P(t) = L/(1 + Ae<sup>−kt</sup>) with A = (L − P₀)/P₀. You rarely need the formula on the exam: the equation itself tells you the limit, the equilibria and where growth is fastest.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Fastest at half the carrying capacity: 200/2.">
+        <p class="q">Check yourself: In dP/dt = 0.1P(1 − P/200), the population is growing fastest when P =</p>
+        <div class="opts"><button type="button">100</button><button type="button">200</button><button type="button">50</button><button type="button">20</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view bc" id="v-arclen" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Units 7–8 · BC</span><span class="tag">BC only</span></div>
+        <h1>Arc length</h1>
+        <p class="lede">How long is a curve? Approximate it with tiny straight pieces and use the Pythagorean theorem on each.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>A tiny piece of the curve over a width dx rises by dy, so its length is <span class="m">√(dx² + dy²) = √(1 + (dy/dx)²) dx</span>. Adding them up: <span class="m">L = ∫<sub>a</sub><sup>b</sup> √(1 + (f′(x))²) dx</span>. The polygon with more and more short segments approaches this length.</p>
+        <p>The integrand rarely has a nice antiderivative, which is why exam problems are chosen so that 1 + (f′)² is a perfect square, or ask you to evaluate with a calculator. Always differentiate first, then square f′ (not f), and then integrate.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>area and volume were integrals of lengths or areas</dd><dt>So we didn't need</dt><dd>the length of a curve itself</dd><dt>Now</dt><dd>cables, roads and paths</dd><dt>So we need</dt><dd>the arc length formula</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>L = ∫ √(1 + (f′(x))²) dx</span><small>arc length of y = f(x)</small></div><div class="eqn"><span>ds = √(dx² + dy²)</span><small>a tiny piece</small></div><div class="eqn"><span>f′ first, then square</span><small></small></div></div>
+      <div class="lab" id="al-lab">
+        <div class="labbar"><span class="title">Straight pieces along a curve</span></div>
+        <div class="ctl"><span class="lbl">Curve</span><div class="seg" id="al-fn" role="group" aria-label="Curve"><button type="button" data-k="a" aria-pressed="true">y = x² on [0, 2]</button><button type="button" data-k="b" aria-pressed="false">y = sin x on [0, π]</button><button type="button" data-k="c" aria-pressed="false">y = (2/3)x^(3/2) on [0, 3]</button></div></div>
+        <canvas id="al-canvas" aria-label="A curve with a polygon of n straight segments along it, compared with the arc length integral."></canvas>
+        <div class="controls"><div class="ctl"><label for="al-n"><span>Segments n</span> <output id="al-n-out"></output></label><input type="range" id="al-n" min="1" max="40" step="1" value="4"></div></div>
+        <div class="readout"><div><span>length of the polygon</span><strong class="x" id="al-poly">—</strong></div><div><span>∫ √(1 + f′²) dx</span><strong class="v" id="al-int">—</strong></div><div><span>difference</span><strong class="a" id="al-diff">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Set n = 1 on y = x². How does the one-chord length compare with the arc length? <button type="button" class="btn link" data-show='[["click", "#al-fn [data-k=a]"], ["#al-n", 1]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>A straight chord is always shorter than the curve through the same end points. Chord: √(4 + 16) = 4.47; the curve is 4.65.</p></details></li>
+        <li><p>Increase n to 40. What happens? <button type="button" class="btn link" data-show='[["#al-n", 40]]'>n = 40</button></p><details><summary>What you should see</summary><p>The polygon length climbs toward the integral from below. The integral is the limit of polygon lengths as the pieces shrink.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Find the length of y = (2/3)x<sup>3/2</sup> from x = 0 to x = 3.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Derivative first.</b> f′(x) = x<sup>1/2</sup>, so (f′)² = x.</li>
+          <li hidden><b>Set up.</b> L = ∫<sub>0</sub><sup>3</sup> √(1 + x) dx.</li>
+          <li hidden><b>Integrate.</b> (2/3)(1 + x)<sup>3/2</sup> from 0 to 3 = (2/3)(8 − 1).</li>
+          <li hidden><b>Answer.</b> <b>14/3</b> ≈ 4.667.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Squaring f instead of f′ in 1 + (f′)².</li>
+        <li>Forgetting the square root or the 1.</li>
+        <li>Leaving the derivative inside √ without squaring: it is (f′)², not f′.</li>
+        <li>Using the area formula by mistake.</li>
+        <li>Not simplifying: look for 1 + (f′)² as a perfect square.</li>
+      </ul></div>
+      <div class="prose"><h2>Parametric arc length</h2>
+        <p>If x = x(t) and y = y(t), the length is ∫ √((dx/dt)² + (dy/dt)²) dt. The speed of a particle is the same square root, so arc length is the integral of speed.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Pythagoras on dx and dy: √(dx² + dy²) = √(1 + (dy/dx)²) dx.">
+        <p class="q">Check yourself: The arc length of y = f(x) on [a, b] is</p>
+        <div class="opts"><button type="button">∫ √(1 + (f′)²) dx</button><button type="button">∫ √(1 + f²) dx</button><button type="button">∫ (1 + f′²) dx</button><button type="button">∫ √(f′) dx</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
   <section class="view" id="v-practice" hidden>
     <div class="wrap">
       <div class="head">
@@ -3039,8 +3343,8 @@ function view3d(cv,o){
 
 /* ---------------- Roster and registries (the data blocks are injected by build.py) ---------------- */
 const MODS={"functions": {"t": "Functions & transformations", "d": "Shift, stretch and flip a graph, and read what a formula is doing.", "bc": false}, "trigexp": {"t": "Trig, exponentials & logs", "d": "The unit circle, e^x and ln x: the functions calculus keeps using.", "bc": false}, "limits": {"t": "Limits from graphs & tables", "d": "What a function is heading toward, even where it never gets there.", "bc": false}, "limalg": {"t": "Algebraic limits", "d": "Factor, rationalize or squeeze when plugging in gives 0/0.", "bc": false}, "contin": {"t": "Continuity & the IVT", "d": "Where a graph breaks, and why continuous functions can't skip values.", "bc": false}, "asym": {"t": "Infinite limits & end behavior", "d": "Vertical and horizontal asymptotes, and what happens as x gets huge.", "bc": false}, "rates": {"t": "Average vs instantaneous rate", "d": "A secant line closing in on a tangent line.", "bc": false}, "deriv": {"t": "The derivative & differentiability", "d": "The limit definition, and where a graph has no slope.", "bc": false}, "rules": {"t": "Power, sum & constant-multiple rules", "d": "Differentiate polynomials and roots in your head.", "bc": false}, "transder": {"t": "Trig, e^x and ln x derivatives", "d": "The derivatives you memorize once.", "bc": false}, "prodquot": {"t": "Product & quotient rules", "d": "When two functions are multiplied or divided.", "bc": false}, "chain": {"t": "The chain rule", "d": "Derivatives of functions inside functions.", "bc": false}, "implicit": {"t": "Implicit differentiation", "d": "Slopes of curves that are not functions of x.", "bc": false}, "invfn": {"t": "Inverse functions & inverse trig", "d": "Derivatives of inverses, arcsin, arctan and friends.", "bc": false}, "higher": {"t": "Higher-order derivatives & choosing a rule", "d": "Second derivatives, and picking the right tool.", "bc": false}, "motion": {"t": "Derivatives in context & motion", "d": "Position, velocity, acceleration and units of a rate.", "bc": false}, "related": {"t": "Related rates", "d": "Two quantities change together: how fast is the other one moving?", "bc": false}, "linear": {"t": "Linearization & differentials", "d": "Approximate a curve by its tangent line.", "bc": false}, "lhop": {"t": "L'Hôpital's rule", "d": "Resolve 0/0 and ∞/∞ by comparing derivatives.", "bc": false}, "mvt": {"t": "Extreme values & the Mean Value Theorem", "d": "Why a continuous function on [a, b] has a max, and a point with the average slope.", "bc": false}, "incdec": {"t": "Increasing, decreasing & the first derivative test", "d": "Read the sign of f′ to find peaks and valleys.", "bc": false}, "concav": {"t": "Concavity & the second derivative test", "d": "Read the sign of f″ to see bending.", "bc": false}, "sketch": {"t": "Connecting f, f′ and f″", "d": "Go between a graph and the graphs of its derivatives.", "bc": false}, "optim": {"t": "Optimization", "d": "Biggest, smallest, cheapest, fastest: set up and solve.", "bc": false}, "accum": {"t": "Accumulation & Riemann sums", "d": "Add up a changing rate with thin slices.", "bc": false}, "ftc": {"t": "The definite integral & the FTC", "d": "Area, accumulation functions and the theorem that ties derivatives to integrals.", "bc": false}, "antider": {"t": "Antiderivatives", "d": "Undo a derivative, and don't forget the + C.", "bc": false}, "usub": {"t": "u-substitution", "d": "Undo the chain rule, including definite integrals.", "bc": false}, "slope": {"t": "Slope fields", "d": "Draw the solutions without solving anything.", "bc": false}, "sepvar": {"t": "Separation of variables & exponential models", "d": "Solve dy/dx = ky and other separable equations.", "bc": false}, "avgval": {"t": "Average value & motion with integrals", "d": "Average of a function, and displacement vs distance.", "bc": false}, "area": {"t": "Area between curves", "d": "Top minus bottom, or right minus left.", "bc": false}, "vols": {"t": "Volumes from cross sections", "d": "Stack slices of a known shape.", "bc": false}, "volrev": {"t": "Volumes of revolution", "d": "Discs and washers around an axis.", "bc": false}, "parts": {"t": "Integration by parts", "d": "Undo the product rule: ∫u dv = uv − ∫v du.", "bc": true}, "partial": {"t": "Partial fractions & long division", "d": "Split a rational function into pieces you can integrate.", "bc": true}, "improper": {"t": "Improper integrals", "d": "Areas that stretch to infinity, or past an asymptote.", "bc": true}, "euler": {"t": "Euler's method", "d": "Step along a slope field to approximate a solution.", "bc": true}, "logistic": {"t": "Logistic models", "d": "Growth that levels off at a carrying capacity.", "bc": true}, "arclen": {"t": "Arc length", "d": "How long is the curve?", "bc": true}, "param": {"t": "Parametric equations", "d": "x and y both depend on t: slope, concavity and length.", "bc": true}, "vector": {"t": "Vector-valued functions & motion", "d": "Velocity, speed and acceleration in the plane.", "bc": true}, "polar": {"t": "Polar curves & area", "d": "Graph with r and θ, and find areas of petals.", "bc": true}, "seriesbasic": {"t": "Series, geometric series & the nth-term test", "d": "When does an infinite sum add up to a number?", "bc": true}, "pseries": {"t": "p-series & the integral test", "d": "Compare a sum to an area.", "bc": true}, "convtests": {"t": "Comparison & ratio tests", "d": "Decide convergence without finding the sum.", "bc": true}, "altser": {"t": "Alternating series & error bounds", "d": "Alternating signs, absolute vs conditional convergence.", "bc": true}, "taylorpoly": {"t": "Taylor polynomials & Lagrange error", "d": "Approximate a function near a point, and bound the error.", "bc": true}, "powser": {"t": "Power series: radius & interval", "d": "Where a series in x converges.", "bc": true}, "maclaurin": {"t": "Maclaurin series & operations", "d": "e^x, sin x, cos x, 1/(1−x), and building new series from them.", "bc": true}};
-const GROUPS=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"]}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"]}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"]}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"]}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": ["motion", "related", "linear", "lhop"]}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": ["mvt", "incdec", "concav", "sketch", "optim"]}, {"w": "Unit 6", "name": "Integration and accumulation of change", "tag": "AP Unit 6", "bc": false, "ids": ["accum", "ftc", "antider", "usub"]}, {"w": "Unit 7", "name": "Differential equations", "tag": "AP Unit 7", "bc": false, "ids": ["slope", "sepvar"]}, {"w": "Unit 8", "name": "Applications of integration", "tag": "AP Unit 8", "bc": false, "ids": ["avgval", "area", "vols", "volrev"]}];
-const ROADMAP=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"], "soon": []}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"], "soon": []}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"], "soon": []}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"], "soon": []}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": ["motion", "related", "linear", "lhop"], "soon": []}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": ["mvt", "incdec", "concav", "sketch", "optim"], "soon": []}, {"w": "Unit 6", "name": "Integration and accumulation of change", "tag": "AP Unit 6", "bc": false, "ids": ["accum", "ftc", "antider", "usub"], "soon": []}, {"w": "Unit 7", "name": "Differential equations", "tag": "AP Unit 7", "bc": false, "ids": ["slope", "sepvar"], "soon": []}, {"w": "Unit 8", "name": "Applications of integration", "tag": "AP Unit 8", "bc": false, "ids": ["avgval", "area", "vols", "volrev"], "soon": []}, {"w": "BC", "name": "Integration techniques (BC)", "tag": "AP Unit 6 · BC", "bc": true, "ids": [], "soon": ["parts", "partial", "improper"]}, {"w": "BC", "name": "More differential equations & applications (BC)", "tag": "AP Units 7–8 · BC", "bc": true, "ids": [], "soon": ["euler", "logistic", "arclen"]}, {"w": "Unit 9", "name": "Parametric equations, polar coordinates and vector-valued functions (BC)", "tag": "AP Unit 9 · BC", "bc": true, "ids": [], "soon": ["param", "vector", "polar"]}, {"w": "Unit 10", "name": "Infinite sequences and series (BC)", "tag": "AP Unit 10 · BC", "bc": true, "ids": [], "soon": ["seriesbasic", "pseries", "convtests", "altser", "taylorpoly", "powser", "maclaurin"]}]; /* every unit, with ids (built) and soon (planned, not built yet) */
+const GROUPS=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"]}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"]}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"]}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"]}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": ["motion", "related", "linear", "lhop"]}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": ["mvt", "incdec", "concav", "sketch", "optim"]}, {"w": "Unit 6", "name": "Integration and accumulation of change", "tag": "AP Unit 6", "bc": false, "ids": ["accum", "ftc", "antider", "usub"]}, {"w": "Unit 7", "name": "Differential equations", "tag": "AP Unit 7", "bc": false, "ids": ["slope", "sepvar"]}, {"w": "Unit 8", "name": "Applications of integration", "tag": "AP Unit 8", "bc": false, "ids": ["avgval", "area", "vols", "volrev"]}, {"w": "BC", "name": "Integration techniques (BC)", "tag": "AP Unit 6 · BC", "bc": true, "ids": ["parts", "partial", "improper"]}, {"w": "BC", "name": "More differential equations & applications (BC)", "tag": "AP Units 7–8 · BC", "bc": true, "ids": ["euler", "logistic", "arclen"]}];
+const ROADMAP=[{"w": "Optional", "name": "Math toolkit", "tag": "Math", "bc": false, "ids": ["functions", "trigexp"], "soon": []}, {"w": "Unit 1", "name": "Limits and continuity", "tag": "AP Unit 1", "bc": false, "ids": ["limits", "limalg", "contin", "asym"], "soon": []}, {"w": "Unit 2", "name": "Differentiation: definition and basic rules", "tag": "AP Unit 2", "bc": false, "ids": ["rates", "deriv", "rules", "transder", "prodquot"], "soon": []}, {"w": "Unit 3", "name": "Differentiation: composite, implicit and inverse functions", "tag": "AP Unit 3", "bc": false, "ids": ["chain", "implicit", "invfn", "higher"], "soon": []}, {"w": "Unit 4", "name": "Contextual applications of differentiation", "tag": "AP Unit 4", "bc": false, "ids": ["motion", "related", "linear", "lhop"], "soon": []}, {"w": "Unit 5", "name": "Analytical applications of differentiation", "tag": "AP Unit 5", "bc": false, "ids": ["mvt", "incdec", "concav", "sketch", "optim"], "soon": []}, {"w": "Unit 6", "name": "Integration and accumulation of change", "tag": "AP Unit 6", "bc": false, "ids": ["accum", "ftc", "antider", "usub"], "soon": []}, {"w": "Unit 7", "name": "Differential equations", "tag": "AP Unit 7", "bc": false, "ids": ["slope", "sepvar"], "soon": []}, {"w": "Unit 8", "name": "Applications of integration", "tag": "AP Unit 8", "bc": false, "ids": ["avgval", "area", "vols", "volrev"], "soon": []}, {"w": "BC", "name": "Integration techniques (BC)", "tag": "AP Unit 6 · BC", "bc": true, "ids": ["parts", "partial", "improper"], "soon": []}, {"w": "BC", "name": "More differential equations & applications (BC)", "tag": "AP Units 7–8 · BC", "bc": true, "ids": ["euler", "logistic", "arclen"], "soon": []}, {"w": "Unit 9", "name": "Parametric equations, polar coordinates and vector-valued functions (BC)", "tag": "AP Unit 9 · BC", "bc": true, "ids": [], "soon": ["param", "vector", "polar"]}, {"w": "Unit 10", "name": "Infinite sequences and series (BC)", "tag": "AP Unit 10 · BC", "bc": true, "ids": [], "soon": ["seriesbasic", "pseries", "convtests", "altser", "taylorpoly", "powser", "maclaurin"]}]; /* every unit, with ids (built) and soon (planned, not built yet) */
 const TIPS={},TT={},GLOSS={},KEYS={},PROBS=[],FRQS=[],GLYPH={};
 const METHODS={clues:[],items:[]};
 Object.keys(MODS).forEach(id=>{const g=ROADMAP.find(g=>g.ids.includes(id)||g.soon.includes(id));MODS[id].ap=g?g.tag:'';MODS[id].w=g?g.w:'';});
@@ -4449,7 +4753,7 @@ const lmN=v=>v===null?'does not exist':String(v).replace('-','−');
       const mx=0.3;const P2=gpanel(ctx,{x:half+44,y:14,w:w-half-58,h:h-44},[0,1],[0,A(.5)*1.35+1e-9],{xn:4,yn:3});areaSigned(ctx,P2,A,0,1,T.ce,T.ca,200,.3);curveD(ctx,P2,A,0,1,T.ce,2.8,200);vline(ctx,P2,x0,T.hot,[4,4]);dot(ctx,P2.X(x0),P2.Y(A(x0)),6,T.ce,T.surface);label(ctx,'A(x): area of the slice at x',P2.box.x+6,P2.box.y+10,T.ce,'left','middle',MONO);
       /* the slice itself */
       const side=s(x0)*250,bx=P2.box.x+P2.box.w-side-22,by=P2.box.y+P2.box.h*.5;ctx.fillStyle=alpha(T.ce,.35);ctx.strokeStyle=T.ce;ctx.lineWidth=2;ctx.beginPath();
-      if(sh==='sq')ctx.rect(bx,by-side,side,side);else if(sh==='se'){ctx.arc(bx+side/2,by,side/2,Math.PI,0);ctx.closePath();}else{ctx.moveTo(bx,by);ctx.lineTo(bx+side,by);ctx.lineTo(bx+side/2,by-side*Math.sqrt(3)/2);ctx.closePath();}ctx.fill();ctx.stroke();label(ctx,'slice, base s = '+fmt(s(x0),3),bx+side/2,by+13,T.muted,'center','middle',MONO);}});
+      if(sh==='sq')ctx.rect(bx,by-side,side,side);else if(sh==='se'){ctx.arc(bx+side/2,by,side/2,Math.PI,0);ctx.closePath();}else{ctx.moveTo(bx,by);ctx.lineTo(bx+side,by);ctx.lineTo(bx+side/2,by-side*Math.sqrt(3)/2);ctx.closePath();}ctx.fill();ctx.stroke();label(ctx,'slice, base s = '+fmt(s(x0),3),P2.box.x+P2.box.w-4,by+14,T.muted,'right','middle',MONO);}});
   function upd(){setText('vo-s',fmt(s(x0),4));setText('vo-A',fmt(A(x0),5));setText('vo-V',fmt(integ(A,0,1,800),5));sim.render();}
   bindRange('vo-x',v=>nz(v),v=>{x0=v;upd();});segBind('vo-sh','k',v=>{sh=v;upd();});upd();drawers.vols=()=>sim.render();
   KEYS['vo-canvas']=['Left: the base region; the orange segment is the base of the slice at x. Right: the slice area at each x; the shaded area under it is the volume.',[['cx','y = x'],['ca','y = x²'],['hot','base length s(x)'],['ce','A(x), and the volume']]];
@@ -4498,6 +4802,180 @@ const lmN=v=>v===null?'does not exist':String(v).replace('-','−');
     return {q:`The region under y = √x on [0, 4] is revolved about the line y = −${c}. Find the volume. Give a decimal to one place.`,ans,unit:'',tol:.003,chk:Math.PI*integ(x=>(Math.sqrt(x)+c)**2-c*c,0,4,3000),hint:`Outer radius √x + ${c}, inner radius ${c} (distance from the axis to the x-axis).`,sol:`V = π∫<sub>0</sub><sup>4</sup> [(√x + ${c})² − ${c}²] dx = π∫(x + ${2*c}√x) dx = π(8 + ${32*c}/3) = <b>${fmt(ans,1)}</b>.`};}});
   PROBS.push({id:'vr-setup',topic:'volrev',title:'Set up the volume integral',gen(){const R=[['the region between y = √x and y = x about the x-axis','π∫₀¹ (x − x²) dx',['π∫₀¹ (√x − x)² dx','π∫₀¹ (√x + x)² dx','∫₀¹ (x − x²) dx']],['the region under y = x² on [0, 2] about the x-axis','π∫₀² x⁴ dx',['π∫₀² x² dx','π∫₀² x dx','2π∫₀² x⁴ dx']],['the region under y = √x on [0, 4] about y = −1','π∫₀⁴ [(√x + 1)² − 1] dx',['π∫₀⁴ x dx','π∫₀⁴ (√x − 1)² dx','π∫₀⁴ (√x + 1)² dx']]],[reg,c,w]=pick(R),m=mcq(c,w);
     return {q:`Which integral gives the volume when ${reg} is revolved?`,choices:m.choices,ans:m.ans,hint:'Radii are distances from the axis. Square each radius, subtract the inner from the outer if there is a hole, and include π.',sol:`<b>${c}</b>.`};}});
+})();
+
+/* ===== modules/parts.js ===== */
+/* ---------------- Integration by parts ---------------- */
+(function parts(){
+  const cv=$('#pa-canvas');if(!cv)return;
+  const C={a:{f:x=>x*Math.exp(x),F:x=>x*Math.exp(x)-Math.exp(x),a0:0,form:'u = x, dv = eˣ dx → du = dx, v = eˣ:   ∫ x eˣ dx = x eˣ − ∫ eˣ dx = (x − 1)eˣ',bmin:.3},
+    b:{f:x=>x*Math.sin(x),F:x=>Math.sin(x)-x*Math.cos(x),a0:0,form:'u = x, dv = sin x dx → v = −cos x:   ∫ x sin x dx = −x cos x + ∫ cos x dx = sin x − x cos x',bmin:.3},
+    c:{f:Math.log,F:x=>x*Math.log(x)-x,a0:1,form:'u = ln x, dv = dx → du = dx/x, v = x:   ∫ ln x dx = x ln x − ∫ dx = x ln x − x',bmin:1.05},
+    d:{f:x=>x*x*Math.exp(x),F:x=>Math.exp(x)*(x*x-2*x+2),a0:0,form:'parts twice: u = x², dv = eˣ dx, then u = x:   ∫ x² eˣ dx = eˣ(x² − 2x + 2)',bmin:.3}};
+  let k='a',b=1.5;
+  const sim=glab('pa-canvas',{view:()=>{const A=C[k];let hi=0,lo=0;for(let i=0;i<=60;i++){const v=A.f(A.a0+.01+(3.3-A.a0)*i/60);hi=Math.max(hi,v);lo=Math.min(lo,v);}return {xr:[-.2,3.3],yr:[lo-.1*hi-.1,hi*1.1+.1]};},draw(ctx,P){const A=C[k];areaSigned(ctx,P,A.f,A.a0,b,T.ce,T.ca);curveD(ctx,P,A.f,A.a0+(k==='c'?1e-4:0),3.3,T.cx,2.8,300);vline(ctx,P,b,T.hot,[4,4]);vline(ctx,P,A.a0,T.muted);}});
+  function upd(){const A=C[k],num=integ(A.f,A.a0,b,1500),fm=A.F(b)-A.F(A.a0);setText('pa-form',A.form);setText('pa-num',fmt(num,5));setText('pa-fm',fmt(fm,5));setText('pa-eq',Math.abs(num-fm)<1e-5?'yes ✓':'no');sim.render();}
+  function setR(){const el=$('#pa-b');el.min=C[k].bmin;if(+el.value<C[k].bmin)el.value=Math.max(C[k].bmin,1.5);b=+el.value;}
+  bindRange('pa-b',v=>nz(v),v=>{b=v;upd();});segBind('pa-fn','k',v=>{k=v;setR();upd();});upd();drawers.parts=()=>sim.render();
+  KEYS['pa-canvas']=['Move b. The shaded area is computed two ways: numerically, and from the by-parts antiderivative.',[['cx','the integrand'],['ce','area (pink if below the axis)'],['hot','upper limit b']]];
+  TIPS['pa-b']=()=>'The by-parts formula and the numeric area must agree for every b.';
+  GLOSS['LIATE']='A memory aid for choosing u in integration by parts: Logarithmic, Inverse trig, Algebraic, Trig, Exponential.';GLOSS['integration by parts']='∫ u dv = uv − ∫ v du, from the product rule.';
+  TT.parts='Ask students to try both choices of u and see which makes ∫ v du easier. Use LIATE as a default, not a law.';
+})();
+(function(){
+  const T1=[()=>{const a=ri(1,3);return {f:`x*e^(${a}x)`,F:`e^(${a}x)*(${a}x-1)/${a*a}`,fx:x=>x*Math.exp(a*x)};},()=>{const a=ri(1,4);return {f:`x*sin(${a}x)`,F:`sin(${a}x)/${a*a}-x*cos(${a}x)/${a}`,fx:x=>x*Math.sin(a*x)};},()=>{const a=ri(1,4);return {f:`x*cos(${a}x)`,F:`cos(${a}x)/${a*a}+x*sin(${a}x)/${a}`,fx:x=>x*Math.cos(a*x)};},()=>({f:'ln(x)',F:'x*ln(x)-x',fx:Math.log}),()=>({f:'x*ln(x)',F:'x^2*ln(x)/2-x^2/4',fx:x=>x*Math.log(x)}),()=>({f:'x^2*e^x',F:'e^x*(x^2-2x+2)',fx:x=>x*x*Math.exp(x)})];
+  PROBS.push({id:'pa-expr',topic:'parts',title:'Integrate by parts',gen(){const t=T1[ri(0,T1.length-1)]();
+    return {q:`Find ∫ ${pretty(t.f).replace(/sin\(/,'sin(').replace(/ln\(x\)/,'ln x')} dx. Type your answer (the + C is optional).`,expr:t.F,c:true,chkf:t.fx,hint:'Use ∫u dv = uv − ∫v du. For ln x, take u = ln x and dv = dx. Check by differentiating.',sol:`By parts: <b>${pretty(t.F)} + C</b>.`};}});
+  PROBS.push({id:'pa-def',topic:'parts',title:'Definite integral by parts',gen(){const pat=ri(0,3);let q,ans,chk;
+    if(pat===0){const a=ri(1,3);q=`Evaluate ∫<sub>0</sub><sup>1</sup> x e<sup>${a===1?'':a}x</sup> dx. Give a decimal to three places.`;ans=(Math.exp(a)*(a-1)+1)/(a*a);chk=integ(x=>x*Math.exp(a*x),0,1,2000);}
+    else if(pat===1){q='Evaluate ∫<sub>0</sub><sup>π</sup> x sin x dx. Give a decimal to three places.';ans=Math.PI;chk=integ(x=>x*Math.sin(x),0,Math.PI,2000);}
+    else if(pat===2){const b=pick([2,3,4]);q=`Evaluate ∫<sub>1</sub><sup>${b}</sup> ln x dx. Give a decimal to three places.`;ans=b*Math.log(b)-b+1;chk=integ(Math.log,1,b,3000);}
+    else{const b=pick([2,3]);q=`Evaluate ∫<sub>1</sub><sup>${b}</sup> x ln x dx. Give a decimal to three places.`;ans=b*b*Math.log(b)/2-b*b/4+.25;chk=integ(x=>x*Math.log(x),1,b,3000);}
+    return {q,ans,unit:'',tol:.003,chk,hint:'Integrate by parts, then evaluate uv at the limits and subtract ∫ v du.',sol:`The by-parts evaluation gives <b>${fmt(ans,4)}</b>.`};}});
+  PROBS.push({id:'pa-choice',topic:'parts',title:'Choose u',gen(){const R=[['x e<sup>3x</sup>','u = x'],['x² sin x','u = x²'],['ln x','u = ln x'],['x arctan x','u = arctan x'],['x ln x','u = ln x'],['e<sup>x</sup> x³','u = x³'],['x cos 2x','u = x'],['arcsin x','u = arcsin x']],[ex,ans]=pick(R),m=mcq(ans,R.map(r=>r[1]));
+    return {q:`Using LIATE, which choice of u is best for ∫ ${ex} dx?`,choices:m.choices,ans:m.ans,hint:'Logarithmic, Inverse trig, Algebraic, Trig, Exponential: pick the first one that appears.',sol:`<b>${ans}</b>.`};}});
+})();
+
+/* ===== modules/partial.js ===== */
+/* ---------------- Partial fractions & long division ---------------- */
+(function partial(){
+  const cv=$('#pf-canvas');if(!cv)return;
+  let a=-1,b=2,p=3,q=1,x0=3.5;
+  const f=x=>(p*x+q)/((x-a)*(x-b)),A=()=>(p*a+q)/(a-b),B=()=>(p*b+q)/(b-a);
+  const sim=glab('pf-canvas',{view:()=>({xr:[-5,5],yr:[-8,8]}),draw(ctx,P){const xs=[-5,a,b,5].sort((u,v)=>u-v),e=1e-4;
+      for(let i=0;i<3;i++){const lo=xs[i]+(i?e:0),hi=xs[i+1]-(i<2?e:0);curveD(ctx,P,f,lo,hi,T.cx,3,500);curveD(ctx,P,x=>A()/(x-a),lo,hi,alpha(T.ca,.9),2,500,[6,4]);curveD(ctx,P,x=>B()/(x-b),lo,hi,alpha(T.cv,.9),2,500,[6,4]);}
+      vline(ctx,P,a,T.muted);vline(ctx,P,b,T.muted);const y=f(x0);if(isFinite(y))dot(ctx,P.X(x0),P.Y(y),6,T.cx,T.surface);}});
+  function upd(){const form=`f(x) = (${polyTxt([p,q])})/((${lin(a)})(${lin(b)})) = A/(${lin(a)}) + B/(${lin(b)})   ⇒   ∫ f dx = A ln|${lin(a)}| + B ln|${lin(b)}| + C`;setText('pf-form',form);setText('pf-ca',fmt(A(),4)+'  = '+frac(A()));setText('pf-cb',fmt(B(),4)+'  = '+frac(B()));
+    const y=f(x0),s=A()/(x0-a)+B()/(x0-b);setText('pf-chk',Math.abs(x0-a)<.05||Math.abs(x0-b)<.05?'x is near a root of the denominator':`${fmt(y,5)}  vs  ${fmt(s,5)}`);sim.render();}
+  [['a',v=>a=v],['b',v=>b=v],['p',v=>p=v],['q',v=>q=v],['x',v=>x0=v]].forEach(([s,fn])=>bindRange('pf-'+s,v=>nz(v),v=>{fn(v);upd();}));upd();drawers.partial=()=>sim.render();
+  KEYS['pf-canvas']=['Blue is the original fraction; the pink and green dashed curves are its two partial fractions. Their sum is the blue curve.',[['cx','the original f(x)'],['ca','A/(x − a)'],['cv','B/(x − b)']]];
+  TIPS['pf-x']=()=>'Move the probe: the two readouts always agree, except at the roots a and b.';
+  GLOSS['partial fractions']='Writing a fraction of polynomials as a sum of simpler fractions, such as A/(x − a) + B/(x − b).';GLOSS['cover-up method']='To find A, cover the factor (x − a) in the denominator and substitute x = a in what remains.';
+  TT.partial='Have students find A and B by the cover-up method, then check at one value of x.';
+})();
+(function(){
+  const rp=()=>{let a,b;do{a=ri(-4,2);b=ri(a+1,5);}while(a===b);return [a,b];};
+  PROBS.push({id:'pf-AB',topic:'partial',title:'Find A or B',gen(){const [a,b]=rp(),A=ri(-5,5)||2,B=ri(-5,5)||3,p=A+B,q=-(A*b+B*a),askA=Math.random()<.5,f=x=>(p*x+q)/((x-a)*(x-b));
+    return {q:`(${polyTxt([p,q])})/((${lin(a)})(${lin(b)})) = A/(${lin(a)}) + B/(${lin(b)}). Find ${askA?'A':'B'}.`,ans:askA?A:B,unit:'',abs:.01,chk:askA?limit(x=>(x-a)*f(x),a,1):limit(x=>(x-b)*f(x),b,1),hint:`Cover-up: to find ${askA?'A':'B'}, substitute x = ${askA?a:b} into everything except the factor (${lin(askA?a:b)}).`,sol:`${askA?'A':'B'} = (${p}(${nz(askA?a:b)}) ${sgn(q)}) / (${nz(askA?a-b:b-a)}) = <b>${nz(askA?A:B)}</b>.`};}});
+  PROBS.push({id:'pf-int',topic:'partial',title:'Definite integral with partial fractions',gen(){const [a,b]=rp(),A=ri(-4,4)||1,B=ri(-4,4)||2,p=A+B,q=-(A*b+B*a),lo=Math.max(a,b)+1,hi=lo+ri(2,5),f=x=>(p*x+q)/((x-a)*(x-b)),ans=A*Math.log((hi-a)/(lo-a))+B*Math.log((hi-b)/(lo-b));
+    return {q:`Evaluate ∫<sub>${lo}</sub><sup>${hi}</sup> (${polyTxt([p,q])})/((${lin(a)})(${lin(b)})) dx. Give a decimal to three places.`,ans,unit:'',tol:.004,chk:integ(f,lo,hi,3000),hint:'Split into A/(x − a) + B/(x − b), integrate to logs, and evaluate.',sol:`With A = ${A}, B = ${B}: ${A} ln|${lin(a)}| + ${B} ln|${lin(b)}| from ${lo} to ${hi} = <b>${fmt(ans,4)}</b>.`};}});
+  PROBS.push({id:'pf-expr',topic:'partial',title:'Antiderivative with partial fractions',gen(){const [a,b]=rp(),A=ri(-4,4)||1,B=ri(-4,4)||2,p=A+B,q=-(A*b+B*a),f=x=>(p*x+q)/((x-a)*(x-b)),F=`(${A})*ln(abs(x-(${a})))+(${B})*ln(abs(x-(${b})))`;
+    return {q:`Find ∫ (${polyTxt([p,q])})/((${lin(a)})(${lin(b)})) dx. Type your answer using ln(abs(...)) (the + C is optional).`,expr:F,c:true,chkf:f,hint:'Partial fractions: A/(x − a) + B/(x − b); each integrates to a log.',sol:`<b>${A} ln|${lin(a)}| + ${B} ln|${lin(b)}| + C</b> (A = ${A}, B = ${B}).`};}});
+  PROBS.push({id:'pf-long',topic:'partial',title:'Long division first',gen(){const r=ri(-2,2),bb=ri(-3,5),cc=ri(-4,6),lo=r+1,hi=r+ri(2,4),R=r*r+bb*r+cc,f=x=>(x*x+bb*x+cc)/(x-r),ans=(hi*hi-lo*lo)/2+(bb+r)*(hi-lo)+R*Math.log((hi-r)/(lo-r));
+    return {q:`Evaluate ∫<sub>${lo}</sub><sup>${hi}</sup> (${polyTxt([1,bb,cc])})/(${lin(r)}) dx. Give a decimal to three places.`,ans,unit:'',tol:.004,chk:integ(f,lo,hi,3000),hint:`The top has higher degree: divide first. x² ${sgn(bb)}x ${sgn(cc)} = (${lin(r)})(x ${sgn(bb+r)}) + ${R}.`,sol:`(x² ${sgn(bb)}x ${sgn(cc)})/(${lin(r)}) = x ${sgn(bb+r)} + ${R}/(${lin(r)}). Integrating from ${lo} to ${hi}: <b>${fmt(ans,4)}</b>.`};}});
+})();
+
+/* ===== modules/improper.js ===== */
+/* ---------------- Improper integrals ---------------- */
+(function improper(){
+  const cv=$('#ip-canvas');if(!cv)return;
+  let ty='inf',p=2,z=1;
+  const isOne=()=>Math.abs(p-1)<1e-9;
+  const lim=()=>ty==='inf'?(p>1?1/(p-1):Infinity):(p<1?1/(1-p):Infinity);
+  const val=()=>{if(ty==='inf'){const B=Math.pow(10,z);return isOne()?Math.log(B):(Math.pow(B,1-p)-1)/(1-p);}const e=Math.pow(10,-z);return isOne()?-Math.log(e):(1-Math.pow(e,1-p))/(1-p);};
+  const sim=glab('ip-canvas',{view:()=>ty==='inf'?{xr:[0,12],yr:[0,4]}:{xr:[0,1.2],yr:[0,10]},draw(ctx,P){const f=x=>Math.pow(x,-p);
+      if(ty==='inf'){const B=Math.pow(10,z);areaSigned(ctx,P,f,1,Math.min(B,P.xr[1]),T.ce,T.ca,300,.35);curveD(ctx,P,f,.05,12,T.cx,2.8,400);vline(ctx,P,1,T.muted);if(B<=12)vline(ctx,P,B,T.hot,[4,4]);else label(ctx,'the shading continues off the right edge',P.box.x+P.box.w-6,P.box.y+14,T.hot,'right','middle',MONO);}
+      else{const e=Math.pow(10,-z);areaSigned(ctx,P,f,Math.max(e,.003),1,T.ce,T.ca,300,.35);curveD(ctx,P,f,.02,1.2,T.cx,2.8,400);vline(ctx,P,1,T.muted);vline(ctx,P,e,T.hot,[4,4]);label(ctx,'lower limit ε = '+fmt(e,3),P.box.x+P.box.w-6,P.box.y+14,T.hot,'right','middle',MONO);}}});
+  function upd(){const L=lim();setText('ip-area',fmt(val(),4));setText('ip-lim',isFinite(L)?fmt(L,4):'∞ (grows without bound)');setText('ip-ver',isFinite(L)?'converges':'diverges');sim.render();}
+  bindRange('ip-p',v=>nz(v),v=>{p=v;upd();});bindRange('ip-z',v=>ty==='inf'?'out to '+fmt(Math.pow(10,v),0):'from '+fmt(Math.pow(10,-v),4),v=>{z=v;upd();});segBind('ip-ty','k',v=>{ty=v;upd();});upd();drawers.improper=()=>sim.render();
+  KEYS['ip-canvas']=['Slide p and push the limit out (or toward 0). If the area so far levels off at the limit it converges; if it keeps growing it diverges.',[['cx','f(x) = 1/xᵖ'],['ce','area so far'],['hot','the moving limit']]];
+  TIPS['ip-p']=el=>{const q=+el.value;return ty==='inf'?(q>1?`p = ${nz(q)} > 1: the tail has finite area 1/(p − 1).`:'p ≤ 1: the area to ∞ diverges.'):(q<1?`p = ${nz(q)} < 1: finite area 1/(1 − p), despite the blow-up at 0.`:'p ≥ 1: the area near 0 diverges.');};
+  GLOSS['improper integral']='An integral with an infinite limit or an integrand that blows up; defined as a limit of ordinary integrals.';GLOSS['converge']='The limit exists and is a finite number.';
+  TT.improper='Ask students to predict convergence from p alone, then check on the lab. The borderline p = 1 diverges in both types.';
+})();
+(function(){
+  PROBS.push({id:'ip-val',topic:'improper',title:'Evaluate an improper integral',gen(){const pat=pick([0,1,2,3]);let q,ans,show;
+    if(pat===0){const p=pick([2,3,4,5]);q=`Evaluate ∫<sub>1</sub><sup>∞</sup> 1/x<sup>${p}</sup> dx. Give a fraction or decimal.`;ans=1/(p-1);show='1/'+(p-1);}
+    else if(pat===1){const kk=ri(1,5);q=`Evaluate ∫<sub>0</sub><sup>∞</sup> e<sup>−${kk===1?'':kk}x</sup> dx. Give a fraction or decimal.`;ans=1/kk;show=kk===1?'1':'1/'+kk;}
+    else if(pat===2){const m=pick([2,3,4,5]);q=`Evaluate ∫<sub>0</sub><sup>1</sup> 1/x<sup>1/${m}</sup> dx. Give a fraction or decimal.`;ans=1/(1-1/m);show=m+'/'+(m-1);}
+    else{const a=pick([1,2,3]);q=`Evaluate ∫<sub>${a}</sub><sup>∞</sup> 1/x² dx. Give a fraction or decimal.`;ans=1/a;show=a===1?'1':'1/'+a;}
+    return {q,ans,unit:'',tol:.004,show,chk:ans,hint:'Replace the problem point by a variable limit, integrate, and take the limit.',sol:`The limit of the proper integrals is <b>${show}</b>.`};}});
+  PROBS.push({id:'ip-conv',topic:'improper',title:'Converge or diverge?',gen(){const R=[['∫<sub>1</sub><sup>∞</sup> 1/x dx','diverges'],['∫<sub>1</sub><sup>∞</sup> 1/x² dx','converges'],['∫<sub>1</sub><sup>∞</sup> 1/√x dx','diverges'],['∫<sub>1</sub><sup>∞</sup> 1/x<sup>1.5</sup> dx','converges'],['∫<sub>0</sub><sup>1</sup> 1/x dx','diverges'],['∫<sub>0</sub><sup>1</sup> 1/√x dx','converges'],['∫<sub>0</sub><sup>1</sup> 1/x² dx','diverges'],['∫<sub>0</sub><sup>∞</sup> e<sup>−x</sup> dx','converges'],['∫<sub>1</sub><sup>∞</sup> x dx','diverges']],[ex,ans]=pick(R),m=mcq(ans,['converges','diverges']);
+    return {q:`Does ${ex} converge or diverge?`,choices:m.choices,ans:m.ans,hint:'p-test: ∫₁^∞ x⁻ᵖ converges iff p > 1; ∫₀¹ x⁻ᵖ converges iff p < 1.',sol:`<b>${ans}</b>.`};}});
+  PROBS.push({id:'ip-pexp',topic:'improper',title:'Which p converge?',gen(){const type=pick(['inf','pt']),p=pick([.5,.8,1,1.2,1.5,2,3]),conv=type==='inf'?p>1:p<1,m=mcq(conv?'converges':'diverges',['converges','diverges']);
+    return {q:`Does ${type==='inf'?`∫<sub>1</sub><sup>∞</sup> 1/x<sup>${p}</sup> dx`:`∫<sub>0</sub><sup>1</sup> 1/x<sup>${p}</sup> dx`} converge or diverge?`,choices:m.choices,ans:m.ans,hint:type==='inf'?'At ∞: converges iff p > 1.':'Near 0: converges iff p < 1.',sol:`With p = ${p}: <b>${conv?'converges':'diverges'}</b>.`};}});
+})();
+
+/* ===== modules/euler.js ===== */
+/* ---------------- Euler's method ---------------- */
+(function euler(){
+  const cv=$('#eu-canvas');if(!cv)return;
+  const C={a:{F:(x,y)=>y,ex:x=>Math.exp(x),yr:[0,8.5]},b:{F:(x,y)=>x-y,ex:x=>x-1+2*Math.exp(-x),yr:[.5,2.4]},c:{F:(x,y)=>-2*x*y,ex:x=>Math.exp(-x*x),yr:[-.1,1.15]}};
+  const H={h1:1,h05:.5,h025:.25,h01:.1,h005:.05};
+  let k='a',hk='h05';
+  const pts=()=>{const F=C[k].F,h=H[hk],n=Math.round(2/h),out=[[0,1]];let x=0,y=1;for(let i=0;i<n;i++){y+=h*F(x,y);x=+(x+h).toFixed(6);out.push([x,y]);}return out;};
+  const sim=glab('eu-canvas',{view:()=>({xr:[-.1,2.1],yr:C[k].yr}),draw(ctx,P){const A=C[k],ps=pts(),h=H[hk];curveD(ctx,P,A.ex,0,2,T.cx,2.8,300);
+      ctx.save();clip(ctx,P);ctx.strokeStyle=T.hot;ctx.lineWidth=2.4;ctx.beginPath();ps.forEach(([x,y],i)=>i?ctx.lineTo(P.X(x),P.Y(y)):ctx.moveTo(P.X(x),P.Y(y)));ctx.stroke();ctx.restore();ps.forEach(([x,y])=>dot(ctx,P.X(x),P.Y(y),h>=.25?5:3,T.hot,T.surface));}});
+  function upd(){const A=C[k],ps=pts(),h=H[hk],est=ps[ps.length-1][1],ex=A.ex(2);setText('eu-est',fmt(est,4));setText('eu-ex',fmt(ex,4));setText('eu-err',fmt(est-ex,4)+(est<ex?' (under)':' (over)'));
+    const rows=ps.length>10?[...ps.slice(0,6),null,ps[ps.length-1]]:ps;let i0=0;$('#eu-tbl').innerHTML='<thead><tr><th>n</th><th>xₙ</th><th>yₙ</th><th>slope F(xₙ, yₙ)</th></tr></thead><tbody>'+rows.map(r=>{if(!r)return '<tr><td colspan="4">…</td></tr>';const n=ps.indexOf(r);return `<tr><td>${n}</td><td>${fmt(r[0],2)}</td><td>${fmt(r[1],4)}</td><td>${n<ps.length-1?fmt(A.F(r[0],r[1]),4):'—'}</td></tr>`;}).join('')+'</tbody>';sim.render();}
+  segBind('eu-fn','k',v=>{k=v;upd();});segBind('eu-h','k',v=>{hk=v;upd();});upd();drawers.euler=()=>sim.render();
+  KEYS['eu-canvas']=['Blue is the exact solution; the orange polyline is Euler\'s method. Change the step size h.',[['cx','exact solution'],['hot','Euler steps']]];
+  TIPS['eu-h']=()=>'A smaller step h means more, shorter tangent-line steps, and a smaller error.';
+  GLOSS["Euler's method"]='Approximate a solution by repeated tangent-line steps: yₙ₊₁ = yₙ + h·F(xₙ, yₙ).';
+  TT.euler='Have students do the first two steps by hand on the first equation, then use the lab to see what shrinking h does.';
+})();
+(function(){
+  const DE=[['x + y',(x,y)=>x+y],['x − y',(x,y)=>x-y],['y − x',(x,y)=>y-x],['2x + y',(x,y)=>2*x+y],['xy',(x,y)=>x*y],['y',(x,y)=>y],['x²',(x,y)=>x*x],['y − 1',(x,y)=>y-1]];
+  PROBS.push({id:'eu-step',topic:'euler',title:'Two steps of Euler\'s method',gen(){const [nm,F]=pick(DE),h=pick([.5,.25,1]),y0=ri(1,4),n=2,x0=ri(0,1);let x=x0,y=y0;const steps=[];for(let i=0;i<n;i++){const s=F(x,y);steps.push(`step ${i+1}: slope ${nz(s)} at (${nz(x)}, ${nz(y)}) → y = ${nz(+(y+h*s).toFixed(4))}`);y+=h*s;x+=h;}
+    let xm=x0,ym=y0;for(let i=0;i<n;i++){ym=ym+h*F(xm,ym);xm+=h;}
+    return {q:`Use Euler's method with step size h = ${h}, two steps, to approximate y(${nz(x0+n*h)}) for dy/dx = ${nm}, y(${x0}) = ${y0}. Give a decimal.`,ans:y,unit:'',abs:.01,chk:ym,hint:'y_new = y_old + h · (slope at the old point). Update x by h each step.',sol:`${steps.join('; ')}. So y(${nz(x0+n*h)}) ≈ <b>${nz(+y.toFixed(4))}</b>.`};}});
+  PROBS.push({id:'eu-bias',topic:'euler',title:'Over- or underestimate?',gen(){const R=[['dy/dx = y, y(0) = 1 (solution eˣ, concave up)','underestimate'],['dy/dx = −y, y(0) = 4 (solution 4e⁻ˣ, concave up)','underestimate'],['dy/dx = 2x, y(0) = 0 (solution x², concave up)','underestimate'],['dy/dx = −2x, y(0) = 5 (solution 5 − x², concave down)','overestimate'],['dy/dx = cos x, y(0) = 0 on [0, π/2] (solution sin x, concave down)','overestimate']],[tx,ans]=pick(R),m=mcq(ans,['underestimate','overestimate']);
+    return {q:`Euler's method is used for ${tx}. Is the estimate an overestimate or an underestimate?`,choices:m.choices,ans:m.ans,hint:'Tangent lines lie below a concave-up curve and above a concave-down one.',sol:`Euler follows tangent lines, which lie ${ans==='underestimate'?'below':'above'} the solution: an <b>${ans}</b>.`};}});
+  PROBS.push({id:'eu-slope',topic:'euler',title:'One Euler step',gen(){const a=ri(1,3),b=ri(-2,3)||1,x0=ri(0,2),y0=ri(1,5),h=pick([.1,.2,.5]),F=(x,y)=>a*x+b*y,ans=y0+h*F(x0,y0);
+    return {q:`dy/dx = ${a===1?'':a}x ${b<0?'−':'+'} ${Math.abs(b)===1?'':Math.abs(b)}y with y(${x0}) = ${y0}. Use one Euler step of size ${h} to estimate y(${nz(+(x0+h).toFixed(2))}). Give a decimal.`,ans,unit:'',abs:.005,chk:y0+h*(a*x0+b*y0),hint:'New y = y₀ + h·(dy/dx at (x₀, y₀)).',sol:`slope = ${a}(${x0}) ${b<0?'−':'+'} ${Math.abs(b)}(${y0}) = ${nz(F(x0,y0))}. y₁ = ${y0} + ${h}(${nz(F(x0,y0))}) = <b>${nz(+ans.toFixed(4))}</b>.`};}});
+})();
+
+/* ===== modules/logistic.js ===== */
+/* ---------------- Logistic models ---------------- */
+(function logistic(){
+  const cv=$('#lg-canvas');if(!cv)return;
+  let kk=.5,L=8,P0=1,t0=6;
+  const P=t=>L/(1+((L-P0)/P0)*Math.exp(-kk*t)),dP=p=>kk*p*(1-p/L);
+  const sim=glab('lg-canvas',{h:w=>clamp(w*.36,230,300),view:()=>({xr:[0,20],yr:[0,Math.max(L,P0)*1.15],xlabel:'t'}),draw(ctx,P_){hline(ctx,P_,L,T.hot,[6,4]);curveD(ctx,P_,P,0,20,T.cx,2.8,300);label(ctx,'carrying capacity L',P_.box.x+P_.box.w-6,P_.Y(L)-9,T.hot,'right','middle',MONO);
+      if(P0<L/2){const ts=Math.log((L-P0)/P0)/kk;if(ts<20){dot(ctx,P_.X(ts),P_.Y(L/2),6,T.ce,T.ink);label(ctx,'inflection',P_.X(ts)+9,P_.Y(L/2)+14,T.ce,'left','middle',MONO);}}vline(ctx,P_,t0,T.muted,[3,4]);dot(ctx,P_.X(t0),P_.Y(P(t0)),6.5,T.cx,T.surface);label(ctx,'P(t)',P_.box.x+8,P_.box.y+10,T.cx,'left','middle',LABEL);}});
+  const sim2=glab('lg-canvas2',{h:w=>clamp(w*.3,190,250),view:()=>({xr:[0,Math.max(L,P0)*1.15],yr:[-.1,Math.max(kk*L/4*1.3,.2)],xlabel:'P'}),draw(ctx,P_){curveD(ctx,P_,dP,0,Math.max(L,P0)*1.15,T.cv,2.8,200);dot(ctx,P_.X(L/2),P_.Y(kk*L/4),6,T.ce,T.ink);label(ctx,'fastest growth at P = L/2',P_.X(L/2),P_.Y(kk*L/4)-12,T.ce,'center','middle',MONO);const p=P(t0);dot(ctx,P_.X(p),P_.Y(dP(p)),6.5,T.cv,T.surface);label(ctx,'dP/dt as a function of P',P_.box.x+8,P_.box.y+10,T.cv,'left','middle',LABEL);}});
+  function upd(){const p=P(t0);setText('lg-P',fmt(p,4));setText('lg-dP',fmt(dP(p),4));setText('lg-max',`${fmt(kk*L/4,3)} at P = ${fmt(L/2,2)}`);sim.render();sim2.render();}
+  bindRange('lg-k',v=>nz(v),v=>{kk=v;upd();});bindRange('lg-L',v=>nz(v),v=>{L=v;upd();});bindRange('lg-p0',v=>nz(v),v=>{P0=v;upd();});bindRange('lg-t',v=>nz(v),v=>{t0=v;upd();});upd();drawers.logistic=()=>{sim.render();sim2.render();};
+  KEYS['lg-canvas']=['Top: the S-curve. Bottom: the growth rate as a function of P, a parabola with its peak at P = L/2.',[['cx','P(t)'],['cv','dP/dt vs P'],['hot','carrying capacity'],['ce','fastest growth / inflection']]];
+  TIPS['lg-t']=()=>'Watch the green dot on the parabola: growth is fastest at the top, slow near 0 and near L.';
+  GLOSS['carrying capacity']='The population L that the environment can sustain: the limit of P in the logistic model.';GLOSS['logistic']='dP/dt = kP(1 − P/L): growth that levels off at L.';
+  TT.logistic='Ask students to read the limit, the equilibria and the fastest-growth population straight from the differential equation.';
+})();
+(function(){
+  PROBS.push({id:'lg-limit',topic:'logistic',title:'Limit of a logistic population',gen(){const k=pick([.01,.02,.05,.1,.2]),L=pick([100,250,500,800,1000,5000]),P0=Math.round(L*pick([.05,.1,.2])),nm=`${k}P(1 − P/${L})`;
+    return {q:`dP/dt = ${nm} with P(0) = ${P0}. What is lim<sub>t→∞</sub> P(t)?`,ans:L,unit:'',abs:.01,chk:L,hint:'The carrying capacity: dP/dt = kP(1 − P/L) has L as the limit when 0 < P(0) < L.',sol:`Comparing with kP(1 − P/L): L = <b>${L}</b>.`};}});
+  PROBS.push({id:'lg-max',topic:'logistic',title:'When is growth fastest?',gen(){const k=pick([.02,.05,.1,.4]),L=pick([100,200,400,1000]),askP=Math.random()<.5,ans=askP?L/2:k*L/4;
+    return {q:`dP/dt = ${k}P(1 − P/${L}). ${askP?'At what population P is the growth rate largest?':'What is the largest possible growth rate dP/dt?'}`,ans,unit:'',tol:.004,chk:askP?argmax(p=>k*p*(1-p/L),0,L):k*L/4,hint:'dP/dt is a parabola in P with zeros at 0 and L; its peak is halfway.',sol:askP?`The peak of the parabola is at P = L/2 = <b>${L/2}</b>.`:`At P = L/2: dP/dt = k(L/2)(1/2) = kL/4 = <b>${fmt(k*L/4,3)}</b>.`};}});
+  PROBS.push({id:'lg-rate',topic:'logistic',title:'Growth rate at a given size',gen(){const k=pick([.02,.05,.1,.2]),L=pick([100,200,500,1000]),P=Math.round(L*pick([.1,.3,.6,.9])),ans=k*P*(1-P/L);
+    return {q:`dP/dt = ${k}P(1 − P/${L}). Find dP/dt when P = ${P}. Give a decimal.`,ans,unit:'',tol:.004,chk:k*P-k*P*P/L,hint:'Substitute P into the right-hand side.',sol:`dP/dt = ${k}(${P})(1 − ${P}/${L}) = <b>${fmt(ans,3)}</b>.`};}});
+  PROBS.push({id:'lg-model',topic:'logistic',title:'Which behavior?',gen(){const R=[['dP/dt = 0.1P(1 − P/300) and P(0) = 40','P increases and approaches 300'],['dP/dt = 0.1P(1 − P/300) and P(0) = 400','P decreases and approaches 300'],['dP/dt = 0.1P and P(0) = 40','P grows without bound'],['dP/dt = 0.1P(1 − P/300) and P(0) = 0','P stays at 0'],['dP/dt = 0.1P(1 − P/300) and P(0) = 300','P stays at 300']],[tx,ans]=pick(R),m=mcq(ans,R.map(r=>r[1]));
+    return {q:`For ${tx}, which describes P(t) as t increases?`,choices:m.choices,ans:m.ans,hint:'Look at the sign of dP/dt, and at the equilibria P = 0 and P = L.',sol:`<b>${ans}</b>.`};}});
+})();
+
+/* ===== modules/arclen.js ===== */
+/* ---------------- Arc length ---------------- */
+(function arclen(){
+  const cv=$('#al-canvas');if(!cv)return;
+  const C={a:{f:x=>x*x,d:x=>2*x,lo:0,hi:2,yr:[-.3,4.4]},b:{f:Math.sin,d:Math.cos,lo:0,hi:Math.PI,yr:[-.3,1.4]},c:{f:x=>2/3*Math.pow(x,1.5),d:Math.sqrt,lo:0,hi:3,yr:[-.3,3.8]}};
+  let k='a',n=4;
+  const sim=glab('al-canvas',{view:()=>({xr:[C[k].lo-.2,C[k].hi+.2],yr:C[k].yr}),draw(ctx,P){const A=C[k];curveD(ctx,P,A.f,A.lo,A.hi,T.cx,2.8,300);ctx.save();clip(ctx,P);ctx.strokeStyle=T.hot;ctx.lineWidth=2.4;ctx.beginPath();for(let i=0;i<=n;i++){const x=A.lo+(A.hi-A.lo)*i/n;i?ctx.lineTo(P.X(x),P.Y(A.f(x))):ctx.moveTo(P.X(x),P.Y(A.f(x)));}ctx.stroke();ctx.restore();
+      for(let i=0;i<=n;i++){const x=A.lo+(A.hi-A.lo)*i/n;dot(ctx,P.X(x),P.Y(A.f(x)),n>20?2.5:5,T.hot,T.surface);}}});
+  const poly=()=>{const A=C[k];let s=0;for(let i=0;i<n;i++){const x0=A.lo+(A.hi-A.lo)*i/n,x1=A.lo+(A.hi-A.lo)*(i+1)/n;s+=Math.hypot(x1-x0,A.f(x1)-A.f(x0));}return s;};
+  function upd(){const A=C[k],I=integ(x=>Math.sqrt(1+A.d(x)**2),A.lo,A.hi,2000),s=poly();setText('al-poly',fmt(s,5));setText('al-int',fmt(I,5));setText('al-diff',fmt(I-s,5));sim.render();}
+  bindRange('al-n',v=>String(v),v=>{n=v;upd();});segBind('al-fn','k',v=>{k=v;upd();});upd();drawers.arclen=()=>sim.render();
+  KEYS['al-canvas']=['The orange polygon uses n straight segments. Its length approaches the arc length from below as n grows.',[['cx','the curve'],['hot','polygon with n segments']]];
+  TIPS['al-n']=el=>`${el.value} chords: always shorter than the curve, but closer as n increases.`;
+  GLOSS['arc length']='The length of a curve: ∫ √(1 + (f′(x))²) dx.';
+  TT.arclen='Ask students why every polygon is shorter than the curve, and what the integral adds up.';
+})();
+(function(){
+  PROBS.push({id:'al-length',topic:'arclen',title:'Compute an arc length',gen(){const pat=pick([0,1,2]);let q,ans,chk;
+    if(pat===0){const b=pick([1,3,8,15]);q=`Find the arc length of y = (2/3)x<sup>3/2</sup> from x = 0 to x = ${b}. Give a decimal.`;ans=(2/3)*(Math.pow(1+b,1.5)-1);chk=integ(x=>Math.sqrt(1+x),0,b,3000);}
+    else if(pat===1){q='Find the arc length of y = x³/6 + 1/(2x) from x = 1 to x = 2. Give a fraction or decimal.';ans=17/12;chk=integ(x=>Math.sqrt(1+(x*x/2-1/(2*x*x))**2),1,2,3000);}
+    else{const b=pick([1,2,3]);q=`Find the arc length of y = (e<sup>x</sup> + e<sup>−x</sup>)/2 from x = 0 to x = ${b}. Give a decimal to three places.`;ans=Math.sinh(b);chk=integ(x=>Math.cosh(x),0,b,2000);}
+    return {q,ans,unit:'',tol:.003,chk,hint:'Differentiate, form 1 + (f′)², and look for a perfect square.',sol:`The integrand √(1 + (f′)²) simplifies to a function you can integrate; the length is <b>${fmt(ans,4)}</b>.`};}});
+  PROBS.push({id:'al-setup',topic:'arclen',title:'Set up the arc length integral',gen(){const R=[['y = x² from x = 0 to x = 2','∫₀² √(1 + 4x²) dx',['∫₀² √(1 + x⁴) dx','∫₀² √(1 + 2x) dx','∫₀² (1 + 4x²) dx']],['y = sin x from x = 0 to x = π','∫₀^π √(1 + cos²x) dx',['∫₀^π √(1 + sin²x) dx','∫₀^π √(1 + cos x) dx','∫₀^π (1 + cos²x) dx']],['y = ln x from x = 1 to x = e','∫₁^e √(1 + 1/x²) dx',['∫₁^e √(1 + ln²x) dx','∫₁^e √(1 + 1/x) dx','∫₁^e (1 + 1/x²) dx']],['y = eˣ from x = 0 to x = 1','∫₀¹ √(1 + e²ˣ) dx',['∫₀¹ √(1 + eˣ) dx','∫₀¹ √(1 + e⁴ˣ) dx','∫₀¹ (1 + e²ˣ) dx']]],[cur,c,w]=pick(R),m=mcq(c,w);
+    return {q:`Which integral gives the length of the curve ${cur}?`,choices:m.choices,ans:m.ans,hint:'L = ∫ √(1 + (f′(x))²) dx. Differentiate first, then square f′.',sol:`<b>${c}</b>.`};}});
 })();
 
 /* ===== overview.js ===== */

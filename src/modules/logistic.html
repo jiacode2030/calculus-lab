@@ -1,0 +1,50 @@
+  <section class="view bc" id="v-logistic" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Units 7–8 · BC</span><span class="tag">BC only</span></div>
+        <h1>Logistic models</h1>
+        <p class="lede">Real populations do not grow forever. A logistic model grows fast when small, slows as it approaches a carrying capacity, and levels off.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p><span class="m">dP/dt = kP(1 − P/L)</span>. When P is small the factor (1 − P/L) is near 1, so growth is almost exponential. As P approaches the <b>carrying capacity L</b>, the factor shrinks to 0 and growth stops. P = 0 and P = L are equilibria; L is stable. The solution is an S-shaped curve with limit L.</p>
+        <p>The growth rate dP/dt is a parabola in P: zero at P = 0 and P = L, and <b>largest at P = L/2</b>, where the S-curve has its inflection point and steepest slope. The maximum rate is kL/4. Everything here (limit, max rate, inflection) can be read from the differential equation without solving it.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>exponential growth forever</dd><dt>So we didn't need</dt><dd>growth that levels off at a limit</dd><dt>Now</dt><dd>populations, spread of disease, adoption of technology</dd><dt>So we need</dt><dd>the logistic differential equation</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>dP/dt = kP(1 − P/L)</span><small>logistic</small></div><div class="eqn"><span>lim P = L</span><small>carrying capacity</small></div><div class="eqn"><span>max growth at P = L/2, rate kL/4</span><small>inflection of the S-curve</small></div></div>
+      <div class="lab" id="lg-lab">
+        <div class="labbar"><span class="title">The S-curve and its rate</span></div>
+        <canvas id="lg-canvas" aria-label="Top: population against time, an S-shaped curve with a dashed line at the carrying capacity. Bottom: growth rate against population, a parabola."></canvas>
+        <canvas id="lg-canvas2" aria-label="Growth rate dP over dt against P, with the current population marked."></canvas>
+        <div class="controls"><div class="ctl"><label for="lg-k"><span>k</span> <output id="lg-k-out"></output></label><input type="range" id="lg-k" min="0.1" max="1" step="0.05" value="0.5"></div><div class="ctl"><label for="lg-L"><span>Carrying capacity L</span> <output id="lg-L-out"></output></label><input type="range" id="lg-L" min="2" max="10" step="0.5" value="8"></div><div class="ctl"><label for="lg-p0"><span>Start P₀</span> <output id="lg-p0-out"></output></label><input type="range" id="lg-p0" min="0.2" max="10" step="0.2" value="1"></div><div class="ctl"><label for="lg-t"><span>Time t</span> <output id="lg-t-out"></output></label><input type="range" id="lg-t" min="0" max="20" step="0.1" value="6"></div></div>
+        <div class="readout"><div><span>P(t)</span><strong class="x" id="lg-P">—</strong></div><div><span>dP/dt now</span><strong class="v" id="lg-dP">—</strong></div><div><span>fastest growth</span><strong class="a" id="lg-max">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Set P₀ = 1, L = 8. When is the population growing fastest? <button type="button" class="btn link" data-show='[["#lg-p0", 1], ["#lg-L", 8], ["#lg-k", 0.5]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>When P = L/2 = 4 (the steepest part of the S, and the top of the parabola below). The maximum rate is kL/4 = 0.5·8/4 = 1.</p></details></li>
+        <li><p>Start P₀ above L (try P₀ = 10, L = 8). What does P do? <button type="button" class="btn link" data-show='[["#lg-p0", 10], ["#lg-L", 8]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>It decreases toward L: (1 − P/L) is negative, so the model pulls the population back down to the carrying capacity.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">dP/dt = 0.02P(1 − P/500), P(0) = 50. Find lim<sub>t→∞</sub> P, the P at which growth is fastest, and the fastest rate.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Compare with kP(1 − P/L).</b> k = 0.02, L = 500.</li>
+          <li hidden><b>Limit.</b> The carrying capacity: lim P = 500 (since 0 &lt; P(0) &lt; L).</li>
+          <li hidden><b>Fastest growth.</b> At P = L/2 = 250.</li>
+          <li hidden><b>Rate.</b> kL/4 = 0.02(500)/4 = 2.5 per time unit.</li>
+          <li hidden><b>Answer.</b> Limit <b>500</b>; fastest at <b>P = 250</b> with rate <b>2.5</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 5</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Using L = the limit of dP/dt. L is the limit of P itself.</li>
+        <li>Reading the maximum growth at P = L instead of L/2.</li>
+        <li>Forgetting the sign: for P &gt; L the population decreases.</li>
+        <li>Confusing logistic with exponential growth.</li>
+        <li>Mixing up P (population) and dP/dt (growth rate) when reading graphs.</li>
+      </ul></div>
+      <div class="prose"><h2>Solving it</h2>
+        <p>Separating variables with partial fractions gives P(t) = L/(1 + Ae<sup>−kt</sup>) with A = (L − P₀)/P₀. You rarely need the formula on the exam: the equation itself tells you the limit, the equilibria and where growth is fastest.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="Fastest at half the carrying capacity: 200/2.">
+        <p class="q">Check yourself: In dP/dt = 0.1P(1 − P/200), the population is growing fastest when P =</p>
+        <div class="opts"><button type="button">100</button><button type="button">200</button><button type="button">50</button><button type="button">20</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>

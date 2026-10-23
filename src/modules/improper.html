@@ -1,0 +1,49 @@
+  <section class="view bc" id="v-improper" hidden>
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="tag ap">AP Unit 6 · BC</span><span class="tag">BC only</span></div>
+        <h1>Improper integrals</h1>
+        <p class="lede">What if the area stretches out forever, or the function blows up inside the interval? Sometimes the area is still finite.</p>
+      </div>
+      <div class="intuit"><b class="k">The idea</b>
+        <p>An integral is <b>improper</b> if one limit is ∞ or the integrand blows up on the interval. Replace the troublesome point by a variable and take a limit: <span class="m">∫<sub>1</sub><sup>∞</sup> f dx = lim<sub>b→∞</sub> ∫<sub>1</sub><sup>b</sup> f dx</span>. If the limit is a number the integral <b>converges</b> to it; if not, it <b>diverges</b>.</p>
+        <p>The benchmark: <span class="m">∫<sub>1</sub><sup>∞</sup> 1/x<sup>p</sup> dx</span> converges iff <b>p &gt; 1</b> (to 1/(p − 1)); and <span class="m">∫<sub>0</sub><sup>1</sup> 1/x<sup>p</sup> dx</span> converges iff <b>p &lt; 1</b> (to 1/(1 − p)). So 1/x² has finite area from 1 to ∞, but 1/x does not, narrowly.</p>
+      </div>
+      <div class="assume upgrade"><h3>Assumption upgrade</h3><dl><dt>Before</dt><dd>definite integrals had finite limits and a continuous integrand</dd><dt>So we didn't need</dt><dd>a limit definition for unbounded cases</dd><dt>Now</dt><dd>∫ e^{−x} dx from 0 to ∞, and the p-test for series</dd><dt>So we need</dt><dd>improper integrals</dd></dl></div>
+      <div class="eqgrid"><div class="eqn"><span>∫<sub>a</sub><sup>∞</sup> f = lim<sub>b→∞</sub> ∫<sub>a</sub><sup>b</sup> f</span><small>infinite limit</small></div><div class="eqn"><span>∫<sub>1</sub><sup>∞</sup> x<sup>−p</sup> dx converges iff p &gt; 1</span><small>value 1/(p − 1)</small></div><div class="eqn"><span>∫<sub>0</sub><sup>1</sup> x<sup>−p</sup> dx converges iff p &lt; 1</span><small>value 1/(1 − p)</small></div></div>
+      <div class="lab" id="ip-lab">
+        <div class="labbar"><span class="title">Area that never stops, or does</span></div>
+        <div class="ctl"><span class="lbl">Type</span><div class="seg" id="ip-ty" role="group" aria-label="Type"><button type="button" data-k="inf" aria-pressed="true">∫₁^∞ 1/xᵖ dx</button><button type="button" data-k="pt" aria-pressed="false">∫₀¹ 1/xᵖ dx</button></div></div>
+        <canvas id="ip-canvas" aria-label="A graph of one over x to the p with shaded area out to a growing limit, and the area so far compared with the limiting value."></canvas>
+        <div class="controls"><div class="ctl"><label for="ip-p"><span>p</span> <output id="ip-p-out"></output></label><input type="range" id="ip-p" min="0.4" max="3" step="0.05" value="2"></div><div class="ctl"><label for="ip-z"><span>How far out (or how close to 0)</span> <output id="ip-z-out"></output></label><input type="range" id="ip-z" min="0" max="3" step="0.05" value="1"></div></div>
+        <div class="readout"><div><span>area so far</span><strong class="x" id="ip-area">—</strong></div><div><span>the limit</span><strong class="v" id="ip-lim">—</strong></div><div><span>converges?</span><strong class="" id="ip-ver">—</strong></div></div>
+      </div>
+      <div class="try"><h3>Try this</h3><p class="small" style="margin:0">Predict what will happen first. Then set it up and check.</p><ol>
+        <li><p>Set p = 2 and push the slider out. What does the area approach? <button type="button" class="btn link" data-show='[["click", "#ip-ty [data-k=inf]"], ["#ip-p", 2], ["#ip-z", 3]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>1: the area from 1 to b is 1 − 1/b → 1. The infinite tail has finite area.</p></details></li>
+        <li><p>Set p = 1 and push out. Does it level off? <button type="button" class="btn link" data-show='[["click", "#ip-ty [data-k=inf]"], ["#ip-p", 1], ["#ip-z", 3]]'>Set it up for me</button></p><details><summary>What you should see</summary><p>No: the area is ln b, which grows forever (slowly). ∫ 1/x from 1 to ∞ diverges.</p></details></li>
+      </ol></div>
+      <div class="example"><h3>Worked example</h3><p class="prob">Decide whether ∫<sub>1</sub><sup>∞</sup> 1/x² dx and ∫<sub>1</sub><sup>∞</sup> 1/x dx converge, and evaluate any that do.</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>
+        <div class="exbody"><ol class="exsteps">
+          <li hidden><b>Replace ∞ by b.</b> ∫<sub>1</sub><sup>b</sup> x<sup>−2</sup> dx = [−1/x]<sub>1</sub><sup>b</sup> = 1 − 1/b.</li>
+          <li hidden><b>Take the limit.</b> lim<sub>b→∞</sub> (1 − 1/b) = 1. Converges to <b>1</b>.</li>
+          <li hidden><b>The other.</b> ∫<sub>1</sub><sup>b</sup> 1/x dx = ln b, and lim<sub>b→∞</sub> ln b = ∞.</li>
+          <li hidden><b>Answer.</b> The first converges to <b>1</b>; the second <b>diverges</b>.</li>
+        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of 4</button><button type="button" class="btn" data-all>Show all steps</button></div></div>
+      </div>
+      <div class="oops"><h3>Common mistakes</h3><ul>
+        <li>Plugging ∞ in as a number. Always take a limit of an integral with a variable limit.</li>
+        <li>Forgetting the integrand can be unbounded at an interior point, which also makes it improper.</li>
+        <li>Thinking a tail that gets small must have finite area: 1/x → 0 but its area diverges.</li>
+        <li>Reversing the p-conditions for the two types (p &gt; 1 at ∞; p &lt; 1 at 0).</li>
+        <li>Forgetting to split an integral with a problem point inside.</li>
+      </ul></div>
+      <div class="prose"><h2>Comparison</h2>
+        <p>If 0 ≤ f ≤ g and ∫ g converges, then ∫ f converges; if ∫ f diverges, so does ∫ g. This lets you decide convergence without finding the value, and it returns in the series tests.</p>
+      </div>
+      <div class="quiz" data-correct="0" data-explain="p = 3/2 &gt; 1: value 1/(p − 1) = 2.">
+        <p class="q">Check yourself: ∫<sub>1</sub><sup>∞</sup> 1/x<sup>3/2</sup> dx</p>
+        <div class="opts"><button type="button">converges to 2</button><button type="button">converges to 1</button><button type="button">diverges</button><button type="button">converges to 3/2</button></div>
+        <p class="fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
