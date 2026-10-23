@@ -241,3 +241,4 @@ h1{letter-spacing:-.03em}
 body.is-ab .bc,body.is-ab .bcx{display:none!important}
 .modgroup.bc .mod{border-style:dashed}
 body.is-ab .prob.bc{display:none!important}
+.eqgrid .eqn{flex-wrap:wrap;white-space:normal}.eqgrid .eqn small{text-align:right}
