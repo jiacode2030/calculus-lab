@@ -109,23 +109,23 @@ table.data{min-width:0}
 }
 
 /* =====================================================================
-   Periwinkle theme layer: soft indigo surfaces, an indigo accent, rounder cards.
+   Pastel yellow theme layer: soft butter surfaces, a sunny accent, rounder cards.
    Graph color roles: f blue, f′ green, f″ pink, tangent/secant orange, accumulation gold.
    ===================================================================== */
 :root{
-  --bg:#EEF0FB; --surface:#FCFCFF; --sunk:#E1E4F6; --ink:#16183A; --muted:#575B7E; --line:#CDD2EE; --grid:#DFE2F5;
-  --accent:#5459C9; --accent-d:#3F43A8; --accent-soft:#DADDF8; --accent-ink:#FFFFFF; --blush:#FBE9F3; --peach:#FDEBD8;
-  --shadow-1:0 1px 2px rgba(30,30,90,.06),0 4px 14px rgba(30,30,90,.06);
-  --shadow-2:0 2px 4px rgba(30,30,90,.07),0 16px 34px rgba(30,30,90,.12);
+  --bg:#FBF6E3; --surface:#FFFDF6; --sunk:#F4ECCF; --ink:#2A2410; --muted:#554C31; --line:#E9DDB2; --grid:#F2E9C6;
+  --accent:#F2C94C; --accent-d:#634900; --accent-soft:#F8EAB4; --accent-ink:#2A2108; --blush:#FBE9F0; --peach:#FDEBD8;
+  --shadow-1:0 1px 2px rgba(90,70,10,.06),0 4px 14px rgba(90,70,10,.06);
+  --shadow-2:0 2px 4px rgba(90,70,10,.07),0 16px 34px rgba(90,70,10,.12);
   --r:18px;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0E1020; --surface:#161A30; --sunk:#1E2340; --ink:#E7E9FA; --muted:#A3A9CF; --line:#2D3459; --grid:#1C213A;
-  --accent:#9EA2FF; --accent-d:#B9BCFF; --accent-soft:#2A2F5C; --accent-ink:#0E1020; --blush:#33203A; --peach:#33281F;
+  --bg:#15130B; --surface:#1F1C12; --sunk:#29251A; --ink:#F5EFDC; --muted:#BDB392; --line:#3A3424; --grid:#221F15;
+  --accent:#F3D57E; --accent-d:#F7E3A6; --accent-soft:#3B331B; --accent-ink:#1A1607; --blush:#35222A; --peach:#35291B;
   --shadow-1:0 1px 2px rgba(0,0,0,.4); --shadow-2:0 2px 4px rgba(0,0,0,.4),0 14px 30px rgba(0,0,0,.45);}}
 :root[data-theme="dark"]{
-  --bg:#0E1020; --surface:#161A30; --sunk:#1E2340; --ink:#E7E9FA; --muted:#A3A9CF; --line:#2D3459; --grid:#1C213A;
-  --accent:#9EA2FF; --accent-d:#B9BCFF; --accent-soft:#2A2F5C; --accent-ink:#0E1020; --blush:#33203A; --peach:#33281F;
+  --bg:#15130B; --surface:#1F1C12; --sunk:#29251A; --ink:#F5EFDC; --muted:#BDB392; --line:#3A3424; --grid:#221F15;
+  --accent:#F3D57E; --accent-d:#F7E3A6; --accent-soft:#3B331B; --accent-ink:#1A1607; --blush:#35222A; --peach:#35291B;
   --shadow-1:0 1px 2px rgba(0,0,0,.4); --shadow-2:0 2px 4px rgba(0,0,0,.4),0 14px 30px rgba(0,0,0,.45);}
 
 /* page: soft pastel glow instead of a flat grey */
@@ -161,7 +161,7 @@ a{color:var(--accent-d)}
 .btn.isdone{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .fs-btn{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);box-shadow:var(--shadow-2)}
 .seg{background:color-mix(in srgb,var(--accent) 10%,var(--sunk));border-radius:12px}
-.seg button[aria-pressed="true"]{background:var(--surface);color:var(--accent-d);box-shadow:0 1px 4px rgba(30,30,90,.18)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--accent-d);box-shadow:0 1px 4px rgba(90,70,10,.18)}
 input[type=range],input[type=checkbox]{accent-color:var(--accent)}
 select,input[type=text]{border-radius:11px;background:var(--surface);border-color:var(--line)}
 select:focus,input[type=text]:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
@@ -262,4 +262,15 @@ body.is-ab .mitem.bc,body.is-ab .frq.bc,body.is-ab tr.bc{display:none!important}
 :root[data-theme="dark"] .nav a[aria-current="page"],:root[data-theme="dark"] .nav .ind,:root[data-theme="dark"] .steps .ind,:root[data-theme="dark"] .btn.primary{box-shadow:none}
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]) .nav a[aria-current="page"],:root:not([data-theme="light"]) .nav .ind,:root:not([data-theme="light"]) .steps .ind,:root:not([data-theme="light"]) .btn.primary{box-shadow:none}
+}
+
+/* readable headings on the yellow theme (4.5:1): teaching tip in light, mistakes and "Try this" notes in dark */
+.ttip h3,.note b{color:#9A4A0C}
+:root[data-theme="dark"] .ttip h3,:root[data-theme="dark"] .note b{color:#F2A04E}
+:root[data-theme="dark"] .oops h3{color:#F59A72}
+:root[data-theme="dark"] .try .small{color:#D6CCAA}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .ttip h3,:root:not([data-theme="light"]) .note b{color:#F2A04E}
+  :root:not([data-theme="light"]) .oops h3{color:#F59A72}
+  :root:not([data-theme="light"]) .try .small{color:#D6CCAA}
 }
