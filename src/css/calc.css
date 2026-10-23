@@ -274,3 +274,40 @@ body.is-ab .mitem.bc,body.is-ab .frq.bc,body.is-ab tr.bc{display:none!important}
   :root:not([data-theme="light"]) .oops h3{color:#F59A72}
   :root:not([data-theme="light"]) .try .small{color:#D6CCAA}
 }
+
+/* ===== Physics-style skin, matching Mechanics Lab and E&M Lab =====
+   Light = "Textbook": grid paper with two soft corner glows, a serif headline with an italic gradient phrase,
+   crisp corners, a dark ink main button. Dark = "Instrument": the same ombre, a heavy headline, mono buttons.
+   Calculus gradient: light #16707B -> #2C5BB5, dark #6FDCE5 -> #93AEFF. Graph color roles are unchanged. */
+:root{--g1:#16707B;--g2:#2C5BB5;--r:10px}
+:root[data-theme="dark"] {--g1:#6FDCE5;--g2:#93AEFF}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) {--g1:#6FDCE5;--g2:#93AEFF}
+}
+html,body{background-color:var(--bg)}
+body{background-image:radial-gradient(900px 520px at 88% -8%,color-mix(in srgb,var(--g1) 10%,transparent),transparent 62%),radial-gradient(760px 520px at -8% 104%,color-mix(in srgb,var(--g2) 9%,transparent),transparent 62%),linear-gradient(color-mix(in srgb,var(--g1) 7%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--g1) 7%,transparent) 1px,transparent 1px);background-size:auto,auto,32px 32px,32px 32px;background-attachment:fixed,fixed,scroll,scroll}
+.rail{background:var(--surface)}
+/* headlines: serif with an italic gradient phrase (light), heavy sans with a gradient phrase (dark) */
+h1{font-family:"STIX Two Text",Georgia,serif;font-weight:400;letter-spacing:-.01em}
+.hero h1 .hl{background:linear-gradient(100deg,var(--g1),var(--g2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;font-style:italic;animation:none;padding-right:.06em}
+/* crisp shapes */
+.btn,.seg,select,input[type=text],.searchbtn,.themebtn,.nav a,.nav .ind,#cmd-list li,.coach,.readout,.eqgrid .eqc,.eq-block,.note,.countdown{border-radius:8px}
+.btn.primary,.fs-btn{background:var(--ink);border-color:var(--ink);color:var(--surface);box-shadow:var(--shadow-1)}
+.btn.primary:hover{background:var(--ink);border-color:var(--ink);opacity:.88}
+.nav a[aria-current="page"],.nav.has-ind a[aria-current="page"]{color:var(--surface);box-shadow:none}
+.nav .ind,.nav a[aria-current="page"]{background:var(--ink)}
+.rmeter i,.meter i{background:linear-gradient(90deg,var(--g1),var(--g2))}
+:root[data-theme="dark"] h1{font-family:"Bricolage Grotesque","Avenir Next",system-ui,sans-serif;font-weight:800;letter-spacing:-.03em}
+:root[data-theme="dark"] .hero h1 .hl{background:linear-gradient(100deg,var(--g1),var(--g2)) 0 0/100% 100% no-repeat;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;font-style:normal}
+:root[data-theme="dark"] .btn.primary,.fs-btn{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font:500 12.5px var(--f-mono);letter-spacing:.06em;text-transform:uppercase}
+:root[data-theme="dark"] .btn.primary:hover{background:var(--accent-d);border-color:var(--accent-d);opacity:1}
+:root[data-theme="dark"] .nav .ind,.nav a[aria-current="page"]{background:var(--accent)}
+:root[data-theme="dark"] .nav a[aria-current="page"],.nav.has-ind a[aria-current="page"]{color:var(--accent-ink)}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) h1{font-family:"Bricolage Grotesque","Avenir Next",system-ui,sans-serif;font-weight:800;letter-spacing:-.03em}
+  :root:not([data-theme="light"]) .hero h1 .hl{background:linear-gradient(100deg,var(--g1),var(--g2)) 0 0/100% 100% no-repeat;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;font-style:normal}
+  :root:not([data-theme="light"]) .btn.primary,.fs-btn{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font:500 12.5px var(--f-mono);letter-spacing:.06em;text-transform:uppercase}
+  :root:not([data-theme="light"]) .btn.primary:hover{background:var(--accent-d);border-color:var(--accent-d);opacity:1}
+  :root:not([data-theme="light"]) .nav .ind,.nav a[aria-current="page"]{background:var(--accent)}
+  :root:not([data-theme="light"]) .nav a[aria-current="page"],.nav.has-ind a[aria-current="page"]{color:var(--accent-ink)}
+}
