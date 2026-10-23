@@ -5,7 +5,7 @@ State: all 50 modules, the review tools (practice, Which method, exam builder, m
 ## To publish on GitHub Pages
 1. Create the repo `jiacode2030/calculus-lab` (public), `git remote add origin ...`, `git push -u origin main`.
 2. Settings → Pages → deploy from `main`, root. `index.html` is the built site; `.nojekyll` is present.
-3. "Report an issue" opens issues in `jiacode2030/ap-labs-feedback` (`REPO` in `src/js/report.js`), labelled `course:calc`.
+3. "Report an issue" opens issues in `jiacode2030/intulab-feedback` (`REPO` in `src/js/report.js`), labelled `course:calc`.
 
 ## Before relying on the content
 - Verify the unit/topic list and the BC-only flags against the current course and exam description (written from memory).
