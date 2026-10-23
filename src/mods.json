@@ -1,0 +1,252 @@
+{
+ "functions": {
+  "t": "Functions & transformations",
+  "d": "Shift, stretch and flip a graph, and read what a formula is doing.",
+  "bc": false
+ },
+ "trigexp": {
+  "t": "Trig, exponentials & logs",
+  "d": "The unit circle, e^x and ln x: the functions calculus keeps using.",
+  "bc": false
+ },
+ "limits": {
+  "t": "Limits from graphs & tables",
+  "d": "What a function is heading toward, even where it never gets there.",
+  "bc": false
+ },
+ "limalg": {
+  "t": "Algebraic limits",
+  "d": "Factor, rationalize or squeeze when plugging in gives 0/0.",
+  "bc": false
+ },
+ "contin": {
+  "t": "Continuity & the IVT",
+  "d": "Where a graph breaks, and why continuous functions can't skip values.",
+  "bc": false
+ },
+ "asym": {
+  "t": "Infinite limits & end behavior",
+  "d": "Vertical and horizontal asymptotes, and what happens as x gets huge.",
+  "bc": false
+ },
+ "rates": {
+  "t": "Average vs instantaneous rate",
+  "d": "A secant line closing in on a tangent line.",
+  "bc": false
+ },
+ "deriv": {
+  "t": "The derivative & differentiability",
+  "d": "The limit definition, and where a graph has no slope.",
+  "bc": false
+ },
+ "rules": {
+  "t": "Power, sum & constant-multiple rules",
+  "d": "Differentiate polynomials and roots in your head.",
+  "bc": false
+ },
+ "transder": {
+  "t": "Trig, e^x and ln x derivatives",
+  "d": "The derivatives you memorize once.",
+  "bc": false
+ },
+ "prodquot": {
+  "t": "Product & quotient rules",
+  "d": "When two functions are multiplied or divided.",
+  "bc": false
+ },
+ "chain": {
+  "t": "The chain rule",
+  "d": "Derivatives of functions inside functions.",
+  "bc": false
+ },
+ "implicit": {
+  "t": "Implicit differentiation",
+  "d": "Slopes of curves that are not functions of x.",
+  "bc": false
+ },
+ "invfn": {
+  "t": "Inverse functions & inverse trig",
+  "d": "Derivatives of inverses, arcsin, arctan and friends.",
+  "bc": false
+ },
+ "higher": {
+  "t": "Higher-order derivatives & choosing a rule",
+  "d": "Second derivatives, and picking the right tool.",
+  "bc": false
+ },
+ "motion": {
+  "t": "Derivatives in context & motion",
+  "d": "Position, velocity, acceleration and units of a rate.",
+  "bc": false
+ },
+ "related": {
+  "t": "Related rates",
+  "d": "Two quantities change together: how fast is the other one moving?",
+  "bc": false
+ },
+ "linear": {
+  "t": "Linearization & differentials",
+  "d": "Approximate a curve by its tangent line.",
+  "bc": false
+ },
+ "lhop": {
+  "t": "L'Hôpital's rule",
+  "d": "Resolve 0/0 and ∞/∞ by comparing derivatives.",
+  "bc": false
+ },
+ "mvt": {
+  "t": "Extreme values & the Mean Value Theorem",
+  "d": "Why a continuous function on [a, b] has a max, and a point with the average slope.",
+  "bc": false
+ },
+ "incdec": {
+  "t": "Increasing, decreasing & the first derivative test",
+  "d": "Read the sign of f′ to find peaks and valleys.",
+  "bc": false
+ },
+ "concav": {
+  "t": "Concavity & the second derivative test",
+  "d": "Read the sign of f″ to see bending.",
+  "bc": false
+ },
+ "sketch": {
+  "t": "Connecting f, f′ and f″",
+  "d": "Go between a graph and the graphs of its derivatives.",
+  "bc": false
+ },
+ "optim": {
+  "t": "Optimization",
+  "d": "Biggest, smallest, cheapest, fastest: set up and solve.",
+  "bc": false
+ },
+ "accum": {
+  "t": "Accumulation & Riemann sums",
+  "d": "Add up a changing rate with thin slices.",
+  "bc": false
+ },
+ "ftc": {
+  "t": "The definite integral & the FTC",
+  "d": "Area, accumulation functions and the theorem that ties derivatives to integrals.",
+  "bc": false
+ },
+ "antider": {
+  "t": "Antiderivatives",
+  "d": "Undo a derivative, and don't forget the + C.",
+  "bc": false
+ },
+ "usub": {
+  "t": "u-substitution",
+  "d": "Undo the chain rule, including definite integrals.",
+  "bc": false
+ },
+ "slope": {
+  "t": "Slope fields",
+  "d": "Draw the solutions without solving anything.",
+  "bc": false
+ },
+ "sepvar": {
+  "t": "Separation of variables & exponential models",
+  "d": "Solve dy/dx = ky and other separable equations.",
+  "bc": false
+ },
+ "avgval": {
+  "t": "Average value & motion with integrals",
+  "d": "Average of a function, and displacement vs distance.",
+  "bc": false
+ },
+ "area": {
+  "t": "Area between curves",
+  "d": "Top minus bottom, or right minus left.",
+  "bc": false
+ },
+ "vols": {
+  "t": "Volumes from cross sections",
+  "d": "Stack slices of a known shape.",
+  "bc": false
+ },
+ "volrev": {
+  "t": "Volumes of revolution",
+  "d": "Discs and washers around an axis.",
+  "bc": false
+ },
+ "parts": {
+  "t": "Integration by parts",
+  "d": "Undo the product rule: ∫u dv = uv − ∫v du.",
+  "bc": true
+ },
+ "partial": {
+  "t": "Partial fractions & long division",
+  "d": "Split a rational function into pieces you can integrate.",
+  "bc": true
+ },
+ "improper": {
+  "t": "Improper integrals",
+  "d": "Areas that stretch to infinity, or past an asymptote.",
+  "bc": true
+ },
+ "euler": {
+  "t": "Euler's method",
+  "d": "Step along a slope field to approximate a solution.",
+  "bc": true
+ },
+ "logistic": {
+  "t": "Logistic models",
+  "d": "Growth that levels off at a carrying capacity.",
+  "bc": true
+ },
+ "arclen": {
+  "t": "Arc length",
+  "d": "How long is the curve?",
+  "bc": true
+ },
+ "param": {
+  "t": "Parametric equations",
+  "d": "x and y both depend on t: slope, concavity and length.",
+  "bc": true
+ },
+ "vector": {
+  "t": "Vector-valued functions & motion",
+  "d": "Velocity, speed and acceleration in the plane.",
+  "bc": true
+ },
+ "polar": {
+  "t": "Polar curves & area",
+  "d": "Graph with r and θ, and find areas of petals.",
+  "bc": true
+ },
+ "seriesbasic": {
+  "t": "Series, geometric series & the nth-term test",
+  "d": "When does an infinite sum add up to a number?",
+  "bc": true
+ },
+ "pseries": {
+  "t": "p-series & the integral test",
+  "d": "Compare a sum to an area.",
+  "bc": true
+ },
+ "convtests": {
+  "t": "Comparison & ratio tests",
+  "d": "Decide convergence without finding the sum.",
+  "bc": true
+ },
+ "altser": {
+  "t": "Alternating series & error bounds",
+  "d": "Alternating signs, absolute vs conditional convergence.",
+  "bc": true
+ },
+ "taylorpoly": {
+  "t": "Taylor polynomials & Lagrange error",
+  "d": "Approximate a function near a point, and bound the error.",
+  "bc": true
+ },
+ "powser": {
+  "t": "Power series: radius & interval",
+  "d": "Where a series in x converges.",
+  "bc": true
+ },
+ "maclaurin": {
+  "t": "Maclaurin series & operations",
+  "d": "e^x, sin x, cos x, 1/(1−x), and building new series from them.",
+  "bc": true
+ }
+}

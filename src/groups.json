@@ -1,0 +1,156 @@
+[
+ {
+  "w": "Optional",
+  "name": "Math toolkit",
+  "tag": "Math",
+  "bc": false,
+  "ids": [
+   "functions",
+   "trigexp"
+  ]
+ },
+ {
+  "w": "Unit 1",
+  "name": "Limits and continuity",
+  "tag": "AP Unit 1",
+  "bc": false,
+  "ids": [
+   "limits",
+   "limalg",
+   "contin",
+   "asym"
+  ]
+ },
+ {
+  "w": "Unit 2",
+  "name": "Differentiation: definition and basic rules",
+  "tag": "AP Unit 2",
+  "bc": false,
+  "ids": [
+   "rates",
+   "deriv",
+   "rules",
+   "transder",
+   "prodquot"
+  ]
+ },
+ {
+  "w": "Unit 3",
+  "name": "Differentiation: composite, implicit and inverse functions",
+  "tag": "AP Unit 3",
+  "bc": false,
+  "ids": [
+   "chain",
+   "implicit",
+   "invfn",
+   "higher"
+  ]
+ },
+ {
+  "w": "Unit 4",
+  "name": "Contextual applications of differentiation",
+  "tag": "AP Unit 4",
+  "bc": false,
+  "ids": [
+   "motion",
+   "related",
+   "linear",
+   "lhop"
+  ]
+ },
+ {
+  "w": "Unit 5",
+  "name": "Analytical applications of differentiation",
+  "tag": "AP Unit 5",
+  "bc": false,
+  "ids": [
+   "mvt",
+   "incdec",
+   "concav",
+   "sketch",
+   "optim"
+  ]
+ },
+ {
+  "w": "Unit 6",
+  "name": "Integration and accumulation of change",
+  "tag": "AP Unit 6",
+  "bc": false,
+  "ids": [
+   "accum",
+   "ftc",
+   "antider",
+   "usub"
+  ]
+ },
+ {
+  "w": "Unit 7",
+  "name": "Differential equations",
+  "tag": "AP Unit 7",
+  "bc": false,
+  "ids": [
+   "slope",
+   "sepvar"
+  ]
+ },
+ {
+  "w": "Unit 8",
+  "name": "Applications of integration",
+  "tag": "AP Unit 8",
+  "bc": false,
+  "ids": [
+   "avgval",
+   "area",
+   "vols",
+   "volrev"
+  ]
+ },
+ {
+  "w": "BC",
+  "name": "Integration techniques (BC)",
+  "tag": "AP Unit 6 · BC",
+  "bc": true,
+  "ids": [
+   "parts",
+   "partial",
+   "improper"
+  ]
+ },
+ {
+  "w": "BC",
+  "name": "More differential equations & applications (BC)",
+  "tag": "AP Units 7–8 · BC",
+  "bc": true,
+  "ids": [
+   "euler",
+   "logistic",
+   "arclen"
+  ]
+ },
+ {
+  "w": "Unit 9",
+  "name": "Parametric equations, polar coordinates and vector-valued functions (BC)",
+  "tag": "AP Unit 9 · BC",
+  "bc": true,
+  "ids": [
+   "param",
+   "vector",
+   "polar"
+  ]
+ },
+ {
+  "w": "Unit 10",
+  "name": "Infinite sequences and series (BC)",
+  "tag": "AP Unit 10 · BC",
+  "bc": true,
+  "ids": [
+   "seriesbasic",
+   "pseries",
+   "convtests",
+   "altser",
+   "taylorpoly",
+   "powser",
+   "maclaurin"
+  ]
+ }
+]
