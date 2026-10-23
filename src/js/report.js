@@ -2,7 +2,8 @@
 /* ---------------- Report an issue: opens a pre-filled GitHub issue (no server needed) ---------------- */
 (function report(){
   const dlg=$('#rp'),form=$('#rp-form'),where=$('#rp-where'),type=$('#rp-type'),det=$('#rp-details'),ctxEl=$('#rp-ctx'),msg=$('#rp-msg');
-  const REPO='https://github.com/jiacode2030/calculus-lab';
+  const REPO='https://github.com/jiacode2030/ap-labs-feedback';
+  const COURSE_NAME='Calculus Lab',COURSE_LABEL='course:calc',SITE_VERSION='2026-10-23';
   let ctx='';
   const viewName=v=>{if(v==='overview')return 'Overview';if(MODS[v])return MODS[v].t;const a=$(`#nav a[data-view="${v}"]`);return a?a.textContent.replace(/ \(\d+ due\)/,'').trim():v;};
   const clip=(t,n)=>t.length>n?t.slice(0,n-1)+'…':t;
@@ -22,9 +23,9 @@
   const text=()=>`Report an issue (Calculus Lab)\nWhere: ${viewName(where.value)} (#${where.value})\nType: ${type.value}\nDetails: ${det.value.trim()}\nContext: ${ctx}`;
   form.addEventListener('submit',e=>{e.preventDefault();const details=det.value.trim();
     if(!details){msg.className='msg no';msg.textContent='Add a few words about the issue first.';det.focus();return;}
-    const title=clip(`[${type.value}] ${viewName(where.value)}: ${details.replace(/\s+/g,' ')}`,90);
-    const body=`**Where:** ${viewName(where.value)} (#${where.value})\n**Type:** ${type.value}\n\n${details}\n\n**Context:** ${ctx}`;
-    const url=REPO+'/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body);
+    const title=clip(`[${COURSE_NAME}] [${type.value}] ${viewName(where.value)}: ${details.replace(/\s+/g,' ')}`,100);
+    const body=`**Course:** ${COURSE_NAME} (${COURSE()})\n**Module:** ${viewName(where.value)} (#${where.value})\n**Type:** ${type.value}\n**Site version:** ${SITE_VERSION}\n\n${details}\n\n**Context:** ${ctx}`;
+    const url=REPO+'/issues/new?labels='+encodeURIComponent(COURSE_LABEL)+'&title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body);
     const w=window.open(url,'_blank','noopener');msg.className='msg ok';msg.textContent=w?'Opened GitHub in a new tab. Press "Submit new issue" there.':'Your browser blocked the new tab. Use "Copy report text" and post it at '+REPO.replace('https://','')+'/issues.';});
   $('#rp-copy').addEventListener('click',async()=>{if(!det.value.trim()){msg.className='msg no';msg.textContent='Add a few words about the issue first.';det.focus();return;}
     let ok=false;try{await navigator.clipboard.writeText(text());ok=true;}catch(e){}msg.className='msg '+(ok?'ok':'no');msg.textContent=ok?'Copied. Paste it into a new issue or an email.':'Could not copy automatically.';});
@@ -32,3 +33,25 @@
   dlg.addEventListener('click',e=>{if(e.target===dlg)close();});
   document.addEventListener('click',e=>{const b=e.target.closest('[data-report]');if(b){e.preventDefault();open(b);}});
 })();
+
+/* Analytics: GoatCounter, shared with every AP Labs site. Anonymous, no cookies, no personal data.
+   Loads only on the public GitHub Pages site, and counts each module view as its own page. */
+(function analytics(){if(!/\.github\.io$/.test(location.hostname))return;
+  /* honor Do Not Track and Global Privacy Control: no counter at all */
+  if(navigator.doNotTrack==='1'||window.doNotTrack==='1'||navigator.globalPrivacyControl===true)return;window.goatcounter={no_onload:true};
+  const s=document.createElement('script');s.async=true;s.src='https://gc.zgo.at/count.js';s.dataset.goatcounter='https://aplabs.goatcounter.com/count';
+  const view=()=>{const id=(location.hash||'').slice(1)||'overview';if(window.goatcounter&&window.goatcounter.count)window.goatcounter.count({path:location.pathname.replace(/\/$/,'')+'/'+id,title:id});};
+  s.onload=()=>{view();addEventListener('hashchange',view);};document.head.appendChild(s);})();
+/* AP Labs app: offline support (sw.js). Only on the live site, and localhost for testing. */
+if('serviceWorker' in navigator&&(/\.github\.io$/.test(location.hostname)||location.hostname==='localhost'))addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+/* Get the AP Labs app (same app as the AP Labs page; hidden once you're in it) */
+(function appInstall(){var btns=document.querySelectorAll('.appbtn,.appbtn2'),dlg=document.getElementById('app-dlg');if(!btns.length||!dlg)return;
+  var each=function(f){Array.prototype.forEach.call(btns,f);};
+  if(matchMedia('(display-mode: standalone)').matches||navigator.standalone===true)return;
+  each(function(b){b.hidden=false;});var prompt=null;
+  var ua=navigator.userAgent,os=/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1)?'ios':/Android/.test(ua)?'android':'desktop';
+  var form=dlg.querySelector('form'),mine=dlg.querySelector('[data-os="'+os+'"]'),more=document.createElement('details');more.innerHTML='<summary>Other devices</summary>';
+  Array.prototype.forEach.call(dlg.querySelectorAll('.appos'),function(el){if(el!==mine)more.appendChild(el);});form.insertBefore(more,form.querySelector('.approw'));
+  addEventListener('beforeinstallprompt',function(e){e.preventDefault();prompt=e;});
+  addEventListener('appinstalled',function(){each(function(b){b.hidden=true;});});
+  each(function(b){b.addEventListener('click',function(){if(prompt){prompt.prompt();prompt=null;return;}if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','');});});})();

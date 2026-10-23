@@ -1,5 +1,5 @@
 (function exam(){const box=$('#ex-weeks');let N=10,timed=false,timer=null,cards=[];
-  GROUPS.forEach((g,i)=>{const b=document.createElement('button');b.type='button';b.dataset.i=i;b.setAttribute('aria-pressed','false');b.textContent=g.w==='Optional'?'Math toolkit':g.w==='BC'?'BC extras':g.w;b.title=g.name;if(g.bc)b.classList.add('bc');b.addEventListener('click',()=>b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true')));box.appendChild(b);});
+  GROUPS.forEach((g,i)=>{const b=document.createElement('button');b.type='button';b.dataset.i=i;b.setAttribute('aria-pressed','false');b.textContent=g.w==='Optional'?'Math toolkit':g.w==='BC'?(/Integration/.test(g.name)?'BC techniques':'BC extras'):g.w;b.title=g.name;if(g.bc)b.classList.add('bc');b.addEventListener('click',()=>b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true')));box.appendChild(b);});
   segBind('ex-n','n',v=>N=+v);segBind('ex-t','t',v=>timed=v==='on');
   $('#ex-all').addEventListener('click',()=>$$('#ex-weeks button').forEach(b=>b.setAttribute('aria-pressed','true')));
   $('#ex-none').addEventListener('click',()=>$$('#ex-weeks button').forEach(b=>b.setAttribute('aria-pressed','false')));
