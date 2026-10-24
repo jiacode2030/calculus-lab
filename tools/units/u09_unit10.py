@@ -1,3 +1,50 @@
+# ---- figures for series basics, p-series, comparison/ratio, alternating
+import math as _m
+_SB = Plot((0, 9.4), (-.2, 5.3), (30, 12, 215, 196))
+_sbS = lambda n: 9 / 2 * (1 - 3 ** -n)
+_sbT = lambda n: 3 * 3 ** -(n - 1)
+_sbf = fig(_SB.axes((2, 4, 6, 8), (1, 3, 4.5), 'N', 'S_N') + ''.join(_SB.dot(n, _sbS(n), '', 'f') for n in range(1, 9)), [
+    (1, ''.join(rect(_SB.X(n) - 6, _SB.Y(_sbT(n)), 12, _SB.Y(0) - _SB.Y(_sbT(n)), 'area', .4) for n in range(1, 7)) + _SB.text(1, 3.5, '3', 'ink', 11) + _SB.text(2, 1.5, '1', 'ink', 11) + _SB.text(3, .65, '⅓', 'ink', 11), 'a = 3, r = 1/3: terms 3, 1, 1/3, …', 'area'),
+    (2, '', '|r| = 1/3 < 1: converges', 'ink'),
+    (3, _SB.seg(0, 4.5, 9.4, 4.5, 'tan', 2, '6 4') + _SB.text(9.3, 4.85, '9/2', 'tan', 12, 'end'), 'sum = 3/(1 − 1/3) = 9/2', 'tan'),
+    (4, ''.join(_SB.dot(n, n / (n + 1), '', 'dd') for n in range(1, 9)) + _SB.text(9.3, 1.35, 'n/(n+1) → 1', 'dd', 10.5, 'end'), 'terms n/(n+1) → 1, not 0: diverges', 'dd'),
+    (5, '', 'converges to 9/2; the other diverges', 'ink')],
+    'Blue dots: the partial sums of 3 + 1 + 1/3 + …, climbing to the dashed line at 9/2. Gold bars: the terms. Pink dots: the terms of Σ n/(n+1), which never shrink to 0.', 230)
+
+_PS = Plot((0, 12.5), (-.05, 1.08), (30, 12, 215, 196))
+_psf = lambda x: 1 / (x * x + 1)
+_psg = lambda x: 1 / (x * x)
+_psfig = fig(_PS.axes((2, 4, 6, 8, 10, 12), (.5, 1), 'x', 'y') + _PS.curve(_psf, 0, 12.3), [
+    (1, _PS.dot(1, _psf(1), '', 'ink') + _PS.text(1.5, .56, 'f(1) = ½', 'ink', 11, 'start'), 'f(x) = 1/(x² + 1): positive, decreasing', 'ink'),
+    (2, _PS.under(_psf, 1, 12.3, 'area', .3) + _PS.text(5.5, .22, '∫ = π/4', 'ink', 12), '∫₁^∞ f dx = π/4', 'area'),
+    (3, ''.join(rect(_PS.X(n - 1), _PS.Y(_psf(n)), _PS.X(n) - _PS.X(n - 1), _PS.Y(0) - _PS.Y(_psf(n)), 'tan', .28, 'tan', 1) for n in range(2, 13)), 'rectangles for n ≥ 2 fit under the curve', 'tan'),
+    (4, _PS.curve(_psg, 1, 12.3, 'dd', 2.2, '5 4') + _PS.seg(10, -.05, 10, 1.05, 'dd', 1.4, '4 4') + _PS.text(10.2, .85, 'N = 10', 'dd', 11, 'start'), 'dashed: 1/x², tail beyond N = 10', 'dd'),
+    (5, '', 'tail ≤ ∫₁₀^∞ dx/x² = 0.1', 'dd')],
+    'The blue curve and the gold area under it bound the sum of the orange rectangles. Dashed pink: 1/x², used to bound the tail after ten terms.', 230)
+
+_T1 = Plot((0, 11), (0, 1.05), (30, 8, 215, 112))
+_T2 = Plot((0, 11), (0, 1.4), (30, 158, 215, 112))
+_ctr = lambda n: (n + 1) / (3 * n)
+_ctq = lambda n: n * n * (n + 1) / (n ** 3 + 5)
+_ctfig = fig(_T1.axes((2, 4, 6, 8, 10), (1 / 3, 1), 'n', 'ratio') + _T2.axes((2, 4, 6, 8, 10), (1,), 'n', 'aₙ/bₙ'), [
+    (1, ''.join(_T1.dot(n, _ctr(n), '', 'f') for n in range(1, 11)), 'ratio (n + 1)/(3n)', 'f'),
+    (2, _T1.seg(0, 1 / 3, 11, 1 / 3, 'tan', 2, '6 4') + _T1.seg(0, 1, 11, 1, 'dd', 1.4, '4 4') + _T1.text(10.8, .52, 'L = 1/3', 'tan', 11, 'end'), 'L = 1/3 < 1: converges', 'tan'),
+    (3, ''.join(_T2.dot(n, _ctq(n), '', 'f') for n in range(1, 11)), 'aₙ/bₙ = n²(n + 1)/(n³ + 5)', 'f'),
+    (4, _T2.seg(0, 1, 11, 1, 'tan', 2, '6 4') + _T2.text(10.8, 1.2, 'limit 1', 'tan', 11, 'end'), 'limit 1: same behavior as Σ 1/n²', 'tan'),
+    (5, '', 'both converge', 'ink')],
+    'Top: the ratio of consecutive terms of Σ n/3ⁿ settles at 1/3, below the pink line at 1. Bottom: the terms of the second series divided by 1/n² settle at 1.', 290)
+
+_AS = Plot((0, 15), (.68, 1.05), (30, 12, 215, 196))
+_asA = lambda N: sum((1 if n % 2 else -1) / n ** 2 for n in range(1, N + 1))
+_asS = _m.pi ** 2 / 12
+_asfig = fig(_AS.axes((2, 4, 6, 8, 10, 12, 14), (.7, .8, .9, 1), 'N', 'S_N') + _AS.seg(0, _asA(1), 0, _asA(1), 'f', 1) + pline([(_AS.X(n), _AS.Y(_asA(n))) for n in range(1, 15)], 'f', 1.5) + ''.join(_AS.dot(n, _asA(n), '', 'f', 0, -9, 3.5) for n in range(1, 15)), [
+    (1, _AS.text(1.2, 1.015, 'b₁ = 1', 'ink', 10, 'start') + _AS.text(2.6, .73, 'b₂ = ¼', 'ink', 10, 'start'), 'bₙ = 1/n² decreases to 0', 'ink'),
+    (2, _AS.seg(0, _asS, 15, _asS, 'tan', 2, '6 4') + _AS.text(14.8, _asS + .014, 'S ≈ 0.8225', 'tan', 11, 'end'), 'sums zigzag around S', 'tan'),
+    (3, rect(_AS.X(0), _AS.Y(_asA(11)), _AS.X(15) - _AS.X(0), _AS.Y(_asA(10)) - _AS.Y(_asA(11)), 'area', .3) + _AS.seg(10, .68, 10, 1.05, 'mut', 1.2, '4 4'), 'S between S₁₀ and S₁₁', 'area'),
+    (4, '', 'error ≤ b₁₁ = 1/121 < 0.01', 'dd'),
+    (5, '', 'Σ 1/n² converges: absolute', 'ink')],
+    'The partial sums swing above and below the dashed sum, each swing smaller. The gold band between S₁₀ and S₁₁ always traps S.', 230)
+
 mod('seriesbasic','Series, geometric series & the nth-term test',
  'Can you add infinitely many numbers and get a finite answer? Sometimes yes: it depends on whether the terms shrink fast enough.',
  ['An <b>infinite series</b> Σ aₙ is the limit of its <b>partial sums</b> S_N = a₁ + … + a_N. If S_N approaches a number S, the series <b>converges</b> to S; otherwise it <b>diverges</b>. Think of walking toward a wall: half the distance, then half of what remains, and so on. The steps add up to the whole distance: 1/2 + 1/4 + 1/8 + … = 1.',
@@ -8,13 +55,16 @@ mod('seriesbasic','Series, geometric series & the nth-term test',
    ctl=[('sb-a','First term a',-4,4,.5,2),('sb-r','Ratio r',-1.6,1.6,.05,.5),('sb-n','Number of terms N',1,30,1,10)],
    out=[('sb-s','partial sum S_N','x'),('sb-lim','a/(1 − r), if |r| < 1','v'),('sb-ver','the series','')])],
  [('Set r = 0.5, a = 2. What do the partial sums approach? <button type="button" class="btn link" data-show=\'' + show(["#sb-a",2],["#sb-r",0.5],["#sb-n",30]) + '\'>Set it up for me</button>','' ,'Toward 2/(1 − 0.5) = 4. After 30 terms the sum is within about 10⁻⁸ of it.'),
-  ('Set r = −0.8. What happens, and what about r = 1.2? <button type="button" class="btn link" data-show=\'' + show(["#sb-r",-0.8],["#sb-n",30]) + '\'>r = −0.8</button>','' ,'With r = −0.8 the sums zigzag toward a/(1 + 0.8) = 1.11 (converges, |r| < 1). With r = 1.2 the terms grow, so the sums run away: diverges.')],
+  ('Set r = −0.8. What happens, and what about r = 1.2? <button type="button" class="btn link" data-show=\'' + show(["#sb-r",-0.8],["#sb-n",30]) + '\'>r = −0.8</button>','' ,'With r = −0.8 the sums zigzag toward a/(1 + 0.8) = 1.11 (converges, |r| < 1). With r = 1.2 the terms grow, so the sums run away: diverges.'),
+  ('Set a = 2 and r = 1. What do the partial sums do?',show(["#sb-a",2],["#sb-r",1],["#sb-n",30]),'They climb in a straight line, S<sub>N</sub> = 2N, reaching 60 at N = 30. The ratio r = 1 is the boundary: the terms stay at 2, never shrinking to 0, so the series diverges.'),
+  ('Set r = −0.5 and a = 3. Where do the sums settle, and on which sides of the limit do they land?',show(["#sb-a",3],["#sb-r",-0.5],["#sb-n",30]),'They settle at 3/(1 + 0.5) = 2, landing alternately above and below it, because the terms alternate in sign.'),
+  ('Flip the first term to a = −3 with r = 0.5. How does the limit change?',show(["#sb-a",-3],["#sb-r",0.5],["#sb-n",30]),'The limit is −3/(1 − 0.5) = −6: the formula a/(1 − r) scales with a, so flipping the sign of the first term flips the sum, and the sums descend instead of climbing.')],
  ('Find 3 + 1 + 1/3 + 1/9 + …, and decide about Σ n/(n + 1).',[
   '<b>Identify.</b> First term a = 3, ratio r = 1/3: geometric.',
   '<b>Check |r| &lt; 1.</b> 1/3 is between −1 and 1, so it converges.',
   '<b>Sum.</b> a/(1 − r) = 3/(1 − 1/3) = 3/(2/3) = 9/2.',
   '<b>The other series.</b> aₙ = n/(n + 1) → 1 ≠ 0, so by the nth-term test Σ n/(n + 1) diverges.',
-  '<b>Answer.</b> The geometric series converges to <b>9/2</b>; the second one <b>diverges</b>.']),
+  '<b>Answer.</b> The geometric series converges to <b>9/2</b>; the second one <b>diverges</b>.'],_sbf),
  ['Using a/(1 − r) when |r| ≥ 1.','Starting at the wrong n: a/(1 − r) assumes the first term is a (starting n = 0). For Σ from n = 1 use a₁/(1 − r).','Concluding a series converges because aₙ → 0 (the nth-term test can only prove divergence).','Confusing the sequence aₙ with the series Σ aₙ.','Forgetting that r is the ratio of consecutive terms.'],
  ('Repeating decimals',['A repeating decimal is a geometric series: 0.777… = 7/10 + 7/100 + … = (7/10)/(1 − 1/10) = 7/9. And 0.2323… = 23/99.']),
  [('Σ<sub>n=0</sub><sup>∞</sup> 5(2/3)<sup>n</sup> =',['15','10','5','diverges'],0,'a/(1 − r) = 5/(1 − 2/3) = 15.')])
@@ -28,13 +78,16 @@ mod('pseries','p-series & the integral test',
  [lab('ps-lab','Rectangles under a curve',canvas='ps-canvas',aria='The curve one over x to the p with rectangles of width 1 whose heights are the terms, and partial sums compared with the integral.',
    ctl=[('ps-p','p',.4,3,.05,2),('ps-n','Terms N',1,40,1,10)],out=[('ps-sum','partial sum S_N','x'),('ps-int','∫ from 1 to N of 1/xᵖ','v'),('ps-ver','Σ 1/nᵖ','')])],
  [('Set p = 2 and N = 40. How big can the sum get? <button type="button" class="btn link" data-show=\'' + show(["#ps-p",2],["#ps-n",40]) + '\'>Set it up for me</button>','' ,'Never more than 1 + ∫₁^∞ 1/x² = 2 (the sum is actually π²/6 ≈ 1.645). The rectangles are under the curve, so the sum is bounded by the area.'),
-  ('Set p = 1. Does the sum level off? <button type="button" class="btn link" data-show=\'' + show(["#ps-p",1],["#ps-n",40]) + '\'>Set it up for me</button>','' ,'No: S_N ≥ ∫₁^{N+1} dx/x = ln(N + 1), which grows without bound. The harmonic series diverges, but slowly.')],
+  ('Set p = 1. Does the sum level off? <button type="button" class="btn link" data-show=\'' + show(["#ps-p",1],["#ps-n",40]) + '\'>Set it up for me</button>','' ,'No: S_N ≥ ∫₁^{N+1} dx/x = ln(N + 1), which grows without bound. The harmonic series diverges, but slowly.'),
+  ('Set p = 1.5 and N = 40. Compare the partial sum with the bound 1 + 1/(p − 1).',show(["#ps-p",1.5],["#ps-n",40]),'S<sub>40</sub> ≈ 2.298, safely under the bound 1 + 1/0.5 = 3. The true sum is about 2.612, so the 40-term sum is still 0.31 short: a p-series with p near 1 converges slowly.'),
+  ('Set p = 1.1 and N = 40. Does the series converge? How far along is it?',show(["#ps-p",1.1],["#ps-n",40]),'Yes, p = 1.1 &gt; 1, but S<sub>40</sub> is only about 3.68 while the bound is 1 + 1/0.1 = 11. When p is barely above 1 the tail is huge, so the sum is far from finished after 40 terms.'),
+  ('Set p = 0.5 and N = 40. How does S<sub>N</sub> compare with the integral?',show(["#ps-p",0.5],["#ps-n",40]),'S<sub>40</sub> ≈ 11.27, above the integral 2(√40 − 1) ≈ 10.65, and both keep growing like 2√N without bound. Here the rectangles stay above the curve and the sum diverges.')],
  ('Use the integral test to decide Σ<sub>n=1</sub><sup>∞</sup> 1/(n² + 1), and bound the tail after N = 10 terms of Σ 1/n².',[
   '<b>Check the conditions.</b> f(x) = 1/(x² + 1) is positive, continuous and decreasing for x ≥ 1.',
   '<b>Integral.</b> ∫<sub>1</sub><sup>∞</sup> dx/(x² + 1) = lim [arctan x]<sub>1</sub><sup>b</sup> = π/2 − π/4 = π/4, finite.',
   '<b>Conclude.</b> The series converges.',
   '<b>Tail bound.</b> Σ<sub>n&gt;10</sub> 1/n² ≤ ∫<sub>10</sub><sup>∞</sup> dx/x² = 1/10.',
-  '<b>Answer.</b> Converges; the remainder after 10 terms is at most <b>0.1</b>.']),
+  '<b>Answer.</b> Converges; the remainder after 10 terms is at most <b>0.1</b>.'],_psfig),
  ['Using the integral test without checking positive, continuous, decreasing.','Thinking the integral equals the sum. They only share convergence (the sum is a different number).','Believing 1/n converges because its terms go to 0.','Mixing up p-series (p &gt; 1) with the p-integral near 0 (p &lt; 1).','Forgetting the first terms of the sum when estimating: S ≈ S_N + tail.'],
  ('Comparing the tests',['The p-series test is the integral test done once and for all for 1/nᵖ. The comparison tests (next module) use p-series as the benchmark: most rational-looking series behave like a p-series.']),
  [('Σ 1/n<sup>1.5</sup>',['converges (p = 1.5 > 1)','diverges (p ≤ 1)','converges to 1.5','diverges by the nth-term test'],0,'p-series with p = 1.5 > 1.')])
@@ -52,13 +105,16 @@ mod('convtests','Comparison & ratio tests',
    seg=('ts-cm','Compare',[('a','1/(n²+1) vs 1/n²'),('b','1/√(n²−1) vs 1/n'),('c','1/(2ⁿ+1) vs 1/2ⁿ'),('d','1/ln n vs 1/n')]),pre='<p class="small" id="ts-cform" style="margin:0"></p>',
    out=[('ts-ra','aₙ/bₙ at n = 30','x'),('ts-cv','conclusion','')])],
  [('Choose 2ⁿ/n!. What does the ratio do as n grows? <button type="button" class="btn link" data-show=\'' + show(["click","#ts-fn [data-k=b]"]) + '\'>Set it up for me</button>','' ,'The ratio is 2/(n + 1), which goes to 0, so L = 0 &lt; 1: converges absolutely. Factorials grow faster than exponentials.'),
-  ('Choose 1/n². What is L, and does the test decide? <button type="button" class="btn link" data-show=\'' + show(["click","#ts-fn [data-k=d]"]) + '\'>Set it up for me</button>','' ,'L = 1, so the ratio test is inconclusive. (1/n² converges, 1/n diverges, and both have L = 1.) Use the p-series test instead.')],
+  ('Choose 1/n². What is L, and does the test decide? <button type="button" class="btn link" data-show=\'' + show(["click","#ts-fn [data-k=d]"]) + '\'>Set it up for me</button>','' ,'L = 1, so the ratio test is inconclusive. (1/n² converges, 1/n diverges, and both have L = 1.) Use the p-series test instead.'),
+  ('Choose n!/3ⁿ. What happens to the ratio, and what does that mean?',show(["click","#ts-fn [data-k=c]"]),'The ratio is (n + 1)/3, which grows without bound, so L = ∞ &gt; 1 and the series diverges. The terms themselves eventually blow up, so the nth-term test agrees.'),
+  ('In the second lab, choose 1/(n² + 1) vs 1/n². Which test is this, and what does the ratio aₙ/bₙ show?',show(["click","#ts-cm [data-k=a]"]),'Direct comparison: every term is smaller than the term of the convergent p-series 1/n², so it converges. The ratio aₙ/bₙ is close to 1 (0.9989 at n = 30), so limit comparison would agree.'),
+  ('Choose 1/ln n vs 1/n. Why does this one diverge even though both terms go to 0?',show(["click","#ts-cm [data-k=d]"]),'Since ln n &lt; n, each term 1/ln n is larger than 1/n, and Σ 1/n diverges, so the bigger series diverges too. Comparison only proves divergence when your series is the larger one.')],
  ('Decide whether Σ n/3ⁿ and Σ (n + 1)/(n³ + 5) converge.',[
   '<b>First series: ratio test.</b> |aₙ₊₁/aₙ| = [(n + 1)/3ⁿ⁺¹]·[3ⁿ/n] = (n + 1)/(3n) → 1/3.',
   '<b>Conclude.</b> L = 1/3 &lt; 1, so it converges.',
   '<b>Second series: limit comparison with 1/n².</b> aₙ/bₙ = n²(n + 1)/(n³ + 5) → 1.',
   '<b>Conclude.</b> 0 &lt; 1 &lt; ∞ and Σ 1/n² converges, so it converges.',
-  '<b>Answer.</b> Both <b>converge</b>.']),
+  '<b>Answer.</b> Both <b>converge</b>.'],_ctfig),
  ['Using the ratio test on a p-series (L = 1 always).','Concluding "diverges" when L = 1. The test is inconclusive.','Comparing in the wrong direction: a series smaller than a divergent one proves nothing.','Applying direct comparison without positive terms.','Choosing bₙ that does not capture the dominant behavior.'],
  ('Choosing the test',['Factorials or exponentials in aₙ: ratio test. Rational function of n (or roots): limit comparison with a p-series. Terms like 1/(n² + 1) that are slightly smaller than 1/n²: direct comparison. If the terms alternate in sign: the next module.']),
  [('lim |aₙ₊₁/aₙ| = 2. Then Σ aₙ',['diverges','converges absolutely','converges conditionally','cannot be decided'],0,'L > 1: the ratio test says diverges.')])
@@ -73,13 +129,16 @@ mod('altser','Alternating series & error bounds',
    ctl=[('at-p','p in (−1)ⁿ⁺¹/nᵖ',.2,2.5,.1,1),('at-n','Terms N',1,30,1,8)],
    out=[('at-s','S_N','x'),('at-sum','the sum S (estimated)','v'),('at-err','error bound b(N+1)','a'),('at-ver','Σ (−1)ⁿ⁺¹/nᵖ is','')])],
  [('Set p = 1 (alternating harmonic series), N = 8. Where is the true sum, and how far off is S₈? <button type="button" class="btn link" data-show=\'' + show(["#at-p",1],["#at-n",8]) + '\'>Set it up for me</button>','' ,'The sum is ln 2 ≈ 0.693. S₈ ≈ 0.635, and the bound is 1/9 ≈ 0.111; the real error is 0.058, within the bound.'),
-  ('Set p = 0.5 and then 2. What changes about the type of convergence? <button type="button" class="btn link" data-show=\'' + show(["#at-p",0.5]) + '\'>p = 0.5</button>','' ,'For 0 < p ≤ 1 it converges only because of the alternating signs (conditional). For p > 1 even the absolute values converge (absolute convergence).')],
+  ('Set p = 0.5 and then 2. What changes about the type of convergence? <button type="button" class="btn link" data-show=\'' + show(["#at-p",0.5]) + '\'>p = 0.5</button>','' ,'For 0 < p ≤ 1 it converges only because of the alternating signs (conditional). For p > 1 even the absolute values converge (absolute convergence).'),
+  ('Set p = 2 and N = 10. How good is S₁₀, and what is the bound?',show(["#at-p",2],["#at-n",10]),'S<sub>10</sub> ≈ 0.8180 and the bound is b<sub>11</sub> = 1/121 ≈ 0.0083. The true sum is π²/12 ≈ 0.8225, so the real error is about 0.0045, within the bound.'),
+  ('Set p = 0.3 and N = 30. Is the error bound useful here?',show(["#at-p",0.3],["#at-n",30]),'The series still converges (conditionally), but b<sub>31</sub> = 31<sup>−0.3</sup> ≈ 0.357, almost as large as the partial sum 0.386. The bound is correct but nearly useless: terms that shrink slowly need many terms.'),
+  ('Set p = 1 and slide N from 8 to 9. Which side of the sum is S<sub>N</sub> on for odd N and for even N?',show(["#at-p",1],["#at-n",9]),'For odd N the partial sum is above the true sum ln 2 ≈ 0.693 (the last term added was positive), and for even N it is below. The true sum always lies between consecutive partial sums.')],
  ('How many terms of Σ (−1)ⁿ⁺¹/n² guarantee an error less than 0.01? Is the series absolutely convergent?',[
   '<b>Check the test.</b> bₙ = 1/n² is decreasing and → 0, so the series converges.',
   '<b>Error bound.</b> |S − S_N| ≤ b_{N+1} = 1/(N + 1)².',
   '<b>Require less than 0.01.</b> 1/(N + 1)² &lt; 0.01 ⇒ (N + 1)² &gt; 100 ⇒ N + 1 &gt; 10 ⇒ N ≥ 10.',
   '<b>Absolute?</b> Σ 1/n² is a convergent p-series (p = 2), so the series converges absolutely.',
-  '<b>Answer.</b> <b>N = 10</b> terms; <b>absolutely</b> convergent.']),
+  '<b>Answer.</b> <b>N = 10</b> terms; <b>absolutely</b> convergent.'],_asfig),
  ['Skipping the decreasing condition in the alternating series test.','Using b_N instead of b_{N+1} for the error bound.','Thinking every convergent alternating series converges absolutely.','Applying the error bound to a non-alternating series.','Counting the number of terms off by one: S_N has N terms and the bound is the (N + 1)th term.'],
  ('Absolute vs conditional',['Absolute convergence is the strongest kind: rearranging terms cannot change the sum. A conditionally convergent series like 1 − 1/2 + 1/3 − … is fragile: its terms can be rearranged to sum to any number (Riemann). In the course, you need to classify a series as absolutely convergent, conditionally convergent or divergent.']),
  [('Σ (−1)ⁿ/√n',['converges conditionally','converges absolutely','diverges','converges to 0'],0,'Terms decrease to 0 (so it converges), but Σ 1/√n is a divergent p-series (p = 1/2).')])
