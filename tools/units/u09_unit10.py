@@ -186,6 +186,28 @@ mod('taylorpoly','Taylor polynomials & Lagrange error',
  ('Reading coefficients',['The coefficient of (x − a)ᵏ is f⁽ᵏ⁾(a)/k!. So if P₃(x) = 2 + 3x − 4x² + 10x³, then f(0) = 2, f′(0) = 3, f″(0) = 2!·(−4) = −8, f‴(0) = 3!·10 = 60.']),
  [('The coefficient of x³ in the Maclaurin series of f is',['f‴(0)/6','f‴(0)/3','f‴(0)','f⁗(0)/6'],0,'Coefficient of xᵏ is f⁽ᵏ⁾(0)/k!, so k = 3 gives f‴(0)/3! = f‴(0)/6.')])
 
+# ---- figures for power series and Maclaurin series
+_PW = Plot((-2.6, 6.6), (-1.5, 1.3), (30, 12, 215, 130))
+_pwtk = ''.join(ln(_PW.X(q), _PW.Y(0) - 4, _PW.X(q), _PW.Y(0) + 4, 'mut', 1.2) + _PW.text(q, -.42, str(q).replace('-', '−'), 'mut', 10, w=400) for q in (-1, 2, 5))
+_pwfig = fig(ln(_PW.X(-2.5), _PW.Y(0), _PW.X(6.5), _PW.Y(0), 'mut', 1.4) + _pwtk + _PW.text(6.5, .3, 'x', 'mut', 10, 'end', 400), [
+    (1, _PW.dot(2, 0, '', 'ink', 0, 0, 4.5) + _PW.text(2, .5, 'center 2', 'ink', 10.5), 'ratio test: |x − 2|/3 < 1', 'ink'),
+    (2, _PW.seg(-1, 0, 5, 0, 'd', 6) + _PW.text(.5, .95, 'R = 3', 'tan', 11) + _PW.text(3.5, .95, 'R = 3', 'tan', 11) + _PW.seg(-1, .65, -1, .8, 'tan', 1.2) + _PW.seg(5, .65, 5, .8, 'tan', 1.2), 'R = 3: open interval (−1, 5)', 'd'),
+    (3, circ(_PW.X(5), _PW.Y(0), 6, 'surf', 1, 'dd', 2.6) + _PW.text(5, -.9, 'x = 5', 'dd', 10.5) + _PW.text(5, -1.3, 'diverges', 'dd', 10.5), 'x = 5: Σ 1/n diverges (open)', 'dd'),
+    (4, circ(_PW.X(-1), _PW.Y(0), 5.5, 'd', 1) + _PW.text(-1, -.9, 'x = −1', 'd', 10.5) + _PW.text(-1, -1.3, 'converges', 'd', 10.5), 'x = −1: alternating, converges (closed)', 'd'),
+    (5, '', 'interval of convergence [−1, 5)', 'ink')],
+    'The number line for Σ (x − 2)ⁿ/(n·3ⁿ): green is where the series converges. The hollow dot at 5 is excluded, the solid dot at −1 is included.', 190)
+
+_M1 = Plot((-1.35, 1.35), (-2.3, 2.3), (30, 8, 215, 112))
+_M2 = Plot((-1.6, 1.6), (0, 2.2), (30, 158, 215, 112))
+_mcf = lambda x: x * _m.sin(x * x)
+_mcg = lambda x: (_m.exp(x) - 1 - x) / (x * x)
+_mcfig = fig(_M1.axes((-1, 1), (-2, 2), 'x', 'y') + _M1.curve(_mcf, -1.3, 1.3, 'f', 2.8) + _M2.axes((-1, 1), (1, 2), 'x', 'y'), [
+    (1, _M1.curve(lambda x: _m.sin(x * x), -1.3, 1.3, 'mut', 1.3, '4 4') + _M1.text(.55, 1.55, 'sin(x²)', 'mut', 10.5, 'start'), 'sin(x²) = x² − x⁶/6 + …', 'ink'),
+    (2, _M1.curve(lambda x: x ** 3, -1.25, 1.25, 'tan', 1.4, '5 3') + _M1.curve(lambda x: x ** 3 - x ** 7 / 6, -1.3, 1.3, 'tan', 2.4) + _M1.text(-.2, -1.1, 'x³ − x⁷/6', 'tan', 10.5, 'end'), 'x sin(x²) = x³ − x⁷/6 + …', 'tan'),
+    (3, _M2.curve(_mcg, -1.5, -.03, 'f', 2.6) + _M2.curve(_mcg, .03, 1.5, 'f', 2.6) + _M2.seg(-1.6, .5, 1.6, .5, 'tan', 1.8, '6 4') + circ(_M2.X(0), _M2.Y(.5), 5, 'surf', 1, 'f', 2.2) + _M2.text(-1.55, .75, '½', 'tan', 12, 'start'), '(eˣ − 1 − x)/x² → ½', 'tan'),
+    (4, '', 'terms and limit: x³ − x⁷/6 + … ; 1/2', 'ink')],
+    'Top: x sin(x²) (blue) and its series (orange): x³ alone is close near 0 and one more term hugs the curve farther out. Bottom: (eˣ − 1 − x)/x² has a hole at 0, and closes in on 1/2 from both sides.', 290)
+
 mod('powser','Power series: radius & interval of convergence',
  'A power series is an infinite polynomial. It converges for x near its center, and the radius tells you how near.',
  ['A <b>power series</b> centered at c is Σ aₙ(x − c)ⁿ. It is a polynomial with infinitely many terms, so for each x it either converges or diverges. The set of x where it converges is an interval centered at c: the <b>interval of convergence</b>, with <b>radius R</b> (the series converges for |x − c| &lt; R and diverges for |x − c| &gt; R).',
@@ -196,13 +218,16 @@ mod('powser','Power series: radius & interval of convergence',
    seg=('pw-fn','Series',[('a','Σ xⁿ'),('b','Σ xⁿ/n'),('c','Σ xⁿ/n²'),('d','Σ xⁿ/n!'),('e','Σ n! xⁿ')]),ctl=[('pw-x','Probe x',-3,3,.05,.5)],
    out=[('pw-R','radius R','x'),('pw-int','interval of convergence','v'),('pw-st','at the probe x the series','')])],
  [('Choose Σ xⁿ/n. At x = 1 and x = −1 what happens? <button type="button" class="btn link" data-show=\'' + show(["click","#pw-fn [data-k=b]"],["#pw-x",1]) + '\'>x = 1</button>','' ,'At x = 1 it is the harmonic series (diverges); at x = −1 it is the alternating harmonic series (converges). So the interval is [−1, 1): the endpoints must be tested separately.'),
-  ('Choose Σ n! xⁿ. For which x does it converge? <button type="button" class="btn link" data-show=\'' + show(["click","#pw-fn [data-k=e]"],["#pw-x",0.3]) + '\'>x = 0.3</button>','' ,'Only at x = 0: the terms n!xⁿ blow up for any x ≠ 0 (R = 0). Compare Σ xⁿ/n!, which converges for every x (R = ∞).')],
+  ('Choose Σ n! xⁿ. For which x does it converge? <button type="button" class="btn link" data-show=\'' + show(["click","#pw-fn [data-k=e]"],["#pw-x",0.3]) + '\'>x = 0.3</button>','' ,'Only at x = 0: the terms n!xⁿ blow up for any x ≠ 0 (R = 0). Compare Σ xⁿ/n!, which converges for every x (R = ∞).'),
+  ('Choose Σ xⁿ/n² and test x = 1 and x = −1. Compare with Σ xⁿ/n.',show(["click","#pw-fn [data-k=c]"],["#pw-x",1]),'Both endpoints converge: at x = 1 it is the p-series Σ 1/n² (p = 2) and at x = −1 it is its alternating version. So the interval is the closed [−1, 1]. Dividing by n instead of n² lost the endpoint x = 1.'),
+  ('Choose Σ xⁿ and put the probe at x = 0.9, then at x = 1.1. What changes?',show(["click","#pw-fn [data-k=a]"],["#pw-x",0.9]),'At 0.9 the sums settle at 1/(1 − 0.9) = 10; at 1.1 the terms grow and the sums run away. Since this is the geometric series, R = 1 and both endpoints fail (the terms never go to 0).'),
+  ('Choose Σ xⁿ/n! and drag the probe to x = 3. Does it converge?',show(["click","#pw-fn [data-k=d]"],["#pw-x",3]),'Yes, for every x: the ratio is |x|/(n + 1) → 0 for any x, so R = ∞. This is the series for eˣ; at x = 3 it converges to e³ ≈ 20.09, just more slowly than at small x.')],
  ('Find the radius and interval of convergence of Σ<sub>n=1</sub><sup>∞</sup> (x − 2)ⁿ/(n·3ⁿ).',[
   '<b>Ratio test.</b> |aₙ₊₁/aₙ| = |x − 2|·n/(3(n + 1)) → |x − 2|/3.',
   '<b>Converges when</b> |x − 2|/3 &lt; 1, i.e. |x − 2| &lt; 3. So R = 3, center 2, open interval (−1, 5).',
   '<b>Endpoint x = 5.</b> Σ 3ⁿ/(n·3ⁿ) = Σ 1/n: harmonic, diverges.',
   '<b>Endpoint x = −1.</b> Σ (−3)ⁿ/(n·3ⁿ) = Σ (−1)ⁿ/n: alternating harmonic, converges.',
-  '<b>Answer.</b> R = <b>3</b>; interval of convergence <b>[−1, 5)</b>.']),
+  '<b>Answer.</b> R = <b>3</b>; interval of convergence <b>[−1, 5)</b>.'],_pwfig),
  ['Forgetting to test the endpoints.','Stopping at |x − c| &lt; R and writing the interval as closed.','Confusing the radius with the interval (R = 3 has length 6).','Using the ratio test at the endpoints (it gives L = 1: inconclusive).','Forgetting the center: the interval is centered at c, not at 0.'],
  ('Term-by-term calculus',['Inside the radius, differentiate and integrate a power series term by term, and the radius stays the same. At the endpoints convergence may change. For example, from 1/(1 − x) = Σ xⁿ (|x| &lt; 1) you get 1/(1 − x)² = Σ n xⁿ⁻¹ and −ln(1 − x) = Σ xⁿ/n.']),
  [('Σ xⁿ/n² has interval of convergence',['[−1, 1]','(−1, 1)','[−1, 1)','(−1, 1]'],0,'R = 1. At x = ±1 it is Σ 1/n² (p = 2, converges) and the alternating version (converges), so both endpoints are included.')])
@@ -217,12 +242,15 @@ mod('maclaurin','Maclaurin series & operations',
    seg=('mc-fn','Function',[('ex','eˣ'),('e2','e^(−x²)'),('sn','sin x'),('sx','sin(x²)'),('at','arctan x'),('ln','ln(1+x)')]),ctl=[('mc-n','Number of nonzero terms',1,8,1,3)],pre='<p class="small" id="mc-form" style="margin:0"></p>',
    out=[('mc-ser','the series starts','x'),('mc-rad','converges for','v'),('mc-err','max error on the plotted window','a')])],
  [('Choose e^(−x²). Where does the series come from, and how many terms are needed near x = 1? <button type="button" class="btn link" data-show=\'' + show(["click","#mc-fn [data-k=e2]"],["#mc-n",4]) + '\'>Set it up for me</button>','' ,'Replace x by −x² in the series for eˣ: 1 − x² + x⁴/2 − x⁶/6 + …. With 4 terms the curve matches well for |x| ≤ 1.3 or so.'),
-  ('Choose arctan x and increase the terms. What happens past |x| = 1? <button type="button" class="btn link" data-show=\'' + show(["click","#mc-fn [data-k=at]"],["#mc-n",6]) + '\'>Set it up for me</button>','' ,'The partial sums fly off: the series has radius 1. It was obtained by integrating Σ (−1)ⁿ x²ⁿ = 1/(1 + x²), which only converges for |x| < 1.')],
+  ('Choose arctan x and increase the terms. What happens past |x| = 1? <button type="button" class="btn link" data-show=\'' + show(["click","#mc-fn [data-k=at]"],["#mc-n",6]) + '\'>Set it up for me</button>','' ,'The partial sums fly off: the series has radius 1. It was obtained by integrating Σ (−1)ⁿ x²ⁿ = 1/(1 + x²), which only converges for |x| < 1.'),
+  ('Choose sin x. With 3 terms, how close is the curve at x = 2? And with 4?',show(["click","#mc-fn [data-k=sn]"],["#mc-n",3]),'With 3 terms (x − x³/6 + x⁵/120) the value at x = 2 is 0.9333 against sin 2 = 0.9093, an error of about 0.024; with 4 terms it is 0.9079, an error of about 0.0014. Each added term widens the window where the polynomial hugs the curve.'),
+  ('Choose ln(1 + x) with 6 terms. Compare x = 0.5 with x = 2.',show(["click","#mc-fn [data-k=ln]"],["#mc-n",6]),'Near x = 0.5 the partial sum is excellent, but at x = 2 it gives −5.6 while ln 3 ≈ 1.0986: the partial sums fly off past x = 1. The radius is 1, because it came from integrating 1/(1 + x) = Σ (−x)ⁿ, a geometric series.'),
+  ('Choose sin(x²) and use 2 terms. Where does it follow the curve, and how is this series built?',show(["click","#mc-fn [data-k=sx]"],["#mc-n",2]),'Replace x by x² in the sin series: x² − x⁶/6 + …. Two terms follow the curve well for |x| up to about 1 and then drift. No derivatives were computed: substitution gave every coefficient at once.')],
  ('Use known series to find the first three nonzero terms of x·sin(x²) and lim<sub>x→0</sub> (e<sup>x</sup> − 1 − x)/x².',[
   '<b>Substitute.</b> sin u = u − u³/6 + u⁵/120 − …, with u = x²: sin(x²) = x² − x⁶/6 + x¹⁰/120 − ….',
   '<b>Multiply by x.</b> x sin(x²) = x³ − x⁷/6 + x¹¹/120 − ….',
   '<b>Limit.</b> eˣ − 1 − x = x²/2 + x³/6 + …, so (eˣ − 1 − x)/x² = 1/2 + x/6 + … → 1/2.',
-  '<b>Answer.</b> x³ − x⁷/6 + x¹¹/120; the limit is <b>1/2</b>.']),
+  '<b>Answer.</b> x³ − x⁷/6 + x¹¹/120; the limit is <b>1/2</b>.'],_mcfig),
  ['Not replacing x consistently when substituting (every x in the series changes).','Forgetting factorials in e<sup>x</sup>, sin and cos.','Using the sin series for cos (or the reverse): sin has odd powers, cos has even powers.','Forgetting the alternating sign (−1)ⁿ.','Ignoring the interval of convergence after substituting or integrating.'],
  ('Why these are enough',['Differentiating the series for sin x term by term gives the series for cos x, and integrating Σ xⁿ gives −ln(1 − x). The AP exam usually asks for the first few terms, a pattern (general term), or a value computed from a known series, and the error bound.']),
  [('The coefficient of x⁴ in the Maclaurin series of cos x is',['1/24','−1/24','1/12','1/6'],0,'cos x = 1 − x²/2! + x⁴/4! − …, and 4! = 24: the coefficient is +1/24.')])

@@ -108,6 +108,25 @@ mod('asym','Infinite limits & end behavior',
  ('Reading the sign',['To get the sign of an infinite limit, check which side you approach from. Near x = 2, 1/(x − 2) is large positive from the right (positive denominator) and large negative from the left, so lim<sub>x→2⁺</sub> = ∞ and lim<sub>x→2⁻</sub> = −∞, and the two-sided limit does not exist.']),
  [('lim<sub>x→∞</sub> (5x + 1)/(2x² + 7) =',['0','5/2','∞','1/7'],0,'The bottom has the higher degree, so it wins and the ratio goes to 0.')])
 
+# ---- figures for functions & transformations, trig/exp/log
+import math as _fm
+def _box(x, y, w, h, c='f'): return rect(x - w / 2, y - h / 2, w, h, 'surf', 1, c, 1.6, 6)
+def _bn(x, y, t, c='f'): return _box(x, y, 36, 28, c) + txt(x, y + 5, t, c, 15)
+_cmfig = fig(txt(130, 22, 'f(g(2))   —   g first, then f', 'ink', 11.5) + txt(130, 100, 'g(f(2))   —   f first, then g', 'ink', 11.5) + _bn(36, 56, '2', 'ink') + _bn(36, 134, '2', 'ink'), [
+    (1, arr(56, 56, 98, 56, 'f', '', 2.2) + txt(77, 46, 'g', 'f', 13) + _bn(130, 56, '1', 'f'), 'g(2) = 2·2 − 3 = 1', 'f'),
+    (2, arr(150, 56, 192, 56, 'tan', '', 2.2) + txt(171, 46, 'f', 'tan', 13) + _bn(224, 56, '2', 'tan'), 'f(1) = 1² + 1 = 2', 'tan'),
+    (3, arr(56, 134, 98, 134, 'tan', '', 2.2) + txt(77, 124, 'f', 'tan', 13) + _bn(130, 134, '5', 'tan') + arr(150, 134, 192, 134, 'f', '', 2.2) + txt(171, 124, 'g', 'f', 13) + _bn(224, 134, '7', 'f'), 'f(2) = 5, then g(5) = 7', 'f'),
+    (4, txt(224, 90, '2 ≠ 7', 'dd', 13), 'f(g(2)) = 2 but g(f(2)) = 7', 'dd')],
+    'Each box holds the value after one function. The two orders of composition end at different numbers.', 170)
+_TE = Plot((-.6, 1.6), (-1, 10.5), (30, 12, 215, 196))
+_tex = _fm.log(7) / 2
+_tefig = fig(_TE.axes((.5, 1, 1.5), (3, 7), 'x', 'y') + _TE.curve(lambda x: _fm.exp(2 * x), -.55, 1.15) + _TE.text(1.55, 9.6, 'y = e²ˣ', 'f', 11, 'end'), [
+    (1, _TE.seg(-.6, 7, 1.6, 7, 'tan', 2, '6 4') + _TE.text(-.5, 7.7, 'y = 7', 'tan', 11, 'start'), 'solve e²ˣ = 7: where does it hit 7?', 'tan'),
+    (2, '', 'ln(e²ˣ) = 2x, so 2x = ln 7', 'ink'),
+    (3, _TE.dot(_tex, 7, '', 'tan') + _TE.seg(_tex, 7, _tex, 0, 'mut', 1.3, '3 3') + _TE.dot(_tex, 0, '0.973', 'ink', 0, 16, 3.5), 'x = (ln 7)/2 ≈ 0.973', 'tan'),
+    (4, '', 'check: e^1.946 ≈ 7', 'ink')],
+    'The curve y = e²ˣ crosses the line y = 7 at one point. Its x-coordinate is the answer, and ln is the tool that finds it.', 230)
+
 mod('functions','Functions & transformations',
  'Before derivatives: how to read a formula as a graph. Shift, stretch and flip a parent function and see exactly what each number does.',
  ['Every graph in calculus is a familiar parent function that has been moved. <span class="m">y = a·f(b(x − h)) + k</span> says: shift right by <b>h</b>, shift up by <b>k</b>, stretch vertically by <b>a</b> (flip if negative) and squeeze horizontally by <b>b</b>. Changes <i>inside</i> the parentheses act on x and act backwards (x − h moves right); changes <i>outside</i> act on y and do what they say.',
@@ -119,12 +138,15 @@ mod('functions','Functions & transformations',
    ctl=[('fn-a','a (vertical stretch / flip)',-3,3,.25,1),('fn-b','b (horizontal squeeze)',.25,3,.25,1),('fn-h','h (right)',-4,4,.5,0),('fn-k','k (up)',-4,4,.5,0)],
    pre='<p class="small" id="fn-eq" style="margin:0"></p>',out=[('fn-ho','key point moves from','x'),('fn-hn','to','a')])],
  [('Set h = 2 and k = 1 on x². Where is the vertex? <button type="button" class="btn link" data-show=\'' + show(["click","#fn-base [data-k=sq]"],["#fn-h",2],["#fn-k",1]) + '\'>Set it up for me</button>','' ,'At (2, 1): right 2 because of (x − 2), up 1 because of + 1.'),
-  ('Set a = −1 on x². What happens? <button type="button" class="btn link" data-show=\'' + show(["click","#fn-base [data-k=sq]"],["#fn-a",-1]) + '\'>Set it up for me</button>','' ,'The parabola flips upside down: a negative a reflects the graph across the x-axis.')],
+  ('Set a = −1 on x². What happens? <button type="button" class="btn link" data-show=\'' + show(["click","#fn-base [data-k=sq]"],["#fn-a",-1]) + '\'>Set it up for me</button>','' ,'The parabola flips upside down: a negative a reflects the graph across the x-axis.'),
+  ('Choose sin x and set b = 2. How does the graph change?',show(["click","#fn-base [data-k=sin]"],["#fn-b",2]),'It repeats twice as fast: the period is 2π/2 = π instead of 2π. A larger b squeezes the graph horizontally toward the y-axis, while its height stays 1.'),
+  ('Choose |x| with a = −2 and k = 3. Where is the corner, and which way does it open?',show(["click","#fn-base [data-k=abs]"],["#fn-a",-2],["#fn-k",3]),'The corner moves to (0, 3), and the graph opens downward: a = −2 flips it over and also makes it steeper (slopes ±2). The equation is y = −2|x| + 3.'),
+  ('Choose √x and set h = −2. Where does the graph start? Which way did it move?',show(["click","#fn-base [data-k=rt]"],["#fn-h",-2]),'It starts at (−2, 0): the equation is √(x + 2), and + 2 inside moves the graph LEFT by 2. Inside changes act backwards, which is why x + 2 is a move to the left.')],
  ('If f(x) = x² + 1 and g(x) = 2x − 3, find f(g(2)) and g(f(2)).',[
   '<b>Inside first.</b> For f(g(2)) work out g(2) = 2·2 − 3 = 1.',
   '<b>Then f.</b> f(1) = 1² + 1 = 2.',
   '<b>Now the other order.</b> f(2) = 4 + 1 = 5, then g(5) = 10 − 3 = 7.',
-  '<b>Answer.</b> f(g(2)) = <b>2</b> and g(f(2)) = <b>7</b>. Composition is not commutative.']),
+  '<b>Answer.</b> f(g(2)) = <b>2</b> and g(f(2)) = <b>7</b>. Composition is not commutative.'],_cmfig),
  ['Moving the wrong way: (x + 2) shifts the graph left, not right.','Applying h before the stretch b when b is inside: in y = f(b(x − h)) the shift is h, not h/b.','Mixing up f(g(x)) and g(f(x)).','Treating f<sup>−1</sup>(x) as 1/f(x). It is the inverse function, not the reciprocal.'],
  ('Even, odd and inverses',['Even functions satisfy f(−x) = f(x) (mirror in the y-axis, like x²). Odd functions satisfy f(−x) = −f(x) (turn 180° about the origin, like x³ and sin x). A function has an inverse only if it passes the horizontal line test; the inverse graph is the reflection over y = x.']),
  [('The graph of y = (x − 3)² + 2 is the graph of y = x² moved:',['left 3, up 2','right 3, up 2','right 3, down 2','left 3, down 2'],1,'Inside shifts act backwards: x − 3 moves right 3; + 2 outside moves up 2.')])
@@ -140,12 +162,14 @@ mod('trigexp','Trig, exponentials & logs',
   lab('te-lab2','e and ln are inverses',canvas='te-canvas2',aria='Graphs of b to the x, its inverse log, and the line y = x.',
    ctl=[('te-base','Base b',1.2,6,.05,2.718)],out=[('te-slope','slope of b^x at x = 0','x'),('te-ln','ln b','a')])],
  [('Set θ = π/4 (about 0.785). What are sine and cosine? <button type="button" class="btn link" data-show=\'' + show(["#te-ang",0.7854]) + '\'>Set it up for me</button>','' ,'Both are √2/2 ≈ 0.707: at 45° the point sits on the diagonal, so its x and y coordinates are equal.'),
-  ('Slide the base b to e (2.718). What is the slope of b<sup>x</sup> at x = 0? <button type="button" class="btn link" data-show=\'' + show(["#te-base",2.718]) + '\'>Set it up for me</button>','' ,'1. For other bases the slope at 0 is ln b: below 1 for b &lt; e, above 1 for b &gt; e. Only e makes the slope exactly equal to the height (1) at x = 0.')],
+  ('Slide the base b to e (2.718). What is the slope of b<sup>x</sup> at x = 0? <button type="button" class="btn link" data-show=\'' + show(["#te-base",2.718]) + '\'>Set it up for me</button>','' ,'1. For other bases the slope at 0 is ln b: below 1 for b &lt; e, above 1 for b &gt; e. Only e makes the slope exactly equal to the height (1) at x = 0.'),
+  ('Set θ = 3π/2 (about 4.71). What are sin θ and cos θ, and where is the point?',show(["#te-ang",4.7124]),'sin θ ≈ −1 and cos θ ≈ 0: the point is at the bottom of the circle, (0, −1). The angle is measured counter-clockwise from the positive x-axis, and tan θ blows up here because cos θ = 0.'),
+  ('Set the base b = 2, then b = 5. What is the slope of bˣ at x = 0 each time?',show(["#te-base",2]),'For b = 2 the slope at 0 is ln 2 ≈ 0.693, and for b = 5 it is ln 5 ≈ 1.609. The slope of bˣ at x = 0 is always ln b, so it equals 1 only for b = e.')],
  ('Solve e<sup>2x</sup> = 7 for x.',[
   '<b>Undo e with ln.</b> Take the natural log of both sides: ln(e<sup>2x</sup>) = ln 7.',
   '<b>Simplify.</b> ln(e<sup>2x</sup>) = 2x, so 2x = ln 7.',
   '<b>Solve.</b> x = (ln 7)/2.',
-  '<b>Answer.</b> x ≈ <b>0.973</b>. Check: e<sup>1.946</sup> ≈ 7.']),
+  '<b>Answer.</b> x ≈ <b>0.973</b>. Check: e<sup>1.946</sup> ≈ 7.'],_tefig),
  ['Using degrees in calculus formulas. Set your calculator to radians.','Writing ln(a + b) = ln a + ln b. The rule is for products: ln(ab) = ln a + ln b.','Forgetting ln x is only defined for x &gt; 0.','Thinking e<sup>x</sup> can be zero or negative: it is always positive.','Mixing up sin²θ with sin(θ²).'],
  ('The special angles',['Memorize the first-quadrant values: sin 0 = 0, sin π/6 = 1/2, sin π/4 = √2/2, sin π/3 = √3/2, sin π/2 = 1, and cosine runs the other way (1, √3/2, √2/2, 1/2, 0). The signs in the other quadrants follow from which coordinate is negative.']),
  [('ln(e<sup>5</sup>) =',['5','e<sup>5</sup>','1/5','ln 5'],0,'ln undoes e to a power: ln(e^5) = 5.')])
