@@ -80,6 +80,29 @@ mod('euler','Euler\'s method',
  ('Why it works',['Near a point the solution is almost its tangent line, whose slope the differential equation gives exactly. Each step makes a small error; many small steps keep the total error small. The smaller the step, the closer you stay to the true curve.']),
  [('Euler\'s method for dy/dx = x + y, y(0) = 2, h = 0.1 gives y₁ =',['2.2','2.1','2.0','2.3'],0,'slope at (0, 2) is 2, so y₁ = 2 + 0.1(2) = 2.2.')])
 
+# ---- figures for Logistic models
+import math
+_lgP = lambda t: 500 / (1 + 9 * math.exp(-.02 * t))
+_ti = math.log(9) / .02
+_Lg = Plot((-12, 335), (-30, 580), (30, 12, 215, 196))
+_lgf = fig(_Lg.axes((100, 200, 300), (250, 500), 't', 'P') + _Lg.curve(_lgP, 0, 330) + _Lg.dot(0, 50, '50', 'f', 18, -4), [
+    (1, '', 'k = 0.02, L = 500', 'ink'),
+    (2, _Lg.seg(0, 500, 330, 500, 'tan', 2, '6 4') + _Lg.text(330, 530, 'L = 500', 'tan', 11, 'end'), 'P → 500', 'tan'),
+    (3, _Lg.seg(0, 250, _ti, 250, 'mut', 1.2, '3 4') + _Lg.dot(_ti, 250, 'P = 250', 'area', 34, 12), 'fastest at P = L/2 = 250', 'area'),
+    (4, _Lg.seg(_ti - 45, 250 - 112.5, _ti + 45, 250 + 112.5, 'tan', 2.4), 'slope there kL/4 = 2.5', 'tan'),
+    (5, '', 'inflection of the S-curve', 'area')],
+    'The solution starting at P(0) = 50: steepest where it crosses half the carrying capacity, then leveling off at 500.', 230)
+_fish = lambda t: 5000 / (1 + 24 * math.exp(-.4 * t))
+_t1, _t2 = math.log(6) / .4, math.log(24) / .4
+_Fi = Plot((-1, 25.5), (-300, 5800), (30, 12, 215, 196))
+_lake = fig(_Fi.axes((5, 10, 15, 20, 25), (2500, 5000), 't', 'P') + _Fi.curve(_fish, 0, 25) + _Fi.dot(0, 200, '200', 'f', 22, -6), [
+    (1, _Fi.seg(0, 5000, 25, 5000, 'tan', 2, '6 4') + _Fi.text(25, 5350, 'L = 5000', 'tan', 11, 'end'), 'P → 5000', 'tan'),
+    (2, _Fi.seg(0, 2500, 25, 2500, 'mut', 1.2, '3 4'), 'fastest at 2500: 500 fish/yr', 'area'),
+    (3, _Fi.dot(_t1, 1000, 'P = 1000', 'f', 30, 6), 'P = 1000: concave up', 'dd'),
+    (4, _Fi.dot(_t2, 2500, 't ≈ 7.95', 'area', 32, 14), 'reaches 2500 at t ≈ 7.945', 'area'),
+    (5, '', 'harvest ≤ 500/yr is sustainable', 'ink')],
+    'The fish population: nearly exponential at first, steepest at 2500 fish, then leveling off at the carrying capacity.', 230)
+
 mod('logistic','Logistic models',
  'Real populations do not grow forever. A logistic model grows fast when small, slows as it approaches a carrying capacity, and levels off.',
  ['<span class="m">dP/dt = kP(1 − P/L)</span>. When P is small the factor (1 − P/L) is near 1, so growth is almost exponential. As P approaches the <b>carrying capacity L</b>, the factor shrinks to 0 and growth stops. P = 0 and P = L are equilibria; L is stable. The solution is an S-shaped curve with limit L.',
@@ -89,15 +112,25 @@ mod('logistic','Logistic models',
  [lab('lg-lab','The S-curve and its rate',canvas='lg-canvas',aria='Top: population against time, an S-shaped curve with a dashed line at the carrying capacity. Bottom: growth rate against population, a parabola.',
    ctl=[('lg-k','k',.1,1,.05,.5),('lg-L','Carrying capacity L',2,10,.5,8),('lg-p0','Start P₀',.2,10,.2,1),('lg-t','Time t',0,20,.1,6)],canvas2=('lg-canvas2','Growth rate dP over dt against P, with the current population marked.'),
    out=[('lg-P','P(t)','x'),('lg-dP','dP/dt now','v'),('lg-max','fastest growth','a')])],
- [('Set P₀ = 1, L = 8. When is the population growing fastest? <button type="button" class="btn link" data-show=\'' + show(["#lg-p0",1],["#lg-L",8],["#lg-k",0.5]) + '\'>Set it up for me</button>','' ,'When P = L/2 = 4 (the steepest part of the S, and the top of the parabola below). The maximum rate is kL/4 = 0.5·8/4 = 1.'),
-  ('Start P₀ above L (try P₀ = 10, L = 8). What does P do? <button type="button" class="btn link" data-show=\'' + show(["#lg-p0",10],["#lg-L",8]) + '\'>Set it up for me</button>','' ,'It decreases toward L: (1 − P/L) is negative, so the model pulls the population back down to the carrying capacity.')],
- ('dP/dt = 0.02P(1 − P/500), P(0) = 50. Find lim<sub>t→∞</sub> P, the P at which growth is fastest, and the fastest rate.',[
+ [('Set P₀ = 1, L = 8. When is the population growing fastest?',show(["#lg-p0",1],["#lg-L",8],["#lg-k",0.5]),'When P = L/2 = 4 (the steepest part of the S, and the top of the parabola below). The maximum rate is kL/4 = 0.5·8/4 = 1.'),
+  ('Now raise k to 1. What changes, and what does not?',show(["#lg-p0",1],["#lg-L",8],["#lg-k",1]),'The fastest rate doubles to kL/4 = 1·8/4 = 2, and the S-curve happens in half the time. But growth is still fastest at P = 4, and the limit is still L = 8: k sets the speed, L sets where it ends.'),
+  ('Start exactly at half the carrying capacity: P₀ = 4, L = 8. Where is the inflection point?',show(["#lg-p0",4],["#lg-L",8],["#lg-k",0.5]),'There is none after t = 0. The population starts at the fastest-growth point, so the rate only falls from there and the curve is concave down the whole time.'),
+  ('Start small: P₀ = 0.2, L = 8, and set t = 2. Compare P with the exponential 0.2e<sup>kt</sup>.',show(["#lg-p0",0.2],["#lg-L",8],["#lg-k",0.5],["#lg-t",2]),'The model gives P(2) ≈ 0.521; pure exponential growth would give 0.2e ≈ 0.544. While P is small, (1 − P/L) is close to 1, so logistic growth starts out nearly exponential. Later the two separate completely.'),
+  ('Start P₀ above L (try P₀ = 10, L = 8). What does P do?',show(["#lg-p0",10],["#lg-L",8]),'It decreases toward L: (1 − P/L) is negative, so the model pulls the population back down to the carrying capacity.')],
+ [('dP/dt = 0.02P(1 − P/500), P(0) = 50. Find lim<sub>t→∞</sub> P, the P at which growth is fastest, and the fastest rate.',[
   '<b>Compare with kP(1 − P/L).</b> k = 0.02, L = 500.',
   '<b>Limit.</b> The carrying capacity: lim P = 500 (since 0 &lt; P(0) &lt; L).',
   '<b>Fastest growth.</b> At P = L/2 = 250.',
   '<b>Rate.</b> kL/4 = 0.02(500)/4 = 2.5 per time unit.',
-  '<b>Answer.</b> Limit <b>500</b>; fastest at <b>P = 250</b> with rate <b>2.5</b>.']),
- ['Using L = the limit of dP/dt. L is the limit of P itself.','Reading the maximum growth at P = L instead of L/2.','Forgetting the sign: for P &gt; L the population decreases.','Confusing logistic with exponential growth.','Mixing up P (population) and dP/dt (growth rate) when reading graphs.'],
+  '<b>Answer.</b> Limit <b>500</b>; fastest at <b>P = 250</b> with rate <b>2.5</b>.'],_lgf),
+  {'h':'Worked example 2: stocking a lake (AP-style)','fig':_lake,
+   'prob':'A lake is stocked with 200 fish. The population P(t), t years later, satisfies dP/dt = 0.4P(1 − P/5000). (a) Find lim<sub>t→∞</sub> P(t). (b) For what value of P is the population growing fastest, and how fast? (c) Is the graph of P concave up or concave down when P = 1000? Explain. (d) The solution is P(t) = 5000/(1 + 24e<sup>−0.4t</sup>). When does the population reach 2500?',
+   'steps':['<b>(a)</b> Here k = 0.4 and L = 5000. Since 0 &lt; 200 &lt; 5000, lim P = <b>5000 fish</b>.',
+    '<b>(b)</b> dP/dt is largest at P = L/2 = <b>2500</b>, where dP/dt = 0.4(2500)(1 − 1/2) = <b>500 fish per year</b>.',
+    '<b>(c)</b> Differentiate the equation: d²P/dt² = 0.4(1 − 2P/5000)·dP/dt. At P = 1000, 1 − 2P/5000 = 0.6 &gt; 0 and dP/dt = 0.4(1000)(0.8) = 320 &gt; 0, so d²P/dt² &gt; 0: <b>concave up</b>. Below 2500 fish the growth is speeding up.',
+    '<b>(d)</b> 5000/(1 + 24e<sup>−0.4t</sup>) = 2500 gives 24e<sup>−0.4t</sup> = 1, so t = ln 24 / 0.4 ≈ <b>7.945 years</b>. This is the inflection point, the steepest part of the S.',
+    '<b>Why fisheries care (beyond the AP exam).</b> If H fish per year are caught, dP/dt = 0.4P(1 − P/5000) − H. The population can hold steady only if H is at most the largest natural growth rate, 500 per year, which happens when the lake holds 2500 fish. This is the idea of a "maximum sustainable yield".']}],
+ ['Using L = the limit of dP/dt. L is the limit of P itself.','Reading the maximum growth at P = L instead of L/2.','Forgetting the sign: for P &gt; L the population decreases.','Confusing logistic with exponential growth.','Mixing up P (population) and dP/dt (growth rate) when reading graphs.','For concavity, forgetting the chain rule: d²P/dt² needs dP/dt as a factor.'],
  ('Solving it',['Separating variables with partial fractions gives P(t) = L/(1 + Ae<sup>−kt</sup>) with A = (L − P₀)/P₀. You rarely need the formula on the exam: the equation itself tells you the limit, the equilibria and where growth is fastest.']),
  [('In dP/dt = 0.1P(1 − P/200), the population is growing fastest when P =',['100','200','50','20'],0,'Fastest at half the carrying capacity: 200/2.')])
 

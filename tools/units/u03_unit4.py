@@ -108,6 +108,26 @@ mod('related','Related rates',
  ('A checklist',['Name every variable with units. Write what is constant and what changes. Use a relationship that is true at all times (Pythagoras, similar triangles, a volume or area formula), not just at the moment asked about. Differentiate. Substitute known values. Solve. Include units and a sentence.']),
  [('A circle\'s radius grows at 2 cm/s. dA/dt = ?',['2πr·(2)','πr²·(2)','2πr','2'],0,'A = πr², so dA/dt = 2πr·dr/dt = 2πr·2.')])
 
+# ---- figures for Linearization & differentials
+_Lq = Plot((14, 37), (3.6, 6.3), (30, 12, 215, 196))
+_rt = lambda x: x ** .5
+_linf = fig(_Lq.axes((16, 25, 34), (4, 5, 6), 'x', 'y') + _Lq.curve(_rt, 14.5, 36) + _Lq.text(35.5, 6.12, 'y = √x', 'f', 11, 'end'), [
+    (1, _Lq.dot(25, 5, '(25, 5)', 'ink', 22, 16), 'easy point: √25 = 5', 'ink'),
+    (2, _Lq.seg(21, 4.6, 29, 5.4, 'tan', 2.4), 'slope f′(25) = 1/10', 'tan'),
+    (3, _Lq.seg(14.5, 3.95, 36, 6.1, 'tan', 2), 'L(x) = 5 + (x − 25)/10', 'tan'),
+    (4, _Lq.dot(26, 5.1, '5.1', 'tan', -10, -8), 'L(26) = 5.1, true 5.0990', 'tan'),
+    (5, _Lq.dot(34, 5.9, '', 'tan') + _Lq.dot(34, 34 ** .5, '', 'f') + _Lq.seg(34, 34 ** .5, 34, 5.9, 'dd', 2) + _Lq.text(34.6, 5.88, 'gap', 'dd', 10, 'start', 500), 'line above curve: overestimate', 'dd')],
+    'Near x = 25 the tangent line (orange) and √x are nearly the same. Farther out, at x = 34, the gap shows the line is above the concave-down curve.', 230)
+_st, _sd = [0, 2, 5, 7], [4.0, 6.6, 9.6, 11.0]
+_Sn = Plot((-.5, 9), (0, 13.5), (30, 12, 215, 196))
+_snow = fig(_Sn.axes((2, 5, 7), (8, 12), 't', 'in') + ''.join(_Sn.dot(a, b, f'{b:.1f}', 'f', dx, dy) for a, b, dx, dy in zip(_st, _sd, (18, 0, 0, 12), (4, 16, 16, 18))), [
+    (1, _Sn.seg(5, 9.6, 7, 11.0, 'tan', 2, '5 4'), 'd′(6) ≈ 1.4/2 = 0.7 in/h', 'tan'),
+    (2, _Sn.seg(5.6, 10.3, 8.6, 11.8, 'tan', 2.4), 'L(t) = 11.0 + 0.5(t − 7)', 'tan'),
+    (3, _Sn.dot(8, 11.5, '11.5', 'tan', 0, -10), 'L(8) = 11.5 in', 'tan'),
+    (4, _Sn.curve(lambda t: 11 + .5 * (t - 7) - .15 * (t - 7) ** 2, 7, 8.6, 'f', 2, '4 4'), 'd″ < 0: curve below the line', 'dd'),
+    (5, pline([(_Sn.X(a), _Sn.Y(b)) for a, b in zip(_st, _sd)], 'mut', 1.4, '2 4') + _Sn.text(2.1, 5.0, '1.3', 'mut', 10, w=500) + _Sn.text(3.9, 7.4, '1.0', 'mut', 10, w=500) + _Sn.text(6.4, 9.4, '0.7', 'mut', 10, w=500), 'slopes 1.3, 1.0, 0.7: falling', 'ink')],
+    'The four depth readings (blue). The tangent at t = 7 (orange) runs above the concave-down depth curve (dashed, a sketch), so it overestimates d(8).', 230)
+
 mod('linear','Linearization & differentials',
  'Zoom in far enough and a curve is a line. Use the tangent line to estimate values you cannot compute by hand.',
  ['Near x = a, the curve is almost indistinguishable from its tangent line <span class="m">L(x) = f(a) + f′(a)(x − a)</span>. So to estimate f at a nearby point, use L instead: <span class="m">f(x) ≈ L(x)</span>. This is how a calculator first estimates square roots, and how physicists replace sin θ by θ for small angles.',
@@ -118,15 +138,24 @@ mod('linear','Linearization & differentials',
    seg=('li-fn','Function',[('sq','√x'),('sn','sin x'),('ex','eˣ'),('ln','ln x')]),
    ctl=[('li-a','Tangent point a',.5,4,.1,1),('li-x','Target x',.3,4.5,.05,1.4)],
    out=[('li-L','estimate L(x)','x'),('li-f','true f(x)','v'),('li-e','error (L − f)','a'),('li-side','the tangent line is','')])],
- [('On √x with a = 1, estimate √1.2. <button type="button" class="btn link" data-show=\'' + show(["click","#li-fn [data-k=sq]"],["#li-a",1],["#li-x",1.2]) + '\'>Set it up for me</button>','' ,'L(x) = 1 + ½(x − 1), so L(1.2) = 1.1. The true √1.2 = 1.0954: a tiny overestimate, because √x is concave down.'),
-  ('Slide x far from a. What happens to the error? <button type="button" class="btn link" data-show=\'' + show(["click","#li-fn [data-k=sq]"],["#li-a",1],["#li-x",4]) + '\'>Set it up for me</button>','' ,'The error grows quickly: L(4) = 2.5 but √4 = 2. A tangent line is only a good estimate close to a.')],
- ('Use a linearization to estimate √26.',[
+ [('On √x with a = 1, estimate √1.2.',show(["click","#li-fn [data-k=sq]"],["#li-a",1],["#li-x",1.2]),'L(x) = 1 + ½(x − 1), so L(1.2) = 1.1. The true √1.2 = 1.0954: a tiny overestimate, because √x is concave down.'),
+  ('Slide x far from a. What happens to the error?',show(["click","#li-fn [data-k=sq]"],["#li-a",1],["#li-x",4]),'The error grows quickly: L(4) = 2.5 but √4 = 2. A tangent line is only a good estimate close to a.'),
+  ('Choose ln x with a = 1 and estimate ln 1.1. Over or under?',show(["click","#li-fn [data-k=ln]"],["#li-a",1],["#li-x",1.1]),'L(x) = x − 1, so L(1.1) = 0.1, while ln 1.1 ≈ 0.0953. An overestimate, because ln x is concave down.'),
+  ('Choose eˣ with a = 1 and estimate e<sup>1.4</sup>. Over or under?',show(["click","#li-fn [data-k=ex]"],["#li-a",1],["#li-x",1.4]),'L(1.4) = e + e(0.4) = 1.4e ≈ 3.8056, but e<sup>1.4</sup> ≈ 4.0552: an underestimate by about 0.25, because eˣ is concave up. A bigger step and stronger bending give a bigger error.')],
+ [('Use a linearization to estimate √26.',[
   '<b>Pick a nearby easy point.</b> f(x) = √x, a = 25 (since √25 = 5).',
   '<b>Slope.</b> f′(x) = 1/(2√x), so f′(25) = 1/10.',
   '<b>Build L.</b> L(x) = 5 + (1/10)(x − 25).',
   '<b>Estimate.</b> L(26) = 5 + 0.1 = 5.1.',
-  '<b>Answer.</b> √26 ≈ <b>5.1</b> (true value 5.0990). Overestimate, since √x is concave down.']),
- ['Choosing a not close to x. The estimate is only good near a.','Evaluating f′ at x instead of at a.','Forgetting f(a) in L(x).','Saying overestimate/underestimate from the sign of f′. It depends on f″ (concavity).','Using degrees for trig linearizations. They require radians.'],
+  '<b>Answer.</b> √26 ≈ <b>5.1</b> (true value 5.0990). Overestimate, since √x is concave down.'],_linf),
+  {'h':'Worked example 2: snow depth (AP-style table)','fig':_snow,'table':[['t (hours)','0','2','5','7'],['d(t) (inches)','4.0','6.6','9.6','11.0']],
+   'prob':'During a snowstorm, the depth of snow on the ground is d(t) inches, t hours after midnight. d is twice differentiable, with selected values in the table. Also d′(7) = 0.5 and d″(t) &lt; 0 for 0 ≤ t ≤ 8. (a) Use the data to estimate d′(6), with units. (b) Use the line tangent to the graph of d at t = 7 to estimate the depth at t = 8. (c) Is your estimate in (b) an overestimate or an underestimate? Explain.',
+   'steps':['<b>(a)</b> Use the two readings around t = 6: d′(6) ≈ (d(7) − d(5))/(7 − 5) = (11.0 − 9.6)/2 = <b>0.7 inch per hour</b>.',
+    '<b>(b) Tangent line.</b> At t = 7 the point is (7, 11.0) and the slope is d′(7) = 0.5: L(t) = 11.0 + 0.5(t − 7).',
+    '<b>Estimate.</b> d(8) ≈ L(8) = 11.0 + 0.5(1) = <b>11.5 inches</b>.',
+    '<b>(c)</b> d″(t) &lt; 0, so the graph of d is concave down and lies below its tangent line. The estimate 11.5 is an <b>overestimate</b>.',
+    '<b>Check against the table.</b> The slopes between readings are (6.6 − 4.0)/2 = 1.3, (9.6 − 6.6)/3 = 1.0 and 0.7 inch per hour: decreasing, as a concave-down d should be, and d′(7) = 0.5 continues the trend. The snow is still piling up, just more slowly.']}],
+ ['Choosing a not close to x. The estimate is only good near a.','Evaluating f′ at x instead of at a.','Forgetting f(a) in L(x).','Saying overestimate/underestimate from the sign of f′. It depends on f″ (concavity).','Using degrees for trig linearizations. They require radians.','With a table, estimating a derivative from readings that do not surround the point when ones that do are available.'],
  ('Differentials',['The change in y along the tangent line is dy = f′(x) dx, while the true change is Δy. For a small dx they nearly agree. This is how measurement error spreads: if the radius of a sphere is measured with a small error dr, the error in volume is about dV = 4πr² dr.']),
  [('The tangent line to f at a lies above the curve near a when',['f″(a) < 0','f″(a) > 0','f′(a) < 0','f′(a) > 0'],0,'Concave down means the curve bends away below its tangent line, so the tangent estimate is too large.')])
 

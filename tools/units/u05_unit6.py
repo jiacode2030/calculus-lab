@@ -50,23 +50,55 @@ mod('accum','Accumulation & Riemann sums',
  ('Which sum is high or low?',['For an <b>increasing</b> function, left sums underestimate and right sums overestimate; for a <b>decreasing</b> function it reverses. The trapezoid rule overestimates when f is concave up (the chords lie above the curve) and underestimates when concave down; the midpoint rule does the opposite. Averaging left and right sums gives the trapezoid sum.']),
  [('For a decreasing function, a right Riemann sum is',['an underestimate','an overestimate','exact','impossible to tell'],0,'On a decreasing function the right edge is the lowest point of each strip, so the rectangles are under the curve.')])
 
+# ---- figures for The definite integral & the Fundamental Theorem
+_F = Plot((-.25, 3.5), (-.6, 8.2), (30, 12, 215, 196))
+_lin = lambda x: 2 * x + 1
+_ftcf = fig(_F.axes((1, 2, 3), (3, 7), 'x', 'f') + _F.curve(_lin, 0, 3.3) + _F.text(.2, 7.7, 'f(x) = 2x + 1', 'f', 12, 'start'), [
+    (1, _F.text(.2, 6.6, 'F(x) = x² + x', 'ink', 11, 'start', 500), 'F(x) = x² + x', 'f'),
+    (2, _F.under(_lin, 1, 3) + _F.seg(1, 0, 1, 3, 'area', 1.6) + _F.seg(3, 0, 3, 7, 'area', 1.6) + _F.dot(1, 3, '3', 'f', -10, -4) + _F.dot(3, 7, '7', 'f', 10, 2) + _F.text(2, 2, '10', 'ink', 15), 'F(3) − F(1) = 12 − 2 = 10', 'area'),
+    (2, '', 'check: trapezoid 2·(3 + 7)/2 = 10', 'ink'),
+    (3, '', 'upper limit x² moves at rate 2x', 'tan'),
+    (4, '', 'd/dx = sin(x²)·2x', 'd')],
+    'The integral is the gold area under f(x) = 2x + 1 from 1 to 3. It is a trapezoid, so geometry confirms the 10.', 230)
+_E = lambda t: 6 * t - t * t
+_r1, _r2 = 3 - 5 ** .5, 3 + 5 ** .5
+_G = Plot((-.3, 6.6), (-.8, 10.2), (30, 12, 215, 196))
+_tank = fig(_G.axes((1, 2, 3, 4, 5, 6), (4, 9), 't', 'L/h') + _G.curve(_E, 0, 6) + _G.seg(0, 4, 6, 4, 'dd', 2, '6 4')
+            + _G.text(4.6, 9.4, 'in: E(t)', 'f', 11) + _G.text(6.3, 4.7, 'out: 4', 'dd', 11, 'end'), [
+    (1, _G.between(_E, lambda t: 4, _r1, _r2) + _G.between(lambda t: 4, _E, 0, _r1, 'dd', .3) + _G.between(lambda t: 4, _E, _r2, 6, 'dd', .3)
+        + _G.text(1.9, 5.0, 'gain', 'ink', 11, w=500) + _G.text(.38, 3.0, 'loss', 'dd', 10, w=500), 'net rate = E(t) − 4', 'area'),
+    (2, _G.text(3, 1.7, 'net +12 L', 'ink', 13), 'W(6) = 50 + 12 = 62', 'area'),
+    (3, arr(_G.X(3), _G.Y(4), _G.X(3), _G.Y(9), 'd', '', 2.4) + _G.dot(3, 9, 'E(3) = 9', 'f', 0, -9) + _G.text(3.15, 6.9, '5', 'd', 13, 'start'), 'W′(3) = 9 − 4 = 5', 'd'),
+    (4, _G.dot(_r1, 4, '0.76', 'tan', 16, -6) + _G.dot(_r2, 4, '5.24', 'tan', -16, -6), 'W′ = 0 at t = 3 ± √5', 'tan'),
+    (5, '', 'least at t ≈ 0.764: 48.546 L', 'f')],
+    'Blue is the inflow rate, the dashed pink line the outflow. Gold strips add water; pink strips (near t = 0 and t = 6) drain it.', 230)
+
 mod('ftc','The definite integral & the Fundamental Theorem',
  'Differentiating and integrating are opposites. This theorem is why antiderivatives can find areas.',
  ['Define the <b>accumulation function</b> <span class="m">A(x) = ∫<sub>a</sub><sup>x</sup> f(t) dt</span>: the signed area from a up to x. Slide x to the right and the area grows at a rate equal to the height of f at the edge. That is <b>FTC Part 1</b>: <span class="m">A′(x) = f(x)</span>. Integration undoes differentiation.',
   '<b>FTC Part 2</b> turns that into a method: if F is any antiderivative of f, then <span class="m">∫<sub>a</sub><sup>b</sup> f(x) dx = F(b) − F(a)</span>. No more adding rectangles. A related fact: the net change of a quantity equals the integral of its rate, <span class="m">∫<sub>a</sub><sup>b</sup> f′(x) dx = f(b) − f(a)</span>.'],
  ('the definite integral was a limit of sums','a shortcut through antiderivatives','areas, accumulated quantities and almost every integral problem','the Fundamental Theorem of Calculus'),
  [('d/dx ∫<sub>a</sub><sup>x</sup> f(t) dt = f(x)','Part 1'),('∫<sub>a</sub><sup>b</sup> f(x) dx = F(b) − F(a)','Part 2, F′ = f'),('d/dx ∫<sub>a</sub><sup>g(x)</sup> f(t) dt = f(g(x))·g′(x)','with the chain rule')],
- [lab('fc-lab','Area so far, and its slope',canvas='fc-canvas',aria='Top graph: f with the signed area from 0 to x shaded. Bottom graph: the accumulated area A(x) with a point at x.',
-   seg=('fc-fn','f(t)',[('a','t² − 2t'),('b','cos t'),('c','e^(−t²)')]),ctl=[('fc-x','x',0,3,.05,1.5)],canvas2=('fc-canvas2','The accumulation function A of x.'),
-   out=[('fc-A','A(x) = ∫₀ˣ f(t) dt','x'),('fc-f','f(x), the height at the edge','v'),('fc-slope','slope of A at x (numeric)','a')])],
- [('Choose t² − 2t and slide x to 2. What is happening to A? <button type="button" class="btn link" data-show=\'' + show(["click","#fc-fn [data-k=a]"],["#fc-x",2]) + '\'>Set it up for me</button>','' ,'A is at its lowest point (A(2) = −4/3): f is negative until x = 2 (area below the axis counts negative), so A decreases, and f(2) = 0 where A turns around.'),
-  ('Compare f(x) with the slope of A at several x. What do you see? <button type="button" class="btn link" data-show=\'' + show(["click","#fc-fn [data-k=b]"],["#fc-x",1]) + '\'>Set it up for me</button>','' ,'They are equal everywhere: the slope of the accumulation graph is the height of f. That is FTC Part 1.')],
- ('Evaluate ∫<sub>1</sub><sup>3</sup> (2x + 1) dx, and find d/dx ∫<sub>0</sub><sup>x²</sup> sin t dt.',[
+ [lab('fc-lab','Area so far, and its slope',canvas='fc-canvas',aria='Top graph: f with the signed area from a to x shaded. Bottom graph: the accumulated area A(x) with a point at x.',
+   seg=('fc-fn','f(t)',[('a','t² − 2t'),('b','cos t'),('c','e^(−t²)')]),ctl=[('fc-x','x',0,3,.05,1.5),('fc-start','Start a',0,2,.05,0)],canvas2=('fc-canvas2','The accumulation function A of x.'),
+   out=[('fc-A','A(x) = ∫ₐˣ f(t) dt','x'),('fc-f','f(x), the height at the edge','v'),('fc-slope','slope of A at x (numeric)','a')])],
+ [('Choose t² − 2t and slide x to 2. What is happening to A?',show(["click","#fc-fn [data-k=a]"],["#fc-start",0],["#fc-x",2]),'A is at its lowest point (A(2) = −4/3): f is negative until x = 2 (area below the axis counts negative), so A decreases, and f(2) = 0 where A turns around.'),
+  ('Compare f(x) with the slope of A at several x. What do you see?',show(["click","#fc-fn [data-k=b]"],["#fc-start",0],["#fc-x",1]),'They are equal everywhere: the slope of the accumulation graph is the height of f. That is FTC Part 1.'),
+  ('On t² − 2t, move the start a from 0 to 1. What happens to the A graph, and what stays the same?',show(["click","#fc-fn [data-k=a]"],["#fc-x",2.5],["#fc-start",1]),'The whole A graph moves up by 2/3 (it now crosses 0 at x = 1, because A(1) = 0), but its shape and its slope at every x are unchanged: A′(x) = f(x) whatever the start. Changing a only adds a constant. That is why any antiderivative works in FTC Part 2.'),
+  ('Choose e^(−t²) and slide x to 3. Read A(3). Why is this function special?',show(["click","#fc-fn [data-k=c]"],["#fc-start",0],["#fc-x",3]),'A(3) ≈ 0.8862, almost exactly √π/2 (the rest of the tail beyond 3 adds only about 0.00002). e^(−t²) has no antiderivative made of elementary functions, so A(x) = ∫<sub>0</sub><sup>x</sup> e^(−t²) dt is a genuinely new function, and FTC Part 1 still tells you its derivative: A′(x) = e^(−x²).')],
+ [('Evaluate ∫<sub>1</sub><sup>3</sup> (2x + 1) dx, and find d/dx ∫<sub>0</sub><sup>x²</sup> sin t dt.',[
   '<b>Antiderivative.</b> F(x) = x² + x.',
   '<b>FTC Part 2.</b> F(3) − F(1) = (9 + 3) − (1 + 1) = 10. The integral is <b>10</b>.',
   '<b>Second problem: chain rule.</b> The upper limit is g(x) = x², so d/dx ∫<sub>0</sub><sup>x²</sup> sin t dt = sin(x²)·(x²)′.',
-  '<b>Answer.</b> <b>2x sin(x²)</b>.']),
- ['Forgetting to subtract: F(b) − F(a), not F(b) + F(a).','Adding + C in a definite integral. It cancels, so leave it out.','Forgetting the chain rule factor g′(x) when the upper limit is not just x.','Treating area below the axis as positive. The integral is net (signed) area.','Swapping limits without changing the sign: ∫<sub>b</sub><sup>a</sup> = −∫<sub>a</sub><sup>b</sup>.'],
+  '<b>Answer.</b> <b>2x sin(x²)</b>.'],_ftcf),
+  {'h':'Worked example 2: a water tank (AP-style)','fig':_tank,
+   'prob':'Water flows into a tank at the rate E(t) = 6t − t² liters per hour and drains out at a constant 4 liters per hour, for 0 ≤ t ≤ 6 hours. At t = 0 the tank holds 50 liters. Let W(t) be the amount of water in the tank at time t. (a) How much water is in the tank at t = 6? (b) Is the amount of water increasing or decreasing at t = 3? At what rate? (c) At what time in [0, 6] is the amount of water least? Justify your answer.',
+   'steps':['<b>Amount = start + ∫ net rate.</b> The net rate is in minus out, so W(t) = 50 + ∫<sub>0</sub><sup>t</sup> (6s − s² − 4) ds.',
+    '<b>(a)</b> ∫<sub>0</sub><sup>6</sup> (6t − t² − 4) dt = [3t² − t³/3 − 4t]<sub>0</sub><sup>6</sup> = 108 − 72 − 24 = 12, so W(6) = 50 + 12 = <b>62 liters</b>.',
+    '<b>(b)</b> By FTC Part 1, W′(t) = E(t) − 4, so W′(3) = 9 − 4 = 5. The amount is <b>increasing at 5 liters per hour</b>.',
+    '<b>(c) Critical points.</b> W′(t) = 0 when 6t − t² = 4, that is t² − 6t + 4 = 0, so t = 3 ± √5 ≈ 0.764 and 5.236. W′ &lt; 0 before 0.764, W′ &gt; 0 between, and W′ &lt; 0 after 5.236.',
+    '<b>Candidates test.</b> W(0) = 50, W(0.764) ≈ 48.546, W(5.236) ≈ 63.454, W(6) = 62. The least amount is about <b>48.546 liters, at t = 3 − √5 ≈ 0.764 hours</b>: at first water drains faster than it flows in.']}],
+ ['Forgetting to subtract: F(b) − F(a), not F(b) + F(a).','Adding + C in a definite integral. It cancels, so leave it out.','Forgetting the chain rule factor g′(x) when the upper limit is not just x.','Treating area below the axis as positive. The integral is net (signed) area.','Swapping limits without changing the sign: ∫<sub>b</sub><sup>a</sup> = −∫<sub>a</sub><sup>b</sup>.','In amount problems, forgetting the starting amount, or using the inflow rate alone instead of in minus out.'],
  ('Properties worth knowing',['∫<sub>a</sub><sup>a</sup> f = 0; ∫<sub>a</sub><sup>b</sup> f = −∫<sub>b</sub><sup>a</sup> f; ∫<sub>a</sub><sup>c</sup> f = ∫<sub>a</sub><sup>b</sup> f + ∫<sub>b</sub><sup>c</sup> f; constants pull out and sums split. If f is the rate of change of a quantity, ∫<sub>a</sub><sup>b</sup> f is the total change in that quantity from a to b.']),
  [('d/dx ∫<sub>1</sub><sup>x</sup> √(t<sup>3</sup> + 1) dt =',['√(x³ + 1)','x√(x³ + 1)','3x²/(2√(x³ + 1))','0'],0,'FTC Part 1 with upper limit x: the answer is the integrand evaluated at x.')])
 

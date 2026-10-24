@@ -2,13 +2,14 @@
 (function ftc(){
   const cv=$('#fc-canvas');if(!cv)return;
   const C={a:{f:t=>t*t-2*t,yr:[-1.5,3.6]},b:{f:Math.cos,yr:[-1.3,1.3]},c:{f:t=>Math.exp(-t*t),yr:[-.3,1.2]}};
-  let k='a',x0=1.5;
-  const A=x=>integ(C[k].f,0,x,300);
-  const sim=glab('fc-canvas',{h:w=>clamp(w*.36,230,300),view:()=>({xr:[0,3.2],yr:C[k].yr}),draw(ctx,P){const f=C[k].f;areaSigned(ctx,P,f,0,x0,T.ce,T.ca);curveD(ctx,P,f,0,3.2,T.cx,2.8,300);vline(ctx,P,x0,T.hot,[4,4]);dot(ctx,P.X(x0),P.Y(f(x0)),6,T.cx,T.surface);label(ctx,'f(t)',P.box.x+8,P.box.y+10,T.cx,'left','middle',LABEL);}});
-  const sim2=glab('fc-canvas2',{h:w=>clamp(w*.3,190,250),view:()=>{let lo=0,hi=0;for(let i=0;i<=60;i++){const v=A(3.2*i/60);lo=Math.min(lo,v);hi=Math.max(hi,v);}const p=Math.max((hi-lo)*.15,.1);return {xr:[0,3.2],yr:[lo-p,hi+p]};},draw(ctx,P){curveD(ctx,P,A,0,3.2,T.ce,2.8,160);const y=A(x0),m=C[k].f(x0);line(ctx,P,x0-.8,y-.8*m,x0+.8,y+.8*m,T.hot,2.2);dot(ctx,P.X(x0),P.Y(y),6,T.ce,T.surface);label(ctx,'A(x) = area accumulated so far',P.box.x+8,P.box.y+10,T.ce,'left','middle',LABEL);}});
+  let k='a',x0=1.5,a0=0;
+  const A=x=>integ(C[k].f,a0,x,300);
+  const sim=glab('fc-canvas',{h:w=>clamp(w*.36,230,300),view:()=>({xr:[0,3.2],yr:C[k].yr}),draw(ctx,P){const f=C[k].f,bk=x0<a0;areaSigned(ctx,P,f,Math.min(a0,x0),Math.max(a0,x0),bk?T.ca:T.ce,bk?T.ce:T.ca);vline(ctx,P,a0,T.muted,[2,4]);label(ctx,'a',P.X(a0)+6,P.box.y+P.box.h-10,T.muted,'left','middle',MONO);curveD(ctx,P,f,0,3.2,T.cx,2.8,300);vline(ctx,P,x0,T.hot,[4,4]);dot(ctx,P.X(x0),P.Y(f(x0)),6,T.cx,T.surface);label(ctx,'f(t)',P.box.x+8,P.box.y+10,T.cx,'left','middle',LABEL);}});
+  const sim2=glab('fc-canvas2',{h:w=>clamp(w*.3,190,250),view:()=>{let lo=0,hi=0;for(let i=0;i<=60;i++){const v=A(3.2*i/60);lo=Math.min(lo,v);hi=Math.max(hi,v);}const p=Math.max((hi-lo)*.15,.1);return {xr:[0,3.2],yr:[lo-p,hi+p]};},draw(ctx,P){curveD(ctx,P,A,0,3.2,T.ce,2.8,160);const y=A(x0),m=C[k].f(x0);line(ctx,P,x0-.8,y-.8*m,x0+.8,y+.8*m,T.hot,2.2);dot(ctx,P.X(a0),P.Y(0),4.5,T.muted,T.surface);dot(ctx,P.X(x0),P.Y(y),6,T.ce,T.surface);label(ctx,'A(x) = area accumulated so far',P.box.x+8,P.box.y+10,T.ce,'left','middle',LABEL);}});
   function upd(){const f=C[k].f;setText('fc-A',fmt(A(x0),4));setText('fc-f',fmt(f(x0),4));setText('fc-slope',fmt(D(A,x0,2e-3),4));sim.render();sim2.render();}
-  bindRange('fc-x',v=>nz(v),v=>{x0=v;upd();});segBind('fc-fn','k',v=>{k=v;upd();});upd();drawers.ftc=()=>{sim.render();sim2.render();};
-  KEYS['fc-canvas']=['Slide x. Gold area (pink where f is negative) is A(x); the lower graph records it. The orange tangent has slope f(x).',[['cx','f(t)'],['ce','A(x), accumulated area'],['ca','area below the axis (negative)'],['hot','tangent to A at x']]];
+  bindRange('fc-x',v=>nz(v),v=>{x0=v;upd();});bindRange('fc-start',v=>nz(v),v=>{a0=v;upd();});segBind('fc-fn','k',v=>{k=v;upd();});upd();drawers.ftc=()=>{sim.render();sim2.render();};
+  KEYS['fc-canvas']=['Slide x. Gold area counts positive and pink counts negative (f below the axis, or x left of the start a); together they make A(x), which the lower graph records. The orange tangent has slope f(x). Moving a shifts A up or down without changing its slopes.',[['cx','f(t)'],['ce','A(x), accumulated area'],['ca','area counted negative'],['muted','the start a'],['hot','tangent to A at x']]];
+  TIPS['fc-start']=()=>'Changing the start adds a constant to A: the graph shifts, its slopes do not.';
   TIPS['fc-x']=el=>`x = ${nz(+el.value)}: A is ${C[k].f(+el.value)>0?'increasing':'decreasing'} because f(x) is ${C[k].f(+el.value)>0?'positive':'negative'}, and its slope equals f(x).`;
   GLOSS['accumulation function']='A(x) = ∫ₐˣ f(t) dt: the signed area from a up to x. Its derivative is f(x).';GLOSS['Fundamental Theorem']='Differentiation and integration undo each other: A′(x) = f(x), and ∫ₐᵇ f = F(b) − F(a).';
   TT.ftc='Have students predict where A is increasing, decreasing and has its minimum from the graph of f alone.';

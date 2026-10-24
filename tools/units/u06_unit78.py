@@ -80,6 +80,31 @@ mod('sepvar','Separation of variables & exponential models',
  ('Why exponentials',['If the rate of change is proportional to the amount, a bigger amount grows faster, which makes it even bigger: that feedback is the shape of e<sup>kt</sup>. Check any proposed solution by differentiating: if y = y₀e<sup>kt</sup> then dy/dt = k·y₀e<sup>kt</sup> = k y. ✓']),
  [('If dy/dt = −0.2y and y(0) = 50, then y(t) =',['50e<sup>−0.2t</sup>','50e<sup>0.2t</sup>','−0.2·50e<sup>t</sup>','50 − 0.2t'],0,'dy/dt = ky gives y = y₀e^{kt} with k = −0.2.')])
 
+# ---- figures for Average value & motion with integrals
+import math
+_x2 = lambda x: x * x
+_A1 = Plot((-.25, 3.5), (-.8, 10), (30, 8, 215, 112))
+_A2 = Plot((-.25, 3.5), (-1.5, 3.5), (30, 158, 215, 112))
+_vq = lambda t: t * t - 4 * t + 3
+_avf = fig(_A1.axes((1, 2, 3), (3, 9), 'x', 'f') + _A1.curve(_x2, 0, 3.15) + _A2.axes((1, 3), (-1, 3), 't', 'v') + _A2.curve(_vq, 0, 3.3, 'd'), [
+    (1, _A1.under(_x2, 0, 3) + _A1.box_(0, 3, 3, 'tan', .1) + _A1.seg(0, 3, 3, 3, 'tan', 2, '6 4') + _A1.text(.15, 4.6, 'avg 3', 'tan', 11, 'start'), 'area 9 ÷ width 3 = 3', 'tan'),
+    (2, _A2.under(_vq, 0, 1) + _A2.between(lambda t: 0, _vq, 1, 3, 'dd', .3), 'net area: 0', 'area'),
+    (3, _A2.dot(1, 0) + _A2.dot(3, 0), 'v = 0 at t = 1 and 3', 'ink'),
+    (4, _A2.text(.3, .8, '+4/3', 'ink', 11, 'start') + _A2.text(2, -.55, '−4/3', 'dd', 11), 'distance 4/3 + 4/3', 'dd'),
+    (5, '', 'avg 3 · disp 0 · dist 8/3 m', 'ink')],
+    'Top: the dashed orange rectangle has the same area as the gold region under x². Bottom: v(t) spends area above the axis (forward) and below it (backward).', 290)
+_Tf = lambda t: 60 - 10 * math.cos(math.pi * t / 12)
+_Tav = 60 + 20 / math.pi
+_Tc = 12 / math.pi * math.acos(-2 / math.pi)
+_K = Plot((-1, 25.5), (46, 75), (30, 12, 215, 196))
+_temp = fig(_K.axes((6, 12, 18, 24), (50, 60, 70), 't', '°F') + _K.curve(_Tf, 0, 24), [
+    (1, _K.between(_Tf, lambda t: 46, 6, 18, 'area', .3) + _K.seg(6, 46, 6, _Tf(6), 'area', 1.4) + _K.seg(18, 46, 18, _Tf(18), 'area', 1.4), '(1/12)∫₆¹⁸ T dt', 'area'),
+    (2, '', '∫ = 720 + 240/π', 'area'),
+    (3, _K.seg(6, _Tav, 18, _Tav, 'tan', 2, '6 4') + _K.text(5.6, _Tav - .9, '66.37', 'tan', 11, 'end'), 'average ≈ 66.366 °F', 'tan'),
+    (4, _K.dot(_Tc, _Tav, '8.64', 'd', -14, -6) + _K.dot(24 - _Tc, _Tav, '15.36', 'd', 16, -6), 'T = average at t ≈ 8.64, 15.36', 'd'),
+    (5, _K.seg(6, 60, 12, 70, 'dd', 2.2) + _K.dot(6, 60, '', 'dd') + _K.dot(12, 70, '', 'dd') + _K.text(7.6, 70.5, 'slope 5/3', 'dd', 11, 'end'), 'rate of change ≈ 1.667 °F/h', 'dd')],
+    'The temperature over one day. The dashed orange line is the average from 6 am to 6 pm; the pink secant is an average rate of change, a different thing.', 230)
+
 mod('avgval','Average value & motion with integrals',
  'The average of a function over an interval is the height of a rectangle with the same area. And for a moving particle, integrals tell you how far it went and how far it ended up.',
  ['The <b>average value</b> of f on [a, b] is <span class="m">f<sub>avg</sub> = (1/(b − a)) ∫<sub>a</sub><sup>b</sup> f(x) dx</span>: total accumulation divided by the length of the interval. A continuous function actually <i>equals</i> its average somewhere (the Mean Value Theorem for integrals).',
@@ -92,15 +117,24 @@ mod('avgval','Average value & motion with integrals',
   lab('av-lab2','Displacement vs distance',canvas='av-canvas2',aria='A velocity graph with the area up to time T shaded, positive and negative, and readouts of displacement, distance and position.',
    ctl=[('av-T','T',.1,5,.05,4)],pre='<p class="small" style="margin:0">v(t) = t² − 4t + 3 (m/s), starting position s(0) = 2 m.</p>',
    out=[('av-disp','displacement ∫₀ᵀ v dt','x'),('av-dist','total distance ∫₀ᵀ |v| dt','a'),('av-pos','position s(T)','v')])],
- [('On x² over [0, 3], find the average value and where f equals it. <button type="button" class="btn link" data-show=\'' + show(["click","#av-fn [data-k=a]"],["#av-a",0],["#av-b",3]) + '\'>Set it up for me</button>','' ,'∫₀³ x² dx = 9, so the average is 3. x² = 3 at x = √3 ≈ 1.73: the green dot where the curve crosses the average line.'),
-  ('Set T = 3 on the motion graph. Compare displacement and distance. <button type="button" class="btn link" data-show=\'' + show(["#av-T",3]) + '\'>T = 3</button>','' ,'Displacement is 0 (the signed areas cancel): the particle ends where it started, s(3) = 2 m. But the distance is 4/3 + 4/3 = 8/3 m: it went forward, then back. Distance counts both trips.')],
- ('Find the average value of f(x) = x² on [0, 3], and the displacement and distance for v(t) = t² − 4t + 3 on [0, 3].',[
+ [('On x² over [0, 3], find the average value and where f equals it.',show(["click","#av-fn [data-k=a]"],["#av-a",0],["#av-b",3]),'∫₀³ x² dx = 9, so the average is 3. x² = 3 at x = √3 ≈ 1.73: the green dot where the curve crosses the average line.'),
+  ('Choose 4x − x² on [0, 4]. Predict the average before you look. How many points equal it?',show(["click","#av-fn [data-k=d]"],["#av-a",0],["#av-b",4]),'∫₀⁴ (4x − x²) dx = 32 − 64/3 = 32/3, so the average is 8/3 ≈ 2.667, two thirds of the peak height 4. The curve crosses the average twice, at x = 2 ± 2/√3 ≈ 0.845 and 3.155. The theorem promises at least one such point, not exactly one.'),
+  ('Set T = 3 on the motion graph. Compare displacement and distance.',show(["#av-T",3]),'Displacement is 0 (the signed areas cancel): the particle ends where it started, s(3) = 2 m. But the distance is 4/3 + 4/3 = 8/3 m: it went forward, then back. Distance counts both trips.'),
+  ('Now slide T to 5. Find displacement, distance and position.',show(["#av-T",5]),'Displacement 20/3 ≈ 6.667 m and distance 28/3 ≈ 9.333 m: the extra 8/3 is the out-and-back trip from t = 0 to 3. Position s(5) = 2 + 20/3 = 26/3 ≈ 8.667 m. After t = 3 the particle only moves forward, so the two grow at the same rate.')],
+ [('Find the average value of f(x) = x² on [0, 3], and the displacement and distance for v(t) = t² − 4t + 3 on [0, 3].',[
   '<b>Average value.</b> (1/3) ∫<sub>0</sub><sup>3</sup> x² dx = (1/3)(9) = 3.',
   '<b>Displacement.</b> ∫<sub>0</sub><sup>3</sup> (t² − 4t + 3) dt = [t³/3 − 2t² + 3t]<sub>0</sub><sup>3</sup> = 9 − 18 + 9 = 0.',
   '<b>Sign of v.</b> v = (t − 1)(t − 3): positive on [0, 1), negative on (1, 3).',
   '<b>Distance.</b> ∫<sub>0</sub><sup>1</sup> v dt = 4/3, and ∫<sub>1</sub><sup>3</sup> v dt = −4/3. Distance = 4/3 + 4/3 = 8/3.',
-  '<b>Answer.</b> Average value <b>3</b>; displacement <b>0</b>; total distance <b>8/3 m</b>.']),
- ['Dividing by the wrong thing: divide by b − a, not by b or by 2.','Using ∫ v instead of ∫ |v| for distance.','Forgetting the starting position when finding position.','Averaging endpoint values (f(a) + f(b))/2 instead of integrating.','Not splitting the integral where v changes sign.'],
+  '<b>Answer.</b> Average value <b>3</b>; displacement <b>0</b>; total distance <b>8/3 m</b>.'],_avf),
+  {'h':'Worked example 2: a day\'s temperature (AP-style)','fig':_temp,
+   'prob':'The temperature in a town, in degrees Fahrenheit, is modeled by T(t) = 60 − 10 cos(πt/12), where t is hours after midnight. (a) Find the average temperature from 6 am (t = 6) to 6 pm (t = 18). (b) At what times between 6 am and 6 pm does the temperature equal that average? (c) Find the average rate of change of T from t = 6 to t = 12, with units. How is it different from (a)?',
+   'steps':['<b>(a) Set up.</b> Average = (1/(18 − 6)) ∫<sub>6</sub><sup>18</sup> T(t) dt.',
+    '<b>Integrate.</b> An antiderivative is 60t − (120/π) sin(πt/12). So ∫<sub>6</sub><sup>18</sup> T dt = 60(12) − (120/π)(sin(3π/2) − sin(π/2)) = 720 + 240/π.',
+    '<b>Divide by 12.</b> Average = 60 + 20/π ≈ <b>66.366 °F</b>.',
+    '<b>(b)</b> Solve 60 − 10 cos(πt/12) = 60 + 20/π: cos(πt/12) = −2/π, so t ≈ <b>8.636 and 15.364</b> (about 8:38 am and 3:22 pm). On a calculator-active question, solving T(t) = 66.366 numerically is enough.',
+    '<b>(c)</b> (T(12) − T(6))/(12 − 6) = (70 − 60)/6 ≈ <b>1.667 °F per hour</b>. This is a rate (degrees per hour, the slope of a secant), while (a) is a temperature (degrees, the height of the equal-area rectangle). Do not mix them up.']}],
+ ['Dividing by the wrong thing: divide by b − a, not by b or by 2.','Using ∫ v instead of ∫ |v| for distance.','Forgetting the starting position when finding position.','Averaging endpoint values (f(a) + f(b))/2 instead of integrating.','Not splitting the integral where v changes sign.','Confusing the average value of f, (1/(b − a))∫ f, with the average rate of change of f, (f(b) − f(a))/(b − a).'],
  ('Units',['Average value has the units of f. Displacement and distance have the units of v × t. If f is a rate, ∫ f is a total amount; dividing by the interval length gives the average rate.']),
  [('The average value of f(x) = 2x on [1, 3] is',['4','2','8','3'],0,'(1/2)∫₁³ 2x dx = (1/2)(9 − 1) = 4.')])
 

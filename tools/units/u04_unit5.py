@@ -1,3 +1,26 @@
+# ---- figures for Extreme values & the Mean Value Theorem
+_M = Plot((-.3, 3.6), (-.8, 10.5), (30, 12, 215, 196))
+_mvf = fig(_M.axes((1, 2, 3), (1, 4, 9), 'x', 'y') + _M.curve(lambda x: x * x, 0, 3.2) + _M.dot(1, 1, '', 'ink') + _M.dot(3, 9, '', 'ink'), [
+    (1, '', 'polynomial: continuous and differentiable', 'ink'),
+    (2, _M.seg(.85, .4, 3.2, 9.8, 'tan', 2, '6 4') + _M.text(1.25, .55, '(1, 1)', 'ink', 10, 'start', 500) + _M.text(2.9, 9.6, '(3, 9)', 'ink', 10, 'end', 500), 'secant slope (9 − 1)/2 = 4', 'tan'),
+    (3, '', 'set f′(c) = 2c equal to 4', 'd'),
+    (4, _M.seg(1.1, .4, 2.9, 7.6, 'tan', 2.6) + _M.dot(2, 4, 'c = 2', 'd', 16, 12), 'tangent at c = 2 has slope 4', 'd'),
+    (5, '', 'tangent ∥ secant', 'tan')],
+    'The secant from (1, 1) to (3, 9) is dashed; the tangent at c = 2 (solid) is parallel to it.', 230)
+_pb, _pc = 35 / 24 + 3.5 / 432 * 24, -3.5 / 432
+_pp = lambda t: 12 + _pb * t + _pc * t * t
+_Cm = Plot((-2, 39), (8, 66), (30, 8, 215, 106))
+_Cv = Plot((-2, 39), (55, 106), (30, 150, 215, 112))
+_vm = lambda t: 60 * (_pb + 2 * _pc * t)
+_cam = fig(_Cm.axes((), (12, 47, 61), '', 'mile') + ''.join(_Cm.dot(a, b, '', 'f') for a, b in ((0, 12), (24, 47), (36, 61)))
+           + _Cv.axes((12, 24, 36), (70, 87.5), 't', 'mph') + _Cv.seg(0, 70, 37, 70, 'mut', 1.2, '2 4'), [
+    (1, _Cm.seg(0, 12, 24, 47, 'tan', 2, '6 4') + _Cm.text(13, 24, '87.5 mph', 'tan', 11, 'start') + _Cv.seg(0, 87.5, 24, 87.5, 'tan', 2, '6 4'), 'average 35 mi / 24 min = 87.5 mph', 'tan'),
+    (2, _Cm.curve(_pp, 0, 36, 'f', 2, '3 4') + _Cv.curve(_vm, 0, 36, 'd', 2.4) + _Cv.dot(12, 87.5, 'c₁', 'd', 0, -10), 'speed exactly 87.5 at some c₁', 'd'),
+    (3, _Cm.seg(24, 47, 36, 61, 'tan', 2, '6 4') + _Cm.text(37, 50, '70', 'tan', 11, 'end') + _Cv.seg(24, 70, 36, 70, 'tan', 2, '6 4') + _Cv.dot(30, 70, 'c₂', 'd', 0, -10), '14 mi / 12 min = 70 mph', 'tan'),
+    (4, '', 'v fell from 87.5 to 70: a < 0 sometime', 'dd'),
+    (5, '', 'MVT: some moment exists, not when', 'ink')],
+    'Top: the three camera readings (blue dots) and the average speeds (dashed secants). Bottom: the speed on one possible trip (green, only an illustration). It must hit each average speed somewhere inside its interval.', 290)
+
 mod('mvt','Extreme values & the Mean Value Theorem',
  'Two guarantees about continuous and differentiable functions: there is always a highest and lowest point, and somewhere the slope equals the average slope.',
  ['<b>Extreme Value Theorem:</b> a function continuous on a closed interval <span class="m">[a, b]</span> has an absolute maximum and an absolute minimum there. They occur at endpoints or at <b>critical points</b>, where f′ = 0 or f′ does not exist. To find them, evaluate f at the critical points and at both endpoints (the candidates test).',
@@ -8,15 +31,24 @@ mod('mvt','Extreme values & the Mean Value Theorem',
    seg=('mv-fn','Function',[('cu','x³/3 − x'),('sn','sin x'),('sq','x²'),('abs','|x|')]),
    ctl=[('mv-a','a (left end)',-2,1,.1,-1.5),('mv-b','b (right end)',1.2,3,.1,2.5)],
    out=[('mv-m','average slope (secant)','x'),('mv-c','point(s) c with f′(c) = that slope','v'),('mv-ext','absolute max / min on [a, b]','a')])],
- [('On x³/3 − x with the default interval, find where the tangent is parallel to the secant. <button type="button" class="btn link" data-show=\'' + show(["click","#mv-fn [data-k=cu]"],["#mv-a",-1.5],["#mv-b",2.5]) + '\'>Set it up for me</button>','' ,'There can be more than one c. Each orange tangent is parallel to the secant. The MVT only promises at least one.'),
-  ('Choose |x|. Does a tangent parallel to the secant exist? <button type="button" class="btn link" data-show=\'' + show(["click","#mv-fn [data-k=abs]"],["#mv-a",-1],["#mv-b",2]) + '\'>Set it up for me</button>','' ,'No: the slope of |x| is only −1 or 1, but the average slope here is 1/3. The MVT does not apply because |x| is not differentiable at 0, which lies inside the interval.')],
- ('Verify the MVT for f(x) = x² on [1, 3] and find c.',[
+ [('On x³/3 − x with the default interval, find where the tangent is parallel to the secant.',show(["click","#mv-fn [data-k=cu]"],["#mv-a",-1.5],["#mv-b",2.5]),'There can be more than one c. Each orange tangent is parallel to the secant. The MVT only promises at least one.'),
+  ('On the same curve and interval, read the absolute maximum and minimum. Where are they?',show(["click","#mv-fn [data-k=cu]"],["#mv-a",-1.5],["#mv-b",2.5]),'The maximum is about 2.708 at the right endpoint x = 2.5 (the local maximum at x = −1 is only 2/3). The minimum is −2/3 at the critical point x = 1. This is why the candidates test always checks the endpoints.'),
+  ('Choose x² on [−1, 2]. Find c before you look.',show(["click","#mv-fn [data-k=sq]"],["#mv-a",-1],["#mv-b",2]),'The average slope is (4 − 1)/3 = 1, and f′(c) = 2c = 1 gives c = 0.5, the midpoint. For any parabola, the MVT point is the midpoint of the interval.'),
+  ('Choose |x|. Does a tangent parallel to the secant exist?',show(["click","#mv-fn [data-k=abs]"],["#mv-a",-1],["#mv-b",2]),'No: the slope of |x| is only −1 or 1, but the average slope here is 1/3. The MVT does not apply because |x| is not differentiable at 0, which lies inside the interval.')],
+ [('Verify the MVT for f(x) = x² on [1, 3] and find c.',[
   '<b>Check the hypotheses.</b> f is a polynomial: continuous and differentiable everywhere.',
   '<b>Average slope.</b> (f(3) − f(1))/(3 − 1) = (9 − 1)/2 = 4.',
   '<b>Set the derivative equal.</b> f′(c) = 2c = 4.',
   '<b>Solve.</b> c = 2, and 2 lies in (1, 3). ✓',
-  '<b>Answer.</b> <b>c = 2</b>. (The tangent at x = 2 has slope 4, parallel to the secant.)']),
- ['Using the MVT without checking continuity and differentiability.','Giving a c outside (a, b).','Finding extremes by only looking where f′ = 0 and forgetting the endpoints.','Confusing the MVT (an average slope) with Rolle\'s theorem (the special case f(a) = f(b), slope 0).','Saying a local maximum is the absolute maximum. Compare all candidates.'],
+  '<b>Answer.</b> <b>c = 2</b>. (The tangent at x = 2 has slope 4, parallel to the secant.)'],_mvf),
+  {'h':'Worked example 2: speed cameras (AP-style table)','fig':_cam,'table':[['t (minutes after 2:00 pm)','0','24','36'],['p(t) (mile marker)','12','47','61']],
+   'prob':'Highway cameras record a car at the times and mile markers in the table. The speed limit is 70 mph. The car\'s position p(t) is a differentiable function of t. (a) Must the car have been going faster than the speed limit at some time between 2:00 and 2:24? Justify. (b) Must the car have been going exactly 70 mph at some time between 2:24 and 2:36? (c) Assume p is twice differentiable. Must the car\'s acceleration have been negative at some time? Explain.',
+   'steps':['<b>(a) Average speed.</b> (47 − 12) miles in 24 minutes: 35 miles ÷ 0.4 hour = <b>87.5 mph</b>.',
+    '<b>Apply the MVT.</b> p is differentiable, so it is also continuous, on [0, 24]. So for some c₁ in (0, 24), p′(c₁) = 87.5 mph. <b>Yes</b>: at that moment the car was going exactly 87.5 mph, faster than 70.',
+    '<b>(b)</b> From 2:24 to 2:36 the average speed is 14 miles ÷ 0.2 hour = 70 mph. By the MVT on [24, 36], <b>yes</b>: p′(c₂) = 70 mph for some c₂ in (24, 36).',
+    '<b>(c) MVT again, on the velocity.</b> v = p′ is differentiable on [c₁, c₂], so for some time between, a = v′ = (70 − 87.5)/(c₂ − c₁). The numerator is negative and c₂ &gt; c₁, so <b>yes</b>: the acceleration was negative at some time.',
+    '<b>What the MVT does not tell you.</b> It proves such moments exist, but not when they happened or what the speed was at 2:24. Average-speed cameras in some countries (the United Kingdom and Italy, for example) issue tickets with exactly this argument.']}],
+ ['Using the MVT without checking continuity and differentiability.','Giving a c outside (a, b).','Finding extremes by only looking where f′ = 0 and forgetting the endpoints.','Confusing the MVT (an average slope) with Rolle\'s theorem (the special case f(a) = f(b), slope 0).','Saying a local maximum is the absolute maximum. Compare all candidates.','Mixing units: miles per minute is not miles per hour. Convert before comparing with a speed limit.'],
  ('The candidates test',['To find absolute extremes of a continuous f on [a, b]: (1) find critical points inside (a, b), (2) evaluate f at each critical point and at a and b, (3) the largest value is the maximum and the smallest is the minimum. It always works on a closed interval; on an open interval an extreme may not exist.']),
  [('f is continuous on [0, 4], f(0) = 1 and f(4) = 9, and differentiable on (0, 4). The MVT guarantees a c in (0, 4) with f′(c) =',['2','8','1/2','9'],0,'The average slope is (9 − 1)/(4 − 0) = 2.')])
 
