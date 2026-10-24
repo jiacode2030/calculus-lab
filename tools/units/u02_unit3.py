@@ -67,6 +67,29 @@ mod('implicit','Implicit differentiation',
  ('Why it works',['Near a point on the curve, y is some function of x, even if you cannot write it down. Differentiating an equation that is true for all nearby (x, y) gives another true equation. The chain rule is just the way to differentiate y² = (y(x))² with respect to x.']),
  [('d/dx [y³] with respect to x equals',['3y² dy/dx','3y²','y³ dy/dx','3y² dx/dy'],0,'Chain rule: derivative of the outside (3y²) times the derivative of the inside (dy/dx).')])
 
+# ---- figures for inverse functions and higher derivatives
+import math
+_IV = Plot((-1.5, 11.5), (-1.5, 11.5), (30, 8, 200, 200))
+_ivf = lambda x: x ** 3 + x
+_ivfig = fig(_IV.axes((2, 4, 6, 8, 10), (2, 4, 6, 8, 10), 'x', 'y') + _IV.curve(_ivf, 0, 2.1, 'f', 2.8) + pline([(_IV.X(_ivf(t / 40 * 2.1)), _IV.Y(t / 40 * 2.1)) for t in range(41)], 'd', 2.8)
+             + _IV.seg(-1, -1, 11, 11, 'mut', 1.2, '5 5') + txt(214, 20, 'f', 'f', 12) + txt(214, 150, 'f⁻¹', 'd', 12), [
+    (1, _IV.dot(2, 10, 'f(2) = 10', 'f', -8, 4, 4.5).replace('text-anchor="middle"', 'text-anchor="end"'), 'f(2) = 8 + 2 = 10, so a = 2', 'f'),
+    (2, _IV.seg(1.92, 10 - .08 * 13, 2.07, 10 + .07 * 13, 'tan', 2.8) + _IV.text(2.3, 7.6, 'slope 13', 'tan', 11, 'start'), "f′(2) = 3(4) + 1 = 13", 'tan'),
+    (3, _IV.dot(10, 2, '(10, 2)', 'd', 0, 18, 4.5) + _IV.seg(6, 2 - 4 / 13, 11, 2 + 1 / 13, 'tan', 2.8) + _IV.text(8.6, 3.6, 'slope 1/13', 'tan', 11, 'middle'), 'reflect: the inverse has slope 1/13 at (10, 2)', 'tan'),
+    (4, '', "(f⁻¹)′(10) = 1/f′(2) = 1/13", 'd')],
+    'f (blue) and its inverse (green) are mirror images in the dashed line y = x, so the tangent slopes at matching points are reciprocals: 13 and 1/13.', 235)
+
+_HI = Plot((-2.1, .27), (-1.6, 9), (34, 12, 206, 196))
+_hif = lambda x: x * math.exp(2 * x)
+_hid = lambda x: math.exp(2 * x) * (1 + 2 * x)
+_hidd = lambda x: math.exp(2 * x) * (4 * x + 4)
+_hifig = fig(_HI.axes((-2, -1), (2, 4, 6, 8), 'x', 'y') + _HI.curve(_hif, -2.05, .26, 'f') + txt(150, 190, 'f', 'f', 12), [
+    (1, '', 'product of x and e^(2x)', 'ink'),
+    (2, _HI.curve(_hid, -2.05, .26, 'd', 2.4) + _HI.dot(-.5, 0, '', 'd', 0, 0, 4) + _HI.text(-.9, 1.3, 'f′ = 0 at −0.5', 'd', 10, 'start'), "f′ = e^(2x)(1 + 2x): zero at x = −0.5", 'd'),
+    (3, _HI.curve(_hidd, -2.05, .26, 'dd', 2.4), 'f″ = 2e^(2x)(1 + 2x) + 2e^(2x)', 'dd'),
+    (4, _HI.dot(-1, 0, '', 'dd', 0, 0, 4) + _HI.text(-1.1, -.9, 'f″ = 0 at −1', 'dd', 10, 'end'), 'f″ = e^(2x)(4x + 4): sign change at x = −1', 'dd')],
+    'f (blue), f′ (green), f″ (pink). f′ is 0 where f bottoms out (x = −0.5); f″ changes sign where f changes its bend (x = −1).', 230)
+
 mod('invfn','Inverse functions & inverse trig',
  'If f turns a into b, its inverse turns b back into a. Their slopes at matching points are reciprocals, and that fact gives the derivatives of ln, arcsin and arctan.',
  ['The graph of f⁻¹ is the graph of f reflected over the line y = x. A reflection swaps the roles of rise and run, so a tangent of slope m at (a, b) becomes a tangent of slope <span class="m">1/m</span> at (b, a). That is the rule: <span class="m">(f⁻¹)′(b) = 1 / f′(a)</span> where <span class="m">f(a) = b</span>.',
@@ -80,12 +103,15 @@ mod('invfn','Inverse functions & inverse trig',
    seg=('iv-tr','Function',[('as','arcsin x'),('ac','arccos x'),('at','arctan x')]),ctl=[('iv-x','x',-.95,.95,.05,.5)],pre='<p class="small" id="iv-form" style="margin:0"></p>',
    out=[('iv-sl','slope at x (numeric)','x'),('iv-fm','formula value','v')])],
  [('On eˣ, find the product f′(a)·(f⁻¹)′. <button type="button" class="btn link" data-show=\'' + show(["click","#iv-fn [data-k=ex]"],["#iv-a",0.6]) + '\'>Set it up for me</button>','' ,'Always 1: the slopes are reciprocals. At a = 0.6, f′ = e^0.6 ≈ 1.82, and the inverse (ln) has slope 1/1.82 ≈ 0.55 at the matching point.'),
-  ('On arcsin x, move x toward 1. What happens to the slope? <button type="button" class="btn link" data-show=\'' + show(["click","#iv-tr [data-k=as]"],["#iv-x",0.95]) + '\'>Set it up for me</button>','' ,'It grows large: arcsin has a vertical tangent at x = 1, matching 1/√(1 − x²) → ∞. The sine curve is flat there, so its inverse is steep.')],
+  ('On arcsin x, move x toward 1. What happens to the slope? <button type="button" class="btn link" data-show=\'' + show(["click","#iv-tr [data-k=as]"],["#iv-x",0.95]) + '\'>Set it up for me</button>','' ,'It grows large: arcsin has a vertical tangent at x = 1, matching 1/√(1 − x²) → ∞. The sine curve is flat there, so its inverse is steep.'),
+  ('On sin x, set a = 1.5, close to π/2. What is the inverse slope?',show(["click","#iv-fn [data-k=sn]"],["#iv-a",1.5]),'f′(1.5) = cos 1.5 ≈ 0.0707, so the inverse slope is 1/0.0707 ≈ 14.1. Where sine is nearly flat its inverse is nearly vertical, the same fact as arcsin′ blowing up at x = 1.'),
+  ('On x³ + x, set a = 1. What is (f⁻¹)′(2)?',show(["click","#iv-fn [data-k=cu]"],["#iv-a",1]),'f(1) = 2 and f′(1) = 3 + 1 = 4, so (f⁻¹)′(2) = 1/4. The product of the two slopes is 1 again.'),
+  ('On arctan x, slide x from 0 to 0.9. Where is the slope largest?',show(["click","#iv-tr [data-k=at]"],["#iv-x",0]),'At x = 0: 1/(1 + 0²) = 1. It falls as |x| grows (0.8 at x = 0.5, about 0.55 at x = 0.9), because arctan levels off toward ±π/2 for large inputs.')],
  ('If f(x) = x³ + x, find (f⁻¹)′(10).',[
   '<b>Find a.</b> We need f(a) = 10. Try a = 2: 8 + 2 = 10. ✓',
   '<b>Differentiate f.</b> f′(x) = 3x² + 1, so f′(2) = 13.',
   '<b>Reciprocal.</b> (f⁻¹)′(10) = 1/f′(2).',
-  '<b>Answer.</b> <b>1/13</b>.']),
+  '<b>Answer.</b> <b>1/13</b>.'],_ivfig),
  ['Evaluating f′ at b instead of at a. You need the x that f sends to b.','Writing (f⁻¹)′ = 1/f′(x) without the inverse in the argument: it is 1/f′(f⁻¹(b)).','Confusing f⁻¹ with 1/f.','Forgetting the domain restrictions for inverse trig.','Dropping the chain rule: d/dx arctan(2x) = 2/(1 + 4x²), not 1/(1 + 4x²).'],
  ('Why arcsin has that derivative',['Let y = arcsin x, so sin y = x. Differentiate implicitly: cos y · y′ = 1, so y′ = 1/cos y. With y between −π/2 and π/2, cos y = √(1 − sin²y) = √(1 − x²).']),
  [('If f(2) = 5 and f′(2) = 4, then (f⁻¹)′(5) =',['1/4','4','1/5','5/4'],0,'Reciprocal of the slope at the matching point: 1/f′(2) = 1/4.')])
@@ -100,12 +126,15 @@ mod('higher','Higher-order derivatives & choosing a rule',
    seg=('hi-fn','Function',[('a','x³ − 3x'),('b','sin x'),('c','x⁴ − 2x²'),('d','eˣ')]),ctl=[('hi-x','Point x',-2,2,.05,.5)],
    out=[('hi-f','f(x): height','x'),('hi-d','f′(x): slope','v'),('hi-dd','f″(x): bend','a')])],
  [('Choose <b>x³ − 3x</b> and slide x to 0. What is f″ there, and what does the curve do? <button type="button" class="btn link" data-show=\'' + show(["click","#hi-fn [data-k=a]"],["#hi-x",0]) + '\'>Set it up for me</button>','' ,'f″(0) = 0: the bend switches there. The curve changes from bending down (f″ < 0 for x &lt; 0) to bending up (f″ > 0).'),
-  ('Choose <b>sin x</b>. Where is f″ largest in size? <button type="button" class="btn link" data-show=\'' + show(["click","#hi-fn [data-k=b]"],["#hi-x",1.5708]) + '\'>x = π/2</button>','' ,'At the peak (x = π/2): f″ = −sin(π/2) = −1. The curve bends sharply there, and f′ passes through zero.')],
+  ('Choose <b>sin x</b>. Where is f″ largest in size? <button type="button" class="btn link" data-show=\'' + show(["click","#hi-fn [data-k=b]"],["#hi-x",1.5708]) + '\'>x = π/2</button>','' ,'At the peak (x = π/2): f″ = −sin(π/2) = −1. The curve bends sharply there, and f′ passes through zero.'),
+  ('Choose <b>x⁴ − 2x²</b> and set x = 0. What do f′ and f″ say?',show(["click","#hi-fn [data-k=c]"],["#hi-x",0]),'f′(0) = 0 (a flat tangent) and f″(0) = −4 &lt; 0: bending down at a flat point, so x = 0 is a local maximum of f (the top of the middle hump).'),
+  ('Choose <b>eˣ</b> and look at the three readouts at x = 0.5.',show(["click","#hi-fn [data-k=d]"],["#hi-x",0.5]),'All three are e^0.5 ≈ 1.6487: eˣ is its own derivative, so f = f′ = f″ at every x. The curve is always rising and always bending up.'),
+  ('Choose <b>x³ − 3x</b> and set x = 1. Which derivative tells you it is a minimum?',show(["click","#hi-fn [data-k=a]"],["#hi-x",1]),'f′(1) = 0 says the tangent is flat; f″(1) = 6 &gt; 0 says the curve bends up there. Together: a local minimum, f(1) = −2.')],
  ('Find f″(x) for f(x) = x e<sup>2x</sup>.',[
   '<b>Choose a rule.</b> It is a product of x and e<sup>2x</sup>.',
   '<b>First derivative.</b> f′ = 1·e<sup>2x</sup> + x·(2e<sup>2x</sup>) = e<sup>2x</sup>(1 + 2x).',
   '<b>Differentiate again (product).</b> f″ = 2e<sup>2x</sup>(1 + 2x) + e<sup>2x</sup>·2.',
-  '<b>Simplify.</b> f″ = e<sup>2x</sup>(2 + 4x + 2) = <b>e<sup>2x</sup>(4x + 4)</b>.']),
+  '<b>Simplify.</b> f″ = e<sup>2x</sup>(2 + 4x + 2) = <b>e<sup>2x</sup>(4x + 4)</b>.'],_hifig),
  ['Differentiating the original instead of f′ for the second derivative.','Not simplifying f′ before differentiating again.','Choosing the wrong rule: look at the outermost operation, not the innermost.','Confusing f² with f″.','Sign errors when differentiating trig functions twice: sin → cos → −sin.'],
  ('Which rule first?',['<b>Sum or difference</b>: split and differentiate each term. <b>Product</b> of two functions of x: product rule. <b>Quotient</b>: quotient rule (or rewrite as a product with a negative power). <b>A function of a function</b>, like sin(3x) or √(x² + 1): chain rule. <b>Constant times something</b>: pull out the constant. Many problems need two or three of these in order.']),
  [('Which rule do you apply first to f(x) = x² sin(3x)?',['Chain rule','Product rule','Quotient rule','Power rule only'],1,'The outermost operation is a product of x² and sin(3x); the chain rule then appears inside sin(3x).')])

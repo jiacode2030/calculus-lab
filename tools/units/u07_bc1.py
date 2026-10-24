@@ -1,3 +1,17 @@
+# ---- figures for integration by parts
+import math
+_PA1 = Plot((-.2, 1.4), (-.4, 5.2), (30, 8, 215, 106))
+_PA2 = Plot((-.2, 1.4), (-1.4, 1.3), (30, 152, 215, 110))
+_paf = lambda x: x * math.exp(x)
+_paF = lambda x: (x - 1) * math.exp(x)
+_pafig = fig(_PA1.axes((1,), (2, 4), 'x', 'y') + _PA1.curve(_paf, 0, 1.3) + _PA2.axes((1,), (-1, 1), 'x', 'F'), [
+    (1, '', 'u = x, dv = eˣ dx', 'ink'),
+    (2, '', 'du = dx, v = eˣ', 'ink'),
+    (3, _PA2.curve(_paF, 0, 1.3, 'd', 2.6), 'F(x) = x eˣ − eˣ = (x − 1)eˣ', 'd'),
+    (4, _PA1.under(_paf, 0, 1, 'area', .35) + _PA1.text(.5, .7, 'area', 'ink', 11) + _PA2.dot(0, -1, '−1', 'd', -9, 4, 4) + _PA2.dot(1, 0, '', 'd', 0, 0, 4) + _PA2.seg(1, -1, 1, 0, 'area', 2.8) + _PA2.text(1.12, -.5, 'rise 1', 'ink', 10, 'start'), 'F(1) − F(0) = 0 − (−1) = 1', 'area'),
+    (5, '', 'area = 1, the rise of F', 'ink')],
+    'Top: x eˣ with the area from 0 to 1. Bottom: its antiderivative F; the rise of F from x = 0 to x = 1 equals that area.', 280)
+
 mod('parts','Integration by parts',
  'The product rule, run backwards. It trades a hard integral of a product for a (hopefully easier) one.',
  ['The product rule says <span class="m">(uv)′ = u′v + uv′</span>. Integrate both sides and rearrange: <span class="m">∫ u dv = uv − ∫ v du</span>. You split the integrand into a part <b>u</b> to differentiate and a part <b>dv</b> to integrate. It pays off when differentiating u makes it simpler (x becomes 1, ln x becomes 1/x) and integrating dv is easy (eˣ, sin x, cos x).',
@@ -8,13 +22,16 @@ mod('parts','Integration by parts',
    seg=('pa-fn','Integral',[('a','∫ x eˣ dx'),('b','∫ x sin x dx'),('c','∫ ln x dx'),('d','∫ x² eˣ dx')]),ctl=[('pa-b','Upper limit b',.3,3,.05,1.5)],pre='<p class="small" id="pa-form" style="margin:0"></p>',
    out=[('pa-num','area, found numerically','x'),('pa-fm','by parts: [uv − ∫v du] from a to b','v'),('pa-eq','agree?','')])],
  [('Choose ∫ x eˣ dx. Which choice of u makes the new integral easier: u = x or u = eˣ? Think, then read the formula line. <button type="button" class="btn link" data-show=\'' + show(["click","#pa-fn [data-k=a]"],["#pa-b",1.5]) + '\'>Set it up for me</button>','' ,'u = x: then du = dx and v = eˣ, so ∫ v du = ∫ eˣ dx, trivial. With u = eˣ you would get ∫ (x²/2) eˣ dx, which is harder than the original.'),
-  ('Choose ∫ ln x dx. There is only one function; where is the product? <button type="button" class="btn link" data-show=\'' + show(["click","#pa-fn [data-k=c]"],["#pa-b",2]) + '\'>Set it up for me</button>','' ,'Write ln x = ln x · 1: u = ln x, dv = dx. Then du = dx/x, v = x, and ∫ ln x dx = x ln x − ∫ 1 dx = x ln x − x.')],
+  ('Choose ∫ ln x dx. There is only one function; where is the product? <button type="button" class="btn link" data-show=\'' + show(["click","#pa-fn [data-k=c]"],["#pa-b",2]) + '\'>Set it up for me</button>','' ,'Write ln x = ln x · 1: u = ln x, dv = dx. Then du = dx/x, v = x, and ∫ ln x dx = x ln x − ∫ 1 dx = x ln x − x.'),
+  ('Choose ∫ x sin x dx and set b = 1.5. Which choice of u, and what is the area?',show(["click","#pa-fn [data-k=b]"],["#pa-b",1.5]),'u = x (it becomes 1 when differentiated) and dv = sin x dx. The area is sin b − b cos b = 0.9975 − 0.106 ≈ 0.891.'),
+  ('Choose ∫ x² eˣ dx and set b = 1. Why does it take two rounds of parts, and what is the area?',show(["click","#pa-fn [data-k=d]"],["#pa-b",1]),'Each round lowers the power of x by one: x² → x → 1. The antiderivative is eˣ(x² − 2x + 2), so the area from 0 to 1 is e(1) − 2 = e − 2 ≈ 0.718.'),
+  ('Choose ∫ ln x dx and set b = 2. What is the area from 1 to 2?',show(["click","#pa-fn [data-k=c]"],["#pa-b",2]),'[x ln x − x] from 1 to 2 = (2 ln 2 − 2) − (0 − 1) = 2 ln 2 − 1 ≈ 0.386. The area under ln x is small near x = 1, where ln x is close to 0.')],
  ('Evaluate ∫ x e<sup>x</sup> dx and ∫<sub>0</sub><sup>1</sup> x e<sup>x</sup> dx.',[
   '<b>Choose u and dv (LIATE).</b> u = x (algebraic), dv = eˣ dx.',
   '<b>Differentiate and integrate.</b> du = dx, v = eˣ.',
   '<b>Apply the formula.</b> ∫ x eˣ dx = x eˣ − ∫ eˣ dx = x eˣ − eˣ + C.',
   '<b>Definite integral.</b> [x eˣ − eˣ]<sub>0</sub><sup>1</sup> = (e − e) − (0 − 1) = 1.',
-  '<b>Answer.</b> <b>(x − 1)eˣ + C</b>, and the definite integral is <b>1</b>.']),
+  '<b>Answer.</b> <b>(x − 1)eˣ + C</b>, and the definite integral is <b>1</b>.'],_pafig),
  ['Choosing u badly (making the new integral harder). Try the other choice.','Forgetting to subtract ∫ v du, or its sign.','Dropping the product uv in a definite integral: evaluate [uv] at the limits too.','Not recognizing ln x needs u = ln x, dv = dx.','Forgetting + C in an indefinite integral.'],
  ('Twice, or circular',['For ∫ x² eˣ dx, apply parts twice: the power of x drops from 2 to 1 to 0. For ∫ eˣ sin x dx, applying parts twice returns the original integral: I = (…) − I, so I = (…)/2. The tabular method (a column of derivatives of u and a column of integrals of dv) organizes repeated parts.']),
  [('To find ∫ x cos x dx by parts, a good choice is',['u = x, dv = cos x dx','u = cos x, dv = x dx','u = x cos x, dv = dx','u = 1, dv = x cos x dx'],0,'Differentiating x gives 1; integrating cos x gives sin x. Easy.')])
