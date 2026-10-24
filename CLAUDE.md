@@ -22,7 +22,7 @@ Interactive, intuition-first AP Calculus AB and BC study site. One self-containe
 ## Content rules
 - Accuracy first. After adding or changing problems run `N=400 node tests/audit.js` and verify answers by hand.
 - Keep the notices: "Unofficial study aid. Not affiliated with the College Board." and the study-only note.
-- Part of Intulab (`jiacode2030/intulab`), matching Mechanics, E&M and Chemistry: More labs link, Get the app button (rail on computers, overview on phones), footer credit with LinkedIn, ©, Last updated, Privacy/Terms links (`/intulab/...`), the AP trademark line, the Exam format box in Exam review, and the shared GoatCounter counter (`intulab`, skipped under Do Not Track / Global Privacy Control). Reports go to `jiacode2030/intulab-feedback` with the `course:calc` label.
+- Part of Intulab (`jiacode2030/intulab`), matching Mechanics, E&M and Chemistry: More labs link, Get the app button (rail on computers, overview on phones), footer credit with LinkedIn, ©, Last updated (the "Built by" credit appears once, in the overview footer; not in the side rail), Privacy/Terms links (`/intulab/...`), the AP trademark line, the Exam format box in Exam review, and the shared GoatCounter counter (`intulab`, skipped under Do Not Track / Global Privacy Control). Reports go to `jiacode2030/intulab-feedback` with the `course:calc` label.
 - App: the head tags link `/intulab/manifest.webmanifest`; `sw.js` (cache `aplabs-calculus-lab-v1`) gives offline support. Keep the `viewport` tag; without it phones show the desktop layout.
 - AP exam date: `AP_EXAM_DATES` in `src/js/ui.js` (2027-05-10, Session 1, morning, both AB and BC). Reconfirm each year at apstudents.collegeboard.org/exam-dates.
 
