@@ -1,3 +1,24 @@
+# ---- figures for the chain rule and implicit differentiation
+import math
+_CHL = Plot((-.2, 2.1), (-.4, 4.6), (28, 26, 98, 150))
+_CHR = Plot((-.2, 4.2), (-1.3, 1.3), (150, 26, 100, 150))
+_chfig = fig(_CHL.axes((1, 2), (1, 2, 3, 4), 'x', 'u') + _CHL.curve(lambda x: x * x, 0, 2.05) + _CHR.axes((1, 2, 3, 4), (-1, 1), 'u', 'y') + _CHR.curve(math.sin, 0, 4.1)
+             + txt(77, 16, 'inner: u = x²', 'ink', 10) + txt(200, 16, 'outer: sin u', 'ink', 10) + _CHL.dot(1, 1, '', 'ink', 0, 0, 4) + _CHR.dot(1, math.sin(1), '', 'ink', 0, 0, 4), [
+    (1, ln(_CHL.X(1), _CHL.Y(1), _CHR.X(1), _CHR.Y(math.sin(1)), 'mut', 1.2, '4 4'), 'x = 1 gives u = 1', 'ink'),
+    (2, _CHR.seg(.1, math.sin(1) - .9 * math.cos(1), 2.2, math.sin(1) + 1.2 * math.cos(1), 'tan', 2.4) + txt(205, 196, 'slope cos 1 ≈ 0.540', 'tan', 10), 'outer rate cos(1) ≈ 0.540', 'tan'),
+    (3, _CHL.seg(.4, 1 - .6 * 2, 1.45, 1 + .45 * 2, 'tan', 2.4) + txt(77, 196, 'slope 2x = 2', 'tan', 10), 'inner rate 2x = 2 at x = 1', 'tan'),
+    (4, txt(130, 222, 'f′(1) = 0.540 × 2 ≈ 1.081', 'ink', 13), "f′(1) = cos(1)·2 ≈ 1.081", 'd')],
+    'The inner function turns x into u; the outer function turns u into y. The two slopes at the matching points multiply.', 235)
+
+_IM = Plot((-6.6, 6.6), (-6.6, 6.6), (30, 8, 200, 200))
+_imfig = fig(_IM.axes((-5, 5), (-5, 5), 'x', 'y') + pline([(_IM.X(5 * math.cos(t / 60 * 2 * math.pi)), _IM.Y(5 * math.sin(t / 60 * 2 * math.pi))) for t in range(61)], 'f', 2.8), [
+    (1, txt(45, 24, 'x² + y² = 25', 'f', 11, 'start'), '2x + 2y·y′ = 0', 'f'),
+    (2, _IM.seg(0, 0, 3, 4, 'mut', 1.4, '4 4') + _IM.seg(.3, 4 + .75 * 2.7, 6.1, 4 - .75 * 3.1, 'tan', 2.6) + _IM.dot(3, 4, '(3, 4)', 'ink', -10, -10, 4.5) + txt(172, 124, 'slope −3/4', 'tan', 10, 'start'), 'y′ = −x/y = −3/4 at (3, 4)', 'tan'),
+    (3, '', 'next curve: x²y + y³ = 10', 'ink'),
+    (4, '', '2xy + x²y′ + 3y²y′ = 0', 'ink'),
+    (5, '', "y′ = −2xy / (x² + 3y²)", 'd')],
+    'The tangent at (3, 4) is perpendicular to the radius: the radius has slope 4/3 and the tangent −3/4, which is the −x/y the rule gives.', 235)
+
 mod('chain','The chain rule',
  'When one function sits inside another, rates multiply: the speed of the outer function times the speed of the inner one.',
  ['Picture a chain of gears. If gear A turns 3 times as fast as gear B, and gear B turns twice as fast as gear C, then A turns 3 × 2 = 6 times as fast as C. A composite function <span class="m">y = f(g(x))</span> works the same way: as x changes, <span class="m">u = g(x)</span> changes at rate g′(x), and y changes with u at rate f′(u). Multiply them.',
@@ -9,12 +30,14 @@ mod('chain','The chain rule',
    ctl=[('ch-x','Point x',-1.5,1.5,.05,.8)],canvas2=('ch-canvas2','The outer function f against u, with the tangent at u = g(x).'),pre='<p class="small" id="ch-form" style="margin:0"></p>',
    out=[('ch-gp','g′(x): inner rate','a'),('ch-fp','f′(g(x)): outer rate','v'),('ch-prod','product','x'),('ch-num','numeric slope of f(g(x))','')])],
  [('Choose <b>e²ˣ</b>. What are the two rates at any x, and what do they give? <button type="button" class="btn link" data-show=\'' + show(["click","#ch-fn [data-k=c]"],["#ch-x",0.5]) + '\'>Set it up for me</button>','' ,'The inner rate is always 2, the outer rate is e<sup>2x</sup>: the product 2e<sup>2x</sup> matches the numeric slope. The factor 2 is what the chain rule adds.'),
-  ('Choose <b>(3x+1)⁴</b> and change x. Which factor is always the same? <button type="button" class="btn link" data-show=\'' + show(["click","#ch-fn [data-k=b]"]) + '\'>Set it up for me</button>','' ,'The inner rate 3. The outer rate 4u³ depends on x, but the inner rate does not, so the derivative is 4(3x+1)³·3 = 12(3x + 1)³.')],
+  ('Choose <b>(3x+1)⁴</b> and change x. Which factor is always the same? <button type="button" class="btn link" data-show=\'' + show(["click","#ch-fn [data-k=b]"]) + '\'>Set it up for me</button>','' ,'The inner rate 3. The outer rate 4u³ depends on x, but the inner rate does not, so the derivative is 4(3x+1)³·3 = 12(3x + 1)³.'),
+  ('Choose <b>sin(x²)</b> and slide x to 1.25. What is the slope, and why so small?',show(["click","#ch-fn [data-k=a]"],["#ch-x",1.25]),'f′ = 2x cos(x²) ≈ 2.5·cos(1.5625) ≈ 0.021, nearly 0. At x = 1.25 the inner value x² ≈ 1.56 is almost π/2, where sin u peaks, so the outer rate cos u is nearly 0 and the product is too.'),
+  ('Choose <b>√(x² + 1)</b> and slide x to 0. Which factor makes the slope 0 there?',show(["click","#ch-fn [data-k=d]"],["#ch-x",0]),'The inner rate 2x is 0 at x = 0, so the product is 0: f′ = x/√(x² + 1) = 0, a minimum at (0, 1). At x = 0.8 the slope is 0.8/√1.64 ≈ 0.625.')],
  ('Differentiate f(x) = sin(x²) and g(x) = (3x + 1)⁵.',[
   '<b>Name the layers.</b> For f: outer = sin u, inner = u = x². For g: outer = u⁵, inner = u = 3x + 1.',
   '<b>Differentiate the outside, keep the inside.</b> f′ = cos(x²) · (x²)′. g′ = 5(3x + 1)⁴ · (3x + 1)′.',
   '<b>Multiply by the derivative of the inside.</b> (x²)′ = 2x and (3x + 1)′ = 3.',
-  '<b>Answer.</b> f′(x) = <b>2x cos(x²)</b>; g′(x) = <b>15(3x + 1)⁴</b>.']),
+  '<b>Answer.</b> f′(x) = <b>2x cos(x²)</b>; g′(x) = <b>15(3x + 1)⁴</b>.'],_chfig),
  ['Forgetting the inside derivative: (sin x²)′ is not cos x².','Changing the inside when differentiating the outside. cos(x²) keeps x² as it is.','Applying the power rule to eˣ-type functions: (e<sup>3x</sup>)′ = 3e<sup>3x</sup>, not 3x e<sup>3x−1</sup>.','Stopping early on layers: √(sin(x²)) has three layers.','Mixing up the order of composition when evaluating at a point: you need g(a) first, then f′(g(a)).'],
  ('Several layers',['For three layers, y = f(g(h(x))), multiply three rates: f′(g(h(x)))·g′(h(x))·h′(x). Work from the outside in, one layer at a time, and write each step.']),
  [('d/dx [e<sup>x²</sup>] =',['2x e<sup>x²</sup>','e<sup>x²</sup>','x² e<sup>x²−1</sup>','2e<sup>x</sup>'],0,'Outer e^u gives e^(x²); the inside x² has derivative 2x.')])
@@ -30,13 +53,16 @@ mod('implicit','Implicit differentiation',
    ctl=[('im-x','x of the point',-2,2.9,.05,1.5)],pre='<label class="check"><input type="checkbox" id="im-low"> Use the lower branch</label><p class="small" id="im-form" style="margin:0"></p>',
    out=[('im-pt','point (x, y)','x'),('im-sl','dy/dx from the formula','v'),('im-num','slope measured on the curve','a')])],
  [('On the circle, move to x = 3 on the upper branch. What is the slope? <button type="button" class="btn link" data-show=\'' + show(["click","#im-fn [data-k=circ]"],["#im-x",2.4],["#im-low",False]) + '\'>x = 2.4</button>','' ,'At x = 2.4 the point is (2.4, 1.8), and dy/dx = −x/y = −2.4/1.8 = −1.33. The tangent falls to the right.'),
-  ('Switch to the lower branch at the same x. What happens to the slope? <button type="button" class="btn link" data-show=\'' + show(["click","#im-fn [data-k=circ]"],["#im-x",2.4],["#im-low",True]) + '\'>Set it up for me</button>','' ,'y is now negative, so −x/y is positive: the lower right of a circle slopes up. Same x, opposite slope, because the formula needs y too.')],
+  ('Switch to the lower branch at the same x. What happens to the slope? <button type="button" class="btn link" data-show=\'' + show(["click","#im-fn [data-k=circ]"],["#im-x",2.4],["#im-low",True]) + '\'>Set it up for me</button>','' ,'y is now negative, so −x/y is positive: the lower right of a circle slopes up. Same x, opposite slope, because the formula needs y too.'),
+  ('Choose the ellipse x² + 4y² = 4 and use x = 1 on the upper branch. What is the slope?',show(["click","#im-fn [data-k=ell]"],["#im-x",1],["#im-low",False]),'y = √3/2 ≈ 0.866, and dy/dx = −x/(4y) = −1/(2√3) ≈ −0.289. A gentle downward slope, since the upper right of an ellipse that is wider than tall is nearly flat there.'),
+  ('Choose xy = 4 at x = 2. What is the slope, and does the sign depend on the branch?',show(["click","#im-fn [data-k=hyp]"],["#im-x",2]),'The point is (2, 2) and dy/dx = −y/x = −1. On the other branch (x &lt; 0, y &lt; 0) it is also negative: −y/x is negative whenever x and y have the same sign, so both branches always fall.'),
+  ('Choose y² = x³ − x + 1 and set x = −1.25 (upper branch). What happens to the slope as x approaches the left end?',show(["click","#im-fn [data-k=cub]"],["#im-x",-1.25],["#im-low",False]),'The point is about (−1.25, 0.545) and dy/dx = (3x² − 1)/(2y) ≈ 3.38. As x → −1.3247 the curve reaches y = 0, the denominator 2y goes to 0 and the slope blows up: a vertical tangent at the left tip.')],
  ('Find dy/dx for x² + y² = 25 and the slope at (3, 4). Then find dy/dx for x²y + y³ = 10.',[
   '<b>Differentiate both sides.</b> d/dx[x²] + d/dx[y²] = d/dx[25] gives 2x + 2y·y′ = 0.',
   '<b>Solve for y′.</b> 2y·y′ = −2x, so y′ = −x/y. At (3, 4): <b>−3/4</b>.',
   '<b>Second curve, product rule on x²y.</b> 2xy + x²y′ + 3y²y′ = 0.',
   '<b>Collect the y′ terms.</b> y′(x² + 3y²) = −2xy.',
-  '<b>Answer.</b> y′ = <b>−2xy/(x² + 3y²)</b>.']),
+  '<b>Answer.</b> y′ = <b>−2xy/(x² + 3y²)</b>.'],_imfig),
  ['Forgetting dy/dx after differentiating a y term: (y²)′ is 2y·y′, not 2y.','Not using the product rule on mixed terms like xy.','Dropping y from the answer. Leave it in; the formula depends on both coordinates.','Not isolating dy/dx: collect every y′ term on one side, factor and divide.','Substituting the point too early. Differentiate first, then substitute.'],
  ('Why it works',['Near a point on the curve, y is some function of x, even if you cannot write it down. Differentiating an equation that is true for all nearby (x, y) gives another true equation. The chain rule is just the way to differentiate y² = (y(x))² with respect to x.']),
  [('d/dx [y³] with respect to x equals',['3y² dy/dx','3y²','y³ dy/dx','3y² dx/dy'],0,'Chain rule: derivative of the outside (3y²) times the derivative of the inside (dy/dx).')])

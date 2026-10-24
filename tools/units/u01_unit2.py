@@ -83,6 +83,35 @@ mod('deriv','The derivative & differentiability',
  ('Notation',['f′(x), y′, dy/dx and d/dx[f(x)] all mean the same derivative. Leibniz\'s dy/dx reminds you it is a ratio of tiny changes (change in y over change in x). f′(a) means "evaluate the derivative function at x = a".']),
  [('Which function is continuous at 0 but not differentiable at 0?',['x²','|x|','x³','sin x'],1,'|x| has a corner at 0: the left slope is −1 and the right slope is 1.')])
 
+# ---- figures for the power rule, transcendental derivatives, product and quotient rules
+import math
+_RU = Plot((.4, 2.6), (0, 36), (34, 12, 208, 196))
+_ruf = lambda x: 4 * x ** 3 - 6 * math.sqrt(x) + 5 / x ** 2 + 7
+_rufig = fig(_RU.axes((1, 2), (10, 20, 30), 'x', 'y') + _RU.curve(_ruf, .42, 2.55), [
+    (1, _RU.dot(1, 10, '(1, 10)', 'ink', 24, -6), 'rewrite every term as a power of x', 'ink'),
+    (2, _RU.seg(.62, 10 + .38, 1.55, 10 - .55, 'tan', 2.6), 'slope at x = 1: 12 − 3 − 10 + 0 = −1', 'tan'),
+    (3, '', "f′(x) = 12x² − 3x^(−1/2) − 10x^(−3)", 'd')],
+    'The graph of f. At x = 1 it is almost flat, because the term slopes 12, −3 and −10 nearly cancel (sum −1).', 230)
+
+_T1 = Plot((.4, 2.1), (-10, -1.5), (30, 8, 215, 106))
+_T2 = Plot((.4, 2.1), (-15, 11), (30, 152, 215, 110))
+_trg = lambda x: 3 * math.sin(x) - 2 * math.exp(x) + 5 * math.log(x)
+_trgp = lambda x: 3 * math.cos(x) - 2 * math.exp(x) + 5 / x
+_trfig = fig(_T1.axes((1, 2), (-8, -4), 'x', 'f') + _T1.curve(_trg, .45, 2.05) + _T2.axes((1, 2), (-10, 0, 10), 'x', "f′") + _T2.curve(_trgp, .5, 2.05, 'd'), [
+    (1, _T1.dot(1, _trg(1), '', 'tan', 0, 0, 4), '3 cos x · −2eˣ · 5/x', 'tan'),
+    (2, '', "f′ = 3cos x − 2eˣ + 5/x", 'd'),
+    (3, _T1.seg(.6, _trg(1) - .4 * _trgp(1), 1.4, _trg(1) + .4 * _trgp(1), 'tan', 2.4) + _T2.dot(1, _trgp(1), '1.18', 'tan', 20, -2, 4) + _T2.dot(1.092, 0, '', 'ink', 0, 0, 3.5) + _T2.text(1.5, 5.5, 'f′ = 0 near 1.09', 'ink', 10, 'start', 500), 'f′(1) ≈ 1.184: still rising, peak near 1.09', 'tan')],
+    'Top: f. Bottom: f′, whose value at x = 1 is the slope of the tangent above it. f′ crosses 0 near x = 1.09, the peak of f.', 280)
+
+_pqfig = fig(rect(40, 112, 110, 78, 'f', .13, 'f', 1.6) + txt(95, 208, 'u = x²', 'f', 12) + txt(32, 156, 'v = eˣ', 'f', 12, 'end'), [
+    (1, rect(150, 112, 30, 78, 'tan', .32, 'tan', 1.4) + rect(40, 84, 110, 28, 'dd', .28, 'dd', 1.4) + rect(150, 84, 30, 28, 'mut', .2, 'mut', 1.2, 0)
+        + txt(95, 156, 'f = u·v', 'ink', 15) + txt(165, 154, 'v·du', 'tan', 10) + txt(95, 102, 'u·dv', 'dd', 11) + txt(165, 100, 'tiny', 'mut', 9, w=500)
+        + txt(165, 215, 'du = 2x dx', 'tan', 10, w=500) + txt(165, 227, 'dv = eˣ dx', 'dd', 10, w=500), 'f′ = u′v + uv′: two strips; the corner vanishes', 'tan'),
+    (2, '', 'g′ = (u′v − uv′) / v²', 'd'),
+    (3, '', '(x − 2) − (x + 1) = −3', 'ink'),
+    (4, '', 'f′ = eˣ(x² + 2x) · g′ = −3/(x − 2)²', 'd')],
+    'The area u·v grows by a strip along each side when x increases a little. Each strip is one derivative times the other function.', 240)
+
 mod('rules','Power, sum & constant-multiple rules',
  'You will not use the limit definition every time. A few rules let you differentiate polynomials, roots and reciprocals almost instantly.',
  ['<b>Power rule:</b> <span class="m">d/dx [x<sup>n</sup>] = n x<sup>n−1</sup></span>. Bring the exponent down in front and lower the exponent by one. It works for every real n: x³, √x = x<sup>1/2</sup>, and 1/x² = x<sup>−2</sup>.',
@@ -96,11 +125,14 @@ mod('rules','Power, sum & constant-multiple rules',
    ctl=[('ru-a','a (x³ coefficient)',-2,2,.25,.5),('ru-b','b (x² coefficient)',-3,3,.5,-1),('ru-c','c (x coefficient)',-4,4,.5,-1),('ru-px','Point x',-3,3,.1,1)],
    pre='<p class="small" id="ru-eq" style="margin:0"></p>',out=[('ru-fx','f′(x) by the rules','v'),('ru-slope','f′ at the point','x')])],
  [('Set n = 2 and x = 1.5. What are the formula and the graph\'s slope? <button type="button" class="btn link" data-show=\'' + show(["#ru-n",2],["#ru-x",1.5]) + '\'>Set it up for me</button>','' ,'f′(x) = 2x, so the slope at 1.5 is 3. The numeric slope agrees: the rule is the shortcut for the limit.'),
-  ('Set n = 0.5 (a square root). What is f′ at x = 1? <button type="button" class="btn link" data-show=\'' + show(["#ru-n",0.5],["#ru-x",1]) + '\'>Set it up for me</button>','' ,'f′(x) = ½x<sup>−1/2</sup> = 1/(2√x), so f′(1) = 0.5. The square root flattens as x grows.')],
+  ('Set n = 0.5 (a square root). What is f′ at x = 1? <button type="button" class="btn link" data-show=\'' + show(["#ru-n",0.5],["#ru-x",1]) + '\'>Set it up for me</button>','' ,'f′(x) = ½x<sup>−1/2</sup> = 1/(2√x), so f′(1) = 0.5. The square root flattens as x grows.'),
+  ('Set n = −1 and x = 1. What are f and the slope?',show(["#ru-n",-1],["#ru-x",1]),'f(1) = 1 and f′(x) = −x<sup>−2</sup>, so the slope is −1. The negative exponent gives a falling curve: 1/x always slopes down, steeply near 0.'),
+  ('Set n = 1. What is the slope at every x, and why?',show(["#ru-n",1],["#ru-x",1.5]),'Always 1: f(x) = x is a line of slope 1, and n·x<sup>n−1</sup> = 1·x⁰ = 1. Try n = 0 as well: the slope is 0 because f = 1 is flat.'),
+  ('On the polynomial lab with the starting coefficients, slide the point to x = 1.7. What is the slope, and what is happening to the cubic?',show(["#ru-a",0.5],["#ru-b",-1],["#ru-c",-1],["#ru-px",1.7]),'f′(x) = 1.5x² − 2x − 1, so f′(1.7) = 4.335 − 3.4 − 1 = −0.065, almost 0. The tangent is nearly flat because the cubic is at its local minimum (exactly at x ≈ 1.72).')],
  ('Differentiate f(x) = 4x³ − 6√x + 5/x² + 7.',[
   '<b>Rewrite as powers.</b> f(x) = 4x³ − 6x<sup>1/2</sup> + 5x<sup>−2</sup> + 7.',
   '<b>Differentiate each term.</b> 4·3x² = 12x²; −6·(1/2)x<sup>−1/2</sup> = −3x<sup>−1/2</sup>; 5·(−2)x<sup>−3</sup> = −10x<sup>−3</sup>; the constant 7 goes to 0.',
-  '<b>Answer.</b> f′(x) = <b>12x² − 3x<sup>−1/2</sup> − 10x<sup>−3</sup></b>, or 12x² − 3/√x − 10/x³.']),
+  '<b>Answer.</b> f′(x) = <b>12x² − 3x<sup>−1/2</sup> − 10x<sup>−3</sup></b>, or 12x² − 3/√x − 10/x³.'],_rufig),
  ['Differentiating a constant as if it had an x: the derivative of 7 is 0, and of 7x is 7.','Forgetting to lower the exponent, writing (x³)′ = 3x³.','Applying the power rule to eˣ or 2ˣ. The variable is in the exponent there: a different rule.','Not rewriting 1/x² or √x as powers before differentiating.','Splitting a product or quotient term by term. (x²·x³)′ is not (x²)′·(x³)′.'],
  ('Why it works',['The derivative of x² is 2x (you saw it from the definition). For x³ expand (x + h)³ = x³ + 3x²h + 3xh² + h³, subtract x³, divide by h and let h → 0: 3x². The pattern n x<sup>n−1</sup> comes from the binomial expansion, and it holds for every real n.']),
  [('d/dx [3x⁴ − 2x + 9] =',['12x³ − 2','12x³ − 2x','3x³ − 2','12x³ − 2 + 9'],0,'4·3 = 12 on x³; the derivative of −2x is −2; the derivative of 9 is 0.')])
@@ -116,11 +148,13 @@ mod('transder','Trig, e^x and ln x derivatives',
    pre='<label class="check"><input type="checkbox" id="td-show"> Show the slope function f′ (predict it first!)</label>',ctl=[('td-x','Point x',.2,3,.05,1)],canvas2=('td-canvas2','Graph of the derivative of the chosen function, hidden until you tick the box.'),
    out=[('td-sl','slope at x (numeric)','x'),('td-fx','f′(x) by formula','v'),('td-form','the rule','')])],
  [('Choose <b>sin x</b>, find where the tangent is flat, and predict f′ there. <button type="button" class="btn link" data-show=\'' + show(["click","#td-fn [data-k=sin]"],["#td-x",1.5708]) + '\'>x = π/2</button>','' ,'At the peak (x = π/2) the tangent is flat, so f′ = 0, and cos(π/2) = 0. The slope graph is the cosine curve.'),
-  ('Choose <b>eˣ</b> and tick the box. What do you notice about the two graphs? <button type="button" class="btn link" data-show=\'' + show(["click","#td-fn [data-k=exp]"],["#td-show",True]) + '\'>Set it up for me</button>','' ,'They are identical. Wherever the curve has height h its slope is h too. That is what makes e special.')],
+  ('Choose <b>eˣ</b> and tick the box. What do you notice about the two graphs? <button type="button" class="btn link" data-show=\'' + show(["click","#td-fn [data-k=exp]"],["#td-show",True]) + '\'>Set it up for me</button>','' ,'They are identical. Wherever the curve has height h its slope is h too. That is what makes e special.'),
+  ('Choose <b>ln x</b> and compare the slope at x = 0.2 with the slope at x = 3.',show(["click","#td-fn [data-k=ln]"],["#td-x",0.2]),'f′ = 1/x, so the slope is 5 at x = 0.2 (steep) and 1/3 at x = 3 (gentle). The log curve flattens as x grows but keeps rising.'),
+  ('Choose <b>tan x</b> and slide x toward π/2 ≈ 1.57. What happens to the slope?',show(["click","#td-fn [data-k=tan]"],["#td-x",1]),'f′ = sec²x: at x = 1 it is about 3.43, and it grows without bound as x → π/2, where the tangent line becomes vertical (tan x has a vertical asymptote there).')],
  ('Differentiate f(x) = 3 sin x − 2e<sup>x</sup> + 5 ln x, and find f′(1).',[
   '<b>Term by term.</b> (3 sin x)′ = 3 cos x; (−2e<sup>x</sup>)′ = −2e<sup>x</sup>; (5 ln x)′ = 5/x.',
   '<b>Combine.</b> f′(x) = 3 cos x − 2e<sup>x</sup> + 5/x.',
-  '<b>Evaluate at 1.</b> 3 cos 1 − 2e + 5 = 3(0.5403) − 2(2.7183) + 5 = 1.6209 − 5.4366 + 5 ≈ <b>1.184</b> (radians).']),
+  '<b>Evaluate at 1.</b> 3 cos 1 − 2e + 5 = 3(0.5403) − 2(2.7183) + 5 = 1.6209 − 5.4366 + 5 ≈ <b>1.184</b> (radians).'],_trfig),
  ['Writing (cos x)′ = sin x. The sign is minus: −sin x.','Using degrees on the calculator. The rules assume radians.','Writing (e<sup>x</sup>)′ = x e<sup>x−1</sup>. The power rule needs the variable in the base.','Writing (ln x)′ = ln x or x. It is 1/x.','Forgetting (a<sup>x</sup>)′ = a<sup>x</sup> ln a for other bases.'],
  ('The other trig derivatives',['(tan x)′ = sec²x, (cot x)′ = −csc²x, (sec x)′ = sec x tan x, (csc x)′ = −csc x cot x. You can get all of them from the quotient rule on sin and cos, but they are common enough to memorize.']),
  [('(cos x)′ =',['−sin x','sin x','−cos x','1/x'],0,'Cosine falls from 1 at the start, so its slope is negative: −sin x.')])
@@ -135,12 +169,14 @@ mod('prodquot','Product & quotient rules',
    seg=('pq-fn','Function',[('a','x²·sin x'),('b','x·eˣ'),('c','sin x / x'),('d','(x²+1)/(x−1)')]),pre='<p class="small" id="pq-form" style="margin:0"></p>',
    ctl=[('pq-x','Point x',.3,3,.05,1.5)],out=[('pq-ok','correct rule','v'),('pq-num','slope from the graph (numeric)','x'),('pq-bad','naive u′·v′ (or u′/v′)','a')])],
  [('Choose <b>x·eˣ</b> at x = 1.5. Compare the three numbers. <button type="button" class="btn link" data-show=\'' + show(["click","#pq-fn [data-k=b]"],["#pq-x",1.5]) + '\'>Set it up for me</button>','' ,'The product rule matches the numeric slope (about 11.2); the naive u′v′ gives e<sup>1.5</sup> ≈ 4.48. Only the product rule is right.'),
-  ('Choose the quotient <b>sin x / x</b> and compare. <button type="button" class="btn link" data-show=\'' + show(["click","#pq-fn [data-k=c]"],["#pq-x",2]) + '\'>Set it up for me</button>','' ,'(x cos x − sin x)/x² agrees with the numeric slope. Dividing the derivatives (cos x / 1) does not.')],
+  ('Choose the quotient <b>sin x / x</b> and compare. <button type="button" class="btn link" data-show=\'' + show(["click","#pq-fn [data-k=c]"],["#pq-x",2]) + '\'>Set it up for me</button>','' ,'(x cos x − sin x)/x² agrees with the numeric slope. Dividing the derivatives (cos x / 1) does not.'),
+  ('Choose <b>x²·sin x</b> at x = 1.5. Product rule against the naive u′v′.',show(["click","#pq-fn [data-k=a]"],["#pq-x",1.5]),'Product rule: 2x sin x + x² cos x = 3(0.9975) + 2.25(0.0707) ≈ 3.152, matching the numeric slope. The naive u′v′ = 2x cos x ≈ 0.212 is far off.'),
+  ('Choose <b>(x² + 1)/(x − 1)</b> at x = 2. Compare the quotient rule with u′/v′.',show(["click","#pq-fn [data-k=d]"],["#pq-x",2]),'Quotient rule: (2x(x − 1) − (x² + 1))/(x − 1)² = (4 − 5)/1 = −1, matching the numeric slope (the curve is falling there). The naive u′/v′ = 2x/1 = 4 has the wrong sign.')],
  ('Differentiate f(x) = x² eˣ and g(x) = (x + 1)/(x − 2).',[
   '<b>Product rule on f.</b> u = x², v = eˣ, so u′ = 2x, v′ = eˣ. f′ = 2x·eˣ + x²·eˣ = eˣ(x² + 2x).',
   '<b>Quotient rule on g.</b> u = x + 1, v = x − 2, so u′ = 1, v′ = 1. g′ = (1·(x − 2) − (x + 1)·1)/(x − 2)².',
   '<b>Simplify the top.</b> (x − 2) − (x + 1) = −3.',
-  '<b>Answer.</b> f′(x) = <b>eˣ(x² + 2x)</b> and g′(x) = <b>−3/(x − 2)²</b>.']),
+  '<b>Answer.</b> f′(x) = <b>eˣ(x² + 2x)</b> and g′(x) = <b>−3/(x − 2)²</b>.'],_pqfig),
  ['Writing (uv)′ = u′v′. It misses half of the change.','Getting the quotient numerator in the wrong order: it is u′v − uv′ (low d-high minus high d-low).','Forgetting to square the denominator.','Using the quotient rule when the denominator is a constant. Just pull the constant out.','Not simplifying: factor and cancel if you can.'],
  ('Why the product rule has two terms',['A rectangle with sides u and v has area uv. If both sides grow, the area gains a strip along each side: u′v from stretching one side and uv′ from stretching the other. The tiny corner u′v′ is second order and vanishes in the limit.']),
  [('d/dx [x sin x] =',['sin x + x cos x','cos x','x cos x','sin x + cos x'],0,'(x)′ sin x + x (sin x)′ = sin x + x cos x.')])
