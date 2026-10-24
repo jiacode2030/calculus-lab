@@ -1,3 +1,4 @@
+import math
 # ---- figures for Motion
 _N = Plot((-.6, 4.8), (0, 1), (24, 8, 196, 40))
 _M = Plot((-.3, 4.3), (-7, 10.5), (30, 72, 215, 140))
@@ -159,6 +160,20 @@ mod('linear','Linearization & differentials',
  ('Differentials',['The change in y along the tangent line is dy = f′(x) dx, while the true change is Δy. For a small dx they nearly agree. This is how measurement error spreads: if the radius of a sphere is measured with a small error dr, the error in volume is about dV = 4πr² dr.']),
  [('The tangent line to f at a lies above the curve near a when',['f″(a) < 0','f″(a) > 0','f′(a) < 0','f′(a) > 0'],0,'Concave down means the curve bends away below its tangent line, so the tangent estimate is too large.')])
 
+# ---- figures for L'Hopital's rule
+_L1 = Plot((-2.7, 2.7), (-.4, 3.4), (30, 8, 215, 112))
+_L2 = Plot((-4.2, 4.2), (-.1, .62), (30, 152, 215, 106))
+_lhf = lambda x: 1 - math.cos(x)
+_lhR = lambda x: (1 - math.cos(x)) / (x * x) if x else .5
+_lhfig = fig(_L1.axes((-2, -1, 1, 2), (1, 2, 3), 'x', 'y') + _L1.curve(_lhf, -2.6, 2.6, 'f') + _L1.curve(lambda x: x * x, -1.85, 1.85, 'dd') + _L1.text(2.6, 3.05, 'x²', 'dd', 11, 'end') + _L1.text(-1.5, .55, '1 − cos x', 'f', 10, 'end')
+           + _L2.axes((-4, -2, 2, 4), (.25,), 'x', 'ratio'), [
+    (1, _L1.dot(0, 0, '', 'tan', 0, 0, 5) + _L1.text(0, 2.5, 'both are 0 here', 'tan', 10), 'at x = 0: 0/0, so check the form', 'tan'),
+    (2, '', "top′ / bottom′ = sin x / 2x", 'd'),
+    (3, '', 'still 0/0: differentiate again', 'tan'),
+    (4, _L2.curve(lambda x: _lhR(x) if abs(x) > 1e-9 else float('nan'), -4.1, -.02, 'f', 2.6, '', 90) + _L2.curve(_lhR, .02, 4.1, 'f', 2.6, '', 90) + _L2.seg(-4.2, .5, 4.2, .5, 'tan', 1.8, '6 4') + circ(_L2.X(0), _L2.Y(.5), 4.5, 'surf', 1, 'f', 2) + _L2.text(4.1, .545, '1/2', 'tan', 11, 'end'), 'cos x / 2 → 1/2', 'tan'),
+    (5, '', 'the limit is 1/2', 'ink')],
+    "Top: both functions are 0 at the origin, so (1 − cos x)/x² is 0/0 there. Bottom: the ratio itself, which the rule says tends to 1/2 (the open dot marks the hole at 0, where the ratio has no value).", 280)
+
 mod('lhop','L\'Hôpital\'s rule',
  'If a limit of a ratio is 0/0 or ∞/∞, you can differentiate the top and bottom separately and try again.',
  ['When both f and g go to 0 at a, the ratio f/g depends on <i>how fast</i> each goes to 0. Near a, f ≈ f′(a)(x − a) and g ≈ g′(a)(x − a), so their ratio is about f′(a)/g′(a): the ratio of their <b>rates</b>. That is <b>L\'Hôpital\'s rule</b>: <span class="m">lim f/g = lim f′/g′</span>, if the left side is 0/0 or ∞/∞ and the right side exists.',
@@ -166,17 +181,20 @@ mod('lhop','L\'Hôpital\'s rule',
  ('0/0 was solved by algebra when we were lucky','a general tool for indeterminate quotients','limits like sin x / x, (eˣ − 1)/x, x² / eˣ and ln x / x','L\'Hôpital\'s rule'),
  [('lim f/g = lim f′/g′','if 0/0 or ∞/∞'),('0/0 · ∞/∞','the two direct forms'),('0·∞ · ∞−∞ · 1^∞','rewrite first')],
  [lab('lh-lab','Ratio of functions vs ratio of derivatives',canvas='lh-canvas',aria='Graphs of f over g and of f prime over g prime near a; both approach the same limit.',
-   seg=('lh-fn','Limit',[('a','(eˣ−1)/x at 0'),('b','(1−cos x)/x² at 0'),('c','ln x/(x−1) at 1'),('d','x²/eˣ as x→∞')]),
+   seg=('lh-fn','Limit',[('a','(eˣ−1)/x at 0'),('b','(1−cos x)/x² at 0'),('c','ln x/(x−1) at 1'),('d','x²/eˣ as x→∞'),('e','sin(3x)/x at 0')]),
    ctl=[('lh-w','Zoom (closer to a, or farther out)',0,3,.05,0)],pre='<p class="small" id="lh-form" style="margin:0"></p>',
    out=[('lh-r','f(x)/g(x) at the probe','x'),('lh-rp','f′(x)/g′(x) at the probe','v'),('lh-lim','the limit','a')])],
  [('Choose (eˣ − 1)/x and zoom in. Compare the two ratios. <button type="button" class="btn link" data-show=\'' + show(["click","#lh-fn [data-k=a]"],["#lh-w",3]) + '\'>Set it up for me</button>','' ,'Both head to 1. The ratio of derivatives, eˣ/1, is already 1 at x = 0, so L\'Hôpital gives the limit in one line.'),
-  ('Choose x²/eˣ and widen the window. Which grows faster, top or bottom? <button type="button" class="btn link" data-show=\'' + show(["click","#lh-fn [data-k=d]"],["#lh-w",3]) + '\'>Set it up for me</button>','' ,'The exponential wins: the ratio heads to 0. Applying the rule twice: x²/eˣ → 2x/eˣ → 2/eˣ → 0.')],
+  ('Choose x²/eˣ and widen the window. Which grows faster, top or bottom? <button type="button" class="btn link" data-show=\'' + show(["click","#lh-fn [data-k=d]"],["#lh-w",3]) + '\'>Set it up for me</button>','' ,'The exponential wins: the ratio heads to 0. Applying the rule twice: x²/eˣ → 2x/eˣ → 2/eˣ → 0.'),
+  ('Choose (1 − cos x)/x² and zoom in. What does the ratio do, and what does f′/g′ do?',show(["click","#lh-fn [data-k=b]"],["#lh-w",3]),'Both curves head to 1/2. The first derivative ratio, sin x/(2x), is still 0/0 at 0, so the rule is used a second time: cos x/2 → 1/2. “Still 0/0” means keep going, not stop.'),
+  ('Choose ln x/(x − 1) at 1. What does f′/g′ look like at the point?',show(["click","#lh-fn [data-k=c]"],["#lh-w",3]),'f′/g′ = (1/x)/1 = 1/x, which equals 1 at x = 1. The dashed curve passes straight through the answer while the ratio itself has a hole there. The limit is 1.'),
+  ('Choose sin(3x)/x. Predict the limit before you zoom in.',show(["click","#lh-fn [data-k=e]"],["#lh-w",3]),'3: the rule gives 3cos(3x)/1 → 3. The factor 3 comes from the chain rule on the top. Compare with sin x/x, whose limit is 1.')],
  ('Find lim<sub>x→0</sub> (1 − cos x)/x².',[
   '<b>Check the form.</b> 1 − cos 0 = 0 and 0² = 0: the form 0/0, so the rule applies.',
   '<b>Differentiate top and bottom.</b> (sin x)/(2x).',
   '<b>Check again.</b> Still 0/0 at x = 0, so apply the rule once more.',
   '<b>Differentiate again.</b> (cos x)/2, which at x = 0 is 1/2.',
-  '<b>Answer.</b> The limit is <b>1/2</b>.']),
+  '<b>Answer.</b> The limit is <b>1/2</b>.'],_lhfig),
  ['Using the quotient rule on f/g. Differentiate the top and bottom separately.','Applying the rule when the form is not 0/0 or ∞/∞ (for example 1/0 or 0/5).','Stopping after one step when the form is still 0/0.','Applying it to 0·∞ or ∞ − ∞ directly. Rewrite as a quotient first.','Concluding the original limit does not exist because f′/g′ oscillates: then the rule gives no information.'],
  ('Growth rates',['L\'Hôpital settles a hierarchy: as x → ∞, ln x grows slower than any power of x, which grows slower than any exponential. So (ln x)/x → 0 and x<sup>n</sup>/e<sup>x</sup> → 0 for every n.']),
  [('Which is the first step for lim<sub>x→0</sub> sin(3x)/x?',['Check it is 0/0, then differentiate top and bottom','Plug in 0 and say it is 0','Apply the quotient rule','Say it does not exist'],0,'It is 0/0, so the rule applies: 3cos(3x)/1 → 3.')])

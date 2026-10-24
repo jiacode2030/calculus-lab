@@ -1,3 +1,22 @@
+# ---- figures for Slope fields
+import math as _ms
+_SL = Plot((-.7, 2.4), (-.5, 2.3), (30, 12, 215, 196))
+def _sfield(P, F, xs, ys, L=8):
+    o = ''
+    for x in xs:
+        for y in ys:
+            s = F(x, y); sx = P.X(1) - P.X(0); sy = P.Y(0) - P.Y(1); dx, dy = sx, -s * sy; k = L / _ms.hypot(dx, dy)
+            o += ln(P.X(x) - dx * k, P.Y(y) - dy * k, P.X(x) + dx * k, P.Y(y) + dy * k, 'mut', 1.3)
+    return o
+_slsol = lambda x: x - 1 + 2 * _ms.exp(-x)
+_slf = fig(_SL.axes((1, 2), (1, 2), 'x', 'y') + _sfield(_SL, lambda x, y: x - y, [-.5 + i * .4 for i in range(8)], [-.3 + j * .4 for j in range(7)]) + _SL.dot(0, 1, '(0, 1)', 'tan', -22, -4, 5), [
+    (1, _SL.seg(-.2, 1.2, .2, .8, 'tan', 3) + _SL.text(.5, .12, 'slope −1', 'tan', 11, 'start'), 'slope at (0, 1) = 0 − 1 = −1', 'tan'),
+    (2, _SL.seg(-.6, 1.6, 1.2, -.2, 'tan', 2, '6 4'), 'tangent line y = 1 − x', 'tan'),
+    (3, _SL.dot(.2, .8, '0.8', 'tan', 8, 16, 4), 'estimate y(0.2) ≈ 0.8', 'tan'),
+    (4, _SL.curve(_slsol, -.6, 2.4, 'f', 2.8) + _SL.dot(.2, _slsol(.2), '', 'f', 0, 0, 3.5), 'true y(0.2) = 0.8375: a bit higher', 'f'),
+    (5, '', 'y″ = 1 − y′ = 2 > 0: tangent below', 'dd')],
+    "The slope field of dy/dx = x − y. The tangent line from (0, 1) is the estimate; the blue solution curve bends up and away from it.", 230)
+
 mod('slope','Slope fields',
  'A differential equation tells you the slope at every point. A slope field draws those slopes, and the solutions are the curves that follow them.',
  ['A <b>differential equation</b> like <span class="m">dy/dx = x − y</span> gives the slope of a solution at every point (x, y) without telling you the solution. A <b>slope field</b> draws a tiny line segment of the right slope at a grid of points. A solution curve is one that is tangent to the segments everywhere it passes, like a leaf drifting on a current.',
@@ -9,12 +28,16 @@ mod('slope','Slope fields',
    ctl=[('sf-x0','Start x₀',-3,3,.1,0),('sf-y0','Start y₀',-3,3,.1,1)],pre='<p class="small" style="margin:0">Drag on the graph to move the starting point, or use the sliders.</p>',
    out=[('sf-sl','slope at the start','x'),('sf-y1','solution value 1 unit to the right','v'),('sf-note','what to notice','')])],
  [('Choose dy/dx = x. What do the solutions look like, and why are the segments in each column parallel? <button type="button" class="btn link" data-show=\'' + show(["click","#sf-fn [data-k=a]"]) + '\'>Set it up for me</button>','' ,'Parabolas y = x²/2 + C. The slope depends only on x, so every point in a vertical column has the same slope.'),
-  ('Choose dy/dx = y and start at y₀ = 1, then at y₀ = −1. What happens? <button type="button" class="btn link" data-show=\'' + show(["click","#sf-fn [data-k=b]"],["#sf-y0",1],["#sf-x0",0]) + '\'>Set it up for me</button>','' ,'Solutions y = Ce^x grow away from the x-axis in both directions: y = 0 is a solution but an unstable one. Segments are parallel along each row (slope depends only on y).')],
+  ('Choose dy/dx = y and start at y₀ = 1, then at y₀ = −1. What happens? <button type="button" class="btn link" data-show=\'' + show(["click","#sf-fn [data-k=b]"],["#sf-y0",1],["#sf-x0",0]) + '\'>Set it up for me</button>','' ,'Solutions y = Ce^x grow away from the x-axis in both directions: y = 0 is a solution but an unstable one. Segments are parallel along each row (slope depends only on y).'),
+  ('Choose dy/dx = x − y and start at (0, 1). What is the slope there, and where does the solution stand one unit to the right?',show(["click","#sf-fn [data-k=c]"],["#sf-x0",0],["#sf-y0",1]),'The slope is 0 − 1 = −1, so the curve starts downward. One unit to the right the readout shows about 0.736 (the exact solution y = x − 1 + 2e⁻ˣ gives 2/e). It dips first, then turns up and follows the line y = x − 1.'),
+  ('Choose dy/dx = −x/y and start at (0, 2). Predict the shape.',show(["click","#sf-fn [data-k=d]"],["#sf-x0",0],["#sf-y0",2]),'The slope at the start is −0/2 = 0, and the curve bends downward as x grows: a circle x² + y² = 4. One unit right the readout shows about 1.732 = √3. The slope is never defined on y = 0, where the circle turns vertical.'),
+  ('Choose the logistic-style equation. Compare y₀ = 1 with y₀ = 3, then try y₀ = −1.',show(["click","#sf-fn [data-k=e]"],["#sf-x0",0],["#sf-y0",1]),'Starting at 1 or at 3, the solution rises toward the equilibrium y = 4 (one unit right: about 1.419 from y₀ = 1, and about 3.327 from y₀ = 3). Starting at −1 the slope 0.5y(1 − y/4) is negative, so the solution runs away downward from y = 0.')],
  ('For dy/dx = x − y with y(0) = 1, find the slope at the start and use the tangent line to estimate y(0.2).',[
   '<b>Slope at (0, 1).</b> dy/dx = 0 − 1 = −1.',
   '<b>Tangent line.</b> y ≈ 1 + (−1)(x − 0).',
   '<b>Estimate.</b> y(0.2) ≈ 1 − 0.2 = 0.8.',
-  '<b>Answer.</b> About <b>0.8</b>. (This is one step of Euler\'s method, a BC topic: use the new point to find a new slope.)']),
+  '<b>Check.</b> The exact solution is y = x − 1 + 2e<sup>−x</sup>, so y(0.2) = 0.8375. The tangent line is slightly low because y″ = 1 − y′ = 2 &gt; 0 at the start: the solution is concave up, so it bends above its tangent.',
+  '<b>Answer.</b> About <b>0.8</b> (true 0.8375, an underestimate). This is one step of Euler\'s method, a BC topic: use the new point to find a new slope.'],_slf),
  ['Reading a slope field as the graph of the solution. The segments show slope only.','Mixing up "depends only on x" (parallel in columns) with "depends only on y" (parallel in rows).','Forgetting that two different solutions never cross (for a smooth equation).','Using the slope formula at the wrong point.','Believing the field determines one curve. You need an initial condition.'],
  ('Equilibrium solutions',['Where dy/dx = 0 for all x along a horizontal line y = c, that line is a solution (an equilibrium). In dy/dx = y it is y = 0. In the last case of the lab, y = 0 and y = 4 are equilibria, and solutions between them level off at 4.']),
  [('In a slope field for dy/dx = y² − 1, the segments along y = 1 are',['horizontal','vertical','rising','falling'],0,'dy/dx = 1 − 1 = 0 there, so the segments are flat.')])

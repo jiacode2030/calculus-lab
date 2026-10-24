@@ -52,6 +52,41 @@ mod('mvt','Extreme values & the Mean Value Theorem',
  ('The candidates test',['To find absolute extremes of a continuous f on [a, b]: (1) find critical points inside (a, b), (2) evaluate f at each critical point and at a and b, (3) the largest value is the maximum and the smallest is the minimum. It always works on a closed interval; on an open interval an extreme may not exist.']),
  [('f is continuous on [0, 4], f(0) = 1 and f(4) = 9, and differentiable on (0, 4). The MVT guarantees a c in (0, 4) with f′(c) =',['2','8','1/2','9'],0,'The average slope is (9 − 1)/(4 − 0) = 2.')])
 
+# ---- figures for Increasing/decreasing, Concavity and Connecting f, f', f''
+import math
+_I = Plot((-2.3, 2.3), (-3.3, 3.3), (30, 12, 215, 196))
+_ix = lambda x: x ** 3 - 3 * x
+_idf = fig(_I.axes((-1, 1), (-2, 2), 'x', 'y') + _I.curve(_ix, -2.15, 2.15), [
+    (1, '', "f′(x) = 3(x − 1)(x + 1)", 'd'),
+    (2, _I.seg(-1, -3.1, -1, 3.1, 'mut', 1.2, '4 4') + _I.seg(1, -3.1, 1, 3.1, 'mut', 1.2, '4 4'), 'critical points x = ±1', 'ink'),
+    (3, rect(_I.X(-2.3), _I.Y(3.3), _I.X(-1) - _I.X(-2.3), _I.Y(-3.3) - _I.Y(3.3), 'd', .12) + rect(_I.X(-1), _I.Y(3.3), _I.X(1) - _I.X(-1), _I.Y(-3.3) - _I.Y(3.3), 'dd', .12) + rect(_I.X(1), _I.Y(3.3), _I.X(2.3) - _I.X(1), _I.Y(-3.3) - _I.Y(3.3), 'd', .12)
+        + _I.text(-1.65, -2.8, '+', 'd', 18) + _I.text(0, -2.8, '−', 'dd', 18) + _I.text(1.65, -2.8, '+', 'd', 18), 'sign chart: + − +', 'd'),
+    (4, arr(_I.X(-1.9), _I.Y(-.2), _I.X(-1.9), _I.Y(.8), 'd') + arr(_I.X(.32), _I.Y(.5), _I.X(.32), _I.Y(-.5), 'dd') + arr(_I.X(1.9), _I.Y(.4), _I.X(1.9), _I.Y(1.4), 'd'), 'up on both ends, down in the middle', 'ink'),
+    (5, _I.dot(-1, 2, '(−1, 2) max', 'area', 8, -8) + _I.dot(1, -2, '(1, −2) min', 'dd', -8, 18), '+ → −: max · − → +: min', 'area')],
+    "The blue curve with the sign of f′ shaded: green where f rises, pink where it falls.", 230)
+
+_C = Plot((-.4, 4.5), (-1.2, 5.6), (30, 12, 215, 196))
+_cx = lambda x: x ** 3 - 6 * x * x + 9 * x
+_ccf = fig(_C.axes((1, 2, 3, 4), (2, 4), 'x', 'y') + _C.curve(_cx, -.2, 4.3), [
+    (1, _C.seg(1, -1.1, 1, 5.4, 'mut', 1.2, '4 4') + _C.seg(3, -1.1, 3, 5.4, 'mut', 1.2, '4 4'), "f′ = 3(x − 1)(x − 3) = 0 at 1, 3", 'd'),
+    (2, '', 'f″ = 6x − 12', 'dd'),
+    (3, _C.dot(1, 4, '(1, 4)', 'area', 20, -4) + _C.dot(3, 0, '(3, 0)', 'dd', 34, 20), 'f″(1) < 0: max · f″(3) > 0: min', 'area'),
+    (4, rect(_C.X(-.4), _C.Y(5.6), _C.X(2) - _C.X(-.4), _C.Y(-1.2) - _C.Y(5.6), 'dd', .1) + rect(_C.X(2), _C.Y(5.6), _C.X(4.5) - _C.X(2), _C.Y(-1.2) - _C.Y(5.6), 'f', .1)
+        + _C.seg(1.4, 2 + 3 * .6, 2.6, 2 - 3 * .6, 'tan', 2.2) + _C.dot(2, 2, '(2, 2)', 'tan', 22, -6), 'concave down | concave up: inflection (2, 2)', 'tan')],
+    "Pink background: concave down (f″ < 0). Blue background: concave up. The tangent at the inflection point crosses the curve.", 230)
+
+_S1 = Plot((-1.4, 4.4), (-3.4, 10.5), (30, 8, 215, 112))
+_S2 = Plot((-1.4, 4.4), (-8.2, 3.2), (30, 152, 215, 110))
+_skp = lambda x: (x - 1) * (x - 4)
+_skF = lambda x: x ** 3 / 3 - 2.5 * x * x + 4 * x
+_skf = fig(_S1.axes((1, 4), (), 'x', "f′") + _S1.curve(_skp, -1.2, 4.2, 'd') + _S2.axes((1, 2.5, 4), (), 'x', 'f') + _S2.curve(_skF, -1.2, 4.2),
+    [
+    (1, rect(_S1.X(-1.4), _S1.Y(10.5), _S1.X(1) - _S1.X(-1.4), _S1.Y(-3.4) - _S1.Y(10.5), 'd', .13) + rect(_S1.X(1), _S1.Y(10.5), _S1.X(4) - _S1.X(1), _S1.Y(-3.4) - _S1.Y(10.5), 'dd', .13), "f′ > 0 on (−3, 1), < 0 on (1, 4)", 'd'),
+    (2, _S1.dot(1, 0) + _S2.dot(1, _skF(1), '(1, local max)', 'area', 16, -8) + _S2.seg(1, -8.2, 1, 3.2, 'mut', 1.2, '4 4'), '+ → − at x = 1: local max', 'area'),
+    (3, _S1.dot(2.5, _skp(2.5), 'min', 'dd', 0, 16) + _S1.seg(2.5, -3.4, 2.5, 10.5, 'mut', 1.2, '4 4') + _S2.seg(2.5, -8.2, 2.5, 3.2, 'mut', 1.2, '4 4'), 'f′ has a minimum at x = 2.5', 'dd'),
+    (4, _S2.dot(2.5, _skF(2.5), 'inflection', 'tan', 0, -12) + _S2.text(-.1, -5.8, 'concave down', 'dd', 10, 'start', 500) + _S2.text(4.2, -5.8, 'concave up', 'f', 10, 'end', 500), 'f″ changes sign at 2.5: inflection', 'tan')],
+    "Top: one f′ that fits the description, f′(x) = (x − 1)(x − 4) (shown from x = −1). Bottom: the f it builds, with the max and the inflection.", 280)
+
 mod('incdec','Increasing, decreasing & the first derivative test',
  'Where the slope is positive the function climbs, where it is negative the function falls. The turning points are where the sign changes.',
  ['If <span class="m">f′(x) &gt; 0</span> on an interval, f is <b>increasing</b> there; if <span class="m">f′(x) &lt; 0</span>, f is <b>decreasing</b>. A <b>critical point</b> is an x in the domain where f′ = 0 or f′ does not exist. These are the only places a function can turn.',
@@ -62,13 +97,16 @@ mod('incdec','Increasing, decreasing & the first derivative test',
    seg=('id-fn','Function',[('a','x³ − 3x'),('b','x³'),('c','x⁴ − 2x²'),('d','x·e⁻ˣ'),('e','x^(2/3)')]),ctl=[('id-x','Point x',-2,2,.05,.5)],canvas2=('id-canvas2','Graph of the derivative with shaded sign regions.'),
    out=[('id-sign','sign of f′ at the point','x'),('id-crit','critical points','v'),('id-class','classification','a')])],
  [('Choose x³ and slide through 0. Is x = 0 a max, a min or neither? <button type="button" class="btn link" data-show=\'' + show(["click","#id-fn [data-k=b]"],["#id-x",0]) + '\'>Set it up for me</button>','' ,'Neither: f′ = 3x² is 0 at x = 0 but positive on both sides, so f keeps increasing. A critical point is a candidate, not a guarantee.'),
-  ('Choose x^(2/3). What happens at x = 0? <button type="button" class="btn link" data-show=\'' + show(["click","#id-fn [data-k=e]"],["#id-x",0.2]) + '\'>Set it up for me</button>','' ,'f′ does not exist at 0 (a cusp), so 0 is a critical point. f′ changes from − to +, so it is a local minimum.')],
+  ('Choose x^(2/3). What happens at x = 0? <button type="button" class="btn link" data-show=\'' + show(["click","#id-fn [data-k=e]"],["#id-x",0.2]) + '\'>Set it up for me</button>','' ,'f′ does not exist at 0 (a cusp), so 0 is a critical point. f′ changes from − to +, so it is a local minimum.'),
+  ('Choose x³ − 3x with x = 0. Is f increasing or decreasing there, and how steeply?',show(["click","#id-fn [data-k=a]"],["#id-x",0]),'Decreasing, with slope f′(0) = −3. The point sits in the middle of (−1, 1), where f′ = 3x² − 3 is negative, so the tangent slopes down.'),
+  ('Choose x⁴ − 2x². How many critical points are there, and which is the local maximum?',show(["click","#id-fn [data-k=c]"],["#id-x",0]),'Three: f′ = 4x(x − 1)(x + 1) is 0 at −1, 0 and 1. The sign chart is − + − +, so x = ±1 are local minima (f = −1) and x = 0 is the local maximum (f = 0).'),
+  ('Choose x·e⁻ˣ and slide x through 1. What is f(1), and why can f′ only change sign there?',show(["click","#id-fn [data-k=d]"],["#id-x",1]),'f(1) = 1/e ≈ 0.368, a local maximum. f′ = (1 − x)e⁻ˣ and e⁻ˣ is never 0, so the sign of f′ is the sign of 1 − x: positive before 1, negative after.')],
  ('Find the intervals where f(x) = x³ − 3x is increasing or decreasing, and classify its critical points.',[
   '<b>Differentiate.</b> f′(x) = 3x² − 3 = 3(x − 1)(x + 1).',
   '<b>Critical points.</b> f′ = 0 at x = −1 and x = 1.',
   '<b>Sign chart.</b> x &lt; −1: f′ &gt; 0; −1 &lt; x &lt; 1: f′ &lt; 0; x &gt; 1: f′ &gt; 0.',
   '<b>Conclude.</b> f is increasing on (−∞, −1) and (1, ∞), decreasing on (−1, 1).',
-  '<b>Classify.</b> At x = −1 the sign goes + → −: <b>local maximum</b> f(−1) = 2. At x = 1 it goes − → +: <b>local minimum</b> f(1) = −2.']),
+  '<b>Classify.</b> At x = −1 the sign goes + → −: <b>local maximum</b> f(−1) = 2. At x = 1 it goes − → +: <b>local minimum</b> f(1) = −2.'],_idf),
  ['Calling any point with f′ = 0 an extremum. Check the sign change.','Forgetting critical points where f′ does not exist.','Not showing a sign chart or a justification (the exam requires one).','Mixing up f and f′: the graph of f′ being above the axis means f is increasing, not that f is positive.','Reporting x when asked for the extreme value (the y-value), or the reverse.'],
  ('Writing the justification',['A complete answer says: "f′(x) changes from positive to negative at x = c, so f has a relative maximum at x = c." Always name the function whose sign you are using, and the interval you checked.']),
  [('f′(x) changes from negative to positive at x = 2. Then f has at x = 2 a',['local minimum','local maximum','inflection point','vertical asymptote'],0,'Decreasing then increasing: a valley, a local minimum.')])
@@ -83,12 +121,15 @@ mod('concav','Concavity & the second derivative test',
    seg=('cc-fn','Function',[('a','x³ − 3x'),('b','x⁴'),('c','sin x'),('d','x⁴ − 2x²')]),ctl=[('cc-x','Point x',-2,2,.05,.6)],canvas2=('cc-canvas2','Graph of the second derivative.'),
    out=[('cc-fp','f′(x)','v'),('cc-fpp','f″(x)','a'),('cc-bend','concavity here','')])],
  [('Choose x³ − 3x and slide through 0. What happens to the tangent line and to f″? <button type="button" class="btn link" data-show=\'' + show(["click","#cc-fn [data-k=a]"],["#cc-x",0]) + '\'>Set it up for me</button>','' ,'f″ = 6x changes sign at 0: concave down to the left, concave up to the right. The tangent line crosses from above the curve to below it: an inflection point.'),
-  ('Choose x⁴ and put x at 0. f″(0) = 0. Is there an inflection point? <button type="button" class="btn link" data-show=\'' + show(["click","#cc-fn [data-k=b]"],["#cc-x",0]) + '\'>Set it up for me</button>','' ,'No. f″ = 12x² is 0 at x = 0 but positive on both sides, so concavity does not change. f″ = 0 is not enough; the test fails here, yet x = 0 is a minimum.')],
+  ('Choose x⁴ and put x at 0. f″(0) = 0. Is there an inflection point? <button type="button" class="btn link" data-show=\'' + show(["click","#cc-fn [data-k=b]"],["#cc-x",0]) + '\'>Set it up for me</button>','' ,'No. f″ = 12x² is 0 at x = 0 but positive on both sides, so concavity does not change. f″ = 0 is not enough; the test fails here, yet x = 0 is a minimum.'),
+  ('Choose x⁴ − 2x² with x = 0. Use the second derivative test, then find the inflection points.',show(["click","#cc-fn [data-k=d]"],["#cc-x",0]),'f′(0) = 0 and f″(0) = −4 &lt; 0, so x = 0 is a local maximum. f″ = 12x² − 4 = 0 at x = ±1/√3 ≈ ±0.577, and it changes sign at both, so those are inflection points. Between them the curve is concave down.'),
+  ('Choose x³ − 3x with x = 1. What does the second derivative test say?',show(["click","#cc-fn [data-k=a]"],["#cc-x",1]),'f′(1) = 0 and f″(1) = 6 &gt; 0: concave up at a flat point, so x = 1 is a local minimum, f(1) = −2. The tangent is horizontal and sits under the curve.'),
+  ('Choose sin x with x = 1.5. Is the curve bending up or down, and why does that match the picture?',show(["click","#cc-fn [data-k=c]"],["#cc-x",1.5]),'f″ = −sin x ≈ −0.997 &lt; 0: concave down. Near the top of the wave (x = π/2 ≈ 1.57) the curve bends down like a frown, and the tangent lies above it.')],
  ('For f(x) = x³ − 6x² + 9x, find the local extrema using the second derivative test, and the inflection point.',[
   '<b>f′.</b> f′(x) = 3x² − 12x + 9 = 3(x − 1)(x − 3), so critical points x = 1 and x = 3.',
   '<b>f″.</b> f″(x) = 6x − 12.',
   '<b>Test.</b> f″(1) = −6 &lt; 0: local maximum f(1) = 4. f″(3) = 6 &gt; 0: local minimum f(3) = 0.',
-  '<b>Inflection.</b> f″ = 0 at x = 2, and f″ changes from negative to positive there. The inflection point is <b>(2, 2)</b>.']),
+  '<b>Inflection.</b> f″ = 0 at x = 2, and f″ changes from negative to positive there. The inflection point is <b>(2, 2)</b>.'],_ccf),
  ['Saying f″ = 0 means an inflection point. The sign must change.','Using f″ to find concavity but writing the answer in terms of f′ (or the reverse).','Applying the second derivative test where f″ = 0, and concluding "neither".','Confusing concave up with increasing. A curve can be decreasing and concave up.','Forgetting that concavity changes can happen where f″ does not exist.'],
  ('Two tests, one picture',['At a critical point the first derivative test looks at the sign of f′ on each side; the second derivative test looks at the bend at the point. Use whichever is quicker; if the second derivative test is inconclusive (f″ = 0), fall back on the first.']),
  [('f′(3) = 0 and f″(3) = −5. Then f has at x = 3 a',['local maximum','local minimum','inflection point','no conclusion'],0,'f″ < 0: concave down at a flat point, a peak.')])
@@ -100,15 +141,18 @@ mod('sketch','Connecting f, f′ and f″',
  ('each graph was studied alone','one graph determines the shape of the others (up to a vertical shift)','curve sketching and reading graphs','the relationships among f, f′ and f″'),
  [('f′ crosses + → − ⇒ f local max','f′ crosses − → + ⇒ local min'),('f′ has a local extremum ⇒ f has an inflection','f″ changes sign'),('f determined by f′ up to + C','the vertical shift')],
  [lab('sk-lab','Drag the slope, rebuild the curve',canvas='sk-canvas',aria='Top graph: a piecewise-linear derivative with draggable points. Bottom graph: the function rebuilt from it.',
-   pre='<p class="small" style="margin:0">Drag the green points up and down to set f′. The blue curve f is built from it.</p>',canvas2=('sk-canvas2','The function f rebuilt from the derivative, with extrema and inflection points marked.'),
+   pre='<p class="small" style="margin:0">Drag the green points up and down to set f′. The blue curve f is built from it.</p><div class="ctl"><span class="lbl">Load an f′</span><div class="seg" id="sk-pre" role="group" aria-label="Load an example f prime"><button type="button" data-k="w" aria-pressed="false">Wave</button><button type="button" data-k="r" aria-pressed="false">Always rising</button><button type="button" data-k="t" aria-pressed="false">Touches zero</button></div></div>',canvas2=('sk-canvas2','The function f rebuilt from the derivative, with extrema and inflection points marked.'),
    ctl=[('sk-c','f(−3), the starting height',-3,3,.25,0)],out=[('sk-inc','f is increasing on','x'),('sk-ext','local extrema','v'),('sk-inf','inflection points','a')],post='<div class="row"><button type="button" class="btn" id="sk-reset">Reset the points</button></div>')],
  [('Drag the middle point of f′ well above the axis. What happens to f?','' ,'f rises steeply where f′ is large and positive, and the bends of f follow the ups and downs of f′.'),
-  ('Make f′ cross the axis downward. What does f do there? ','' ,'f has a local maximum where f′ goes from positive to negative. Drag until you see the peak.')],
+  ('Make f′ cross the axis downward. What does f do there? ','' ,'f has a local maximum where f′ goes from positive to negative. Drag until you see the peak.'),
+  ('Load the “Always rising” f′. Does f have any local extrema? Where is the inflection point?',show(["click","#sk-pre [data-k=r]"]),'No extrema: f′ never crosses the axis, so f only rises. f′ peaks at x = 0, so f″ changes from + to − there: an inflection point where f stops speeding up and starts slowing down.'),
+  ('Load “Touches zero”. f′ reaches 0 at x = 0 without crossing. Is that a max or a min of f?',show(["click","#sk-pre [data-k=t]"]),'Neither: f′ is positive on both sides, so f keeps rising and only flattens for an instant. It is a flat inflection (like x³ at 0), because f′ has a minimum there.'),
+  ('Load “Wave”. Count the local extrema and inflection points of f, and say where each comes from on the f′ graph.',show(["click","#sk-pre [data-k=w]"]),'Three extrema: f′ crosses the axis down at x ≈ −1.75 (max), up at x ≈ 0.25 (min) and down at x ≈ 2.2 (max). Two inflection points, at x = −1 and x = 1, where f′ itself has a valley and a peak.')],
  ('The graph of f′ is positive on (−3, 1), negative on (1, 4) and has a minimum at x = 2.5. Describe f.',[
   '<b>Increasing/decreasing.</b> f′ &gt; 0 on (−3, 1): f increasing there; f′ &lt; 0 on (1, 4): f decreasing.',
   '<b>Extremum.</b> f′ changes + → − at x = 1, so f has a local maximum at x = 1.',
   '<b>Concavity.</b> f′ is decreasing before its minimum at 2.5 and increasing after, so f″ changes sign at 2.5.',
-  '<b>Answer.</b> Local maximum at x = 1, and an inflection point at x = 2.5 (concave down before, concave up after).']),
+  '<b>Answer.</b> Local maximum at x = 1, and an inflection point at x = 2.5 (concave down before, concave up after).'],_skf),
  ['Reading f′ as if it were f. A positive f′ means rising, not "positive height".','Looking at where f′ is zero for inflection. Inflection is where f′ has an extremum (f″ changes sign).','Forgetting f is only determined up to a vertical shift.','Confusing which graph is given: always read the label.','Not justifying: say "f′ changes sign from + to − at x = 1".'],
  ('Justifications that earn the point',['"f has a relative maximum at x = c because f′ changes from positive to negative at x = c." "f has a point of inflection at x = c because f″ changes sign at x = c." Name the derivative and the sign change.']),
  [('Where f′ has a local maximum, f has',['an inflection point','a local maximum','a local minimum','a vertical tangent'],0,'f′ has a maximum there, so f″ changes from + to −: the concavity of f changes.')])

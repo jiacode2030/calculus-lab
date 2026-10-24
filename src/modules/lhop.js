@@ -3,6 +3,7 @@
   const cv=$('#lh-canvas');if(!cv)return;
   const C={a:{f:x=>Math.exp(x)-1,g:x=>x,fp:Math.exp,gp:()=>1,a:0,L:1,form:'lim (eˣ − 1)/x:  top → 0 and bottom → 0.  f′/g′ = eˣ/1 → 1'},
     b:{f:x=>1-Math.cos(x),g:x=>x*x,fp:Math.sin,gp:x=>2*x,a:0,L:.5,form:'lim (1 − cos x)/x²:  0/0.  f′/g′ = sin x/(2x), still 0/0; again: cos x/2 → 1/2'},
+    e:{f:x=>Math.sin(3*x),g:x=>x,fp:x=>3*Math.cos(3*x),gp:()=>1,a:0,L:3,form:'lim sin(3x)/x:  0/0.  f′/g′ = 3cos(3x)/1 → 3'},
     c:{f:Math.log,g:x=>x-1,fp:x=>1/x,gp:()=>1,a:1,L:1,form:'lim ln x/(x − 1) at 1:  0/0.  f′/g′ = (1/x)/1 → 1'},
     d:{f:x=>x*x,g:Math.exp,fp:x=>2*x,gp:Math.exp,a:Infinity,L:0,form:'lim x²/eˣ as x → ∞:  ∞/∞.  f′/g′ = 2x/eˣ, still ∞/∞; again: 2/eˣ → 0'}};
   let k='a',z=0;

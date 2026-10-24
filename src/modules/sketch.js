@@ -14,7 +14,9 @@
       zeros().forEach(z=>dot(ctx,P.X(z.x),P.Y(F(z.x)),6.5,z.up?T.ca:T.ce,T.ink));infl().forEach(x=>{hole(ctx,P.X(x),P.Y(F(x)),5.5,T.ink,false);});label(ctx,'f(x): built from f′ (gold = max, pink = min, open = inflection)',P.box.x+8,P.box.y+10,T.cx,'left','middle',MONO);}});
   function upd(){const z=zeros(),br=[-3,...z.map(q=>q.x),3],iv=[];for(let i=0;i<br.length-1;i++){const m=(br[i]+br[i+1])/2;if(fp(m)>0)iv.push(`(${fmt(br[i],2)}, ${fmt(br[i+1],2)})`);}
     setText('sk-inc',iv.length?iv.join(' and '):'nowhere');setText('sk-ext',z.length?z.map(q=>`${q.up?'min':'max'} at x ≈ ${fmt(q.x,2)}`).join('; '):'none');const inf=infl();setText('sk-inf',inf.length?inf.map(x=>'x = '+fmt(x,0)).join(', '):'none');simTop.render();simBot.render();}
-  bindRange('sk-c',v=>nz(v),v=>{f0=v;upd();});$('#sk-reset').addEventListener('click',()=>{ys=INIT.slice();upd();});$('#sk-lab').addEventListener('labreset',()=>{ys=INIT.slice();f0=0;upd();});
+  bindRange('sk-c',v=>nz(v),v=>{f0=v;upd();});$('#sk-reset').addEventListener('click',()=>{ys=INIT.slice();$$('#sk-pre button').forEach(x=>x.setAttribute('aria-pressed','false'));upd();});
+  const PRE={w:[2,.5,-1.5,-.5,1.5,.5,-2],r:[.5,1,1.5,2,1.5,1,.5],t:[2,1,.5,0,.5,1,2]};
+  $('#sk-pre').addEventListener('click',e=>{const b=e.target.closest('[data-k]');if(!b)return;ys=PRE[b.dataset.k].slice();$$('#sk-pre button').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));upd();});$('#sk-lab').addEventListener('labreset',()=>{ys=INIT.slice();f0=0;upd();});
   upd();drawers.sketch=()=>{simTop.render();simBot.render();};
   KEYS['sk-canvas']=['Drag the green points. Green zone: f′ > 0 so f rises. Pink zone: f′ < 0 so f falls.',[['cv','f′ (the points you drag)'],['cx','f, rebuilt from f′'],['ce','local maximum of f'],['ca','local minimum of f']]];
   TIPS['sk-c']=()=>'Changing f(−3) only slides the whole blue curve up or down: f is determined by f′ up to a vertical shift.';
