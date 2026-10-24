@@ -32,6 +32,22 @@ def lab(id, title, canvas=None, aria='', ctl=(), out=(), pre='', post='', own=Fa
 def show(*acts):
     return json.dumps(list(acts), ensure_ascii=False).replace("'", '&#39;')
 
+def table(rows, cap=''):
+    """rows[0] is the header row; the first column is the row label, like an AP FRQ data table."""
+    head, *body = rows
+    return ('<div class="dtab"><table>' + (f'<caption>{cap}</caption>' if cap else '') + '<thead><tr>' + ''.join(f'<th scope="col">{c}</th>' for c in head) + '</tr></thead><tbody>'
+            + ''.join('<tr>' + ''.join((f'<th scope="row">{c}</th>' if i == 0 else f'<td>{c}</td>') for i, c in enumerate(r)) + '</tr>' for r in body) + '</tbody></table></div>')
+
+def example(e):
+    """e: (problem, steps), (problem, steps, figure_html) or a dict with h, prob, table, steps, fig."""
+    if not isinstance(e, dict): e = dict(zip(('prob', 'steps', 'fig'), e))
+    h, pr, steps, fg = e.get('h', 'Worked example'), e['prob'], e['steps'], e.get('fig')
+    tb = e.get('table')
+    s = f'      <div class="example"><h3>{h}</h3><p class="prob">{pr}</p>' + (table(*tb) if isinstance(tb, tuple) else table(tb) if tb else '') + '<p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>\n'
+    body = '<div class="exbody"><ol class="exsteps">\n' + ''.join(f'          <li hidden>{t}</li>\n' for t in steps) + f'        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of {len(steps)}</button><button type="button" class="btn" data-all>Show all steps</button></div></div>'
+    s += (f'        <div class="exgrid"><div class="figs">{fg}</div>{body}</div>\n' if fg else f'        {body}\n')
+    return s + '      </div>\n'
+
 def mod(id, title, lede, idea, up, eqs, labs, tries, ex, oops, prose=None, quizzes=(), bcx=None, extra_after_labs=''):
     g = GOF[id]; bc = g.get('bc', False)
     tag = g['tag']; course = 'BC only' if bc else 'AB &amp; BC'
@@ -48,8 +64,8 @@ def mod(id, title, lede, idea, up, eqs, labs, tries, ex, oops, prose=None, quizz
         btn = f' <button type="button" class="btn link" data-show=\'{sh}\'>Set it up for me</button>' if sh else ''
         s += f'        <li><p>{q}{btn}</p><details><summary>What you should see</summary><p>{a}</p></details></li>\n'
     s += '      </ol></div>\n'
-    pr, steps = ex
-    s += f'      <div class="example"><h3>Worked example</h3><p class="prob">{pr}</p><p class="small" style="margin:0">Try it yourself first, then reveal one step at a time.</p>\n        <div class="exbody"><ol class="exsteps">\n' + ''.join(f'          <li hidden>{t}</li>\n' for t in steps) + f'        </ol><div class="row"><button type="button" class="btn primary" data-next>Show step 1 of {len(steps)}</button><button type="button" class="btn" data-all>Show all steps</button></div></div>\n      </div>\n'
+    for e in (ex if isinstance(ex, list) else [ex]):
+        s += example(e)
     s += '      <div class="oops"><h3>Common mistakes</h3><ul>\n' + ''.join(f'        <li>{o}</li>\n' for o in oops) + '      </ul></div>\n'
     if prose:
         h2, ps = prose
@@ -62,7 +78,8 @@ def mod(id, title, lede, idea, up, eqs, labs, tries, ex, oops, prose=None, quizz
 if __name__ == '__main__':
     import importlib.util, sys
     sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+    import fig
     for p in sorted((pathlib.Path(__file__).resolve().parent / 'units').glob('*.py')):
         spec = importlib.util.spec_from_file_location(p.stem, p); m = importlib.util.module_from_spec(spec)
-        m.__dict__.update({'mod': mod, 'lab': lab, 'show': show}); spec.loader.exec_module(m)
+        m.__dict__.update({'mod': mod, 'lab': lab, 'show': show, 'table': table}); m.__dict__.update({k: v for k, v in vars(fig).items() if not k.startswith('_')}); spec.loader.exec_module(m)
         print('ran', p.name)

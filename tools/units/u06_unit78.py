@@ -19,6 +19,35 @@ mod('slope','Slope fields',
  ('Equilibrium solutions',['Where dy/dx = 0 for all x along a horizontal line y = c, that line is a solution (an equilibrium). In dy/dx = y it is y = 0. In the last case of the lab, y = 0 and y = 4 are equilibria, and solutions between them level off at 4.']),
  [('In a slope field for dy/dx = y² − 1, the segments along y = 1 are',['horizontal','vertical','rising','falling'],0,'dy/dx = 1 − 1 = 0 there, so the segments are flat.')])
 
+# ---- figures for Separation of variables
+import math as _m
+_S = Plot((-1.25, 1.25), (0, 9.6), (30, 12, 215, 196))
+def _field(P, f, xs, ys, L=9):
+    o = ''
+    for x in xs:
+        for y in ys:
+            sx = P.X(1) - P.X(0); sy = P.Y(0) - P.Y(1); dx, dy = sx, -f(x, y) * sy; k = L / _m.hypot(dx, dy)
+            o += ln(P.X(x) - dx * k, P.Y(y) - dy * k, P.X(x) + dx * k, P.Y(y) + dy * k, 'mut', 1.3)
+    return o
+_sv = fig(_S.axes((-1, 1), (3, 6, 9), 'x', 'y') + _field(_S, lambda x, y: 2 * x * y, [i / 4 for i in range(-4, 5)], [1, 2.5, 4, 5.5, 7, 8.5]), [
+    (1, '', 'dy/y = 2x dx', 'ink'),
+    (2, '', 'ln|y| = x² + C', 'ink'),
+    (3, ''.join(_S.curve(lambda x, A=A: A * _m.exp(x * x), -min(1.2, _m.sqrt(_m.log(9.5 / A))), min(1.2, _m.sqrt(_m.log(9.5 / A))), 'f', 1.3, '4 3') for A in (1, 2, 4)), 'y = A e^(x²): a family', 'f'),
+    (4, _S.dot(0, 3, '(0, 3)', 'tan', 22, 4, 5), 'y(0) = 3 picks A = 3', 'tan'),
+    (5, _S.curve(lambda x: 3 * _m.exp(x * x), -_m.sqrt(_m.log(9.5 / 3)), _m.sqrt(_m.log(9.5 / 3)), 'f', 3), 'y = 3e^(x²)', 'f')],
+    'The slope field of dy/dx = 2xy (gray). Separating gives a whole family of curves; the starting point picks one.', 230)
+_kc = _m.log(7 / 5) / 5
+_Tc = lambda t: 20 + 70 * _m.exp(-_kc * t)
+_C = Plot((-1.5, 33), (0, 100), (32, 12, 213, 196))
+_t40 = _m.log(3.5) / _kc
+_cof = fig(_C.axes((5, 10, 15, 20, 25, 30), (20, 40), 't', 'T') + _C.seg(0, 20, 32, 20, 'tan', 1.4, '5 4') + _C.text(31, 23, 'room 20°', 'tan', 10, 'end', 500), [
+    (1, _C.dot(0, 90, '90', 'f', 14, 4) + _C.dot(5, 70, '70', 'f', 12, -6), 'T − 20 = 70e^(−kt)', 'f'),
+    (2, '', 'k = ln(1.4)/5 ≈ 0.0673', 'ink'),
+    (3, _C.curve(_Tc, 0, 32) + _C.dot(15, _Tc(15), '45.5', 'tan', 0, -10), 'T(15) ≈ 45.5°', 'tan'),
+    (4, _C.seg(0, 40, _t40, 40, 'dd', 1.4, '3 3') + _C.seg(_t40, 0, _t40, 40, 'dd', 1.4, '3 3') + _C.text(_t40 + 1, 44, '18.6 min', 'dd', 11, 'start'), 'T = 40° at t ≈ 18.6', 'dd'),
+    (5, _C.seg(-1, _Tc(0) + _kc * 70, 5, _Tc(0) - 5 * _kc * 70, 'tan', 2.2) + _C.seg(_t40 - 5, 40 + 5 * _kc * 20, _t40 + 5, 40 - 5 * _kc * 20, 'tan', 2.2), 'slope −4.71, then −1.35', 'tan')],
+    'Temperature of the coffee (blue). The dashed line is the room: the coffee approaches it but never drops below.', 230)
+
 mod('sepvar','Separation of variables & exponential models',
  'For some equations you can move all the y\'s to one side and all the x\'s to the other, then integrate. The most important result: when something changes at a rate proportional to itself, it follows an exponential.',
  ['<b>Separate</b>: for <span class="m">dy/dx = f(x)·g(y)</span>, write <span class="m">dy / g(y) = f(x) dx</span>, integrate both sides, and put the constant C on the x side (once). Then use the initial condition to find C, and solve for y if possible. Skipping the +C before using the starting value is the classic error.',
@@ -29,15 +58,25 @@ mod('sepvar','Separation of variables & exponential models',
    seg=('sv-fn','Model',[('gr','dy/dt = k y'),('co','cooling: dT/dt = −k(T − Tₐ)')]),
    ctl=[('sv-k','k',-1,1,.05,.3),('sv-y0','Start value',.5,10,.5,2),('sv-ta','Room temperature Tₐ (cooling only)',0,8,.5,1),('sv-t','Time t',0,10,.1,3)],
    out=[('sv-y','value at time t','x'),('sv-dy','rate dy/dt there','v'),('sv-key','doubling time or half-life','a')])],
- [('Set k = 0.3 and y₀ = 2. When does the quantity double? <button type="button" class="btn link" data-show=\'' + show(["click","#sv-fn [data-k=gr]"],["#sv-k",0.3],["#sv-y0",2]) + '\'>Set it up for me</button>','' ,'After ln 2 / 0.3 ≈ 2.31 time units, and again after another 2.31. The doubling time does not depend on the starting value.'),
-  ('Switch to cooling with Tₐ = 1, y₀ = 6 and k = 0.4. What does T approach? <button type="button" class="btn link" data-show=\'' + show(["click","#sv-fn [data-k=co]"],["#sv-k",0.4],["#sv-y0",6],["#sv-ta",1]) + '\'>Set it up for me</button>','' ,'The room temperature, 1: the difference T − Tₐ decays exponentially, so T levels off at Tₐ.')],
- ('Solve dy/dx = 2xy with y(0) = 3.',[
+ [('Set k = 0.3 and y₀ = 2. When does the quantity double?',show(["click","#sv-fn [data-k=gr]"],["#sv-k",0.3],["#sv-y0",2]),'After ln 2 / 0.3 ≈ 2.31 time units, and again after another 2.31. The doubling time does not depend on the starting value.'),
+  ('Switch to cooling with Tₐ = 1, y₀ = 6 and k = 0.4. What does T approach?',show(["click","#sv-fn [data-k=co]"],["#sv-k",0.4],["#sv-y0",6],["#sv-ta",1]),'The room temperature, 1: the difference T − Tₐ decays exponentially, so T levels off at Tₐ.'),
+  ('Set k = −0.5 and y₀ = 8 (decay). Slide t until the value is 4. How long did that take?',show(["click","#sv-fn [data-k=gr]"],["#sv-k",-0.5],["#sv-y0",8],["#sv-t",1.4]),'About 1.39 = ln 2 / 0.5, the half-life. Slide on to about 2.77 and it is 2: every half-life halves what is left.'),
+  ('Keep k = 0.3 and t = 3. Change the start value from 0.5 to 5. What happens to the slope dy/dt?',show(["click","#sv-fn [data-k=gr]"],["#sv-k",0.3],["#sv-y0",0.5],["#sv-t",3]),'It goes from about 0.37 to about 3.69, ten times steeper, because the value is ten times bigger (1.23 to 12.3). That is what dy/dt = ky means: the slope is always k times the height.'),
+  ('Cooling with k = 0.4, y₀ = 9 and Tₐ = 1. Compare the slope at t = 0 with the slope at t = 1.7.',show(["click","#sv-fn [data-k=co]"],["#sv-k",0.4],["#sv-y0",9],["#sv-ta",1],["#sv-t",0]),'At t = 0 the gap T − Tₐ is 8 and the slope is −0.4(8) = −3.2. By t ≈ 1.7 the gap has about halved (to 4.05), and so has the slope (about −1.62). Hot coffee cools fastest at the start.')],
+ [('Solve dy/dx = 2xy with y(0) = 3.',[
   '<b>Separate.</b> dy/y = 2x dx (valid for y ≠ 0).',
   '<b>Integrate both sides.</b> ln|y| = x² + C.',
   '<b>Solve for y.</b> |y| = e<sup>C</sup> e<sup>x²</sup>, so y = A e<sup>x²</sup> with A = ± e<sup>C</sup>.',
   '<b>Use y(0) = 3.</b> A·e⁰ = 3, so A = 3.',
-  '<b>Answer.</b> y = <b>3e<sup>x²</sup></b>.']),
- ['Not separating completely: all y\'s (with dy) on one side, all x\'s (with dx) on the other.','Forgetting + C, or adding it on both sides.','Using the initial condition before including C.','Dividing by something that could be zero without noting the equilibrium solution.','Mixing up k signs: k &lt; 0 is decay.'],
+  '<b>Answer.</b> y = <b>3e<sup>x²</sup></b>.'],_sv),
+  {'h':'Worked example 2: a cooling cup of coffee','fig':_cof,'table':[['t (minutes)','0','5'],['T(t) (°C)','90','70']],
+   'prob':'Coffee is poured into a room kept at 20 °C. Its temperature T (°C) after t minutes satisfies dT/dt = −k(T − 20) for a constant k &gt; 0, and a thermometer gives the readings in the table. (a) Solve for T(t). (b) Predict the temperature at t = 15. (c) When is the coffee 40 °C? (d) How fast is it cooling at t = 0, and when it is 40 °C?',
+   'steps':['<b>(a) Separate and integrate.</b> dT/(T − 20) = −k dt, so ln|T − 20| = −kt + C and T = 20 + Ae<sup>−kt</sup>. At t = 0, 90 = 20 + A, so A = 70: <b>T = 20 + 70e<sup>−kt</sup></b>.',
+    '<b>Find k from the second reading.</b> 70 = 20 + 70e<sup>−5k</sup> gives e<sup>−5k</sup> = 5/7, so k = (1/5) ln(7/5) ≈ <b>0.0673</b> per minute.',
+    '<b>(b) t = 15.</b> e<sup>−15k</sup> = (5/7)³ = 125/343, so T(15) = 20 + 70(125/343) ≈ <b>45.5 °C</b>.',
+    '<b>(c) 40 °C.</b> 20 + 70e<sup>−kt</sup> = 40 gives e<sup>−kt</sup> = 2/7, so t = ln(3.5)/k ≈ <b>18.6 minutes</b>.',
+    '<b>(d) Rates.</b> dT/dt = −k(T − 20). At t = 0: −0.0673(70) ≈ <b>−4.71 °C/min</b>. At 40 °C: −0.0673(20) ≈ <b>−1.35 °C/min</b>. The coffee cools fastest when it is hottest, because the rate is proportional to the gap with the room.']}],
+ ['Not separating completely: all y\'s (with dy) on one side, all x\'s (with dx) on the other.','Forgetting + C, or adding it on both sides.','Using the initial condition before including C.','Dividing by something that could be zero without noting the equilibrium solution.','Mixing up k signs: k &lt; 0 is decay.','In cooling problems, writing T = T₀e<sup>−kt</sup>: it is the gap T − Tₐ that decays, not T itself.'],
  ('Why exponentials',['If the rate of change is proportional to the amount, a bigger amount grows faster, which makes it even bigger: that feedback is the shape of e<sup>kt</sup>. Check any proposed solution by differentiating: if y = y₀e<sup>kt</sup> then dy/dt = k·y₀e<sup>kt</sup> = k y. ✓']),
  [('If dy/dt = −0.2y and y(0) = 50, then y(t) =',['50e<sup>−0.2t</sup>','50e<sup>0.2t</sup>','−0.2·50e<sup>t</sup>','50 − 0.2t'],0,'dy/dt = ky gives y = y₀e^{kt} with k = −0.2.')])
 
@@ -105,6 +144,30 @@ mod('vols','Volumes from cross sections',
  ('Derivations of the area formulas',['Semicircle with diameter s: radius s/2, area (1/2)π(s/2)² = πs²/8. Equilateral triangle with side s: area (1/2)·s·(√3/2)s = (√3/4)s². Square: s². Keep these in your head: they are the whole difficulty in most cross-section problems.']),
  [('A semicircular cross section has diameter s(x). Its area is',['πs²/8','πs²/4','πs²/2','s²'],0,'Radius s/2, area half of π(s/2)² = πs²/8.')])
 
+# ---- figures for Volumes of revolution
+import math as _m
+_V = Plot((-.35, 4.5), (-3.2, 2.6), (30, 10, 215, 200))
+_sqrt = lambda x: _m.sqrt(max(x, 0))
+_vr = fig(_V.axes((1, 2, 4), (1, 2), 'x', 'y') + _V.under(_sqrt, 0, 4) + _V.curve(_sqrt, 0, 4), [
+    (1, _V.under(lambda x: -_sqrt(x), 0, 4, 'area', .12) + _V.curve(lambda x: -_sqrt(x), 0, 4, 'f', 1.6, '4 3') + _V.seg(1, -1, 1, 1, 'tan', 4) + _V.text(1.12, .45, 'R = √x', 'tan', 11, 'start'), 'disc area π(√x)² = πx', 'tan'),
+    (2, _V.seg(-.3, -1, 4.4, -1, 'ink', 1.6, '6 4') + _V.text(4.4, -1.35, 'y = −1', 'ink', 10, 'end', 500) + _V.seg(3.1, -1, 3.1, _sqrt(3.1), 'tan', 3) + _V.seg(3.35, -1, 3.35, 0, 'dd', 3)
+        + _V.text(3.0, .5, 'R', 'tan', 13, 'end') + _V.text(3.45, -.6, 'r', 'dd', 13, 'start'), 'R = √x + 1, r = 1', 'tan'),
+    (3, '', 'π∫₀⁴ (x + 2√x) dx', 'area'),
+    (4, '', 'π(8 + 32/3)', 'ink'),
+    (5, '', '8π and 56π/3', 'ink')],
+    'The region under y = √x (gold). Step 1 spins it about the x-axis; step 2 about the dashed line y = −1, which leaves a hole.', 230)
+_B = Plot((-7.4, 7.4), (-.6, 10.4), (18, 12, 224, 166))
+_par = lambda x: x * x / 4
+_hh = 9 / _m.sqrt(2)
+_bowl = fig(_B.seg(0, -.5, 0, 10.3, 'mut', 1.2, '5 4') + _B.text(.3, 10, 'axis', 'mut', 10, 'start', 500) + _B.seg(-6, 9, 6, 9, 'mut', 1.2, '3 3') + _B.curve(_par, -6.2, 6.2, 'ink', 3.2)
+            + _B.text(-6.4, 9.3, 'rim', 'mut', 10, 'end', 500), [
+    (1, ell(_B.X(0), _B.Y(4), _B.X(4) - _B.X(0), 6, 'tan', .25, 'tan', 2) + _B.seg(0, 4, 4, 4, 'tan', 2) + _B.text(2, 4.6, 'x = 2√y', 'tan', 11), 'disc radius 2√y, area 4πy', 'tan'),
+    (2, poly(_B.pts(_par, -6, 6), 'area', .22), 'V(h) = 2πh², full = 162π', 'area'),
+    (3, poly(_B.pts(_par, -_m.sqrt(4 * _hh), _m.sqrt(4 * _hh)), 'f', .25) + _B.seg(-6.6, _hh, 6.6, _hh, 'f', 1.6, '4 3') + txt(130, 200, 'half the volume at h ≈ 6.36 cm', 'f', 11), 'half full at h ≈ 6.36', 'f'),
+    (4, arr(_B.X(-3.4), _B.Y(4.1), _B.X(-3.4), _B.Y(5.9), 'd') + _B.text(-4.0, 6.6, 'dh/dt', 'd', 11, 'middle'), 'dh/dt = 20/(16π) ≈ 0.398', 'd'),
+    (5, '', '508.9 cm³ · 6.36 cm · 0.398 cm/s', 'ink')],
+    'Side view of the bowl, drawn to scale. Every horizontal slice is a disc centered on the axis.', 210)
+
 mod('volrev','Volumes of revolution',
  'Spin a region around an axis and it sweeps out a solid. Each slice is a disc (or a ring, called a washer), and its area is π × radius².',
  ['Slice the solid perpendicular to the axis of revolution. A slice through a region that touches the axis is a <b>disc</b> of radius R(x), area πR². If the region has a gap between it and the axis, the slice is a <b>washer</b>: outer radius R, inner radius r, area <span class="m">π(R² − r²)</span>. The volume is <span class="m">V = π ∫<sub>a</sub><sup>b</sup> (R(x)² − r(x)²) dx</span>.',
@@ -113,15 +176,24 @@ mod('volrev','Volumes of revolution',
  [('V = π ∫ R² dx','disc'),('V = π ∫ (R² − r²) dx','washer, R outer, r inner'),('R = distance from the axis','axis y = c: R = f − c')],
  [lab('vr-lab','Spin the region',canvas='vr-canvas',aria='The region and its mirror image across the axis of revolution, with slices drawn as vertical segments, and an end view of the washer at a chosen x.',
    seg=('vr-fn','Region and axis',[('a','y = √x, about the x-axis, [0, 4]'),('b','between y = √x and y = x², about the x-axis'),('c','y = √x about y = −1, [0, 4]')]),
-   ctl=[('vr-x','Slice at x',.05,3.9,.05,1)],out=[('vr-ro','outer radius R','x'),('vr-ri','inner radius r','a'),('vr-V','volume','v')])],
- [('Choose the first region. What shape is each slice, and what is its radius at x = 1? <button type="button" class="btn link" data-show=\'' + show(["click","#vr-fn [data-k=a]"],["#vr-x",1]) + '\'>Set it up for me</button>','' ,'A disc with radius √1 = 1, area π. V = π∫₀⁴ x dx = 8π.'),
-  ('Choose the region between √x and x². What is the slice now? <button type="button" class="btn link" data-show=\'' + show(["click","#vr-fn [data-k=b]"],["#vr-x",0.5]) + '\'>Set it up for me</button>','' ,'A washer: outer radius √x, inner radius x². V = π∫₀¹ (x − x⁴) dx = 3π/10.')],
- ('Find the volume when the region under y = √x on [0, 4] is revolved about the x-axis, then about y = −1.',[
+   ctl=[('vr-x','Slice at x',.05,3.9,.05,1),('vr-c','Axis of revolution y = c',-2,0,.1,0)],out=[('vr-ro','outer radius R','x'),('vr-ri','inner radius r','a'),('vr-V','volume','v')])],
+ [('Choose the first region. What shape is each slice, and what is its radius at x = 1?',show(["click","#vr-fn [data-k=a]"],["#vr-x",1]),'A disc with radius √1 = 1, area π. V = π∫₀⁴ x dx = 8π ≈ 25.13.'),
+  ('Choose the region between √x and x². What is the slice now?',show(["click","#vr-fn [data-k=b]"],["#vr-x",0.5]),'A washer: outer radius √x, inner radius x². At x = 0.5 that is R ≈ 0.707 and r = 0.25. V = π∫₀¹ (x − x⁴) dx = 3π/10 ≈ 0.942.'),
+  ('Back to the first region. Move the axis down to y = −1. What happens to each slice?',show(["click","#vr-fn [data-k=a]"],["#vr-c",-1],["#vr-x",1]),'Each slice gets a hole of radius 1 (the gap between the axis and the x-axis), and the outer radius grows to √x + 1. V = π(8 + 32/3) = 56π/3 ≈ 58.64.'),
+  ('Now move the axis to y = −2. The region is the same. Why is the volume bigger?',show(["click","#vr-fn [data-k=a]"],["#vr-c",-2],["#vr-x",1]),'V = π(8 + 64/3) = 88π/3 ≈ 92.15. The region is farther from the axis, so every point travels around a bigger circle: the washers get wider rings, even though the hole grows too.')],
+ [('Find the volume when the region under y = √x on [0, 4] is revolved about the x-axis, then about y = −1.',[
   '<b>About the x-axis (discs).</b> R = √x, so V = π ∫<sub>0</sub><sup>4</sup> x dx = π(8) = 8π.',
   '<b>About y = −1 (washers).</b> The axis is 1 unit below the x-axis: R = √x + 1, r = 1 (the x-axis is 1 above the axis).',
   '<b>Set up.</b> V = π ∫<sub>0</sub><sup>4</sup> [(√x + 1)² − 1²] dx = π ∫<sub>0</sub><sup>4</sup> (x + 2√x) dx.',
   '<b>Integrate.</b> π [x²/2 + (4/3)x<sup>3/2</sup>]<sub>0</sub><sup>4</sup> = π(8 + 32/3).',
-  '<b>Answer.</b> About x-axis: <b>8π</b>. About y = −1: <b>56π/3</b>.']),
- ['Squaring the difference of functions: (f − g)² is not f² − g².','Forgetting π.','Measuring radii from the x-axis when the axis of revolution is a different line.','Using a disc when there is a gap (it should be a washer).','Mixing up outer and inner radius.'],
+  '<b>Answer.</b> About x-axis: <b>8π</b>. About y = −1: <b>56π/3</b>.'],_vr),
+  {'h':'Worked example 2: filling a bowl','fig':_bowl,
+   'prob':'The inside of a bowl is the curve y = x²/4 revolved about the y-axis (x and y in cm), and the bowl is 9 cm deep. (a) How much does the bowl hold? (b) How deep is the water when the bowl holds half that much? (c) Water is poured in at 20 cm³/s. How fast is the water level rising when the water is 4 cm deep?',
+   'steps':['<b>Slice across the axis.</b> The axis is vertical, so slice horizontally. At height y the slice is a disc of radius x, where y = x²/4 gives x² = 4y. Its area is πx² = <b>4πy</b>.',
+    '<b>(a) Add up the discs.</b> Water to depth h has volume V(h) = ∫<sub>0</sub><sup>h</sup> 4πy dy = 2πh². Full: V(9) = 2π(81) = <b>162π ≈ 508.9 cm³</b>.',
+    '<b>(b) Half full.</b> 2πh² = 81π gives h² = 40.5, h = 9/√2 ≈ <b>6.36 cm</b>. Half the volume sits in the top 29% of the depth, because the bowl is widest there.',
+    '<b>(c) Related rate.</b> Differentiate V = 2πh² in t: dV/dt = 4πh·dh/dt. With dV/dt = 20 and h = 4: dh/dt = 20/(16π) ≈ <b>0.398 cm/s</b>. (4πh is the area of the water\'s surface: the rise is the inflow spread over the surface.)',
+    '<b>Answers.</b> (a) 162π ≈ 508.9 cm³, (b) about 6.36 cm, (c) about 0.398 cm/s, and it slows as the surface widens.']}],
+ ['Squaring the difference of functions: (f − g)² is not f² − g².','Forgetting π.','Measuring radii from the x-axis when the axis of revolution is a different line.','Using a disc when there is a gap (it should be a washer).','Mixing up outer and inner radius.','Revolving about the y-axis but still slicing in x: slices must be perpendicular to the axis, so integrate in y.'],
  ('Which method?',['If the slices perpendicular to the axis are full circles, use discs. If they have a hole, use washers. In AB you slice perpendicular to the axis of revolution (discs and washers); the shell method is not part of the course.']),
  [('Revolving the region under y = x on [0, 2] about the x-axis gives volume',['π ∫₀² x² dx','π ∫₀² x dx','2π ∫₀² x dx','∫₀² x² dx'],0,'Discs of radius R = x: π R² = πx².')])

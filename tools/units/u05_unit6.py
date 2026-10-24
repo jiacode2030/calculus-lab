@@ -1,3 +1,23 @@
+# ---- figures for Accumulation & Riemann sums
+_P = Plot((-.25, 3.4), (-.6, 10), (30, 12, 215, 196))
+_sq = lambda x: x * x
+_acc = fig(_P.axes((1, 2, 3), (4, 9), 'x', 'f') + _P.curve(_sq, 0, 3.15), [
+    (1, ''.join(_P.text(i + .5, .35, 'Δx', 'mut', 10, w=500) for i in range(3)) + ''.join(_P.seg(i, -.25, i, .25, 'mut', 1.2) for i in range(4)), 'Δx = 1', 'ink'),
+    (2, ''.join(_P.dot(i, i * i, str(i * i) if i else '', 'tan', -9, -6) for i in range(3)), 'f(0), f(1), f(2) = 0, 1, 4', 'tan'),
+    (3, ''.join(_P.box_(i, i + 1, i * i) for i in range(3)), 'L₃ = (0 + 1 + 4)(1) = 5', 'area'),
+    (4, _P.under(_sq, 0, 3, 'f', .12) + _P.text(2.55, 2.2, 'exact 9', 'f', 12), 'exact 9: L₃ is low', 'f'),
+    (5, ''.join(f'<rect x="{n(_P.X(i))}" y="{n(_P.Y((i + 1) ** 2))}" width="{n(_P.X(i + 1) - _P.X(i))}" height="{n(_P.Y(0) - _P.Y((i + 1) ** 2))}" style="fill:none;stroke:var(--hot);stroke-width:1.6;stroke-dasharray:4 3"/>' for i in range(3)), 'R₃ = 14: high', 'tan')],
+    'Left rectangles (gold) sit under the rising curve; right rectangles (dashed) stick out above it.', 230)
+_t, _v = [0, 10, 15, 25, 30], [12, 18, 21, 17, 14]
+_Q = Plot((-1.5, 33), (0, 25), (30, 12, 215, 190))
+_car = fig(_Q.axes(_t[1:], (10, 20), 't', 'v') + ''.join(_Q.dot(a, b, str(b), 'f', 0, -9) for a, b in zip(_t, _v)), [
+    (1, ''.join(_Q.seg(a, 0, a, 23, 'mut', 1, '3 3') for a in _t[1:]) + ''.join(_Q.text((_t[i] + _t[i + 1]) / 2, 2.6, str(_t[i + 1] - _t[i]), 'ink', 11) for i in range(4)), 'widths 10, 5, 10, 5', 'ink'),
+    (2, ''.join(_Q.box_(_t[i], _t[i + 1], _v[i]) for i in range(4)), 'left sum = 505', 'area'),
+    (3, _Q.text(15, 5, '≈ 505 m', 'ink', 13), 'meters traveled in 30 s', 'ink'),
+    (4, poly([(_Q.X(a), _Q.Y(b)) for a, b in zip(_t, _v)] + [(_Q.X(30), _Q.Y(0)), (_Q.X(0), _Q.Y(0))], 'tan', .08, 'tan', 1.8, '4 3'), 'trapezoids = 515', 'tan'),
+    (5, '', 'v rises, then falls', 'dd')],
+    'The speedometer readings (blue dots). Strips have different widths because the readings are not evenly spaced.', 230)
+
 mod('accum','Accumulation & Riemann sums',
  'How much water flowed into the tank? Add up the rate over time. When the rate changes, slice the time into short pieces and add rate × time for each.',
  ['If water flows at a constant 5 gallons per minute for 10 minutes, the amount is 5 × 10 = 50 gallons: <b>rate × time</b>, which is the area of a rectangle on a graph of rate against time. When the rate <i>changes</i>, slice the time into thin strips, treat the rate as nearly constant on each strip, and add up the rectangle areas. That is a <b>Riemann sum</b>.',
@@ -7,16 +27,26 @@ mod('accum','Accumulation & Riemann sums',
  [lab('ac-lab','Add up the rectangles',canvas='ac-canvas',aria='A rate graph with rectangles under it for the chosen Riemann sum method, and the exact area for comparison.',
    seg=('ac-fn','Rate f(x)',[('a','x²'),('b','sin x'),('c','4 − x²'),('d','eˣ')]),
    pre='<div class="ctl"><span class="lbl">Method</span><div class="seg" id="ac-m" role="group" aria-label="Riemann sum method"><button type="button" data-k="L" aria-pressed="true">Left</button><button type="button" data-k="R" aria-pressed="false">Right</button><button type="button" data-k="M" aria-pressed="false">Midpoint</button><button type="button" data-k="T" aria-pressed="false">Trapezoid</button></div></div>',
-   ctl=[('ac-n','Number of strips n',1,60,1,4)],out=[('ac-sum','sum','x'),('ac-ex','exact integral','v'),('ac-err','sum − exact','a'),('ac-note','bias','')])],
- [('On x² with left sums and n = 4, is the estimate too big or too small? <button type="button" class="btn link" data-show=\'' + show(["click","#ac-fn [data-k=a]"],["click","#ac-m [data-k=L]"],["#ac-n",4]) + '\'>Set it up for me</button>','' ,'Too small: x² is increasing, so the left edge of each strip is the lowest point and every rectangle sits under the curve. Right sums would overestimate.'),
-  ('Increase n to 60. What happens to the error? <button type="button" class="btn link" data-show=\'' + show(["#ac-n",60]) + '\'>n = 60</button>','' ,'It shrinks toward 0: the sum approaches the integral as n → ∞. The error of a left or right sum falls roughly in proportion to 1/n.')],
- ('Use a left Riemann sum with n = 3 to estimate ∫<sub>0</sub><sup>3</sup> x² dx.',[
+   ctl=[('ac-n','Number of strips n',1,60,1,4),('ac-b','Stop at b',.25,3,'any',3)],out=[('ac-sum','sum','x'),('ac-ex','exact integral','v'),('ac-err','sum − exact','a'),('ac-note','bias','')])],
+ [('On x² with left sums and n = 4, is the estimate too big or too small?',show(["click","#ac-fn [data-k=a]"],["click","#ac-m [data-k=L]"],["#ac-n",4],["#ac-b",3]),'Too small: x² is increasing, so the left edge of each strip is the lowest point and every rectangle sits under the curve. Right sums would overestimate.'),
+  ('Increase n to 60. What happens to the error?',show(["click","#ac-fn [data-k=a]"],["click","#ac-m [data-k=L]"],["#ac-n",60],["#ac-b",3]),'It shrinks toward 0: the sum approaches the integral as n → ∞. The error of a left or right sum falls roughly in proportion to 1/n.'),
+  ('Switch to the trapezoid rule on x² with n = 4. Over or under?',show(["click","#ac-fn [data-k=a]"],["click","#ac-m [data-k=T]"],["#ac-n",4],["#ac-b",3]),'Over: 9.28125 against the exact 9. x² is concave up, so each straight top edge lies above the curve.'),
+  ('Choose 4 − x² with the midpoint rule and n = 60. Slide b from 2 up to 3. Why does the total go down?',show(["click","#ac-fn [data-k=c]"],["click","#ac-m [data-k=M]"],["#ac-n",60],["#ac-b",2]),'Up to b = 2 the total is 16/3 ≈ 5.33, the largest it gets. After x = 2 the rate is negative (pink strips), so the amount decreases, reaching 3 at b = 3. Think of water draining out once the flow reverses.'),
+  ('Choose sin x and slide b all the way to 2π ≈ 6.28. What is the exact integral now?',show(["click","#ac-fn [data-k=b]"],["click","#ac-m [data-k=M]"],["#ac-n",60],["#ac-b",6.2832]),'0: the gold area above the axis on [0, π] (2) is cancelled by the pink area below it on [π, 2π] (−2). A definite integral is net change, not total area.')],
+ [('Use a left Riemann sum with n = 3 to estimate ∫<sub>0</sub><sup>3</sup> x² dx.',[
   '<b>Strip width.</b> Δx = (3 − 0)/3 = 1.',
   '<b>Left endpoints.</b> x = 0, 1, 2, so f = 0, 1, 4.',
   '<b>Add rate × width.</b> L₃ = (0 + 1 + 4)(1) = 5.',
   '<b>Compare.</b> The exact value is 9, so L₃ is an underestimate (f is increasing).',
-  '<b>Answer.</b> <b>5</b>. Right sum: (1 + 4 + 9)(1) = 14, an overestimate.']),
- ['Using the wrong number of heights: n strips use n heights, not n + 1 (except in the trapezoid rule\'s endpoints).','Using Δx = b − a instead of (b − a)/n.','Calling a left sum an overestimate for an increasing function. It underestimates.','Forgetting that area below the axis counts negative in a definite integral.','Dropping units: (liters/minute) × minutes = liters.'],
+  '<b>Answer.</b> <b>5</b>. Right sum: (1 + 4 + 9)(1) = 14, an overestimate.'],_acc),
+  {'h':'Worked example 2: a car\'s speedometer (AP-style table)','fig':_car,'table':[['t (seconds)','0','10','15','25','30'],['v(t) (meters per second)','12','18','21','17','14']],
+   'prob':'A car\'s speed v(t) is read from its speedometer at the times in the table. (a) Use a left Riemann sum with the four subintervals in the table to estimate ∫<sub>0</sub><sup>30</sup> v(t) dt, and explain its meaning with units. (b) Estimate the same integral with a trapezoidal sum. (c) Is the left sum an overestimate or an underestimate?',
+   'steps':['<b>Widths.</b> The readings are not evenly spaced: the strips are 10, 5, 10 and 5 seconds wide. Use each width separately, not one Δx.',
+    '<b>(a) Left sum.</b> Use the speed at the start of each strip: 12(10) + 18(5) + 21(10) + 17(5) = 120 + 90 + 210 + 85 = <b>505</b>.',
+    '<b>Meaning.</b> ∫<sub>0</sub><sup>30</sup> v(t) dt is the car\'s change in position over the 30 seconds. The speed is positive, so the car traveled about <b>505 meters</b> in those 30 seconds. Units: (m/s) × s = m.',
+    '<b>(b) Trapezoids.</b> Average the two ends of each strip: 10(12 + 18)/2 + 5(18 + 21)/2 + 10(21 + 17)/2 + 5(17 + 14)/2 = 150 + 97.5 + 190 + 77.5 = <b>515 meters</b>.',
+    '<b>(c) Over or under?</b> It cannot be determined. A left sum is low where v increases and high where it decreases, and these readings rise then fall. Without knowing v is monotonic on the whole interval, you cannot say.']}],
+ ['Using the wrong number of heights: n strips use n heights, not n + 1 (except in the trapezoid rule\'s endpoints).','Using Δx = b − a instead of (b − a)/n.','With a table of uneven times, using one Δx for every strip.','Calling a left sum an overestimate for an increasing function. It underestimates.','Forgetting that area below the axis counts negative in a definite integral.','Dropping units: (liters/minute) × minutes = liters.'],
  ('Which sum is high or low?',['For an <b>increasing</b> function, left sums underestimate and right sums overestimate; for a <b>decreasing</b> function it reverses. The trapezoid rule overestimates when f is concave up (the chords lie above the curve) and underestimates when concave down; the midpoint rule does the opposite. Averaging left and right sums gives the trapezoid sum.']),
  [('For a decreasing function, a right Riemann sum is',['an underestimate','an overestimate','exact','impossible to tell'],0,'On a decreasing function the right edge is the lowest point of each strip, so the rectangles are under the curve.')])
 

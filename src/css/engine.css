@@ -278,10 +278,34 @@ details > p,details > div{margin:0}
 
 .example{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px}
 .example h3{font:500 12px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--cx);margin:0}
-.example .prob{margin:0;font-weight:500;max-width:75ch}
+.example .prob{display:block;margin:0;font-weight:500;max-width:75ch}
 .exgrid{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:18px;align-items:start}
 @media (max-width:720px){.exgrid{grid-template-columns:minmax(0,1fr)}}
 .figs{display:flex;flex-direction:column;gap:10px}
+/* worked-example figures: layers appear with the steps (data-s = step number) */
+.fbdfig{margin:0;background:var(--sunk);border-radius:10px;padding:8px}
+.fbdfig figcaption{font-size:12.5px;color:var(--muted);padding:4px 4px 2px}
+.stepfig svg{display:block;width:100%;max-width:260px;margin:0 auto;height:auto}
+.stepfig [hidden]{display:none}
+.stepfig svg .fbnew{animation:fb-in .7s var(--ease-out) backwards}
+.fbdnotes{display:flex;flex-wrap:wrap;gap:4px;padding:6px 2px 0}
+.fbdnotes span{font:500 11px/1.35 var(--f-mono);padding:3px 7px;border-radius:6px;background:var(--surface);border:1px solid var(--line);color:var(--ink);opacity:.6;transition:opacity var(--d-2)}
+.fbdnotes span.cur{opacity:1;box-shadow:0 0 0 2px color-mix(in srgb,currentColor 30%,transparent)}
+.fbdnotes .f{color:var(--cx);border-color:color-mix(in srgb,var(--cx) 40%,var(--line))}
+.fbdnotes .d{color:var(--cv);border-color:color-mix(in srgb,var(--cv) 40%,var(--line))}
+.fbdnotes .dd{color:var(--ca);border-color:color-mix(in srgb,var(--ca) 40%,var(--line))}
+.fbdnotes .tan{color:var(--hot);border-color:color-mix(in srgb,var(--hot) 40%,var(--line))}
+.fbdnotes .area{color:var(--ce);border-color:color-mix(in srgb,var(--ce) 40%,var(--line))}
+.fbdnotes .fbnew{animation:pop-note .5s var(--ease-spring) backwards}
+@keyframes fb-in{from{opacity:0}}
+@keyframes pop-note{from{opacity:0;transform:scale(.8)}}
+@media (prefers-reduced-motion:reduce){.stepfig svg .fbnew,.fbdnotes .fbnew{animation:none}}
+/* AP-style data tables inside a worked example */
+.dtab{overflow-x:auto;margin:2px 0}
+.dtab table{min-width:0;width:auto;font:500 13.5px var(--f-mono);border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.dtab th,.dtab td{padding:6px 12px;border:1px solid var(--line);text-align:center;white-space:nowrap}
+.dtab thead th,.dtab tbody th{background:var(--sunk);font:600 12.5px var(--f-mono);color:var(--ink);letter-spacing:0}
+.dtab caption{caption-side:top;text-align:left;font:500 12px var(--f-mono);color:var(--muted);padding-bottom:4px}
 .exsteps{margin:0 0 10px;padding-left:22px;display:flex;flex-direction:column;gap:10px}
 .exsteps li{animation:stepin .25s ease}
 @keyframes stepin{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}

@@ -1,18 +1,44 @@
 /* ---------------- Optimization ---------------- */
 (function optim(){
   const cv=$('#op-canvas');if(!cv)return;
-  const V0=355;
-  const C={fence:{f:x=>x*(100-2*x),lo:1,hi:49,def:20,xr:[0,50],yr:[-100,1400],max:true,form:'A = x(100 − 2x)   (x = sides ⟂ river; the side along the river is 100 − 2x)',dim:x=>`sides ${fmt(x,2)} ft, ${fmt(100-2*x,2)} ft, ${fmt(x,2)} ft`,u:'ft²',xl:'x (ft)'},
-    box:{f:x=>x*(12-2*x)**2,lo:.2,hi:5.8,def:1,xr:[0,6],yr:[-20,150],max:true,form:'V = x(12 − 2x)²   (cut an x × x square from each corner of a 12 × 12 sheet)',dim:x=>`height ${fmt(x,2)}, base ${fmt(12-2*x,2)} × ${fmt(12-2*x,2)}`,u:'cm³',xl:'x (cm)'},
-    can:{f:r=>2*Math.PI*r*r+2*V0/r,lo:1,hi:8,def:2,xr:[0,9],yr:[0,600],max:false,form:'S = 2πr² + 2V/r   (can of fixed volume V = 355 cm³: least metal)',dim:r=>`radius ${fmt(r,2)}, height ${fmt(V0/(Math.PI*r*r),2)}`,u:'cm²',xl:'r (cm)'}};
-  let k='fence',x=3;
-  const best=()=>{const A=C[k];return A.max?argmax(A.f,A.lo,A.hi):argmin(A.f,A.lo,A.hi);};
-  const sim=glab('op-canvas',{view:()=>({xr:C[k].xr,yr:C[k].yr,xlabel:C[k].xl}),draw(ctx,P){const A=C[k],b=best();curveD(ctx,P,A.f,Math.max(A.xr[0],.01),A.xr[1],T.cx,2.8,300);const m=D(A.f,x),y=A.f(x);line(ctx,P,x-1.5,y-1.5*m,x+1.5,y+1.5*m,T.hot,2);dot(ctx,P.X(x),P.Y(y),6.5,T.hot,T.surface);dot(ctx,P.X(b),P.Y(A.f(b)),6,T.ce,T.ink);vline(ctx,P,b,T.muted,[3,4]);}});
-  function upd(){const A=C[k],b=best(),y=A.f(x);setText('op-form',A.form);setText('op-val',`${fmt(y,3)} ${A.u}  (slope ${fmt(D(A.f,x),2)})`);setText('op-best',`x = ${fmt(b,3)}, ${A.max?'max':'min'} = ${fmt(A.f(b),3)} ${A.u}`);setText('op-dim',A.dim(x));sim.render();}
-  function setR(){const A=C[k],el=$('#op-x');el.min=A.lo;el.max=A.hi;el.value=A.def;x=A.def;}
-  bindRange('op-x',v=>nz(v),v=>{x=v;upd();});segBind('op-fn','k',v=>{k=v;setR();upd();});setR();upd();drawers.optim=()=>sim.render();
+  /* each problem depends on one fixed amount p (op-c): fencing length, sheet width or can volume */
+  const C={fence:{c:[40,200,10,100],cl:'Fencing available (ft)',f:p=>x=>x*(p-2*x),rng:p=>[p/200,p/2-p/200,p/200,p/5],best:p=>p/4,yr:p=>[-p*p/80,p*p/8*1.15],max:true,form:p=>`A = x(${p} − 2x)   (x = the two sides ⟂ the river; the side along the river is ${p} − 2x)`,dim:(p,x)=>`sides ${fmt(x,2)} ft, ${fmt(p-2*x,2)} ft, ${fmt(x,2)} ft`,u:'ft²',xl:'x (ft)'},
+    box:{c:[6,30,1,12],cl:'Sheet width a (cm)',f:p=>x=>x*(p-2*x)**2,rng:p=>[p/600,p/2-p/600,p/600,p/12],best:p=>p/6,yr:p=>[-2*p**3/27*.12,2*p**3/27*1.15],max:true,form:p=>`V = x(${p} − 2x)²   (cut an x × x square from each corner of a ${p} × ${p} sheet)`,dim:(p,x)=>`height ${fmt(x,2)}, base ${fmt(p-2*x,2)} × ${fmt(p-2*x,2)}`,u:'cm³',xl:'x (cm)'},
+    can:{c:[100,1000,5,355],cl:'Volume V (cm³)',f:p=>r=>2*Math.PI*r*r+2*p/r,rng:p=>{const b=Math.cbrt(p/(2*Math.PI));return [Math.round(b*25)/100,Math.round(b*240)/100,.01,Math.round(b*60)/100];},best:p=>Math.cbrt(p/(2*Math.PI)),yr:p=>{const b=Math.cbrt(p/(2*Math.PI));return [0,18*Math.PI*b*b];},max:false,form:p=>`S = 2πr² + 2V/r   (closed can holding V = ${p} cm³: least metal)`,dim:(p,r)=>`radius ${fmt(r,2)}, height ${fmt(p/(Math.PI*r*r),2)} cm`,u:'cm²',xl:'r (cm)'}};
+  let k='fence',x=20,p=100;
+  const F=()=>C[k].f(p);
+  const sim=glab('op-canvas',{view:()=>{const A=C[k],[lo,hi]=A.rng(p);return {xr:[0,hi*1.04],yr:A.yr(p),xlabel:A.xl};},draw(ctx,P){const A=C[k],f=F(),b=A.best(p),[lo,hi]=A.rng(p);curveD(ctx,P,f,Math.max(lo*.5,.001),hi,T.cx,2.8,300);const m=D(f,x),y=f(x),dx=hi*.08;line(ctx,P,x-dx,y-dx*m,x+dx,y+dx*m,T.hot,2.2);dot(ctx,P.X(x),P.Y(y),6.5,T.cx,T.surface);dot(ctx,P.X(b),P.Y(f(b)),6,T.ce,T.ink);vline(ctx,P,b,T.muted,[3,4]);}});
+  /* the real object, drawn to scale for the current x */
+  const scene=sim2d($('#op-scene'),{h:w=>clamp(w*.36,190,260),draw(ctx,w,h){const pad=18;
+    if(k==='fence'){const y=p-2*x,s=Math.min((w-2*pad)/(p/2),(h-56)/(p/4)),W=y*s,H=x*s,x0=w/2-W/2,y0=34;
+      ctx.fillStyle=alpha(T.cx,.18);ctx.fillRect(0,4,w,24);label(ctx,'river (no fence needed)',w/2,16,T.cx,'center','middle',MONO);
+      ctx.fillStyle=alpha(T.ce,.3);ctx.fillRect(x0,y0,W,H);ctx.strokeStyle=T.ink;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x0,y0+H);ctx.lineTo(x0+W,y0+H);ctx.lineTo(x0+W,y0);ctx.stroke();
+      label(ctx,fmt(x,1),x0-6,y0+H/2,T.cx,'right','middle',MONO);label(ctx,fmt(x,1),x0+W+6,y0+H/2,T.cx,'left','middle',MONO);label(ctx,fmt(y,1)+' ft',x0+W/2,y0+H+12,T.cx,'center','middle',MONO);if(H>18&&W>60)label(ctx,fmt(x*y,0)+' ft²',x0+W/2,y0+H/2,T.ink,'center','middle',MONO);}
+    else if(k==='box'){const a=p,b=a-2*x,s=Math.min((w/2-2*pad)/a,(h-40)/a),x0=pad,y0=(h-a*s)/2,c=x*s;
+      ctx.fillStyle=alpha(T.ce,.18);ctx.fillRect(x0,y0,a*s,a*s);ctx.fillStyle=T.surface;[[0,0],[a-x,0],[0,a-x],[a-x,a-x]].forEach(([i,j])=>{ctx.fillRect(x0+i*s,y0+j*s,c,c);});
+      ctx.strokeStyle=T.ink;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(x0+c,y0);ctx.lineTo(x0+a*s-c,y0);ctx.lineTo(x0+a*s-c,y0+c);ctx.lineTo(x0+a*s,y0+c);ctx.lineTo(x0+a*s,y0+a*s-c);ctx.lineTo(x0+a*s-c,y0+a*s-c);ctx.lineTo(x0+a*s-c,y0+a*s);ctx.lineTo(x0+c,y0+a*s);ctx.lineTo(x0+c,y0+a*s-c);ctx.lineTo(x0,y0+a*s-c);ctx.lineTo(x0,y0+c);ctx.lineTo(x0+c,y0+c);ctx.closePath();ctx.stroke();
+      ctx.save();ctx.setLineDash([4,4]);ctx.strokeStyle=T.muted;ctx.strokeRect(x0+c,y0+c,b*s,b*s);ctx.restore();label(ctx,'cut x = '+fmt(x,2),x0+c/2,y0-8,T.cx,'left','middle',MONO);
+      /* folded box in an oblique view */
+      const bx=w*.62,by=h-24,u=b*s*1.3,d=u*.45,hh=x*s*1.3;ctx.lineWidth=2;ctx.strokeStyle=T.ink;
+      const P0=[bx,by],P1=[bx+u,by],P2=[bx+u+d,by-d*.6],P3=[bx+d,by-d*.6],up=q=>[q[0],q[1]-hh];
+      ctx.fillStyle=alpha(T.ce,.28);[[P0,P1,up(P1),up(P0)],[P1,P2,up(P2),up(P1)]].forEach(f=>{ctx.beginPath();f.forEach((q,i)=>i?ctx.lineTo(...q):ctx.moveTo(...q));ctx.closePath();ctx.fill();ctx.stroke();});
+      ctx.save();ctx.setLineDash([4,4]);ctx.strokeStyle=T.muted;ctx.beginPath();ctx.moveTo(...up(P0));ctx.lineTo(...up(P3));ctx.lineTo(...up(P2));ctx.moveTo(...P3);ctx.lineTo(...up(P3));ctx.stroke();ctx.restore();
+      label(ctx,`${fmt(b,2)} × ${fmt(b,2)} × ${fmt(x,2)}`,bx+u/2,by+12,T.cx,'center','middle',MONO);label(ctx,'V = '+fmt(x*b*b,1)+' cm³',bx+u/2,Math.max(12,by-d*.6-hh-12),T.ink,'center','middle',MONO);}
+    else{const r=x,hgt=p/(Math.PI*r*r),rb=C.can.best(p),rmax=C.can.rng(p)[1],s=Math.min((h-50)/(4.5*rb),(w-2*pad)/(2*rmax+2)),R=r*s,H=hgt*s,cx=w/2,base=h-14,ry=R*.28,top=Math.max(ry+4,base-H);
+      const cut=base-H<ry+4;ctx.fillStyle=alpha(T.ce,.22);ctx.fillRect(cx-R,top,2*R,base-top);ctx.beginPath();ctx.ellipse(cx,base,R,ry,0,0,Math.PI);ctx.fill();
+      ctx.strokeStyle=T.ink;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(cx-R,top);ctx.lineTo(cx-R,base);ctx.ellipse(cx,base,R,ry,0,Math.PI,0,true);ctx.lineTo(cx+R,top);ctx.stroke();
+      ctx.fillStyle=alpha(T.ce,.4);ctx.beginPath();ctx.ellipse(cx,top,R,ry,0,0,6.283);ctx.fill();ctx.stroke();
+      ctx.strokeStyle=T.cx;ctx.beginPath();ctx.moveTo(cx,top);ctx.lineTo(cx+R,top);ctx.stroke();label(ctx,'r = '+fmt(r,2),cx+R/2,top-ry-8,T.cx,'center','middle',MONO);
+      if(cut)label(ctx,'(too tall to show)',cx,top+ry+14,T.muted,'center','middle',MONO);label(ctx,'h = '+fmt(hgt,2),cx+R+8,(top+base)/2,T.cx,'left','middle',MONO);label(ctx,hgt>2*r*1.03?'taller than wide':hgt<2*r*.97?'wider than tall':'height ≈ diameter',cx-R-8,(top+base)/2,T.muted,'right','middle',MONO);}}});
+  function upd(){const A=C[k],f=F(),b=A.best(p),y=f(x);setText('op-form',A.form(p));const m0=D(f,x);setText('op-val',`${fmt(y,3)} ${A.u}  (slope ${fmt(Math.abs(m0)<1e-6?0:m0,2)})`);setText('op-best',`x = ${fmt(b,3)}, ${A.max?'max':'min'} = ${fmt(f(b),3)} ${A.u}`);setText('op-dim',A.dim(p,x));sim.render();scene.render();}
+  const lbl=(id,t)=>{const s=$(`label[for=${id}] span`);if(s)s.textContent=t;};
+  function setX(keep){const A=C[k],el=$('#op-x'),[lo,hi,st,d]=A.rng(p);el.min=lo;el.max=hi;el.step=st;if(!keep)el.value=d;x=clamp(+el.value,lo,hi);el.value=x;$('#op-x-out').textContent=nz(x);lbl('op-x',k==='can'?'r':'x');}
+  function setC(){const A=C[k],el=$('#op-c'),[a,b,st,d]=A.c;el.min=a;el.max=b;el.step=st;el.value=d;p=d;$('#op-c-out').textContent=nz(p);lbl('op-c',A.cl);}
+  bindRange('op-x',v=>nz(v),v=>{x=v;upd();});bindRange('op-c',v=>nz(v),v=>{p=v;setX(true);upd();});segBind('op-fn','k',v=>{k=v;setC();setX();upd();});setC();setX();upd();drawers.optim=()=>{sim.render();scene.render();};
   KEYS['op-canvas']=['Slide x. The gold dot is the best value; the orange tangent is flat there.',[['cx','the quantity to optimize'],['hot','tangent at your x'],['ce','the optimum']]];
-  TIPS['op-x']=el=>{const A=C[k],m=D(A.f,+el.value);return `Slope ${fmt(m,2)}: ${Math.abs(m)<.5?'nearly flat, close to the optimum.':m>0?'still rising: moving right '+(A.max?'helps':'hurts')+'.':'falling: moving left '+(A.max?'helps':'hurts')+'.'}`;};
+  KEYS['op-scene']=['The object for your x, drawn to scale. Change the fixed amount to see the best shape scale up or down.',[['ce','the area, box or metal being optimized'],['cx','the dimensions']]];
+  TIPS['op-x']=el=>{const A=C[k],m0=D(F(),+el.value),m=Math.abs(m0)<1e-6?0:m0;return `Slope ${fmt(m,2)}: ${Math.abs(m)<.5?'nearly flat, close to the optimum.':m>0?'still rising: moving right '+(A.max?'helps':'hurts')+'.':'falling: moving left '+(A.max?'helps':'hurts')+'.'}`;};
+  TIPS['op-c']=el=>`Fixed amount ${nz(+el.value)}. The best x moves with it: P/4 for the fence, a/6 for the box, (V/2π)^(1/3) for the can.`;
   GLOSS['objective function']='The quantity you want to maximize or minimize.';GLOSS['constraint']='A condition linking the variables (a fixed perimeter or volume).';
   TT.optim='Have students write the constraint and objective before touching the graph, and justify the answer with a derivative test.';
 })();

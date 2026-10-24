@@ -1,19 +1,20 @@
 /* ---------------- Accumulation & Riemann sums ---------------- */
 (function accum(){
   const cv=$('#ac-canvas');if(!cv)return;
-  const C={a:{f:x=>x*x,a:0,b:3},b:{f:Math.sin,a:0,b:Math.PI},c:{f:x=>4-x*x,a:0,b:3},d:{f:Math.exp,a:0,b:2}};
-  let k='a',m='L',n=4;
-  const yr=()=>{const A=C[k];let lo=0,hi=0;for(let i=0;i<=100;i++){const v=A.f(A.a+(A.b-A.a)*i/100);lo=Math.min(lo,v);hi=Math.max(hi,v);}const p=(hi-lo)*.12;return [lo-p,hi+p];};
-  const sim=glab('ac-canvas',{view:()=>({xr:[C[k].a-.15,C[k].b+.25],yr:yr()}),draw(ctx,P){const A=C[k],h=(A.b-A.a)/n;ctx.save();clip(ctx,P);
+  const C={a:{f:x=>x*x,a:0,b:3,bmax:3},b:{f:Math.sin,a:0,b:Math.PI,bmax:2*Math.PI},c:{f:x=>4-x*x,a:0,b:3,bmax:3},d:{f:Math.exp,a:0,b:2,bmax:2}};
+  let k='a',m='L',n=4,b=3;
+  const yr=()=>{const A=C[k];let lo=0,hi=0;for(let i=0;i<=100;i++){const v=A.f(A.a+(A.bmax-A.a)*i/100);lo=Math.min(lo,v);hi=Math.max(hi,v);}const p=(hi-lo)*.12;return [lo-p,hi+p];};
+  const sim=glab('ac-canvas',{view:()=>({xr:[C[k].a-.15,C[k].bmax+.25],yr:yr()}),draw(ctx,P){const A=C[k],h=(b-A.a)/n;ctx.save();clip(ctx,P);
       for(let i=0;i<n;i++){const x0=A.a+i*h,x1=x0+h;const col=T.ce;let hgt=m==='L'?A.f(x0):m==='R'?A.f(x1):A.f(x0+h/2);
         if(m==='T'){const y0=A.f(x0),y1=A.f(x1);ctx.beginPath();ctx.moveTo(P.X(x0),P.Y(0));ctx.lineTo(P.X(x0),P.Y(y0));ctx.lineTo(P.X(x1),P.Y(y1));ctx.lineTo(P.X(x1),P.Y(0));ctx.closePath();ctx.fillStyle=alpha((y0+y1)<0?T.ca:col,.35);ctx.fill();ctx.strokeStyle=alpha((y0+y1)<0?T.ca:col,.9);ctx.lineWidth=n>30?.6:1.2;ctx.stroke();}
         else{ctx.fillStyle=alpha(hgt<0?T.ca:col,.35);ctx.strokeStyle=alpha(hgt<0?T.ca:col,.9);ctx.lineWidth=n>30?.6:1.2;ctx.beginPath();ctx.rect(P.X(x0),Math.min(P.Y(0),P.Y(hgt)),P.X(x1)-P.X(x0),Math.abs(P.Y(hgt)-P.Y(0)));ctx.fill();ctx.stroke();}}
-      ctx.restore();curveD(ctx,P,A.f,A.a-.15,A.b+.25,T.cx,2.8,400);}});
-  function upd(){const A=C[k],s=riemann(A.f,A.a,A.b,n,m),ex=integ(A.f,A.a,A.b,2000);setText('ac-sum',fmt(s,4));setText('ac-ex',fmt(ex,4));setText('ac-err',fmt(s-ex,4));
+      ctx.restore();curveD(ctx,P,A.f,A.a-.15,A.bmax+.25,T.cx,2.8,400);vline(ctx,P,b,T.muted,[4,4]);label(ctx,'b',P.X(b)+5,P.box.y+10,T.muted,'left','middle',MONO);}});
+  function upd(){const A=C[k],s=riemann(A.f,A.a,b,n,m),ex=integ(A.f,A.a,b,2000);setText('ac-sum',fmt(s,4));setText('ac-ex',fmt(ex,4));setText('ac-err',fmt(s-ex,4));
     setText('ac-note',Math.abs(s-ex)<2e-3*(1+Math.abs(ex))?'essentially exact':s>ex?'overestimate':'underestimate');sim.render();}
-  bindRange('ac-n',v=>String(v),v=>{n=v;upd();});segBind('ac-fn','k',v=>{k=v;upd();});segBind('ac-m','k',v=>{m=v;upd();});upd();drawers.accum=()=>sim.render();
+  function setB(){const A=C[k],el=$('#ac-b');el.min=.25;el.max=A.bmax;el.value=A.b;b=A.b;$('#ac-b-out').textContent=fmt(b,3);}
+  bindRange('ac-n',v=>String(v),v=>{n=v;upd();});bindRange('ac-b',v=>fmt(v,3),v=>{b=v;upd();});segBind('ac-fn','k',v=>{k=v;setB();upd();});segBind('ac-m','k',v=>{m=v;upd();});setB();upd();drawers.accum=()=>sim.render();
   KEYS['ac-canvas']=['Choose a method and n. Gold rectangles (or trapezoids) add up to the estimate; pink ones lie below the axis and count negative.',[['cx','the rate f(x)'],['ce','strips: rate × width'],['ca','area below the axis']]];
-  TIPS['ac-n']=el=>`n = ${el.value} strips, each ${fmt((C[k].b-C[k].a)/el.value,3)} wide. More strips → a better estimate.`;
+  TIPS['ac-n']=el=>`n = ${el.value} strips, each ${fmt((b-C[k].a)/el.value,3)} wide. More strips → a better estimate.`;TIPS['ac-b']=el=>`Accumulate from ${C[k].a} to b = ${fmt(+el.value,3)}. Where the rate is negative, sliding b right makes the total go down.`;
   GLOSS['Riemann sum']='A sum of rate × width over thin strips; it estimates the definite integral.';GLOSS['definite integral']='The limit of Riemann sums: net signed area under f from a to b.';
   TT.accum='Ask students to say, before changing n, whether each method over- or under-estimates for the chosen function.';
 })();

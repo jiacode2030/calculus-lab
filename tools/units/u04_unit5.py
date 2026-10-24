@@ -81,23 +81,59 @@ mod('sketch','Connecting f, f′ and f″',
  ('Justifications that earn the point',['"f has a relative maximum at x = c because f′ changes from positive to negative at x = c." "f has a point of inflection at x = c because f″ changes sign at x = c." Name the derivative and the sign change.']),
  [('Where f′ has a local maximum, f has',['an inflection point','a local maximum','a local minimum','a vertical tangent'],0,'f′ has a maximum there, so f″ changes from + to −: the concavity of f changes.')])
 
+# ---- figures for Optimization
+_P = Plot((0, 54), (0, 1500), (30, 134, 212, 86))
+_fence_base = (rect(20, 8, 220, 22, 'f', .22) + txt(130, 23, 'river', 'f', 11, w=500) + ln(55, 32, 205, 32, 'mut', 1.5, '4 4')
+               + ln(55, 32, 55, 107, 'ink', 3) + ln(55, 107, 205, 107, 'ink', 3) + ln(205, 32, 205, 107, 'ink', 3)
+               + _P.axes((25, 50), (1250,), 'x', 'A'))
+_fence = fig(_fence_base, [
+    (1, txt(45, 74, 'x', 'f', 14, 'end') + txt(215, 74, 'x', 'f', 14, 'start') + txt(130, 122, 'y = 100 − 2x', 'f', 12), '2x + y = 100', 'f'),
+    (2, rect(55, 32, 150, 75, 'area', .3) + txt(130, 74, 'A = xy', 'ink', 13) + _P.curve(lambda x: x * (100 - 2 * x), 0, 50), 'A = x(100 − 2x)', 'area'),
+    (3, _P.seg(13, 1250, 37, 1250, 'tan', 2.6), 'A′ = 100 − 4x = 0', 'd'),
+    (4, '', 'A″ = −4 < 0: a max', 'dd'),
+    (5, _P.dot(25, 1250, '1250 ft²', 'tan', 0, 18), 'x = 25, y = 50', 'tan')],
+    'Top: the pen seen from above. Bottom: the area A(x); the best x is where the tangent is flat.', 244)
+def _cyl(cx, base, r, h, c='ink', fill='area', op=0, dash=''):
+    ry = r * .28; top = base - h
+    sd = f'<path d="M{n(cx - r)},{n(top)} L{n(cx - r)},{n(base)} A{n(r)},{n(ry)} 0 0 0 {n(cx + r)},{n(base)} L{n(cx + r)},{n(top)}" style="fill:{col(fill)};fill-opacity:{op};stroke:{col(c)};stroke-width:2' + (f';stroke-dasharray:{dash}' if dash else '') + '"/>'
+    return sd + ell(cx, top, r, ry, fill, op * 1.6, c, 2, dash)
+_can_base = ln(10, 216, 250, 216, 'mut', 1.5) + _cyl(70, 215, 42, 84)
+_can = fig(_can_base, [
+    (1, ln(70, 131, 112, 131, 'f', 2) + txt(91, 125, 'r', 'f', 13) + ln(122, 131, 122, 215, 'f', 1.5) + txt(127, 177, 'h', 'f', 13, 'start'), 'πr²h = 355', 'f'),
+    (2, _cyl(70, 215, 42, 84, 'ink', 'area', .25), 'S = 2πr² + 710/r', 'area'),
+    (3, txt(70, 112, 'r ≈ 3.84', 'tan', 12), 'S′ = 4πr − 710/r² = 0', 'd'),
+    (4, txt(70, 244, 'h ≈ 7.67 = 2r', 'tan', 12), 'S″ > 0: a min', 'dd'),
+    (5, _cyl(190, 215, 33.5, 134, 'tan', 'tan', .08, '5 4') + txt(190, 64, 'r ≈ 3.05', 'tan', 12) + txt(190, 244, 'h ≈ 12.2 = 4r', 'tan', 12), 'lids cost 2×: h = 4r', 'tan')],
+    'Drawn to scale. Left: the can with the least metal. Right (dashed): the cheapest can when the lids cost twice as much.', 252)
+
 mod('optim','Optimization',
  'Biggest area, least material, fastest time: set up a formula for the quantity, find where its derivative is zero, and check it is the best.',
  ['An optimization problem has four steps. <b>Draw</b> and name the variables. Write the <b>objective</b> (the thing to maximize or minimize) and a <b>constraint</b> (what is fixed). Use the constraint to write the objective in <b>one variable</b>. Then <b>differentiate, set to zero, solve</b>, and <b>justify</b> that you have a max or min (first or second derivative test, or the candidates test on a closed interval).',
-  'Do not forget the domain: dimensions are positive, and endpoints can be the answer. In the lab you will see the objective graph; the best value sits at a peak or valley of the graph, where its derivative (green) crosses zero.'],
+  'Do not forget the domain: dimensions are positive, and endpoints can be the answer. In the lab the picture and the graph move together: the best value sits at a peak or valley of the graph, where the orange tangent is flat.'],
  ('we found extremes of given formulas','how to build the formula from a story','fences, boxes, cans, distance and cost','the optimization procedure'),
  [('draw · objective · constraint · one variable','setup'),('f′(x) = 0','critical points'),('justify with a test','max or min, and domain')],
- [lab('op-lab','Find the best x',canvas='op-canvas',aria='Graph of the quantity to optimize as a function of one variable, with its derivative and a marker at the current value.',
+ [lab('op-lab','Find the best x',canvas='op-scene',aria='A picture of the chosen object (fenced pen, folded box or can) drawn to scale for the current x.',
    seg=('op-fn','Problem',[('fence','Fence (river on one side)'),('box','Open box from a sheet'),('can','Can with least metal')]),
-   ctl=[('op-x','x',.5,10,.05,3)],pre='<p class="small" id="op-form" style="margin:0"></p>',out=[('op-val','objective at this x','x'),('op-best','best x and value','v'),('op-dim','the dimensions','')])],
- [('Choose the fence problem. Slide x to find the largest area. <button type="button" class="btn link" data-show=\'' + show(["click","#op-fn [data-k=fence]"],["#op-x",25]) + '\'>x = 25</button>','' ,'The maximum area is 1250 ft² at x = 25 (so the other side is 50). The derivative A′ = 100 − 4x is zero there and changes from + to −.'),
-  ('Choose the open box. What size square cut gives the largest volume? <button type="button" class="btn link" data-show=\'' + show(["click","#op-fn [data-k=box]"],["#op-x",2]) + '\'>x = 2</button>','' ,'x = 2 gives V = 2(12 − 4)² = 128 cm³, the maximum for a 12 cm sheet. Any larger cut leaves too little base.')],
- ('100 ft of fence encloses a rectangular pen against a straight river (no fence on the river side). Find the dimensions of the largest area.',[
+   canvas2=('op-canvas','Graph of the quantity to optimize as a function of one variable, with a tangent line and a marker at the current value.'),
+   ctl=[('op-x','x',.5,50,.5,20),('op-c','Fixed amount',40,200,10,100)],pre='<p class="small" id="op-form" style="margin:0"></p>',out=[('op-val','objective at this x','x'),('op-best','best x and value','v'),('op-dim','the dimensions','')])],
+ [('Choose the fence problem. Slide x to find the largest area.',show(["click","#op-fn [data-k=fence]"],["#op-c",100],["#op-x",25]),'The maximum area is 1250 ft² at x = 25 (so the other side is 50). The derivative A′ = 100 − 4x is zero there and changes from + to −.'),
+  ('Choose the open box. What size square cut gives the largest volume?',show(["click","#op-fn [data-k=box]"],["#op-c",12],["#op-x",2]),'x = 2 gives V = 2(12 − 4)² = 128 cm³, the maximum for a 12 cm sheet. Any larger cut leaves too little base; any smaller one makes the box too shallow.'),
+  ('Choose the can and find the radius with the least metal. Compare its height with its width.',show(["click","#op-fn [data-k=can]"],["#op-c",355],["#op-x",3.84]),'r ≈ 3.84 cm and h ≈ 7.67 cm, so the height equals the diameter. That is true for every volume: setting S′ = 0 gives r³ = V/(2π), and then h = V/(πr²) = 2r.'),
+  ('Back to the fence. Change the fixed amount of fencing to 200 ft and find the best x again. Then try 60 ft.',show(["click","#op-fn [data-k=fence]"],["#op-c",200],["#op-x",50]),'The best x is 50 for 200 ft and 15 for 60 ft: always P/4, with the long side P/2. The constraint changes the numbers but not the shape of the answer.'),
+  ('Choose the box and make the sheet 30 cm wide. Where is the best cut now?',show(["click","#op-fn [data-k=box]"],["#op-c",30],["#op-x",5]),'x = 5 = 30/6, giving V = 5·20² = 2000 cm³. For any a × a sheet the best cut is a/6, because V′ = (a − 2x)(a − 6x).')],
+ [('100 ft of fence encloses a rectangular pen against a straight river (no fence on the river side). Find the dimensions of the largest area.',[
   '<b>Variables.</b> Let x = the two sides perpendicular to the river, y = the side parallel. Constraint: 2x + y = 100, so y = 100 − 2x.',
   '<b>Objective.</b> A = x·y = x(100 − 2x) = 100x − 2x², with 0 &lt; x &lt; 50.',
   '<b>Differentiate.</b> A′ = 100 − 4x = 0, so x = 25.',
   '<b>Justify.</b> A″ = −4 &lt; 0, so x = 25 is a maximum.',
-  '<b>Answer.</b> x = 25 ft and y = 50 ft, giving the maximum area <b>1250 ft²</b>.']),
+  '<b>Answer.</b> x = 25 ft and y = 50 ft, giving the maximum area <b>1250 ft²</b>.'],_fence),
+  {'h':'Worked example 2: designing a soda can','fig':_can,
+   'prob':'A soda can is a closed cylinder that must hold 355 cm³ (12 fl oz). (a) What radius and height use the least aluminum? (b) The top and bottom are made of thicker metal and cost twice as much per cm² as the side. What radius and height make the cheapest can?',
+   'steps':['<b>Variables and constraint.</b> Radius r and height h in cm. The volume is fixed: πr²h = 355, so h = 355/(πr²).',
+    '<b>Objective in one variable.</b> Metal = two lids + side: S = 2πr² + 2πrh = 2πr² + 2πr·355/(πr²) = <b>2πr² + 710/r</b>, for r &gt; 0.',
+    '<b>Differentiate.</b> S′ = 4πr − 710/r² = 0 gives r³ = 710/(4π) = 355/(2π), so r = (355/(2π))<sup>1/3</sup> ≈ <b>3.84 cm</b>.',
+    '<b>Justify and finish (a).</b> S″ = 4π + 1420/r³ &gt; 0 for every r &gt; 0, so this is the minimum. h = 355/(π·3.84²) ≈ <b>7.67 cm</b>: the height equals the diameter.',
+    '<b>(b) Lids cost twice as much.</b> Cost (in side-metal units) C = 2·2πr² + 710/r = 4πr² + 710/r. C′ = 8πr − 710/r² = 0 gives r³ = 355/(4π), r ≈ <b>3.05 cm</b>, and h = 355/(πr²) ≈ <b>12.2 cm</b> = 4r. Costly lids push the design taller and narrower, which is the shape of the cans you see in stores.']}],
  ['Not using the constraint to reduce to one variable.','Forgetting to check endpoints or the domain.','Giving the optimal x when asked for the maximum value (or the reverse).','Not justifying that it is a max or min.','Mixing units, for example using a formula with radius when the problem gives diameter.'],
  ('Common setups',['<b>Perimeter fixed, maximize area:</b> the square wins. <b>Area fixed, minimize perimeter:</b> the square. <b>Volume fixed, minimize surface area of a can:</b> height = diameter. <b>Distance to a curve:</b> minimize the square of the distance (the same minimum, no square root).']),
  [('To maximize A = x(100 − 2x), you solve',['A′(x) = 0','A(x) = 0','A″(x) = 0','x = 100'],0,'Critical points of the objective are where its derivative is zero.')])

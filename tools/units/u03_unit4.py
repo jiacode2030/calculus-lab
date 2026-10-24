@@ -20,25 +20,57 @@ mod('motion','Derivatives in context & motion',
  ('Reading the story',['Positive velocity means moving in the positive direction; negative means the opposite. Where velocity changes sign the particle turns around. Where acceleration is zero velocity is momentarily constant (a maximum or minimum of v). The same logic reads any rate: if V(t) is volume, V′(t) is a flow rate, and V′ &gt; 0 means filling.']),
  [('v(t) = −4 and a(t) = −2 at some instant. The particle is',['speeding up','slowing down','at rest','turning around'],0,'Velocity and acceleration have the same sign (both negative), so speed is increasing.')])
 
+# ---- figures for Related rates
+_O, _s = (80, 205), 17
+_F, _Tp = (_O[0] + 6 * _s, _O[1]), (_O[0], _O[1] - 8 * _s)
+_lad_base = (ln(80, 205, 250, 205, 'mut', 2) + ln(80, 205, 80, 22, 'mut', 4) + ln(80, 195, 90, 195, 'mut', 1.2) + ln(90, 195, 90, 205, 'mut', 1.2)
+             + ln(*_Tp, *_F, 'f', 5))
+_lad = fig(_lad_base, [
+    (1, txt(131, 222, 'x', 'f', 14) + txt(92, 140, 'y', 'f', 14, 'start') + txt(142, 128, '10 ft', 'f', 12, 'start'), 'x² + y² = 100', 'f'),
+    (2, arr(182, 192, 222, 192, 'd') + txt(204, 182, 'dx/dt', 'd', 12) + arr(60, 69, 60, 110, 'd') + txt(56, 62, 'dy/dt', 'd', 12, 'end'), '2x·x′ + 2y·y′ = 0', 'd'),
+    (3, txt(131, 237, '6', 'ink', 12) + txt(92, 156, '8', 'ink', 12, 'start'), 'x = 6, y = 8', 'ink'),
+    (4, '', 'y′ = −(6/8)(2)', 'tan'),
+    (5, txt(54, 128, '1.5 ft/s', 'tan', 12, 'end') + txt(54, 142, 'down', 'tan', 12, 'end'), 'top falls 1.5 ft/s', 'tan')],
+    'The ladder (blue) is the hypotenuse. Its length stays 10 ft while x and y change.', 245)
+_lamp_base = (ln(8, 205, 252, 205, 'mut', 2) + ln(25, 205, 25, 70, 'ink', 4) + ln(25, 72, 36, 72, 'ink', 3) + circ(38, 74, 6, 'area', 1, 'ink', 1.5)
+              + ln(133, 205, 205, 205, 'ink', 5) + person(133, 205, 54))
+_lamp = fig(_lamp_base, [
+    (1, txt(79, 222, 'x', 'f', 14) + txt(169, 222, 's', 'f', 14) + txt(31, 140, '15 ft', 'ink', 11, 'start') + txt(146, 172, '6 ft', 'ink', 11, 'start') + ln(25, 212, 133, 212, 'f', 1.5) + ln(133, 212, 205, 212, 'f', 1.5, '4 3'), 'tip is at x + s', 'f'),
+    (2, poly([(38, 74), (25, 205), (205, 205)], 'area', .14) + poly([(133, 151), (133, 205), (205, 205)], 'area', .4) + ln(38, 74, 205, 205, 'area', 1.6, '5 4'), '15/(x + s) = 6/s', 'area'),
+    (3, arr(133, 132, 166, 132, 'd', '5 ft/s', off=(6, -12)), 's = (2/3)x, s′ = 10/3', 'd'),
+    (4, arr(205, 194, 238, 194, 'd', '', w=2.6) + txt(221, 186, 'tip', 'd', 11), 'tip: (5/3)(5) = 25/3', 'd'),
+    (5, '', 'x = 40 was never used', 'ink')],
+    'Not to scale. The light ray over the head makes two similar triangles that share the angle at the tip.', 230)
+
 mod('related','Related rates',
  'When two quantities are tied together by an equation and both change in time, their rates are tied together too.',
  ['A ladder slides down a wall. The foot moves out at a steady 2 ft/s, but the top does not move down at a steady rate: it starts slowly and speeds up. The lengths x and y are linked by <span class="m">x² + y² = L²</span>, so their <i>rates</i> are linked by the derivative of that equation with respect to time.',
   'The method: <b>draw and label</b>; write an <b>equation</b> that holds at every moment; <b>differentiate with respect to t</b> (chain rule on every variable); only <b>then substitute</b> the numbers of the moment you care about. Substituting before differentiating freezes the variables and gives 0.'],
  ('quantities changed one at a time with x','a way to connect the rates of several changing quantities','ladders, balloons, shadows, cones, flows','differentiate an equation in time'),
  [('d/dt [x²] = 2x · dx/dt','chain rule in t'),('differentiate first','then plug in'),('draw · equation · d/dt · substitute','the four steps')],
- [lab('rr-lab','Same equation, linked rates',canvas='rr-canvas',aria='A diagram of the chosen situation with a slider for the main variable and the linked rate computed beneath.',
-   seg=('rr-fn','Situation',[('lad','Ladder'),('cir','Ripple'),('sph','Balloon')]),
-   ctl=[('rr-v','Variable',1,9,.1,6)],pre='<p class="small" id="rr-form" style="margin:0"></p>',
+ [lab('rr-lab','Same equation, linked rates',canvas='rr-canvas',aria='A picture of the chosen situation (ladder, ripple, balloon, lamppost or cone tank) with arrows for the given rate and the rate you want.',
+   seg=('rr-fn','Situation',[('lad','Ladder'),('cir','Ripple'),('sph','Balloon'),('lamp','Lamppost shadow'),('cone','Cone tank')]),
+   ctl=[('rr-v','Variable',1,9,.1,6),('rr-g','Given rate',.5,6,.5,2)],pre='<p class="small" id="rr-form" style="margin:0"></p>',
    out=[('rr-given','given rate','x'),('rr-ans','the rate you want','v'),('rr-eq','the derivative','')])],
- [('On the ladder (10 ft, foot moving out at 2 ft/s) set x = 6. How fast is the top sliding down? <button type="button" class="btn link" data-show=\'' + show(["click","#rr-fn [data-k=lad]"],["#rr-v",6]) + '\'>Set it up for me</button>','' ,'y = 8, and dy/dt = −(x/y)(2) = −(6/8)(2) = −1.5 ft/s: the top drops 1.5 ft/s.'),
-  ('Now slide x up to 9. What happens to the speed of the top? <button type="button" class="btn link" data-show=\'' + show(["click","#rr-fn [data-k=lad]"],["#rr-v",9]) + '\'>Set it up for me</button>','' ,'y ≈ 4.36 and dy/dt ≈ −4.13 ft/s: it speeds up a lot as the ladder nears the floor, even though the foot moves at a steady 2 ft/s.')],
- ('A 10 ft ladder leans on a wall. Its foot slides away at 2 ft/s. How fast is the top sliding down when the foot is 6 ft from the wall?',[
+ [('On the ladder (10 ft, foot moving out at 2 ft/s) set x = 6. How fast is the top sliding down?','' + show(["click","#rr-fn [data-k=lad]"],["#rr-v",6],["#rr-g",2]),'y = 8, and dy/dt = −(x/y)(2) = −(6/8)(2) = −1.5 ft/s: the top drops 1.5 ft/s.'),
+  ('Now slide x up to 9. What happens to the speed of the top?',show(["click","#rr-fn [data-k=lad]"],["#rr-v",9],["#rr-g",2]),'y ≈ 4.36 and dy/dt ≈ −4.13 ft/s: it speeds up a lot as the ladder nears the floor, even though the foot moves at a steady 2 ft/s.'),
+  ('Keep x = 6 and double the given rate to 4 ft/s. Predict the new dy/dt before you look.',show(["click","#rr-fn [data-k=lad]"],["#rr-v",6],["#rr-g",4]),'dy/dt = −(6/8)(4) = −3 ft/s, exactly double. At a fixed moment the rate you want is proportional to the given rate; only the moment (x and y) sets the factor.'),
+  ('Choose the lamppost. Drag the person from 5 ft to 25 ft from the pole. Does the shadow grow faster when the person is far away?',show(["click","#rr-fn [data-k=lamp]"],["#rr-v",5],["#rr-g",5]),'No. The shadow grows at 10/3 ≈ 3.33 ft/s and its tip moves at 25/3 ≈ 8.33 ft/s wherever the person is, because similar triangles make s = (2/3)x, a straight-line relationship.'),
+  ('Choose the cone tank (water in at 2 ft³/min). Compare dh/dt at h = 2 ft and at h = 8 ft.',show(["click","#rr-fn [data-k=cone]"],["#rr-v",2],["#rr-g",2]),'About 0.995 ft/min at h = 2 but only 0.062 ft/min at h = 8, 16 times slower: the surface is 4 times wider, so its area is 16 times bigger, and the same water spreads over it.')],
+ [('A 10 ft ladder leans on a wall. Its foot slides away at 2 ft/s. How fast is the top sliding down when the foot is 6 ft from the wall?',[
   '<b>Draw and equation.</b> x = distance of foot from wall, y = height of top: x² + y² = 100.',
   '<b>Differentiate with respect to t.</b> 2x·dx/dt + 2y·dy/dt = 0, so dy/dt = −(x/y)·dx/dt.',
   '<b>Substitute the moment.</b> x = 6 gives y = √(100 − 36) = 8, and dx/dt = 2.',
   '<b>Compute.</b> dy/dt = −(6/8)(2) = −1.5.',
-  '<b>Answer.</b> The top is sliding down at <b>1.5 ft/s</b> (dy/dt = −1.5 ft/s).']),
- ['Substituting numbers before differentiating. Constants have derivative 0, so you lose the rates.','Forgetting dx/dt: 2x alone is not d/dt of x².','Treating a changing quantity as constant (for example the ladder\'s length is constant, but x and y are not).','Ignoring signs: a decreasing quantity has a negative rate. Report it with the right direction.','Dropping units. Rates have units of quantity per time.'],
+  '<b>Answer.</b> The top is sliding down at <b>1.5 ft/s</b> (dy/dt = −1.5 ft/s).'],_lad),
+  {'h':'Worked example 2: a shadow on the sidewalk','fig':_lamp,
+   'prob':'A street light is at the top of a 15 ft pole. A person 6 ft tall walks away from the pole at 5 ft/s. (a) How fast is the person\'s shadow getting longer when they are 40 ft from the pole? (b) How fast is the tip of the shadow moving?',
+   'steps':['<b>Draw and name.</b> x = distance from the pole to the person, s = length of the shadow. The tip of the shadow is x + s from the pole. Given: dx/dt = 5 ft/s.',
+    '<b>Equation that holds at every moment.</b> The big triangle (pole, ground to the tip) and the small one (person, shadow) are similar: 15/(x + s) = 6/s. Cross-multiply: 15s = 6x + 6s, so 9s = 6x and <b>s = (2/3)x</b>.',
+    '<b>(a) Differentiate in t.</b> ds/dt = (2/3)·dx/dt = (2/3)(5) = <b>10/3 ≈ 3.33 ft/s</b>.',
+    '<b>(b) The tip.</b> The tip is at D = x + s = (5/3)x, so dD/dt = (5/3)(5) = <b>25/3 ≈ 8.33 ft/s</b>. The tip outruns the person because the shadow is growing too.',
+    '<b>What about the 40 ft?</b> Neither answer depends on x: s is a constant multiple of x, so its rate is too. AP problems sometimes give a value you do not need; say so rather than forcing it in.']}],
+ ['Substituting numbers before differentiating. Constants have derivative 0, so you lose the rates.','Forgetting dx/dt: 2x alone is not d/dt of x².','Treating a changing quantity as constant (for example the ladder\'s length is constant, but x and y are not).','Ignoring signs: a decreasing quantity has a negative rate. Report it with the right direction.','Dropping units. Rates have units of quantity per time.','In shadow problems, using the distance to the person when the question asks about the tip of the shadow (x + s).'],
  ('A checklist',['Name every variable with units. Write what is constant and what changes. Use a relationship that is true at all times (Pythagoras, similar triangles, a volume or area formula), not just at the moment asked about. Differentiate. Substitute known values. Solve. Include units and a sentence.']),
  [('A circle\'s radius grows at 2 cm/s. dA/dt = ?',['2πr·(2)','πr²·(2)','2πr','2'],0,'A = πr², so dA/dt = 2πr·dr/dt = 2πr·2.')])
 
