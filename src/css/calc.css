@@ -120,11 +120,11 @@ table.data{min-width:0}
   --r:18px;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0B1516; --surface:#121F21; --sunk:#192A2C; --ink:#E4F4F5; --muted:#9DBCBF; --line:#26393C; --grid:#142224;
+  --bg:#0A1214; --surface:#14262A; --sunk:#1C3236; --ink:#EAF8F9; --muted:#AECBCE; --line:#3A5659; --grid:#142224;
   --accent:#5FD0DA; --accent-d:#93E0E7; --accent-soft:#173A3E; --accent-ink:#04191B; --blush:#35222A; --peach:#35291B;
   --shadow-1:0 1px 2px rgba(0,0,0,.4); --shadow-2:0 2px 4px rgba(0,0,0,.4),0 14px 30px rgba(0,0,0,.45);}}
 :root[data-theme="dark"]{
-  --bg:#0B1516; --surface:#121F21; --sunk:#192A2C; --ink:#E4F4F5; --muted:#9DBCBF; --line:#26393C; --grid:#142224;
+  --bg:#0A1214; --surface:#14262A; --sunk:#1C3236; --ink:#EAF8F9; --muted:#AECBCE; --line:#3A5659; --grid:#142224;
   --accent:#5FD0DA; --accent-d:#93E0E7; --accent-soft:#173A3E; --accent-ink:#04191B; --blush:#35222A; --peach:#35291B;
   --shadow-1:0 1px 2px rgba(0,0,0,.4); --shadow-2:0 2px 4px rgba(0,0,0,.4),0 14px 30px rgba(0,0,0,.45);}
 
@@ -311,3 +311,19 @@ h1{font-family:"STIX Two Text",Georgia,serif;font-weight:400;letter-spacing:-.01
   :root:not([data-theme="light"]) .nav .ind,.nav a[aria-current="page"]{background:var(--accent)}
   :root:not([data-theme="light"]) .nav a[aria-current="page"],.nav.has-ind a[aria-current="page"]{color:var(--accent-ink)}
 }
+
+/* Dark mode legibility: calmer "Try this" panel, steadier surfaces and borders */
+:root[data-theme="dark"] .try{background:color-mix(in srgb,var(--cx) 11%,var(--surface));border-color:color-mix(in srgb,var(--cx) 38%,var(--line))}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .try{background:color-mix(in srgb,var(--cx) 11%,var(--surface));border-color:color-mix(in srgb,var(--cx) 38%,var(--line))}
+}
+
+/* Pointer feel (shared with the Intulab landing page): a soft glow follows the mouse, module cards tilt toward it and light up. Mouse and trackpad only; off for reduced motion. */
+#ptr{position:fixed;left:0;top:0;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;pointer-events:none;z-index:0;opacity:0;transition:opacity .5s;
+  background:radial-gradient(circle,color-mix(in srgb,var(--accent,#5CB8FF) 12%,transparent),transparent 66%);will-change:transform}
+#ptr.on{opacity:1}
+@media (hover:hover) and (pointer:fine){
+  a.mod:hover{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-3px);
+    background-image:radial-gradient(220px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--accent,#5CB8FF) 15%,transparent),transparent 70%)}
+}
+@media (prefers-reduced-motion:reduce){#ptr{display:none}a.mod:hover{transform:translateY(-3px)}}
