@@ -25,7 +25,7 @@
 (function(){
   PROBS.push({id:'dv-def',topic:'deriv',title:'Derivative from the definition',gen(){const a=ri(1,5),b=ri(-6,6),x0=ri(-3,3),ans=2*a*x0+b;
     return {q:`Evaluate lim h→0 [f(${nz(x0)} + h) − f(${nz(x0)})]/h for f(x) = ${polyTxt([a,b,0])}.`,ans,unit:'',abs:.01,chk:D(x=>a*x*x+b*x,x0),hint:'That limit is f′(x0). Expand f(x0 + h) − f(x0) and divide by h before letting h → 0.',
-      sol:`The limit is f′(${nz(x0)}). Since f′(x) = ${2*a}x ${sgn(b)}, f′(${nz(x0)}) = <b>${nz(ans)}</b>.`};}});
+      sol:`The limit is f′(${nz(x0)}). Since f′(x) = ${cof(2*a,'x')}${pmt(b)}, f′(${nz(x0)}) = ${mulv(2*a,x0)}${pmt(b)} = <b>${nz(ans)}</b>.`};}});
   PROBS.push({id:'dv-nodiff',topic:'deriv',title:'Where is it not differentiable?',gen(){const c=ri(-4,4),kind=pick(['abs','cbrt','piece']);let ex,why;
     if(kind==='abs'){ex=`f(x) = |${lin(c)}|`;why='has a corner at x = '+nz(c);}else if(kind==='cbrt'){ex=`f(x) = (${lin(c)})<sup>1/3</sup>`;why='has a vertical tangent at x = '+nz(c);}else{ex=`f(x) = ${lin(c)} for x &lt; ${nz(c)} and f(x) = ${lin(c)} + 2 for x ≥ ${nz(c)}`;why='jumps at x = '+nz(c);}
     const m=mcq(`x = ${nz(c)}`,[`x = ${nz(-c)}`,'x = 0','nowhere']);

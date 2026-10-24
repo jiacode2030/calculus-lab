@@ -87,12 +87,23 @@ function sameFn(a,b,o={}){let fa,fb;try{fa=parseExpr(a);fb=parseExpr(b);}catch(e
   for(const x of xs){let va,vb;try{va=fa(x);vb=fb(x);}catch(e){return false;}if(!isFinite(va)||!isFinite(vb)){if(isFinite(va)!==isFinite(vb))return false;continue;}
     good++;if(o.c){const d=vb-va;if(off===null)off=d;else if(Math.abs(d-off)>1e-6*(1+Math.abs(va)))return false;}else if(Math.abs(va-vb)>1e-6*(1+Math.abs(va)))return false;}
   return good>=3;}
-/* "x^2" -> "x²", "sqrt(" -> "√(", "pi" -> "π", "*" dropped between a number and a letter: for showing expressions in text */
+/* "x^2" -> "x²", "sqrt(" -> "√(", "pi" -> "π", "*" dropped between a number and a letter: for showing expressions in text.
+   Also tidies signs and unit coefficients: "1x" -> "x", "+-2" -> "−2", "--2" -> "+2", "x^1" -> "x" */
 function pretty(s){const S='⁰¹²³⁴⁵⁶⁷⁸⁹',sp=d=>d.split('').map(c=>c==='-'?'⁻':S[+c]).join('');
-  return String(s).replace(/\^\((-?\d+)\)/g,(m,d)=>sp(d)).replace(/\^(-?\d+)/g,(m,d)=>sp(d)).replace(/sqrt\(/g,'√(').replace(/\bpi\b/g,'π').replace(/(\d)\s*\*\s*(?=[a-zA-Zπ(])/g,'$1').replace(/\*/g,'·').replace(/-/g,'−');}
+  return String(s).replace(/\+\s*[-−]/g,'-').replace(/[-−]\s*[-−]/g,'+').replace(/(^|[^\w.^])1\*?(?=[a-zA-Z(√])/g,'$1').replace(/\^1(?![\d.])/g,'').replace(/(\^\d+|[x)])(?=(?:sin|cos|tan|sec|ln)\()/g,'$1 ').replace(/\^\((-?\d+)\)/g,(m,d)=>sp(d)).replace(/\^(-?\d+)/g,(m,d)=>sp(d)).replace(/sqrt\(/g,'√(').replace(/\bpi\b/g,'π').replace(/(\d)\s*\*\s*(?=[a-zA-Zπ(])/g,'$1').replace(/\*/g,'·').replace(/-/g,'−');}
 /* polynomial text from coefficients, highest power first: polyTxt([3,0,-2,5]) -> "3x³ − 2x + 5" */
 function polyTxt(c,v='x'){const n=c.length-1,S='⁰¹²³⁴⁵⁶⁷⁸⁹';let out='';c.forEach((a,i)=>{const p=n-i;if(!a)return;const m=Math.abs(a);
   const t=p===0?String(m):(m===1?'':m)+v+(p===1?'':p<10?S[p]:'^'+p);out+=out?(a<0?' − ':' + ')+t:(a<0?'−':'')+t;});return out||'0';}
+/* solution text: cof(1,'x') -> "x", cof(-1,'x') -> "−x", cof(3,'x') -> "3x"; pmt(-2) -> " − 2", pmt(3,'x') -> " + 3x", pmt(0) -> ""; parn(-2) -> "(−2)" so (−2)² never prints as −2² */
+function cof(a,v=''){if(!v)return num(a);return a===1?v:a===-1?'−'+v:num(a)+(/^[\d.]/.test(v)?'·':'')+v;}
+function pmt(a,v=''){return a?(a<0?' − ':' + ')+cof(Math.abs(a),v):'';}
+/* a coefficient times a substituted value: mulv(3,-2) -> "3(−2)", mulv(1,-2) -> "−2", mulv(-1,2) -> "−(2)" */
+function mulv(a,v){return a===1?num(v):a===-1?'−('+num(v)+')':num(a)+'('+num(v)+')';}
+/* the same after a + or − sign: mulp(1,-2) -> "(−2)" */
+function mulp(a,v){return a===1?parn(v):num(a)+'('+num(v)+')';}
+/* [[3/4,4],[-2,1],[5,0]] -> "(3/4)x⁴ − 2x + 5": term list with exact fractions, for showing antiderivatives */
+function termsFrac(ts){return ts.filter(([c])=>c).map(([c,p],i)=>{const fr=frac(Math.abs(c)),k=fr==='1'&&p?'':fr.includes('/')&&p?'('+fr+')':fr;return (c<0?(i?' − ':'−'):(i?' + ':''))+k+(p===0?'':'x'+(p===1?'':'<sup>'+p+'</sup>'));}).join('')||'0';}
+function parn(a,t){t=t==null?num(a):t;return a<0?'('+t+')':t;}
 /* a number as an exact-looking fraction when it is one: 0.75 -> "3/4" */
 function frac(x,maxd=64){if(Number.isInteger(x))return String(x).replace('-','−');for(let d=2;d<=maxd;d++){const n=Math.round(x*d);if(Math.abs(n/d-x)<1e-9){const g=gcd(n,d);return (n<0?'−':'')+Math.abs(n/g)+'/'+(d/g);}}return fmt(x,3);}
 

@@ -14,13 +14,13 @@
 })();
 (function(){
   const dfn=ts=>x=>tval(ts,x);
-  PROBS.push({id:'an-expr',topic:'antider',title:'Find an antiderivative',gen(){const pat=pick([0,1,2]);let f,F,fx;
-    if(pat===0){const ts=[[ri(1,4)*3,pick([3,2])],[ri(-6,6)||2,1],[ri(-5,5)||1,0]],I=tint(ts);f=terms(ts);F=terms(I.map(([c,p])=>[+c.toFixed(6),p]));fx=dfn(ts);}
-    else if(pat===1){const a=ri(1,6),b=ri(1,6);f=`${a}cos(x)+${b}e^x`;F=`${a}sin(x)+${b}e^x`;fx=x=>a*Math.cos(x)+b*Math.exp(x);}
-    else{const n=ri(2,5),a=ri(2,6)*n;f=`${a}x^${n-1}`;F=`${a/n}x^${n}`;fx=x=>a*Math.pow(x,n-1);}
-    return {q:`Find an antiderivative of f(x) = ${pretty(f).replace(/cos\(x\)/,'cos x')}. Type your answer (the + C is optional).`,expr:F,c:true,chkf:fx,hint:'Run the derivative rules backwards, and check by differentiating your answer.',sol:`An antiderivative is F(x) = <b>${pretty(F)} + C</b>.`};}});
+  PROBS.push({id:'an-expr',topic:'antider',title:'Find an antiderivative',gen(){const pat=pick([0,1,2]);let f,F,fx,how,Fd;
+    if(pat===0){const ts=[[ri(1,4)*3,pick([3,2])],[ri(-6,6)||2,1],[ri(-5,5)||1,0]],I=tint(ts);f=terms(ts);F=terms(I.map(([c,p])=>[+c.toFixed(6),p]));Fd=termsFrac(I);fx=dfn(ts);how='Power rule backwards on each term: ∫ xⁿ dx = xⁿ⁺¹/(n + 1), and ∫ k dx = kx';}
+    else if(pat===1){const a=ri(1,6),b=ri(1,6);f=`${a}cos(x)+${b}e^x`;F=`${a}sin(x)+${b}e^x`;fx=x=>a*Math.cos(x)+b*Math.exp(x);how='∫ cos x dx = sin x and ∫ eˣ dx = eˣ';}
+    else{const n=ri(2,5),a=ri(2,6)*n;f=`${a}x^${n-1}`;F=`${a/n}x^${n}`;fx=x=>a*Math.pow(x,n-1);how=`∫ ${a}x<sup>${n-1}</sup> dx = ${a}·x<sup>${n}</sup>/${n}`;}
+    return {q:`Find an antiderivative of f(x) = ${pretty(f).replace(/cos\(x\)/,'cos x')}. Type your answer (the + C is optional).`,expr:F,c:true,chkf:fx,hint:'Run the derivative rules backwards, and check by differentiating your answer.',sol:`${how}, so F(x) = <b>${Fd||pretty(F).replace(/sin\(x\)/,'sin x')} + C</b>. Check: F′(x) = f(x).`};}});
   PROBS.push({id:'an-init',topic:'antider',title:'Initial value problem',gen(){const a=ri(1,3),b=ri(-5,5),x1=ri(0,2),y1=ri(-6,8),x2=x1+ri(1,2),ts=[[a*3,2],[2*b,1]],I=tint(ts),C0=y1-tval(I,x1),ans=tval(I,x2)+C0;
-    return {q:`F′(x) = ${pretty(terms(ts))} and F(${x1}) = ${nz(y1)}. Find F(${x2}).`,ans,unit:'',abs:.01,chk:y1+integ(x=>tval(ts,x),x1,x2,2000),hint:'Find the family F(x) = … + C, use F(x1) to get C, then evaluate.',sol:`F(x) = ${pretty(terms(I))} + C. F(${x1}) = ${nz(y1)} gives C = ${nz(+C0.toFixed(4))}. So F(${x2}) = <b>${nz(+ans.toFixed(4))}</b>.`};}});
+    return {q:`F′(x) = ${pretty(terms(ts))} and F(${x1}) = ${nz(y1)}. Find F(${x2}).`,ans,unit:'',abs:.01,chk:y1+integ(x=>tval(ts,x),x1,x2,2000),hint:'Find the family F(x) = … + C, use F(x1) to get C, then evaluate.',sol:`F(x) = ${pretty(terms(I))} + C. F(${x1}) = ${nz(y1)} means ${nz(tval(I,x1))} + C = ${nz(y1)}, so C = ${nz(+C0.toFixed(4))}. So F(${x2}) = ${nz(tval(I,x2))} ${C0<0?'−':'+'} ${nz(Math.abs(+C0.toFixed(4)))} = <b>${nz(+ans.toFixed(4))}</b>.`};}});
   PROBS.push({id:'an-which',topic:'antider',title:'Pick the antiderivative',gen(){const n=ri(2,6),correct=`x<sup>${n+1}</sup>/${n+1} + C`,m=mcq(correct,[`${n}x<sup>${n-1}</sup> + C`,`x<sup>${n+1}</sup> + C`,`x<sup>${n+1}</sup>/${n} + C`,`(${n+1})x<sup>${n}</sup> + C`]);
     return {q:`Which is ∫ x<sup>${n}</sup> dx?`,choices:m.choices,ans:m.ans,hint:'Raise the power by 1, then divide by the new power.',sol:`<b>${correct}</b>. Check: its derivative is x<sup>${n}</sup>.`};}});
 })();

@@ -19,17 +19,17 @@
 })();
 (function(){
   const T0=[
-    ()=>{const n=ri(2,6),a=ri(1,5),b=ri(-5,5);return {f:`(${a}x${b<0?'':'+'}${b})^${n}`,df:`${n*a}(${a}x${b<0?'':'+'}${b})^${n-1}`,fx:x=>Math.pow(a*x+b,n)};},
-    ()=>{const a=ri(2,6);return {f:`sin(${a}x)`,df:`${a}cos(${a}x)`,fx:x=>Math.sin(a*x)};},
-    ()=>{const a=ri(1,4),b=ri(-3,3);return {f:`e^(${a}x^2${b<0?'':'+'}${b}x)`,df:`(${2*a}x${b<0?'':'+'}${b})e^(${a}x^2${b<0?'':'+'}${b}x)`,fx:x=>Math.exp(a*x*x+b*x)};},
-    ()=>{const a=ri(1,5);return {f:`ln(x^2+${a})`,df:`2x/(x^2+${a})`,fx:x=>Math.log(x*x+a)};},
-    ()=>{const a=ri(2,6),b=ri(1,6);return {f:`sqrt(${a}x+${b})`,df:`${a}/(2sqrt(${a}x+${b}))`,fx:x=>Math.sqrt(a*x+b)};},
-    ()=>{const a=ri(1,4);return {f:`cos(x^${a+1})`,df:`-${a+1}x^${a}sin(x^${a+1})`,fx:x=>Math.cos(Math.pow(x,a+1))};}];
+    ()=>{const n=ri(2,6),a=ri(1,5),b=ri(1,5)*pick([1,-1]),u=`${a}x${b<0?'':'+'}${b}`;return {f:`(${u})^${n}`,df:`${n*a}(${u})^${n-1}`,w:`${n}(${u})^${n-1}*${a}`,fx:x=>Math.pow(a*x+b,n)};},
+    ()=>{const a=ri(2,6);return {f:`sin(${a}x)`,df:`${a}cos(${a}x)`,w:`cos(${a}x)*${a}`,fx:x=>Math.sin(a*x)};},
+    ()=>{const a=ri(1,4),b=ri(1,3)*pick([1,-1]),u=`${a}x^2${b<0?'':'+'}${b}x`;return {f:`e^(${u})`,df:`(${2*a}x${b<0?'':'+'}${b})e^(${u})`,w:`e^(${u})*(${2*a}x${b<0?'':'+'}${b})`,fx:x=>Math.exp(a*x*x+b*x)};},
+    ()=>{const a=ri(1,5);return {f:`ln(x^2+${a})`,df:`2x/(x^2+${a})`,w:`(1/(x^2+${a}))*2x`,fx:x=>Math.log(x*x+a)};},
+    ()=>{const a=ri(2,6),b=ri(1,6);return {f:`sqrt(${a}x+${b})`,df:`${a}/(2sqrt(${a}x+${b}))`,w:`(1/(2sqrt(${a}x+${b})))*${a}`,fx:x=>Math.sqrt(a*x+b)};},
+    ()=>{const a=ri(1,4);return {f:`cos(x^${a+1})`,df:`-${a+1}x^${a}sin(x^${a+1})`,w:`-sin(x^${a+1})*${a+1}x^${a}`,fx:x=>Math.cos(Math.pow(x,a+1))};}];
   const disp=s=>pretty(s).replace(/sin\(/g,'sin(').replace(/e\^\(([^)]*)\)/g,'e^($1)');
   PROBS.push({id:'ch-expr',topic:'chain',title:'Differentiate with the chain rule',gen(){const t=pick(T0)();
-    return {q:`Find f′(x) for f(x) = ${disp(t.f)}. Type your answer.`,expr:t.df,chkf:x=>D(t.fx,x),hint:'Identify the outer and inner functions. Differentiate the outside (leave the inside alone), then multiply by the derivative of the inside.',sol:`Outer × inner derivative: f′(x) = <b>${disp(t.df)}</b>.`};}});
+    return {q:`Find f′(x) for f(x) = ${disp(t.f)}. Type your answer.`,expr:t.df,chkf:x=>D(t.fx,x),hint:'Identify the outer and inner functions. Differentiate the outside (leave the inside alone), then multiply by the derivative of the inside.',sol:`Outer derivative (inside left alone) × inner derivative: f′(x) = ${disp(t.w)} = <b>${disp(t.df)}</b>.`};}});
   PROBS.push({id:'ch-eval',topic:'chain',title:'Evaluate a chain-rule derivative',gen(){const n=ri(2,5),a=ri(1,4),b=ri(-3,3),x0=ri(-2,2),f=x=>Math.pow(a*x+b,n),ans=n*a*Math.pow(a*x0+b,n-1);
-    return {q:`If f(x) = (${polyTxt([a,b])})<sup>${n}</sup>, find f′(${nz(x0)}).`,ans,unit:'',abs:.01,chk:D(f,x0),hint:'f′(x) = n(ax + b)^(n−1)·a.',sol:`f′(x) = ${n}(${polyTxt([a,b])})<sup>${n-1}</sup>·${a}. At x = ${nz(x0)}: <b>${nz(ans)}</b>.`};}});
+    return {q:`If f(x) = (${polyTxt([a,b])})<sup>${n}</sup>, find f′(${nz(x0)}).`,ans,unit:'',abs:.01,chk:D(f,x0),hint:'f′(x) = n(ax + b)^(n−1)·a.',sol:`f′(x) = ${n}(${polyTxt([a,b])})${n===2?'':'<sup>'+(n-1)+'</sup>'}${a===1?'':'·'+a}. At x = ${nz(x0)}: ${n}(${nz(a*x0+b)})${n===2?'':'<sup>'+(n-1)+'</sup>'}${a===1?'':'·'+a} = <b>${nz(ans)}</b>.`};}});
   PROBS.push({id:'ch-table',topic:'chain',title:'Chain rule from a table',gen(){const xs=[1,2,3,4],gv={},gpv={},fv={},fpv={};xs.forEach(x=>{gv[x]=pick(xs);gpv[x]=ri(-4,5)||2;fv[x]=ri(-5,8);fpv[x]=ri(-5,6)||3;});const a=pick(xs),u=gv[a],ans=fpv[u]*gpv[a];
     const row=(nm,o)=>`<tr><th>${nm}</th>${xs.map(x=>`<td>${nz(o[x])}</td>`).join('')}</tr>`;
     const tbl=`<table class="lmtbl"><thead><tr><th>x</th>${xs.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${row('g(x)',gv)}${row('g′(x)',gpv)}${row('f(x)',fv)}${row('f′(x)',fpv)}</tbody></table>`;
