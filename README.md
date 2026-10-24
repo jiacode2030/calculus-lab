@@ -9,7 +9,7 @@ Unofficial study aid. Not affiliated with the College Board. AP and Advanced Pla
 ## What is inside
 - 50 modules: a math toolkit, Units 1-8 (AB and BC), and a "BC only" section (integration techniques, Euler's method, logistic models, arc length, Unit 9 parametric/polar/vector, Unit 10 series).
 - Each module: the idea, an assumption upgrade, a live lab, "Try this" predictions, a worked example, common mistakes, an explanation and check-yourself questions.
-- Practice set (186 randomized problem generators), "Which method?" trainer, exam builder, mistakes queue, FRQ practice with point-by-point scoring.
+- Practice set (188 randomized problem generators), "Which method?" trainer, exam builder, mistakes queue, FRQ practice with point-by-point scoring.
 - Reference drawer: derivatives, integrals, limits and series.
 
 ## Build and test
@@ -26,4 +26,4 @@ Part of [Intulab](https://jiacode2030.github.io/intulab/), and installable as pa
 
 Report a mistake or something confusing with the **Report an issue** link on any page. It opens a pre-filled issue in the shared [Intulab feedback](https://github.com/jiacode2030/intulab-feedback/issues) tracker, labelled `course:calc`.
 
-Privacy: progress stays in your browser (keys start with `calc-`); visits are counted anonymously with GoatCounter (no cookies). See the [Privacy policy](https://jiacode2030.github.io/intulab/privacy.html) and [Terms of use](https://jiacode2030.github.io/intulab/terms.html). © 2026 JL. All rights reserved.
+Privacy: progress stays in your browser (keys start with `calc-`); visits are counted anonymously with GoatCounter (no cookies). See the [Privacy policy](https://jiacode2030.github.io/intulab/privacy.html) and [Terms of use](https://jiacode2030.github.io/intulab/terms.html). © 2026 Jiarui Li. All rights reserved.

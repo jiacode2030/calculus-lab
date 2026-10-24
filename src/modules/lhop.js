@@ -22,16 +22,16 @@
   TT.lhop='Ask students to name the form before touching a derivative, and to state which function wins in the ∞/∞ case.';
 })();
 (function(){
-  PROBS.push({id:'lh-basic',topic:'lhop',title:'Use L\'Hôpital\'s rule',gen(){const a=ri(2,7),b=ri(2,7),n=ri(2,6),pat=pick([0,1,2,3]);let q,ans,f,pt,show;
-    if(pat===0){q=`lim x→0 (e<sup>${a}x</sup> − 1)/(${b}x)`;f=x=>(Math.exp(a*x)-1)/(b*x);pt=0;ans=a/b;const g=gcd(a,b);show=a/g+(b/g===1?'':'/'+b/g);}
-    else if(pat===1){q=`lim x→0 sin(${a}x)/sin(${b}x)`;f=x=>Math.sin(a*x)/Math.sin(b*x);pt=0;ans=a/b;const g=gcd(a,b);show=a/g+(b/g===1?'':'/'+b/g);}
-    else if(pat===2){q=`lim x→1 (x<sup>${n}</sup> − 1)/(x − 1)`;f=x=>(Math.pow(x,n)-1)/(x-1);pt=1;ans=n;show=String(n);}
-    else{q=`lim x→1 (ln x)/(x<sup>${n}</sup> − 1)`;f=x=>Math.log(x)/(Math.pow(x,n)-1);pt=1;ans=1/n;show='1/'+n;}
-    return {q:`Find ${q}. Give a fraction or decimal.`,ans,unit:'',tol:.01,show,chk:limit(f,pt,1),hint:'Check the form is 0/0, then differentiate top and bottom separately.',sol:`The form is 0/0. Differentiating top and bottom and substituting gives <b>${show}</b>.`};}});
-  PROBS.push({id:'lh-twice',topic:'lhop',title:'Apply the rule twice',gen(){const a=ri(1,6),pat=pick([0,1]);let q,ans,f,show;
-    if(pat===0){q=`lim x→0 (1 − cos(${a}x))/x²`;f=x=>(1-Math.cos(a*x))/(x*x);ans=a*a/2;show=a*a%2===0?String(a*a/2):a*a+'/2';}
-    else{q=`lim x→0 (e<sup>${a}x</sup> − 1 − ${a}x)/x²`;f=x=>(Math.exp(a*x)-1-a*x)/(x*x);ans=a*a/2;show=a*a%2===0?String(a*a/2):a*a+'/2';}
-    return {q:`Find ${q}. Give a fraction or decimal.`,ans,unit:'',tol:.01,show,chk:limit(f,0,1),hint:'The first derivative step is still 0/0. Apply the rule again.',sol:`Two applications of the rule give <b>${show}</b>.`};}});
+  PROBS.push({id:'lh-basic',topic:'lhop',title:'Use L\'Hôpital\'s rule',gen(){const a=ri(2,7),b=pick([2,3,4,5,6,7].filter(v=>v!==a)),n=ri(2,6),pat=pick([0,1,2,3]);let q,ans,f,pt,show,work;
+    if(pat===0){q=`lim x→0 (e<sup>${a}x</sup> − 1)/(${b}x)`;f=x=>(Math.exp(a*x)-1)/(b*x);pt=0;ans=a/b;const g=gcd(a,b);show=a/g+(b/g===1?'':'/'+b/g);work=`Top → e<sup>0</sup> − 1 = 0 and bottom → 0. Derivatives: ${a}e<sup>${a}x</sup>/${b} → ${a}e<sup>0</sup>/${b} = ${a}/${b}`;}
+    else if(pat===1){q=`lim x→0 sin(${a}x)/sin(${b}x)`;f=x=>Math.sin(a*x)/Math.sin(b*x);pt=0;ans=a/b;const g=gcd(a,b);show=a/g+(b/g===1?'':'/'+b/g);work=`Top → sin 0 = 0 and bottom → 0. Derivatives: ${a}cos(${a}x)/(${b}cos(${b}x)) → ${a}(1)/(${b}(1)) = ${a}/${b}`;}
+    else if(pat===2){q=`lim x→1 (x<sup>${n}</sup> − 1)/(x − 1)`;f=x=>(Math.pow(x,n)-1)/(x-1);pt=1;ans=n;show=String(n);work=`Top → 1 − 1 = 0 and bottom → 0. Derivatives: ${n}x${n===2?'':'<sup>'+(n-1)+'</sup>'}/1 → ${n}(1)${n===2?'':'<sup>'+(n-1)+'</sup>'} = ${n}`;}
+    else{q=`lim x→1 (ln x)/(x<sup>${n}</sup> − 1)`;f=x=>Math.log(x)/(Math.pow(x,n)-1);pt=1;ans=1/n;show='1/'+n;work=`Top → ln 1 = 0 and bottom → 0. Derivatives: (1/x)/(${n}x<sup>${n-1}</sup>) = 1/(${n}x<sup>${n}</sup>) → 1/${n}`;}
+    return {q:`Find ${q}. Give a fraction or decimal.`,ans,unit:'',tol:.01,show,chk:limit(f,pt,1),hint:'Check the form is 0/0, then differentiate top and bottom separately.',sol:`${work}${work.endsWith(show)?'':' = '+show}. So the limit is <b>${show}</b>.`};}});
+  PROBS.push({id:'lh-twice',topic:'lhop',title:'Apply the rule twice',gen(){const a=ri(1,6),pat=pick([0,1]),ax=cof(a,'x'),A=a===1?'':a;let q,ans,f,show,work;
+    if(pat===0){q=`lim x→0 (1 − cos(${ax}))/x²`;f=x=>(1-Math.cos(a*x))/(x*x);ans=a*a/2;show=a*a%2===0?String(a*a/2):a*a+'/2';work=`0/0, so differentiate: ${A}sin(${ax})/(2x), still 0/0. Again: ${a===1?'':a*a}cos(${ax})/2 → ${a*a}/2`;}
+    else{q=`lim x→0 (e<sup>${ax}</sup> − 1 − ${ax})/x²`;f=x=>(Math.exp(a*x)-1-a*x)/(x*x);ans=a*a/2;show=a*a%2===0?String(a*a/2):a*a+'/2';work=`0/0, so differentiate: (${A}e<sup>${ax}</sup> − ${a})/(2x), still 0/0. Again: ${a===1?'':a*a}e<sup>${ax}</sup>/2 → ${a*a}/2`;}
+    return {q:`Find ${q}. Give a fraction or decimal.`,ans,unit:'',tol:.01,show,chk:limit(f,0,1),hint:'The first derivative step is still 0/0. Apply the rule again.',sol:`${work}${show===a*a+'/2'?'':' = '+show}. So the limit is <b>${show}</b>.`};}});
   PROBS.push({id:'lh-inf',topic:'lhop',title:'Which grows faster?',gen(){const n=ri(2,6),p=ri(1,3),R=[[`lim x→∞ x<sup>${n}</sup>/e<sup>x</sup>`,'0'],[`lim x→∞ e<sup>x</sup>/x<sup>${n}</sup>`,'∞'],[`lim x→∞ (ln x)/x<sup>${p}</sup>`,'0'],[`lim x→∞ x<sup>${p}</sup>/ln x`,'∞']],[q,c]=pick(R),m=mcq(c,['0','∞','1','−∞']);
     return {q:`Find ${q}.`,choices:m.choices,ans:m.ans,hint:'Exponentials beat powers; powers beat logs. Or apply L\'Hôpital until the answer is clear.',sol:`Growth hierarchy: ln x ≪ powers ≪ eˣ. The limit is <b>${c}</b>.`};}});
   PROBS.push({id:'lh-form',topic:'lhop',title:'Name the form',gen(){const R=[['lim x→0 (e<sup>x</sup> − 1)/x','0/0 (apply the rule)'],['lim x→∞ (ln x)/x','∞/∞ (apply the rule)'],['lim x→0⁺ x ln x','0·∞ (rewrite as a ratio first)'],['lim x→1 (x + 2)/(x² + 1)','not indeterminate (substitute: 3/2)'],['lim x→∞ (x² + 1)/(e<sup>x</sup>)','∞/∞ (apply the rule)'],['lim x→0 sin x/x','0/0 (apply the rule)']],[q,c]=pick(R),m=mcq(c,R.map(r=>r[1]));

@@ -17,7 +17,7 @@
 })();
 (function(){
   PROBS.push({id:'rt-avg',topic:'rates',title:'Average rate of change',gen(){const a=ri(-3,2),b=a+ri(2,4),c=ri(1,4),d=ri(-5,5),f=x=>c*x*x+d*x,ans=(f(b)-f(a))/(b-a);
-    return {q:`Find the average rate of change of f(x) = ${polyTxt([c,d,0])} on the interval [${nz(a)}, ${b}].`,ans,unit:'',abs:.01,chk:ans,hint:'Average rate = (f(b) − f(a)) / (b − a).',sol:`f(${b}) = ${nz(f(b))} and f(${nz(a)}) = ${nz(f(a))}. So (${nz(f(b))} − (${nz(f(a))}))/(${b} − (${nz(a)})) = ${nz(f(b)-f(a))}/${b-a} = <b>${nz(ans)}</b>.`};}});
+    return {q:`Find the average rate of change of f(x) = ${polyTxt([c,d,0])} on the interval [${nz(a)}, ${nz(b)}].`,ans,unit:'',abs:.01,chk:ans,hint:'Average rate = (f(b) − f(a)) / (b − a).',sol:`f(${nz(b)}) = ${nz(f(b))} and f(${nz(a)}) = ${nz(f(a))}. So (${nz(f(b))} − ${parn(f(a))})/(${nz(b)} − ${parn(a)}) = ${nz(f(b)-f(a))}/${b-a} = <b>${nz(ans)}</b>.`};}});
   PROBS.push({id:'rt-table',topic:'rates',title:'Rate of change from a table',gen(){const t0=ri(0,4),dt=[1,2,3],ts=[t0,t0+dt[0],t0+dt[0]+ri(1,3),t0+dt[0]+ri(4,6)].sort((p,q)=>p-q).filter((v,i,A)=>A.indexOf(v)===i),A=ri(1,3),B=ri(0,6),f=t=>A*t*t+B*t+ri(0,0),
       vals=ts.map(t=>A*t*t+B*t),i=ri(0,ts.length-2),ans=(vals[i+1]-vals[i])/(ts[i+1]-ts[i]);
     const tbl=`<table class="lmtbl"><thead><tr><th>t (s)</th>${ts.map(t=>`<th>${t}</th>`).join('')}</tr></thead><tbody><tr><th>s(t) (m)</th>${vals.map(v=>`<td>${v}</td>`).join('')}</tbody></table>`;

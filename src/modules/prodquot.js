@@ -20,18 +20,20 @@
 })();
 (function(){
   PROBS.push({id:'pq-prod',topic:'prodquot',title:'Product rule',gen(){const a=ri(1,5),b=ri(-5,5),n=ri(2,4),pat=pick([0,1,2,3]);let f,df,fx;const lb=polyTxt([a,b]);
-    if(pat===0){f=`(${lb.replace(/−/g,'-')})e^x`;df=`e^x(${a}x${sgn(a+b).trim()===''?'':sgn(a+b)})`.replace('+ -','- ');df=`e^x*(${a}x+${a+b})`;fx=x=>(a*x+b)*Math.exp(x);}
-    else if(pat===1){f=`x^${n}sin(x)`;df=`${n}x^${n-1}sin(x)+x^${n}cos(x)`;fx=x=>Math.pow(x,n)*Math.sin(x);}
-    else if(pat===2){f=`(${a}x+${b})cos(x)`;df=`${a}cos(x)-(${a}x+${b})sin(x)`;fx=x=>(a*x+b)*Math.cos(x);}
-    else{f=`x^${n}ln(x)`;df=`${n}x^${n-1}ln(x)+x^${n-1}`;fx=x=>Math.pow(x,n)*Math.log(x);}
-    return {q:`Find f′(x) for f(x) = ${pretty(f).replace(/sin\(x\)/g,'sin x').replace(/cos\(x\)/g,'cos x').replace(/ln\(x\)/g,'ln x')}. Type your answer.`,expr:df,chkf:x=>D(fx,x),hint:'(uv)′ = u′v + uv′. Identify u and v first.',sol:`With u and v as the two factors: f′(x) = <b>${pretty(df).replace(/sin\(x\)/g,'sin x').replace(/cos\(x\)/g,'cos x').replace(/ln\(x\)/g,'ln x')}</b>.`};}});
+    const xn=k=>k===1?'x':'x<sup>'+k+'</sup>',L=`(${lb})`;let work;
+    if(pat===0){f=`(${lb.replace(/−/g,'-')})e^x`;df=`e^x*(${a}x+${a+b})`;fx=x=>(a*x+b)*Math.exp(x);work=`u = ${lb}, v = eˣ: f′(x) = ${cof(a,'eˣ')} + ${L}eˣ = <b>eˣ(${polyTxt([a,a+b])})</b>`;}
+    else if(pat===1){f=`x^${n}sin(x)`;df=`${n}x^${n-1}sin(x)+x^${n}cos(x)`;fx=x=>Math.pow(x,n)*Math.sin(x);work=`u = ${xn(n)}, v = sin x: f′(x) = u′v + uv′ = <b>${n}${xn(n-1)} sin x + ${xn(n)} cos x</b>`;}
+    else if(pat===2){f=`(${lb.replace(/−/g,'-')})cos(x)`;df=`${a}cos(x)-(${a}x+${b})sin(x)`;fx=x=>(a*x+b)*Math.cos(x);work=`u = ${lb}, v = cos x: f′(x) = ${cof(a,'cos x')} + ${L}(−sin x) = <b>${cof(a,'cos x')} − ${L}sin x</b>`;}
+    else{f=`x^${n}ln(x)`;df=`${n}x^${n-1}ln(x)+x^${n-1}`;fx=x=>Math.pow(x,n)*Math.log(x);work=`u = ${xn(n)}, v = ln x: f′(x) = ${n}${xn(n-1)} ln x + ${xn(n)}·(1/x) = <b>${n}${xn(n-1)} ln x + ${xn(n-1)}</b>`;}
+    return {q:`Find f′(x) for f(x) = ${pretty(f).replace(/sin\(x\)/g,'sin x').replace(/cos\(x\)/g,'cos x').replace(/ln\(x\)/g,'ln x')}. Type your answer.`,expr:df,chkf:x=>D(fx,x),hint:'(uv)′ = u′v + uv′. Identify u and v first.',sol:`(uv)′ = u′v + uv′ with ${work}.`};}});
   PROBS.push({id:'pq-quot',topic:'prodquot',title:'Quotient rule',gen(){const a=ri(1,5),b=ri(1,5),n=ri(1,3),pat=pick([0,1,2,3]);let f,df,fx;
-    if(pat===0){f=`(x^2+${a})/(x+${b})`;df=`(x^2+${2*b}x-${a})/(x+${b})^2`;fx=x=>(x*x+a)/(x+b);}
-    else if(pat===1){f=`e^x/(x+${b})`;df=`e^x(x+${b-1})/(x+${b})^2`;fx=x=>Math.exp(x)/(x+b);}
-    else if(pat===2){f=`sin(x)/x^${n}`;df=`(x cos(x)-${n}sin(x))/x^${n+1}`;fx=x=>Math.sin(x)/Math.pow(x,n);}
-    else{f=`(${a}x+${b})/(x^2+1)`;df=`(-${a}x^2-${2*b}x+${a})/(x^2+1)^2`;fx=x=>(a*x+b)/(x*x+1);}
+    const xn=k=>k===1?'x':'x<sup>'+k+'</sup>';let work;
+    if(pat===0){f=`(x^2+${a})/(x+${b})`;df=`(x^2+${2*b}x-${a})/(x+${b})^2`;fx=x=>(x*x+a)/(x+b);work=`[2x(x + ${b}) − (x² + ${a})]/(x + ${b})² = <b>(${polyTxt([1,2*b,-a])})/(x + ${b})²</b>`;}
+    else if(pat===1){f=`e^x/(x+${b})`;df=`e^x(x+${b-1})/(x+${b})^2`;fx=x=>Math.exp(x)/(x+b);work=`[eˣ(x + ${b}) − eˣ·1]/(x + ${b})² = <b>eˣ(${polyTxt([1,b-1])})/(x + ${b})²</b>`;}
+    else if(pat===2){f=`sin(x)/x^${n}`;df=`(x cos(x)-${n}sin(x))/x^${n+1}`;fx=x=>Math.sin(x)/Math.pow(x,n);work=`[${xn(n)} cos x − ${n===1?'':n+(n-1===1?'x':xn(n-1))+' '}sin x]/x<sup>${2*n}</sup> = <b>(x cos x − ${n===1?'':n+' '}sin x)/x<sup>${n+1}</sup></b>`;}
+    else{f=`(${a}x+${b})/(x^2+1)`;df=`(-${a}x^2-${2*b}x+${a})/(x^2+1)^2`;fx=x=>(a*x+b)/(x*x+1);work=`[${a===1?'':a}(x² + 1) − (${polyTxt([a,b])})(2x)]/(x² + 1)² = <b>(${polyTxt([-a,-2*b,a])})/(x² + 1)²</b>`;}
     const disp=s=>pretty(s).replace(/sin\(x\)/g,'sin x').replace(/cos\(x\)/g,'cos x');
-    return {q:`Find f′(x) for f(x) = ${disp(f)}. Type your answer.`,expr:df,chkf:x=>D(fx,x),hint:'(u/v)′ = (u′v − uv′)/v². Identify u and v first, and square the denominator.',sol:`f′(x) = <b>${disp(df)}</b>.`};}});
+    return {q:`Find f′(x) for f(x) = ${disp(f)}. Type your answer.`,expr:df,chkf:x=>D(fx,x),hint:'(u/v)′ = (u′v − uv′)/v². Identify u and v first, and square the denominator.',sol:`(u/v)′ = (u′v − uv′)/v²: f′(x) = ${work}.`};}});
   PROBS.push({id:'pq-eval',topic:'prodquot',title:'Evaluate with the product rule',gen(){const a=ri(1,5),b=ri(-4,4),x0=ri(-3,3),f=x=>(x*x+a)*(x+b),ans=2*x0*(x0+b)+(x0*x0+a);
-    return {q:`If f(x) = (x² + ${a})(${lin(-b)}), find f′(${nz(x0)}).`.replace('(x + 0)','x'),ans,unit:'',abs:.01,chk:D(f,x0),hint:'Product rule: u = x² + a, v = x + b.',sol:`f′(x) = 2x(x ${sgn(b)}) + (x² + ${a}). At x = ${nz(x0)}: <b>${nz(ans)}</b>.`};}});
+    return {q:`If f(x) = (x² + ${a})${b===0?'x':'('+lin(-b)+')'}, find f′(${nz(x0)}).`,ans,unit:'',abs:.01,chk:D(f,x0),hint:'Product rule: u = x² + a, v = x + b.',sol:`f′(x) = 2x${b===0?'·x':'('+lin(-b)+')'} + (x² + ${a}). At x = ${nz(x0)}: 2(${nz(x0)})(${nz(x0+b)}) + ${nz(x0*x0+a)} = <b>${nz(ans)}</b>.`};}});
 })();

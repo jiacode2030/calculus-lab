@@ -21,15 +21,15 @@
 })();
 (function(){
   PROBS.push({id:'fn-vertex',topic:'functions',title:'Read a transformation',gen(){const h=ri(-5,5),k=ri(-6,6),a=pick([1,2,3,-1,-2]),askH=Math.random()<.5;
-    const fx=`${a===1?'':a===-1?'−':a}(${lin(h)})²${k===0?'':sgn(k)}`;
+    const fx=`${cof(a,h===0?'x²':'('+lin(h)+')²')}${pmt(k)}`;
     return {q:`The graph of y = ${fx} is a parabola. What is the ${askH?'x':'y'}-coordinate of its vertex?`,ans:askH?h:k,unit:'',abs:.01,chk:askH?h:k,hint:'Compare with the parent y = x²: inside the parentheses shifts x (backwards), outside shifts y.',
       sol:`The vertex of y = a(x − h)² + k is (h, k) = (${nz(h)}, ${nz(k)}). The ${askH?'x':'y'}-coordinate is <b>${nz(askH?h:k)}</b>.`};}});
   PROBS.push({id:'fn-comp',topic:'functions',title:'Composition',gen(){const a=ri(1,4),b=ri(-5,5),c=ri(1,3),d=ri(-4,4),p=ri(-3,3),inner=c*p*p+d,ans=a*inner+b;
     return {q:`Let f(x) = ${polyTxt([a,b])} and g(x) = ${polyTxt([c,0,d])}. Find f(g(${nz(p)})).`,ans,unit:'',abs:.01,chk:ans,hint:'Work inside out: find g first, then put that result into f.',
-      sol:`g(${nz(p)}) = ${nz(inner)}. Then f(${nz(inner)}) = ${a}(${nz(inner)}) ${sgn(b)} = <b>${nz(ans)}</b>.`};}});
+      sol:`g(${nz(p)}) = ${nz(inner)}. Then f(${nz(inner)}) = ${a===1?nz(inner):a+'('+nz(inner)+')'}${pmt(b)} = <b>${nz(ans)}</b>.`};}});
   PROBS.push({id:'fn-inv',topic:'functions',title:'Inverse of a linear function',gen(){const a=pick([2,3,4,5,-2,-3]),b=ri(-6,6),x0=ri(-4,4),y0=a*x0+b;
     return {q:`Let f(x) = ${polyTxt([a,b])}. Find f<sup>−1</sup>(${nz(y0)}).`,ans:x0,unit:'',abs:.01,chk:(y0-b)/a,hint:`f⁻¹(y) is the x for which f(x) = y. Solve ${polyTxt([a,b])} = ${nz(y0)}.`,
-      sol:`Solve ${polyTxt([a,b])} = ${nz(y0)}: ${a}x = ${nz(y0-b)}, so x = <b>${nz(x0)}</b>.`};}});
+      sol:`Solve ${polyTxt([a,b])} = ${nz(y0)}: ${b?cof(a,'x')+' = '+nz(y0-b)+', so ':''}x = ${nz(y0-b)}/${parn(a)} = <b>${nz(x0)}</b>.`};}});
   PROBS.push({id:'fn-parity',topic:'functions',title:'Even, odd or neither',gen(){const E=['x^2+3','2*x^4-5','x^6-x^2','cos(x)+x^2','abs(x)-1'],O=['x^3-x','x^5+3*x','2*x^3','sin(x)+x','x^3-2*x^5'],N=['x^2+x','x^3+1','2*x+5','e^x','x^4-x^3'],kind=pick(['even','odd','neither']),e=pick({even:E,odd:O,neither:N}[kind]);
     const f=parseExpr(e),even=Math.abs(f(1.3)-f(-1.3))<1e-9,odd=Math.abs(f(1.3)+f(-1.3))<1e-9,truth=even&&!odd?'even':odd&&!even?'odd':'neither';
     const m=mcq(truth,['even','odd','neither']);return {q:`Is f(x) = ${pretty(e).replace('abs(x)','|x|')} even, odd or neither?`,choices:m.choices,ans:m.ans,hint:'Compute f(−x) and compare it with f(x) and with −f(x).',sol:`Replacing x by −x ${truth==='even'?'gives the same function (f(−x) = f(x))':truth==='odd'?'gives the negative (f(−x) = −f(x))':'gives neither f(x) nor −f(x)'}, so it is <b>${truth}</b>.`};}});

@@ -233,6 +233,8 @@ h1{letter-spacing:-.03em}
    ===================================================================== */
 .course{display:flex;align-items:center;gap:10px;margin:2px 0 4px}
 .course .seg button{min-width:52px;font-weight:600}
+/* phones: the AB/BC switch gets its own row under the brand, module menu and tools, so the module menu keeps the width */
+@media (max-width:900px){.rail{flex-wrap:wrap;row-gap:8px}.rail .course{order:2;flex:1 0 100%;margin:0;gap:10px}.rail .course .seg button{min-height:36px;padding:6px 14px}}
 .bcbadge{font:600 10px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ca);border:1px solid color-mix(in srgb,var(--ca) 45%,transparent);border-radius:999px;padding:1px 7px;margin-left:8px;vertical-align:middle;white-space:nowrap}
 .nav a[aria-current="page"] .bcbadge{color:var(--accent-ink);border-color:color-mix(in srgb,var(--accent-ink) 60%,transparent)}
 .bcdiv{font:600 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ca);margin:18px 12px 0;padding-top:12px;border-top:1px dashed var(--line)}

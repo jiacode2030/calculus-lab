@@ -74,12 +74,12 @@ const lmN=v=>v===null?'does not exist':String(v).replace('-','−');
     const row=sg=>[.1,.01,.001].map(d=>{const x=a+sg*d;return `<td>${fmt(x,3)}</td><td>${fmt(f(x),4)}</td>`;});
     const tbl=`<table class="lmtbl"><thead><tr><th colspan="2">x → ${fmt(a,0)}⁻</th><th colspan="2">x → ${fmt(a,0)}⁺</th></tr><tr><th>x</th><th>f(x)</th><th>x</th><th>f(x)</th></tr></thead><tbody>${[0,1,2].map(i=>`<tr>${row(-1)[i]}${row(1)[i]}</tr>`).join('')}</tbody></table>`;
     return {q:`Use the table of values of f(x) = ${txt} to estimate lim x→${fmt(a,0)} f(x). Give a whole number.${tbl}`,ans:L,unit:'',abs:.2,hint:'Look at both columns: what number are the f(x) values getting close to as x gets close to '+fmt(a,0)+'?',
-      sol:`The values on the left (${fmt(f(a-.001),4)} at x = ${fmt(a-.001,3)}) and on the right (${fmt(f(a+.001),4)} at x = ${fmt(a+.001,3)}) are both close to ${L}, so the limit is <b>${L}</b>.`};}});
+      sol:`The values on the left (${fmt(f(a-.001),4)} at x = ${fmt(a-.001,3)}) and on the right (${fmt(f(a+.001),4)} at x = ${fmt(a+.001,3)}) are both close to ${nz(L)}, so the limit is <b>${nz(L)}</b>.`};}});
   PROBS.push({id:'lim-onesided',topic:'limits',title:'One-sided limits of a piecewise function',gen(){const c=ri(-3,3),m1=ri(-3,3)||1,b1=ri(-4,4),m2=ri(-3,3)||-1,b2=ri(-4,4),right=Math.random()<.5;
     const P=(m,b)=>polyTxt([m,b]),Lm=m1*c+b1,Lp=m2*c+b2,ans=right?Lp:Lm,cs=c<0?'−'+(-c):String(c);
     return {q:`Let f(x) = ${P(m1,b1)} for x &lt; ${cs} and f(x) = ${P(m2,b2)} for x ≥ ${cs}. Find lim x→${cs}${right?'⁺':'⁻'} f(x).`,ans,unit:'',abs:.01,hint:`For the ${right?'right-hand':'left-hand'} limit use the piece that applies to x ${right?'slightly greater than':'slightly less than'} ${cs}, and substitute ${cs}.`,
       sol:`Approaching from the ${right?'right':'left'} uses ${P(right?m2:m1,right?b2:b1)}. At x = ${cs} that is <b>${fmt(ans,0)}</b>.`};}});
   PROBS.push({id:'lim-k',topic:'limits',title:'Make a limit exist',gen(){const c=pick([-3,-2,-1,1,2,3]),p=ri(-3,3),kk=ri(-4,4)||2,q=c*c+p-kk*c,cs=c<0?'−'+(-c):String(c);
-    return {q:`Let f(x) = x² ${p<0?'−':'+'} ${Math.abs(p)} for x &lt; ${cs}, and f(x) = kx ${q<0?'−':'+'} ${Math.abs(q)} for x ≥ ${cs}. For what value of k does lim x→${cs} f(x) exist?`,ans:kk,unit:'',abs:.01,hint:'The limit exists when the left-hand and right-hand limits are equal. Set the two pieces equal at x = '+cs+'.',
-      sol:`Left: ${c}² ${p<0?'−':'+'} ${Math.abs(p)} = ${c*c+p}. Right: ${cs}k ${q<0?'−':'+'} ${Math.abs(q)}. Setting ${cs}k ${q<0?'−':'+'} ${Math.abs(q)} = ${c*c+p} gives k = <b>${kk}</b>.`};}});
+    return {q:`Let f(x) = x²${pmt(p)} for x &lt; ${cs}, and f(x) = kx${pmt(q)} for x ≥ ${cs}. For what value of k does lim x→${cs} f(x) exist?`,ans:kk,unit:'',abs:.01,hint:'The limit exists when the left-hand and right-hand limits are equal. Set the two pieces equal at x = '+cs+'.',
+      sol:`Left: ${parn(c)}²${pmt(p)} = ${nz(c*c+p)}. Right: ${cof(c,'k')}${pmt(q)}. Setting ${cof(c,'k')}${pmt(q)} = ${nz(c*c+p)} gives ${c===1?'':cof(c,'k')+' = '+nz(kk*c)+', so '}k = <b>${nz(kk)}</b>.`};}});
 })();

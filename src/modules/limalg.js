@@ -21,8 +21,8 @@
 })();
 (function(){
   PROBS.push({id:'la-factor',topic:'limalg',title:'Factor and cancel',gen(){const r=ri(-5,5);let s;do{s=ri(-5,5);}while(s===r);const b=-(r+s),c=r*s,ans=r-s;
-    return {q:`Find lim x→${nz(r)} (${polyTxt([1,b,c])})/(${lin(r)}).`,ans,unit:'',abs:.01,chk:limit(x=>(x*x+b*x+c)/(x-r),r,1),hint:`Factor the top: (${lin(r)})(${lin(s)}). Cancel, then substitute.`,
-      sol:`The top factors as (${lin(r)})(${lin(s)}). Cancel ${lin(r)}, leaving ${lin(s)}. At x = ${nz(r)} that is <b>${nz(ans)}</b>.`};}});
+    return {q:`Find lim x→${nz(r)} (${polyTxt([1,b,c])})/(${lin(r)}).`,ans,unit:'',abs:.01,chk:limit(x=>(x*x+b*x+c)/(x-r),r,1),hint:`Factor the top: ${s===0?'x':'('+lin(s)+')'}(${lin(r)}). Cancel, then substitute.`,
+      sol:`The top factors as ${s===0?'x':'('+lin(s)+')'}(${lin(r)}). Cancel ${lin(r)}, leaving ${lin(s)}. At x = ${nz(r)} that is <b>${nz(ans)}</b>.`};}});
   PROBS.push({id:'la-conj',topic:'limalg',title:'Multiply by the conjugate',gen(){const m=ri(1,6),ans=1/(2*m);
     return {q:`Find lim x→0 (√(x + ${m*m}) − ${m})/x. Give a fraction or decimal.`,ans,unit:'',tol:.01,chk:limit(x=>(Math.sqrt(x+m*m)-m)/x,0,1),show:'1/'+(2*m),hint:`Multiply top and bottom by √(x + ${m*m}) + ${m}.`,
       sol:`The top becomes (x + ${m*m}) − ${m*m} = x. So the expression is x/(x(√(x + ${m*m}) + ${m})) = 1/(√(x + ${m*m}) + ${m}). At x = 0 that is 1/(${m} + ${m}) = <b>1/${2*m}</b>.`};}});
@@ -30,6 +30,6 @@
     return {q:`Find lim x→0 sin(${a}x)/(${b}x). Give a fraction or decimal.`,ans,unit:'',tol:.01,chk:limit(x=>Math.sin(a*x)/(b*x),0,1),show:a/g+(b/g===1?'':'/'+b/g),hint:'Use lim sin(u)/u = 1: write sin(ax)/(bx) as (a/b)·sin(ax)/(ax).',
       sol:`sin(${a}x)/(${b}x) = (${a}/${b})·[sin(${a}x)/(${a}x)] → (${a}/${b})(1) = <b>${a/g}${b/g===1?'':'/'+b/g}</b>.`};}});
   PROBS.push({id:'la-frac',topic:'limalg',title:'A fraction inside a fraction',gen(){const k=pick([2,3,4,5,6,-2,-3,-4]),ans=-1/(k*k);
-    return {q:`Find lim x→${nz(k)} (1/x − 1/${nz(k)})/(x ${k<0?'+ '+(-k):'− '+k}). Give a fraction or decimal.`,ans,unit:'',tol:.01,chk:limit(x=>(1/x-1/k)/(x-k),k,1),show:'−1/'+(k*k),hint:'Combine 1/x − 1/k over a common denominator, then cancel the factor that makes 0/0.',
-      sol:`1/x − 1/${nz(k)} = (${nz(k)} − x)/(${nz(k)}x), so the expression is −1/(${nz(k)}x). At x = ${nz(k)}: −1/${k*k} = <b>${nz(+ans.toFixed(4))}</b>.`};}});
+    return {q:`Find lim x→${nz(k)} (1/x − 1/${parn(k)})/(x ${k<0?'+ '+(-k):'− '+k}). Give a fraction or decimal.`,ans,unit:'',tol:.01,chk:limit(x=>(1/x-1/k)/(x-k),k,1),show:'−1/'+(k*k),hint:'Combine 1/x − 1/k over a common denominator, then cancel the factor that makes 0/0.',
+      sol:`1/x − 1/${parn(k)} = (${nz(k)} − x)/(${cof(k,'x')}) = −(${lin(k)})/(${cof(k,'x')}). Dividing by ${lin(k)} leaves −1/(${cof(k,'x')}). At x = ${nz(k)}: −1/${k*k} = <b>${nz(+ans.toFixed(4))}</b>.`};}});
 })();

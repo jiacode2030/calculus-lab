@@ -23,12 +23,12 @@
   TT.convtests='Ask students to name the best test before seeing the lab, and to say what family of series bₙ comes from.';
 })();
 (function(){
-  PROBS.push({id:'ts-ratio',topic:'convtests',title:'Ratio test limit',gen(){const pat=pick([0,1,2,3]);let q,ans,show,chk;
-    if(pat===0){const b=ri(2,6);q=`For aₙ = n/${b}<sup>n</sup>, find L = lim |aₙ₊₁/aₙ|. Give a fraction or decimal.`;ans=1/b;show='1/'+b;chk=(n=>(n+1)/(b*n))(1e6);}
-    else if(pat===1){const b=ri(2,6);q=`For aₙ = ${b}<sup>n</sup>/n!, find L = lim |aₙ₊₁/aₙ|.`;ans=0;show='0';chk=b/1e6;}
-    else if(pat===2){const b=ri(2,5),c=ri(1,3);q=`For aₙ = n²(n + ${c})/${b}<sup>n</sup>, find L = lim |aₙ₊₁/aₙ|. Give a fraction or decimal.`;ans=1/b;show='1/'+b;chk=(n=>(n+1)**2*(n+1+c)/(b*n*n*(n+c)))(1e6);}
-    else{const b=ri(2,5);q=`For aₙ = ${b}<sup>n</sup>/n, find L = lim |aₙ₊₁/aₙ|.`;ans=b;show=String(b);chk=(n=>b*n/(n+1))(1e6);}
-    return {q,ans,unit:'',tol:.004,show,chk,hint:'Write aₙ₊₁/aₙ, simplify, and take the limit as n → ∞.',sol:`Simplifying the ratio and letting n → ∞ gives L = <b>${show}</b>.`};}});
+  PROBS.push({id:'ts-ratio',topic:'convtests',title:'Ratio test limit',gen(){const pat=pick([0,1,2,3]);let q,ans,show,chk,work;
+    if(pat===0){const b=ri(2,6);q=`For aₙ = n/${b}<sup>n</sup>, find L = lim |aₙ₊₁/aₙ|. Give a fraction or decimal.`;ans=1/b;show='1/'+b;work=`aₙ₊₁/aₙ = [(n + 1)/${b}<sup>n+1</sup>]·[${b}<sup>n</sup>/n] = (n + 1)/(${b}n) → 1/${b}`;chk=(n=>(n+1)/(b*n))(1e6);}
+    else if(pat===1){const b=ri(2,6);q=`For aₙ = ${b}<sup>n</sup>/n!, find L = lim |aₙ₊₁/aₙ|.`;ans=0;show='0';work=`aₙ₊₁/aₙ = [${b}<sup>n+1</sup>/(n + 1)!]·[n!/${b}<sup>n</sup>] = ${b}/(n + 1) → 0`;chk=b/1e6;}
+    else if(pat===2){const b=ri(2,5),c=ri(1,3);q=`For aₙ = n²(n + ${c})/${b}<sup>n</sup>, find L = lim |aₙ₊₁/aₙ|. Give a fraction or decimal.`;ans=1/b;show='1/'+b;chk=(n=>(n+1)**2*(n+1+c)/(b*n*n*(n+c)))(1e6);work=`aₙ₊₁/aₙ = (n + 1)²(n + ${c+1})/(${b}n²(n + ${c})). The polynomial parts have the same leading term n³, so their ratio → 1, leaving 1/${b}`;}
+    else{const b=ri(2,5);q=`For aₙ = ${b}<sup>n</sup>/n, find L = lim |aₙ₊₁/aₙ|.`;ans=b;show=String(b);work=`aₙ₊₁/aₙ = [${b}<sup>n+1</sup>/(n + 1)]·[n/${b}<sup>n</sup>] = ${b}n/(n + 1) → ${b}`;chk=(n=>b*n/(n+1))(1e6);}
+    return {q,ans,unit:'',tol:.004,show,chk,hint:'Write aₙ₊₁/aₙ, simplify, and take the limit as n → ∞.',sol:`${work}. So L = <b>${show}</b>.`};}});
   PROBS.push({id:'ts-which',topic:'convtests',title:'Which test first?',gen(){const R=[['Σ n!/5ⁿ','Ratio test'],['Σ 1/(n³ + 2)','Direct or limit comparison with 1/n³'],['Σ (2n + 1)/(n³ − n)','Limit comparison with 1/n²'],['Σ (−1)ⁿ/n','Alternating series test'],['Σ 3ⁿ/n!','Ratio test'],['Σ 1/(2ⁿ + n)','Direct comparison with (1/2)ⁿ'],['Σ n/(n + 1)','nth-term test (diverges)']],[ex,ans]=pick(R),m=mcq(ans,R.map(r=>r[1]));
     return {q:`Which test is the most natural first choice for ${ex}?`,choices:m.choices,ans:m.ans,hint:'Factorials and exponentials: ratio test. Rational in n: compare with a p-series. Alternating: alternating series test.',sol:`<b>${ans}</b>.`};}});
   PROBS.push({id:'ts-verdict',topic:'convtests',title:'Converge or diverge?',gen(){const R=[['Σ 1/(n² + 4)','converges (compare with 1/n²)'],['Σ n/(n² + 1)','diverges (limit comparison with 1/n)'],['Σ 2ⁿ/n!','converges (ratio test, L = 0)'],['Σ n!/2ⁿ','diverges (ratio test, L = ∞)'],['Σ 1/(3ⁿ + 1)','converges (compare with (1/3)ⁿ)'],['Σ 1/√(n + 1)','diverges (limit comparison with 1/√n)'],['Σ n²/3ⁿ','converges (ratio test, L = 1/3)']],[ex,ans]=pick(R),m=mcq(ans,R.map(r=>r[1]));

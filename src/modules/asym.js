@@ -23,7 +23,7 @@
 (function(){
   PROBS.push({id:'ay-horiz',topic:'asym',title:'Limit at infinity of a ratio',gen(){const a=ri(1,9),d=ri(1,6),b=ri(-5,5),c=ri(-5,5),e=ri(1,9),ans=a/d,g=gcd(a,d);
     return {q:`Find lim x→∞ (${polyTxt([a,b,c])})/(${polyTxt([d,0,e])}). Give a fraction or decimal.`,ans,unit:'',tol:.01,chk:(x=>(a*x*x+b*x+c)/(d*x*x+e))(1e7),show:a/g+(d/g===1?'':'/'+d/g),hint:'Both top and bottom have degree 2. Divide every term by x², or compare the leading terms.',
-      sol:`The degrees are equal, so the limit is the ratio of the leading coefficients: ${a}/${d} = <b>${a/g}${d/g===1?'':'/'+d/g}</b>.`};}});
+      sol:`The degrees are equal, so the limit is the ratio of the leading coefficients: ${g===1?'':a+'/'+d+' = '}<b>${a/g}${d/g===1?'':'/'+d/g}</b>.`};}});
   PROBS.push({id:'ay-hdeg',topic:'asym',title:'Compare degrees',gen(){const m=ri(1,4),n=ri(1,4),a=ri(1,6),d=ri(1,6),sgnA=Math.random()<.5?1:-1,A=sgnA*a;const g=gcd(a,d);
     const term=(c,p)=>polyTxt(Array.from({length:p+1},(_,i)=>i===0?c:i===p?ri(1,5):0));const top=polyTxt([A,...Array(m).fill(0)].map((v,i)=>i===0?A:i===m?ri(1,5):0)),bot=polyTxt([d,...Array(n).fill(0)].map((v,i)=>i===0?d:i===n?ri(1,5):0));
     let correct,chk;const ratio=(sgnA<0?'−':'')+a/g+(d/g===1?'':'/'+d/g);
