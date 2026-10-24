@@ -1,3 +1,17 @@
+# ---- figures for parametric equations
+import math
+_PMx = lambda t: t * t
+_PMy = lambda t: t ** 3 - 3 * t
+_PM = Plot((-.6, 5), (-3.6, 3.6), (30, 12, 215, 196))
+def _pmcurve(a, b, c='f', w=2.8, k=120): return pline([(_PM.X(_PMx(a + (b - a) * i / k)), _PM.Y(_PMy(a + (b - a) * i / k))) for i in range(k + 1)], c, w)
+_pmfig = fig(_PM.axes((1, 2, 3, 4), (-2, 2), 'x', 'y') + _pmcurve(-2.1, 2.1), [
+    (1, _PM.dot(0, 0, 't = 0', 'ink', 12, -8, 3.5) + _PM.text(2.7, -2.9, 'dx/dt = 2t, dy/dt = 3t² − 3', 'ink', 10, 'middle'), 'dx/dt = 2t · dy/dt = 3t² − 3', 'ink'),
+    (2, _PM.dot(4, 2, 't = 2', 'tan', 10, 16, 4.5) + _PM.seg(2.8, 2 - 1.2 * 2.25, 5, 2 + 1 * 2.25, 'tan', 2.6) + _PM.text(3.6, 3.1, 'slope 9/4', 'tan', 10, 'end'), 'slope at t = 2 is 9/4', 'tan'),
+    (3, '', 'd²y/dx² = 15/32 > 0 at t = 2: bending up', 'd'),
+    (4, _PM.seg(.4, 2, 1.7, 2, 'd', 2.4) + _PM.seg(.4, -2, 1.7, -2, 'd', 2.4) + _PM.dot(1, 2, '(1, 2)', 'd', 22, -8, 4.5) + _PM.dot(1, -2, '(1, −2)', 'd', 24, 14, 4.5), 'dy/dt = 0 at t = ±1: horizontal tangents', 'd'),
+    (5, '', 'slope 9/4 · 15/32 · (1, ±2)', 'ink')],
+    'The curve x = t², y = t³ − 3t loops once through the origin; it has horizontal tangents at the points (1, 2) and (1, −2), and the slope at t = 2 is 9/4.', 230)
+
 mod('param','Parametric equations',
  'Instead of y as a function of x, let both depend on time t. The curve is the path of a moving point, and slopes come from the chain rule.',
  ['A <b>parametric curve</b> is a pair <span class="m">x = x(t), y = y(t)</span>. As t increases the point <span class="m">(x, y)</span> traces a path, which can loop, double back and cross itself, none of which a function y = f(x) can do. Eliminating t sometimes gives a familiar curve (a circle, an ellipse), but the parametrization also records the direction and speed of travel.',
@@ -8,13 +22,16 @@ mod('param','Parametric equations',
    seg=('pm-fn','Curve',[('el','ellipse'),('cy','cycloid'),('li','figure eight'),('pa','parabola')]),ctl=[('pm-t','Parameter t',0,12.5,.02,1)],
    out=[('pm-xy','point (x, y)','x'),('pm-v','(dx/dt, dy/dt)','a'),('pm-sl','dy/dx','v'),('pm-d2','d²y/dx²',''),('pm-note','tangent','')])],
  [('On the ellipse, find t where the tangent is horizontal. <button type="button" class="btn link" data-show=\'' + show(["click","#pm-fn [data-k=el]"],["#pm-t",1.5708]) + '\'>t = π/2</button>','' ,'At t = π/2, dy/dt = 2cos t = 0 while dx/dt = −3 sin t ≠ 0: the top of the ellipse, a horizontal tangent.'),
-  ('On the cycloid, put t at 2π. What is happening to the slope? <button type="button" class="btn link" data-show=\'' + show(["click","#pm-fn [data-k=cy]"],["#pm-t",6.2832]) + '\'>t = 2π</button>','' ,'Both dx/dt = 1 − cos t and dy/dt = sin t are 0: a cusp, where the wheel point touches down. The slope is not defined there.')],
+  ('On the cycloid, put t at 2π. What is happening to the slope? <button type="button" class="btn link" data-show=\'' + show(["click","#pm-fn [data-k=cy]"],["#pm-t",6.2832]) + '\'>t = 2π</button>','' ,'Both dx/dt = 1 − cos t and dy/dt = sin t are 0: a cusp, where the wheel point touches down. The slope is not defined there.'),
+  ('On the parabola x = t, y = t² − 2t, put t = 1. What is dy/dx?',show(["click","#pm-fn [data-k=pa]"],["#pm-t",1]),'dy/dt = 2t − 2 = 0 and dx/dt = 1, so dy/dx = 0: a horizontal tangent at the vertex (1, −1). For this curve dy/dx = 2t − 2 is just the ordinary derivative of y = x² − 2x.'),
+  ('On the figure eight (x = cos t, y = sin 2t), put t = π/4 ≈ 0.785. What is the slope?',show(["click","#pm-fn [data-k=li]"],["#pm-t",0.7854]),'dy/dt = 2cos(2t) = 0 at t = π/4 while dx/dt = −sin t ≠ 0: a horizontal tangent at the top of the right loop, (0.707, 1).'),
+  ('On the figure eight, put t = 0. Why does the tangent look vertical?',show(["click","#pm-fn [data-k=li]"],["#pm-t",0]),'At t = 0 the point is (1, 0). dx/dt = −sin 0 = 0 and dy/dt = 2cos 0 = 2, so the velocity is straight up: a vertical tangent, and dy/dx is not defined there.')],
  ('For x = t² and y = t³ − 3t, find dy/dx and d²y/dx² at t = 2, and the points of horizontal tangent.',[
   '<b>Rates.</b> dx/dt = 2t, dy/dt = 3t² − 3.',
   '<b>Slope.</b> dy/dx = (3t² − 3)/(2t). At t = 2: 9/4.',
   '<b>Second derivative.</b> d/dt(dy/dx) = d/dt[(3/2)t − (3/2)/t] = 3/2 + (3/2)/t². Divide by dx/dt = 2t: at t = 2 that is (3/2 + 3/8)/4 = 15/32.',
   '<b>Horizontal tangents.</b> dy/dt = 0 at t = ±1 (dx/dt = ±2 ≠ 0): the points (1, −2) and (1, 2).',
-  '<b>Answer.</b> dy/dx = <b>9/4</b>, d²y/dx² = <b>15/32</b>; horizontal tangents at <b>(1, −2)</b> and <b>(1, 2)</b>.']),
+  '<b>Answer.</b> dy/dx = <b>9/4</b>, d²y/dx² = <b>15/32</b>; horizontal tangents at <b>(1, −2)</b> and <b>(1, 2)</b>.'],_pmfig),
  ['Differentiating dy/dx = (dy/dt)/(dx/dt) with respect to t and forgetting to divide by dx/dt again for the second derivative.','Writing dy/dx = dx/dt ÷ dy/dt (upside down).','Calling a point with dx/dt = dy/dt = 0 a tangent: check, it may be a cusp.','Forgetting that t is time, not the x-coordinate.','Using speed formula without the square root.'],
  ('Speed and direction',['The velocity vector is ⟨dx/dt, dy/dt⟩ and always points along the tangent in the direction of travel. The speed is its magnitude √((dx/dt)² + (dy/dt)²). The distance traveled is the integral of speed, which is the arc length formula.']),
  [('For x = 2t, y = t², dy/dx at t = 3 is',['3','6','1/3','2'],0,'(dy/dt)/(dx/dt) = 2t/2 = t = 3.')])
