@@ -1,3 +1,14 @@
+# ---- figures for the derivative
+_hole = lambda P, x, y, c='f': circ(P.X(x), P.Y(y), 5, 'surf', 1, c, 2)
+_DV = Plot((-.3, 3.1), (-.6, 9.4), (30, 12, 215, 196))
+_dvf = fig(_DV.axes((1, 2, 3), (2, 4, 6, 8), 'x', 'y') + _DV.curve(lambda x: x * x, 0, 3.05), [
+    (1, _DV.dot(1.5, 2.25, 'P', 'ink', -10, 12, 4) + _DV.dot(2.5, 6.25, 'Q', 'tan', 8, 14, 4) + _DV.seg(.6, 2.25 - .9 * 4, 2.6, 2.25 + 4, 'tan', 2), 'h = 1: secant slope 4', 'tan'),
+    (2, _DV.dot(2, 4, '', 'tan', 0, 0, 4) + _DV.seg(.9, 2.25 - .6 * 3.5, 2.5, 2.25 + 3.5, 'tan', 2, '5 4'), 'h = 0.5: slope 3.5', 'tan'),
+    (3, '', 'slope = 2x + h (f(x+h) − f(x)) / h', 'ink'),
+    (4, _DV.seg(.7, 2.25 - .8 * 3, 2.6, 2.25 + 1.1 * 3, 'd', 2.8), 'h → 0: tangent slope 3 = 2(1.5)', 'd'),
+    (5, '', "f′(x) = 2x", 'd')],
+    'The secant from P to a nearby point Q rotates toward the tangent at P (green) as h shrinks.', 230)
+
 # ---- figures for Average vs instantaneous rate
 _R = Plot((-.3, 3.4), (-.8, 10), (30, 12, 215, 196))
 _sq = lambda t: t * t
@@ -59,13 +70,15 @@ mod('deriv','The derivative & differentiability',
    ctl=[('dv-x','Point x',-2.5,2.5,.05,1)],canvas2=('dv-canvas2','Graph of the derivative: the slope of the top graph at each x.'),
    out=[('dv-sl','slope from the left','x'),('dv-sr','slope from the right','a'),('dv-ok','differentiable here?','v')])],
  [('Choose <b>|x|</b> and slide x through 0. What does the slope graph do at 0? <button type="button" class="btn link" data-show=\'' + show(["click","#dv-fn [data-k=abs]"],["#dv-x",0]) + '\'>Set it up for me</button>','' ,'The left slope is −1 and the right slope is +1, so there is no single slope at 0: the derivative graph jumps. A corner is not differentiable.'),
-  ('Choose <b>∛x</b> and move toward 0. What happens to the slope? <button type="button" class="btn link" data-show=\'' + show(["click","#dv-fn [data-k=cr]"],["#dv-x",0.1]) + '\'>Set it up for me</button>','' ,'The slope grows without bound as x → 0 (the tangent becomes vertical), so f′(0) does not exist even though the function is continuous.')],
+  ('Choose <b>∛x</b> and move toward 0. What happens to the slope? <button type="button" class="btn link" data-show=\'' + show(["click","#dv-fn [data-k=cr]"],["#dv-x",0.1]) + '\'>Set it up for me</button>','' ,'The slope grows without bound as x → 0 (the tangent becomes vertical), so f′(0) does not exist even though the function is continuous.'),
+  ('Choose x² and set x = 1. Compare the slope with 2x, then try x = 2.',show(["click","#dv-fn [data-k=sq]"],["#dv-x",1]),'At x = 1 the slope is 2; at x = 2 it is 4: the slope at each point is 2x, which is the derivative graph below (a straight line through the origin).'),
+  ('Choose the step function and slide x to 0. Is it differentiable there?',show(["click","#dv-fn [data-k=st]"],["#dv-x",0]),'No: at x = 0 the graph jumps by 2 (from −1 up to 1), so there is no tangent at all. Everywhere else the pieces are lines of slope 1, so the derivative graph is the constant 1 with a gap at 0. Not continuous there, so not differentiable (differentiable ⇒ continuous).')],
  ('Use the definition to find f′(x) for f(x) = x².',[
   '<b>Write the quotient.</b> f′(x) = lim (f(x + h) − f(x))/h = lim ((x + h)² − x²)/h.',
   '<b>Expand.</b> (x + h)² − x² = 2xh + h².',
   '<b>Factor out h.</b> (2xh + h²)/h = 2x + h (for h ≠ 0).',
   '<b>Take the limit.</b> lim<sub>h→0</sub> (2x + h) = 2x.',
-  '<b>Answer.</b> f′(x) = <b>2x</b>. At x = 3 the slope is 6.']),
+  '<b>Answer.</b> f′(x) = <b>2x</b>. At x = 3 the slope is 6.'],_dvf),
  ['Plugging h = 0 into the quotient before simplifying: it is 0/0.','Forgetting to expand (x + h)² as x² + 2xh + h².','Believing continuous means differentiable (|x| is the counterexample).','Writing f′(x) = limit "= 0" when the numerator goes to zero: the denominator goes to zero too.','Calling the derivative at a point a function. f′(a) is a number; f′(x) is a function.'],
  ('Notation',['f′(x), y′, dy/dx and d/dx[f(x)] all mean the same derivative. Leibniz\'s dy/dx reminds you it is a ratio of tiny changes (change in y over change in x). f′(a) means "evaluate the derivative function at x = a".']),
  [('Which function is continuous at 0 but not differentiable at 0?',['x²','|x|','x³','sin x'],1,'|x| has a corner at 0: the left slope is −1 and the right slope is 1.')])
