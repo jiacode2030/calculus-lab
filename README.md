@@ -9,7 +9,7 @@ Unofficial study aid. Not affiliated with the College Board. AP and Advanced Pla
 ## What is inside
 - 50 modules: a math toolkit, Units 1-8 (AB and BC), and a "BC only" section (integration techniques, Euler's method, logistic models, arc length, Unit 9 parametric/polar/vector, Unit 10 series).
 - Each module: the idea, an assumption upgrade, a live lab, "Try this" predictions, a worked example, common mistakes, an explanation and check-yourself questions.
-- Practice set (186 randomized problem generators), "Which method?" trainer, exam builder, mistakes queue, FRQ practice with point-by-point scoring.
+- Practice set (188 randomized problem generators), "Which method?" trainer, exam builder, mistakes queue, FRQ practice with point-by-point scoring.
 - Reference drawer: derivatives, integrals, limits and series.
 
 ## Build and test
