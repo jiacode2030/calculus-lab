@@ -84,23 +84,52 @@ mod('altser','Alternating series & error bounds',
  ('Absolute vs conditional',['Absolute convergence is the strongest kind: rearranging terms cannot change the sum. A conditionally convergent series like 1 − 1/2 + 1/3 − … is fragile: its terms can be rearranged to sum to any number (Riemann). In the course, you need to classify a series as absolutely convergent, conditionally convergent or divergent.']),
  [('Σ (−1)ⁿ/√n',['converges conditionally','converges absolutely','diverges','converges to 0'],0,'Terms decrease to 0 (so it converges), but Σ 1/√n is a divergent p-series (p = 1/2).')])
 
+# ---- figures for Taylor polynomials
+import math as _m
+_E = Plot((-2.3, 2.3), (-1.2, 7.6), (30, 10, 212, 200))
+_p = lambda c: (lambda x: sum(ci * x ** i for i, ci in enumerate(c)))
+_tp = fig(_E.axes((-2, -1, 1, 2), (1, 4, 7), 'x', 'y') + _E.curve(_m.exp, -2.2, 2.02) + _E.text(1.6, 6.8, 'eˣ', 'f', 13, 'end'), [
+    (1, _E.dot(0, 1, '', 'ink'), 'f⁽ᵏ⁾(0) = 1', 'ink'),
+    (2, _E.curve(_p([1, 1]), -2.2, 2.2, 'tan', 1.3, '3 3') + _E.curve(_p([1, 1, .5]), -2.2, 2.2, 'tan', 1.3, '6 3') + _E.curve(_p([1, 1, .5, 1 / 6]), -2.2, 2.25, 'tan', 2.6) + _E.text(2.2, 2.6, 'P₃', 'tan', 12, 'end'), 'P₁, P₂, P₃ hug eˣ', 'tan'),
+    (3, _E.seg(.5, -1, .5, 1.65, 'mut', 1.2, '3 3') + _E.dot(.5, 1.6458, '', 'tan'), 'P₃(0.5) = 1.6458', 'tan'),
+    (4, '', '|error| ≤ 0.0044', 'dd'),
+    (5, '', 'actual 0.0029', 'ink')],
+    'eˣ (blue) and its Taylor polynomials (orange). Each extra term bends the polynomial closer to the curve near 0.', 230)
+_S2 = Plot((-3.7, 3.7), (-2.2, 2.2), (30, 10, 212, 196))
+_sinf = fig(_S2.axes((-3, 3), (-1, 1), 'x', 'y') + _S2.curve(_m.sin, -3.6, 3.6), [
+    (1, _S2.curve(lambda x: x, -2.2, 2.2, 'tan', 1.2, '3 3'), 'x − x³/3! + x⁵/5! − …', 'ink'),
+    (2, _S2.curve(lambda x: x - x ** 3 / 6, -3.1, 3.1, 'tan', 1.3, '6 3'), 'P₃(0.5) = 0.479167', 'tan'),
+    (3, _S2.curve(lambda x: x - x ** 3 / 6 + x ** 5 / 120, -3.55, 3.55, 'tan', 2.6) + _S2.dot(.5, _m.sin(.5), '', 'ink'), 'P₅(0.5) = 0.479427', 'tan'),
+    (4, '', '|error| ≤ 1.55 × 10⁻⁶', 'dd'),
+    (5, rect(_S2.X(-_m.pi / 4), _S2.Y(2.2), _S2.X(_m.pi / 4) - _S2.X(-_m.pi / 4), _S2.Y(-2.2) - _S2.Y(2.2), 'area', .18) + _S2.text(0, -1.9, '[−π/4, π/4]', 'area', 10.5), 'only a small interval needed', 'area')],
+    'sin x (blue) with the degree 1, 3 and 5 polynomials (orange). Near 0 they agree; far away they peel off.', 230)
+
 mod('taylorpoly','Taylor polynomials & Lagrange error',
  'Approximate any smooth function near a point by a polynomial built from its derivatives. And know how big the error can be.',
  ['The <b>Taylor polynomial</b> of degree n centered at a is <span class="m">P_n(x) = Σ_{k=0}^{n} f⁽ᵏ⁾(a)(x − a)ᵏ/k!</span>. It matches f and its first n derivatives at a, so it hugs f near a. Degree 1 is the tangent line; degree 2 adds the bend. When a = 0 it is called a <b>Maclaurin polynomial</b>.',
-  'The <b>Lagrange error bound</b> says how far off P_n can be: <span class="m">|f(x) − P_n(x)| ≤ M|x − a|ⁿ⁺¹/(n + 1)!</span>, where M is the maximum of |f⁽ⁿ⁺¹⁾| between a and x. Higher degree and a closer x make the bound tiny. This is how a calculator computes sin 0.5 or eˣ: with enough terms of a polynomial.'],
+  'The <b>Lagrange error bound</b> says how far off P_n can be: <span class="m">|f(x) − P_n(x)| ≤ M|x − a|ⁿ⁺¹/(n + 1)!</span>, where M is the maximum of |f⁽ⁿ⁺¹⁾| between a and x. Higher degree and a closer x make the bound tiny. This is how a computer can find sin 0.5 or e<sup>0.5</sup> using only addition and multiplication: with enough terms of a polynomial.'],
  ('the tangent line was our best local approximation','a whole polynomial of any degree','calculators, physics approximations and series','Taylor polynomials and the Lagrange error bound'),
  [('P_n(x) = Σ f⁽ᵏ⁾(a)(x − a)ᵏ/k!','Taylor polynomial'),('|R_n(x)| ≤ M|x − a|ⁿ⁺¹/(n + 1)!','Lagrange error bound'),('M = max |f⁽ⁿ⁺¹⁾| between a and x','')],
  [lab('tp-lab','Add terms and watch the fit improve',canvas='tp-canvas',aria='A function and its Taylor polynomial of the chosen degree, with the probe point and the error.',
    seg=('tp-fn','Function (centered at 0)',[('ex','eˣ'),('sn','sin x'),('cs','cos x'),('ln','ln(1+x)')]),ctl=[('tp-n','Degree n',0,12,1,3),('tp-x','Probe x',-2.8,2.8,.05,1)],
    out=[('tp-P','Pₙ(x)','x'),('tp-f','f(x)','v'),('tp-e','error |f − Pₙ|','a'),('tp-b','Lagrange bound','')])],
- [('On sin x, raise the degree from 1 to 7. What changes? <button type="button" class="btn link" data-show=\'' + show(["click","#tp-fn [data-k=sn]"],["#tp-n",7],["#tp-x",2]) + '\'>Set it up for me</button>','' ,'The polynomial hugs sin x over a wider and wider interval around 0. At x = 2, P₇ = 0.9093 vs sin 2 = 0.9093: error tiny.'),
-  ('Choose ln(1+x) and move the probe to x = 1.5. What happens as n grows? <button type="button" class="btn link" data-show=\'' + show(["click","#tp-fn [data-k=ln]"],["#tp-n",8],["#tp-x",1.5]) + '\'>Set it up for me</button>','' ,'The error does not shrink: ln(1 + x) has a Taylor series only for −1 < x ≤ 1. Outside that interval the polynomials get worse, not better.')],
- ('Find the degree-3 Maclaurin polynomial of f(x) = e<sup>x</sup> and use the Lagrange bound to bound the error at x = 0.5.',[
+ [('On sin x, raise the degree from 1 to 7. What changes?',show(["click","#tp-fn [data-k=sn]"],["#tp-n",7],["#tp-x",2]),'The polynomial hugs sin x over a wider and wider interval around 0. At x = 2, P₇(2) ≈ 0.9079 while sin 2 ≈ 0.9093: the error is about 0.0014, and degree 9 cuts it to under 0.0001.'),
+  ('Choose ln(1+x) and move the probe to x = 1.5. What happens as n grows?',show(["click","#tp-fn [data-k=ln]"],["#tp-n",8],["#tp-x",1.5]),'The error does not shrink: ln(1 + x) has a Taylor series only for −1 < x ≤ 1. Outside that interval the polynomials get worse, not better.'),
+  ('Choose eˣ with n = 3 at x = 1. Compare the actual error with the Lagrange bound.',show(["click","#tp-fn [data-k=ex]"],["#tp-n",3],["#tp-x",1]),'P₃(1) = 1 + 1 + 1/2 + 1/6 ≈ 2.6667 against e ≈ 2.7183, an error of about 0.052. The bound uses M = e¹: e/4! ≈ 0.113. The bound is a guarantee, not an estimate, so it is usually bigger than the real error.'),
+  ('Choose cos x and put the probe far out at x = 2.8. Compare degree 2 with degree 10.',show(["click","#tp-fn [data-k=cs]"],["#tp-n",2],["#tp-x",2.8]),'Degree 2 gives −2.92 against cos 2.8 ≈ −0.942, way off. Degree 10 gives about −0.9427, an error near 0.0005. Far from the center you need many more terms.')],
+ [('Find the degree-3 Maclaurin polynomial of f(x) = e<sup>x</sup> and use the Lagrange bound to bound the error at x = 0.5.',[
   '<b>Derivatives at 0.</b> f⁽ᵏ⁾(0) = 1 for every k.',
   '<b>Polynomial.</b> P₃(x) = 1 + x + x²/2 + x³/6.',
   '<b>Estimate.</b> P₃(0.5) = 1 + 0.5 + 0.125 + 0.0208 = 1.6458 (true e<sup>0.5</sup> = 1.6487).',
   '<b>Bound.</b> f⁗ = eˣ ≤ e<sup>0.5</sup> &lt; 1.7 on [0, 0.5]. |error| ≤ 1.7(0.5)⁴/4! = 1.7(0.0625)/24 ≈ 0.0044.',
-  '<b>Answer.</b> P₃ = <b>1 + x + x²/2 + x³/6</b>; error at 0.5 is at most <b>0.0044</b> (actual 0.0029).']),
+  '<b>Answer.</b> P₃ = <b>1 + x + x²/2 + x³/6</b>; error at 0.5 is at most <b>0.0044</b> (actual 0.0029).'],_tp),
+  {'h':'Worked example 2: how a computer finds sin 0.5','fig':_sinf,
+   'prob':'A processor can only add, subtract, multiply and divide, so it cannot "look up" sin 0.5. (a) Estimate sin 0.5 with the degree-3 Maclaurin polynomial. (b) Improve it with degree 5. (c) Use the Lagrange bound to guarantee the accuracy of (b). (d) Why is it enough to handle small x?',
+   'steps':['<b>The polynomial.</b> The derivatives of sin at 0 cycle 0, 1, 0, −1, so only odd powers appear, with alternating signs: sin x ≈ x − x³/3! + x⁵/5! − …',
+    '<b>(a) Degree 3.</b> P₃(0.5) = 0.5 − 0.125/6 ≈ <b>0.479167</b>. The true value is sin 0.5 = 0.4794255…, so the error is about 0.00026.',
+    '<b>(b) Degree 5.</b> Add 0.5⁵/120 = 0.03125/120 ≈ 0.00026: P₅(0.5) ≈ <b>0.479427</b>, now off by only about 0.0000015.',
+    '<b>(c) Guarantee.</b> sin has no x⁶ term, so P₅ = P₆ and we may use n = 6. Every derivative of sin is at most 1 in size, so M = 1 and |error| ≤ 0.5⁷/7! ≈ <b>1.55 × 10⁻⁶</b>. The actual error is 1.54 × 10⁻⁶, just under the bound.',
+    '<b>(d) Only small x.</b> sin repeats every 2π, and identities such as sin(π − x) = sin x and sin x = cos(π/2 − x) turn any angle into the sine or cosine of an angle in [0, π/4] (cosine has its own polynomial, 1 − x²/2! + x⁴/4! − …). There (π/4)¹³/13! ≈ 7 × 10⁻¹², so a degree-12 polynomial is accurate to about 11 decimal places. Computer math libraries use this idea with a slightly tuned polynomial; many handheld calculators use a different method called CORDIC.']}],
  ['Forgetting the k! in the denominators.','Using the (n)th derivative instead of the (n + 1)th in the Lagrange bound.','Using a polynomial far from its center and trusting it.','Mixing up the degree n and the number of terms (n + 1 terms for degree n).','Forgetting to evaluate the derivatives at the center a, not at x.'],
  ('Reading coefficients',['The coefficient of (x − a)ᵏ is f⁽ᵏ⁾(a)/k!. So if P₃(x) = 2 + 3x − 4x² + 10x³, then f(0) = 2, f′(0) = 3, f″(0) = 2!·(−4) = −8, f‴(0) = 3!·10 = 60.']),
  [('The coefficient of x³ in the Maclaurin series of f is',['f‴(0)/6','f‴(0)/3','f‴(0)','f⁗(0)/6'],0,'Coefficient of xᵏ is f⁽ᵏ⁾(0)/k!, so k = 3 gives f‴(0)/3! = f‴(0)/6.')])

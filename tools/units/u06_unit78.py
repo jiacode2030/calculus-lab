@@ -104,25 +104,73 @@ mod('avgval','Average value & motion with integrals',
  ('Units',['Average value has the units of f. Displacement and distance have the units of v × t. If f is a rate, ∫ f is a total amount; dividing by the interval length gives the average rate.']),
  [('The average value of f(x) = 2x on [1, 3] is',['4','2','8','3'],0,'(1/2)∫₁³ 2x dx = (1/2)(9 − 1) = 4.')])
 
+# ---- figures for Area between curves
+_A = Plot((-.15, 1.25), (-.15, 1.25), (30, 10, 212, 200))
+_ar = fig(_A.axes((1,), (1,), 'x', 'y') + _A.curve(lambda x: x, -.1, 1.2) + _A.curve(lambda x: x * x, -.1, 1.1, 'dd') + _A.text(.66, .86, 'y = x', 'f', 11, 'end') + _A.text(1.08, .78, 'y = x²', 'dd', 11, 'start'), [
+    (1, _A.dot(0, 0, '', 'tan') + _A.dot(1, 1, '(1, 1)', 'tan', -22, -4), 'x = x² at 0 and 1', 'tan'),
+    (2, _A.seg(.4, .16, .4, .4, 'tan', 4) + _A.text(.36, .5, 'top − bottom', 'tan', 11, 'end'), 'height x − x²', 'tan'),
+    (3, _A.between(lambda x: x, lambda x: x * x, 0, 1), '∫₀¹ (x − x²) dx', 'area'),
+    (4, _A.text(.6, .43, '1/6', 'ink', 13), 'area 1/6', 'ink')],
+    'The region between the line (blue) and the parabola (pink). Every vertical slice has height top − bottom.', 230)
+_C2 = Plot((-.4, 9.6), (-.6, 14.5), (32, 10, 210, 196))
+_cyc = fig(_C2.axes((2, 4, 6, 8), (6, 12), 't', 'v'), [
+    (1, _C2.curve(lambda t: 6, 0, 9.3) + _C2.curve(lambda t: 1.5 * t, 0, 9.3, 'dd') + _C2.text(9.3, 6.7, 'Ana 6', 'f', 11, 'end') + _C2.text(7.0, 12.4, 'Ben 1.5t', 'dd', 11, 'end'), 'gap rate 6 − 1.5t', 'ink'),
+    (2, _C2.between(lambda t: 6, lambda t: 1.5 * t, 0, 4) + _C2.text(1.4, 4.2, '12 m', 'ink', 13), 'Ana ahead 12 m', 'area'),
+    (3, _C2.dot(4, 6, 't = 4', 'tan', -18, -8), 'widest gap at t = 4', 'tan'),
+    (4, _C2.between(lambda t: 1.5 * t, lambda t: 6, 4, 8, 'dd', .25) + _C2.text(6.5, 7.6, '12 m', 'ink', 13) + _C2.dot(8, 12, '', 'dd'), 'Ben gains 12 m: tied at 8', 'dd'),
+    (5, '', 'total area 24 ≠ gap 0', 'ink')],
+    'Velocities of Ana (blue) and Ben (pink). The area between the graphs is how far apart the riders get.', 230)
+
 mod('area','Area between curves',
  'The region between two curves is made of thin slices. Top minus bottom, added up, gives the area.',
  ['Slice the region into vertical strips. Each has width dx and height <b>(top − bottom)</b>, so the area is <span class="m">∫<sub>a</sub><sup>b</sup> (f(x) − g(x)) dx</span> where f ≥ g. Find the limits by solving f(x) = g(x). If the curves cross, split the integral at each crossing so the height is always top minus bottom (never negative).',
   'Sometimes horizontal slices are easier: width dy and length <b>(right − left)</b>, giving <span class="m">∫<sub>c</sub><sup>d</sup> (x<sub>right</sub> − x<sub>left</sub>) dy</span>. Use them when the region is bounded by curves that are easy to write as x = h(y), or when top/bottom switch.'],
  ('the integral of f was the area under f','the area between two curves','the area enclosed by curves, the first step to volumes','area between curves, with vertical or horizontal slices'),
  [('A = ∫ (top − bottom) dx','vertical slices'),('A = ∫ (right − left) dy','horizontal slices'),('limits: where the curves meet','solve f(x) = g(x)')],
- [lab('ar-lab','Slice the region',canvas='ar-canvas',aria='The region between two curves shaded, with vertical rectangles of height top minus bottom.',
+ [lab('ar-lab','Slice the region',canvas='ar-canvas',aria='The region between two curves shaded, with vertical rectangles of height top minus bottom, and one highlighted slice.',
    seg=('ar-fn','Curves',[('a','y = x and y = x²'),('b','y = √x and y = x²'),('c','y = x³ and y = x'),('d','sin x and cos x')]),
-   ctl=[('ar-n','Slices n',0,40,1,8)],out=[('ar-lim','intersections','x'),('ar-exact','exact area','v'),('ar-sum','sum of the slices','a')])],
- [('Choose √x and x² and slice with n = 8. How close is the sum to the exact area? <button type="button" class="btn link" data-show=\'' + show(["click","#ar-fn [data-k=b]"],["#ar-n",8]) + '\'>Set it up for me</button>','' ,'Close, a little off: the sum is a midpoint estimate. The exact area is 1/3. More slices give a better answer.'),
-  ('Choose y = x³ and y = x. Which is on top, and why must you split the integral? <button type="button" class="btn link" data-show=\'' + show(["click","#ar-fn [data-k=c]"],["#ar-n",0]) + '\'>Set it up for me</button>','' ,'On (0, 1) the line y = x is on top; on (−1, 0) the cubic is. The curves cross at x = 0, so top and bottom swap there. Splitting (or using symmetry) keeps every height positive.')],
- ('Find the area enclosed by y = x and y = x².',[
+   ctl=[('ar-n','Slices n',0,40,1,8),('ar-x','Highlight the slice at x',0,1,'any',.5)],out=[('ar-lim','intersections','x'),('ar-h','top − bottom at x','a'),('ar-exact','exact area','v'),('ar-sum','sum of the slices','')])],
+ [('Choose √x and x² and slice with n = 8. How close is the sum to the exact area?',show(["click","#ar-fn [data-k=b]"],["#ar-n",8]),'Close, a little off: the sum is a midpoint estimate. The exact area is 1/3. More slices give a better answer.'),
+  ('Choose y = x³ and y = x. Which is on top, and why must you split the integral?',show(["click","#ar-fn [data-k=c]"],["#ar-n",0],["#ar-x",0.5]),'On (0, 1) the line y = x is on top; on (−1, 0) the cubic is. The curves cross at x = 0, so top and bottom swap there. Splitting (or using symmetry) keeps every height positive; the area is 1/2, but ∫₋₁¹ (x − x³) dx without splitting gives 0.'),
+  ('Choose y = x and y = x². Slide the highlighted slice across. Where is it tallest?',show(["click","#ar-fn [data-k=a]"],["#ar-n",8],["#ar-x",0.5]),'At x = 0.5, where the height x − x² reaches 1/4. The area is the sum of all these heights times dx: ∫₀¹ (x − x²) dx = 1/6.'),
+  ('Choose sin x and cos x with n = 40. What is the area between them from π/4 to 5π/4?',show(["click","#ar-fn [data-k=d]"],["#ar-n",40]),'2√2 ≈ 2.828: ∫ (sin x − cos x) dx = [−cos x − sin x] from π/4 to 5π/4 = √2 − (−√2).')],
+ [('Find the area enclosed by y = x and y = x².',[
   '<b>Intersections.</b> x = x² ⇒ x = 0 or 1.',
   '<b>Top and bottom.</b> On (0, 1), x ≥ x², so top = x, bottom = x².',
   '<b>Integrate.</b> ∫<sub>0</sub><sup>1</sup> (x − x²) dx = [x²/2 − x³/3]<sub>0</sub><sup>1</sup>.',
-  '<b>Answer.</b> 1/2 − 1/3 = <b>1/6</b>.']),
- ['Subtracting in the wrong order, giving a negative area. Use top − bottom.','Using the wrong limits: find intersections by setting the functions equal.','Not splitting at crossings when top and bottom switch.','Integrating x² − x as if it were the area under one curve minus a number.','Using dx slices when horizontal slices would avoid splitting.'],
+  '<b>Answer.</b> 1/2 − 1/3 = <b>1/6</b>.'],_ar),
+  {'h':'Worked example 2: two cyclists on a bike path','fig':_cyc,
+   'prob':'Ana and Ben start side by side at t = 0. Ana rides at a steady 6 m/s. Ben starts from rest and speeds up, with velocity 1.5t m/s. (a) How far ahead is Ana at t = 4 seconds? (b) When does Ben catch up? (c) Find ∫<sub>0</sub><sup>8</sup> |6 − 1.5t| dt. Is it the distance between the riders at t = 8?',
+   'steps':['<b>The gap grows at the difference of the velocities.</b> d/dt (gap) = 6 − 1.5t. It is positive until t = 4 (Ana is faster) and negative after (Ben is faster).',
+    '<b>(a) Area between the velocity graphs.</b> Gap at t = 4: ∫<sub>0</sub><sup>4</sup> (6 − 1.5t) dt = [6t − 0.75t²]<sub>0</sub><sup>4</sup> = 24 − 12 = <b>12 m</b>.',
+    '<b>Why t = 4 is the widest gap.</b> There the velocities are equal, so the gap\'s rate of change is 0. Before it Ana pulls away; after it Ben closes in.',
+    '<b>(b) Catch up.</b> ∫<sub>0</sub><sup>T</sup> (6 − 1.5t) dt = 6T − 0.75T² = 0 gives T = 0 or <b>T = 8 s</b>. Ben\'s pink region has exactly cancelled Ana\'s gold one.',
+    '<b>(c) Total area.</b> 12 + 12 = <b>24 m</b>. It is not the gap (the riders are side by side at t = 8). The area between curves counts both pieces as positive; the net change ∫(6 − 1.5t) dt lets them cancel. Read which one the question asks for.']}],
+ ['Subtracting in the wrong order, giving a negative area. Use top − bottom.','Using the wrong limits: find intersections by setting the functions equal.','Not splitting at crossings when top and bottom switch.','Integrating x² − x as if it were the area under one curve minus a number.','Using dx slices when horizontal slices would avoid splitting.','In context, confusing the total area between two rate graphs with the net change (which can cancel).'],
  ('Vertical or horizontal?',['Vertical slices (dx): integrand top − bottom as a function of x. Horizontal slices (dy): integrand right − left as a function of y, so you must write each boundary as x = h(y). Choose the one where the boundary does not change formulas partway through.']),
  [('The area between y = 4 and y = x² from x = −2 to 2 is',['∫<sub>−2</sub><sup>2</sup> (4 − x²) dx','∫<sub>−2</sub><sup>2</sup> (x² − 4) dx','∫<sub>0</sub><sup>4</sup> (4 − x²) dx','∫<sub>−2</sub><sup>2</sup> 4x² dx'],0,'On [−2, 2] the line y = 4 is on top, so integrate top − bottom = 4 − x².')])
+
+# ---- figures for Volumes from cross sections
+_W = Plot((-.08, 1.12), (-.08, 1.12), (24, 48, 180, 172))
+def _sqslice(x, c='area', op=.35, dash=''):
+    a, b = _W.Y(x * x), _W.Y(x); L = a - b; o = .55 * L
+    return poly([(_W.X(x), a), (_W.X(x), b), (_W.X(x) + o, b - o), (_W.X(x) + o, a - o)], c, op, 'tan' if not dash else 'mut', 1.6, dash)
+_vo = fig(_W.axes((1,), (1,), 'x', 'y') + _W.curve(lambda x: x, 0, 1.08) + _W.curve(lambda x: x * x, 0, 1.04, 'dd'), [
+    (1, _W.between(lambda x: x, lambda x: x * x, 0, 1, 'area', .2) + _W.text(.95, .62, 'base', 'mut', 10, 'start', 500), 'base: x² to x', 'area'),
+    (2, _W.seg(.5, .25, .5, .5, 'tan', 3.5) + _W.text(.46, .36, 's', 'tan', 13, 'end'), 's = x − x²', 'tan'),
+    (3, _sqslice(.5), 'A = s² = (x − x²)²', 'area'),
+    (4, _sqslice(.25, 'area', .12, '3 3') + _sqslice(.75, 'area', .12, '3 3'), '∫₀¹ (x² − 2x³ + x⁴) dx', 'ink'),
+    (5, '', 'V = 1/30', 'ink')],
+    'The base region seen from above. Each square slice stands straight up out of the page on the segment s.', 230)
+_py_base = (ln(20, 205, 240, 205, 'mut', 1.5) + poly([(38, 205), (222, 205), (130, 87.4)], 'area', .12, 'ink', 2.2)
+            + txt(130, 222, '230 m', 'ink', 11) + ln(130, 205, 130, 87.4, 'mut', 1, '3 3') + txt(126, 135, '147 m', 'mut', 10, 'end', 500))
+_pyr = fig(_py_base, [
+    (1, rect(75.6, 154.5, 108.8, 5, 'tan', .5, 'tan', 1.5) + txt(130, 150, 's = 230(1 − y/147)', 'tan', 10.5) + arr(24, 205, 24, 157, 'mut', '', 1.4) + txt(28, 182, 'y', 'mut', 12, 'start'), 'side shrinks linearly', 'tan'),
+    (2, '', 'A(y) = 230²(1 − y/147)²', 'area'),
+    (3, '', 'V = 230²·147/3', 'ink'),
+    (4, rect(38, 87.4, 184, 117.6, 'mut', 0, 'mut', 1.2) , 'box: 3 times bigger', 'ink'),
+    (5, poly([(38, 205), (222, 205), (203, 180.7), (57, 180.7)], 'f', .3) + txt(225, 184, 'half', 'f', 10, 'start'), 'half below 30.3 m', 'f')],
+    'Side view, drawn to scale. Every horizontal slice is a square; the shaded band at the bottom holds half the stone.', 230)
 
 mod('vols','Volumes from cross sections',
  'Stack thin slices of a known shape along an axis, and add up their volumes. A slice with area A(x) and thickness dx has volume A(x) dx.',
@@ -133,13 +181,23 @@ mod('vols','Volumes from cross sections',
  [lab('vo-lab','Stack the slices',canvas='vo-canvas',aria='Left: the base region with a vertical line at x and the base length s. Right: the area of the cross section at each x, with the volume as the shaded area.',
    seg=('vo-sh','Cross-section shape',[('sq','Squares'),('se','Semicircles'),('tr','Equilateral triangles')]),pre='<p class="small" style="margin:0">Base: the region between y = x² and y = x on [0, 1], so the base length is s(x) = x − x².</p>',
    ctl=[('vo-x','Position x',.05,.95,.01,.5)],out=[('vo-s','base length s(x)','x'),('vo-A','area A(x) of the slice','v'),('vo-V','volume V = ∫ A dx','a')])],
- [('Choose squares. Where is the slice largest? <button type="button" class="btn link" data-show=\'' + show(["click","#vo-sh [data-k=sq]"],["#vo-x",0.5]) + '\'>x = 0.5</button>','' ,'At x = 0.5: s = 0.25 is the longest base, so the square slice is largest there. V = ∫(x − x²)² dx = 1/30.'),
-  ('Switch to semicircles. How does the volume compare with squares? <button type="button" class="btn link" data-show=\'' + show(["click","#vo-sh [data-k=se]"]) + '\'>Set it up for me</button>','' ,'π/8 ≈ 0.39 of the square volume: a semicircle with diameter s covers π/8 of the square of side s.')],
- ('The base of a solid is the region between y = x² and y = x. Cross sections perpendicular to the x-axis are squares. Find the volume.',[
+ [('Choose squares. Where is the slice largest?',show(["click","#vo-sh [data-k=sq]"],["#vo-x",0.5]),'At x = 0.5: s = 0.25 is the longest base, so the square slice is largest there. V = ∫(x − x²)² dx = 1/30.'),
+  ('Switch to semicircles. How does the volume compare with squares?',show(["click","#vo-sh [data-k=se]"],["#vo-x",0.5]),'π/8 ≈ 0.39 of the square volume (about 0.0131): a semicircle with diameter s covers π/8 of the square of side s.'),
+  ('Switch to equilateral triangles. Predict the volume before you look.',show(["click","#vo-sh [data-k=tr]"],["#vo-x",0.5]),'(√3/4)(1/30) ≈ 0.0144: every slice is √3/4 ≈ 0.433 of the square on the same base, so the whole volume is too.'),
+  ('Compare the slices at x = 0.1 and x = 0.9.',show(["click","#vo-sh [data-k=sq]"],["#vo-x",0.1]),'Both have s = 0.09: x − x² is symmetric about x = 0.5, so the solid is too. Area A(x) only depends on the base length, not on where the slice sits.')],
+ [('The base of a solid is the region between y = x² and y = x. Cross sections perpendicular to the x-axis are squares. Find the volume.',[
   '<b>Base length.</b> s(x) = x − x² on [0, 1].',
   '<b>Area of a square slice.</b> A(x) = s² = (x − x²)² = x² − 2x³ + x⁴.',
   '<b>Integrate.</b> V = ∫<sub>0</sub><sup>1</sup> (x² − 2x³ + x⁴) dx = 1/3 − 1/2 + 1/5.',
-  '<b>Answer.</b> <b>1/30</b> ≈ 0.0333.']),
+  '<b>Stack them.</b> Every thin square of area A(x) and thickness dx contributes A(x) dx; the integral adds them up.',
+  '<b>Answer.</b> <b>1/30</b> ≈ 0.0333.'],_vo),
+  {'h':'Worked example 2: the Great Pyramid','fig':_pyr,
+   'prob':'The Great Pyramid of Giza had a square base about 230 m on a side and was about 147 m tall. (a) Using horizontal square cross sections, find its volume. (b) Compare it with a box that has the same base and height. (c) At what height is half of the pyramid\'s volume below you?',
+   'steps':['<b>Slice horizontally.</b> At height y (in m), the cross section is a square whose side shrinks in a straight line from 230 at the base to 0 at the top: s(y) = 230(1 − y/147).',
+    '<b>Area of a slice.</b> A(y) = s(y)² = 230²(1 − y/147)².',
+    '<b>(a) Integrate.</b> V = ∫<sub>0</sub><sup>147</sup> 230²(1 − y/147)² dy. With u = 1 − y/147 (dy = −147 du) this is 230²·147·∫<sub>0</sub><sup>1</sup> u² du = 230²·147/3 = <b>2,592,100 m³</b>, about 2.6 million cubic meters.',
+    '<b>(b) Compare.</b> The box is 230²·147 = 7,776,300 m³, so the pyramid is exactly <b>1/3</b> of it. That is where V = (1/3)(base area)(height) for every pyramid and cone comes from.',
+    '<b>(c) Half the volume.</b> Above height y sits a smaller pyramid scaled by (1 − y/147), with volume V(1 − y/147)³. Set it to V/2: 1 − y/147 = 2<sup>−1/3</sup>, so y = 147(1 − 2<sup>−1/3</sup>) ≈ <b>30.3 m</b>. Half of all the stone is in the bottom fifth of the height.']}],
  ['Using the wrong base length: it is top − bottom, not just one function.','Squaring after integrating instead of before: A(x) must be squared first.','Using the radius instead of the diameter for a semicircle (the diameter is s).','Forgetting the constant in the area formula (π/8, √3/4).','Mixing dx and dy slices: the slice direction decides which variable you integrate.'],
  ('Derivations of the area formulas',['Semicircle with diameter s: radius s/2, area (1/2)π(s/2)² = πs²/8. Equilateral triangle with side s: area (1/2)·s·(√3/2)s = (√3/4)s². Square: s². Keep these in your head: they are the whole difficulty in most cross-section problems.']),
  [('A semicircular cross section has diameter s(x). Its area is',['πs²/8','πs²/4','πs²/2','s²'],0,'Radius s/2, area half of π(s/2)² = πs²/8.')])

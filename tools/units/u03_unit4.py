@@ -1,3 +1,27 @@
+# ---- figures for Motion
+_N = Plot((-.6, 4.8), (0, 1), (24, 8, 196, 40))
+_M = Plot((-.3, 4.3), (-7, 10.5), (30, 72, 215, 140))
+_v = lambda t: 3 * (t - 1) * (t - 3)
+_path = (arr(_N.X(0), 34, _N.X(4), 34, 'f', '', 2) + arr(_N.X(4), 45, _N.X(0), 45, 'f', '', 2) + arr(_N.X(0), 56, _N.X(4), 56, 'f', '', 2)
+         + txt(_N.X(4) + 8, 37.5, 't 0–1', 'f', 10, 'start', 500) + txt(_N.X(4) + 8, 48.5, 't 1–3', 'f', 10, 'start', 500) + txt(_N.X(4) + 8, 59.5, 't 3–4', 'f', 10, 'start', 500))
+_mot = fig(ln(_N.X(-.4), 12, _N.X(4.6), 12, 'mut', 1.4) + txt(_N.X(4.6) + 4, 15, 's', 'mut', 11, 'start', 500) + ''.join(ln(_N.X(s), 8, _N.X(s), 16, 'mut', 1.2) + txt(_N.X(s), 26, str(s), 'mut', 9, mono=True, w=500) for s in (0, 2, 4))
+           + _M.axes((1, 2, 3, 4), (-3, 3, 9), 't', ''), [
+    (1, _M.curve(_v, 0, 4.1, 'd') + _M.text(4.2, 9.6, 'v', 'd', 12, 'end'), 'v = 3(t − 1)(t − 3)', 'd'),
+    (2, _M.dot(1, 0, 'rest', 'tan', 0, -9) + _M.dot(3, 0, 'rest', 'tan', 0, -9), 'v = 0 at t = 1, 3', 'tan'),
+    (3, _M.curve(lambda t: 6 * t - 12, 5 / 6, 3.75, 'dd', 2.2) + _M.text(3.5, 9.6, 'a', 'dd', 12, 'end'), 'a = 6t − 12', 'dd'),
+    (4, _M.seg(2.5, -6.5, 2.5, 10, 'mut', 1.2, '3 3') + _M.dot(2.5, -2.25, '−2.25', 'd', 0, 17) + _M.dot(2.5, 3, '3', 'dd', 10, 4), 'opposite signs at 2.5', 'tan'),
+    (5, _path, 'slowing down', 'tan')],
+    'Top: where the particle goes on the line. Bottom: velocity (green) and acceleration (pink) against time.', 232)
+_tt, _tv = [0, 2, 5, 8, 12], [0, 100, 40, -120, -150]
+_Q = Plot((-.6, 13), (-175, 125), (36, 10, 206, 196))
+_train = fig(_Q.axes((2, 5, 8, 12), (-150, -100, 100), 't', 'v') + ''.join(_Q.dot(a, b, '', 'f') for a, b in zip(_tt, _tv)), [
+    (1, _Q.seg(2, 100, 5, 40, 'tan', 2.6) + _Q.text(3.6, 92, 'slope −20', 'tan', 11, 'start'), '(40 − 100)/(5 − 2)', 'tan'),
+    (2, '', '−20 m/min²: braking', 'ink'),
+    (3, rect(_Q.X(5), _Q.Y(0) - 6, _Q.X(8) - _Q.X(5), 12, 'dd', .25) + _Q.text(6.5, -30, 'v = 0 here', 'dd', 11), 'IVT: v crosses 0', 'dd'),
+    (4, arr(_Q.X(8), _Q.Y(-120), _Q.X(8), _Q.Y(-120) + 26, 'dd') + _Q.text(8.4, -155, 'a < 0', 'dd', 11, 'start'), 'v < 0, a < 0', 'dd'),
+    (5, '', 'speeding up (westward)', 'tan')],
+    'The table\'s readings (blue). Between t = 5 and t = 8 velocity goes from positive to negative.', 230)
+
 mod('motion','Derivatives in context & motion',
  'A derivative is a rate, and every rate has units and a story. The classic story: a particle moving along a line.',
  ['If <span class="m">s(t)</span> is position, then <span class="m">v(t) = s′(t)</span> is velocity and <span class="m">a(t) = v′(t) = s″(t)</span> is acceleration. Velocity can be negative (moving left or down). <b>Speed</b> is the size of velocity, |v|. The units of each derivative are the units of the quantity divided by the units of time: meters, meters per second, meters per second squared.',
@@ -8,15 +32,25 @@ mod('motion','Derivatives in context & motion',
    seg=('mo-fn','Motion',[('a','s = t³ − 6t² + 9t'),('b','s = 20t − 5t²'),('c','s = 3 sin t')]),
    ctl=[('mo-t','Time t',0,5,.02,0.5)],pre='<div class="row"><button type="button" class="btn" id="mo-play">Play</button></div>',
    out=[('mo-s','position s','x'),('mo-v','velocity v','v'),('mo-a','acceleration a','a'),('mo-state','what the particle is doing','')])],
- [('Choose the first motion and set t = 2.5. Is the particle speeding up or slowing down? <button type="button" class="btn link" data-show=\'' + show(["click","#mo-fn [data-k=a]"],["#mo-t",2.5]) + '\'>Set it up for me</button>','' ,'v(2.5) = 3(1.5)(−0.5) = −2.25 and a(2.5) = 6(2.5) − 12 = 3. Opposite signs, so it is slowing down: moving left, but being pushed right.'),
-  ('Choose the ball (s = 20t − 5t²) and set t = 2. What does v = 0 mean here? <button type="button" class="btn link" data-show=\'' + show(["click","#mo-fn [data-k=b]"],["#mo-t",2]) + '\'>Set it up for me</button>','' ,'At t = 2 the ball is at its highest point (s = 20): it has stopped for an instant before falling. Velocity changes sign there, and acceleration is −10 the whole time.')],
- ('A particle has position s(t) = t³ − 6t² + 9t for t ≥ 0. When is it at rest, and is it speeding up or slowing down at t = 2.5?',[
+ [('Choose the first motion and set t = 2.5. Is the particle speeding up or slowing down?',show(["click","#mo-fn [data-k=a]"],["#mo-t",2.5]),'v(2.5) = 3(1.5)(−0.5) = −2.25 and a(2.5) = 6(2.5) − 12 = 3. Opposite signs, so it is slowing down: moving left, but being pushed right.'),
+  ('Choose the ball (s = 20t − 5t²) and set t = 2. What does v = 0 mean here?',show(["click","#mo-fn [data-k=b]"],["#mo-t",2]),'At t = 2 the ball is at its highest point (s = 20): it has stopped for an instant before falling. Velocity changes sign there, and acceleration is −10 the whole time.'),
+  ('First motion again, t = 1. The particle is at rest. Does it stay there?',show(["click","#mo-fn [data-k=a]"],["#mo-t",1]),'No. At t = 1, s = 4 and v = 0, but a = −6: it is being pushed left, so it turns around and heads back. v = 0 is a turning point, not a stop.'),
+  ('First motion, t = 2. Acceleration is 0. What is special about the velocity there?',show(["click","#mo-fn [data-k=a]"],["#mo-t",2]),'v(2) = −3 is the lowest velocity between t = 1 and t = 3, so the particle is moving left fastest (speed 3). a = v′ = 0 marks a minimum of v, just as f′ = 0 marks a min of f.'),
+  ('Choose the spring (s = 3 sin t) and set t = 1.56, just before π/2 ≈ 1.571. Where is the mass, and which way is it pushed?',show(["click","#mo-fn [data-k=c]"],["#mo-t",1.56]),'Almost at the far end: s ≈ 3, v ≈ 0.03 (nearly stopped) and a ≈ −3, so it is slowing down. At t = π/2 it stops and turns back. The spring pulls hardest at the ends, where the mass is momentarily stopped: a = −s for this motion.')],
+ [('A particle has position s(t) = t³ − 6t² + 9t for t ≥ 0. When is it at rest, and is it speeding up or slowing down at t = 2.5?',[
   '<b>Velocity.</b> v(t) = s′(t) = 3t² − 12t + 9 = 3(t − 1)(t − 3).',
   '<b>At rest.</b> v = 0 at t = 1 and t = 3.',
   '<b>Acceleration.</b> a(t) = v′(t) = 6t − 12.',
   '<b>Signs at t = 2.5.</b> v(2.5) = 3(1.5)(−0.5) = −2.25 and a(2.5) = 3.',
-  '<b>Answer.</b> At rest at <b>t = 1 and t = 3</b>. At t = 2.5 velocity is negative and acceleration positive (opposite signs), so the particle is <b>slowing down</b>.']),
- ['Confusing velocity with speed: velocity has a sign, speed does not.','Saying the particle is speeding up whenever acceleration is positive. You must compare it with the sign of velocity.','Forgetting units. Always write them: m/s, m/s².','Treating v = 0 as a stop forever. It may only be a turning point.','Using the position formula to find velocity at a time without differentiating first.'],
+  '<b>Answer.</b> At rest at <b>t = 1 and t = 3</b>. At t = 2.5 velocity is negative and acceleration positive (opposite signs), so the particle is <b>slowing down</b>.'],_mot),
+  {'h':'Worked example 2: a train on a straight track (AP-style table)','fig':_train,'table':[['t (minutes)','0','2','5','8','12'],['v(t) (meters per minute)','0','100','40','−120','−150']],
+   'prob':'A train moves along a straight east–west track. Its velocity v(t), in meters per minute (positive means east), is a differentiable function of time, with the values shown in the table. (a) Estimate the train\'s acceleration at t = 3.5 minutes, with units. (b) Must the train be at rest at some time between t = 5 and t = 8? Explain. (c) At t = 8 the acceleration is −15 m/min². Is the train speeding up or slowing down then?',
+   'steps':['<b>(a) Use the readings on either side of 3.5.</b> a(3.5) = v′(3.5) ≈ (v(5) − v(2))/(5 − 2) = (40 − 100)/3 = <b>−20 m/min²</b>. Units: (m/min) per minute.',
+    '<b>Meaning.</b> Around t = 3.5 the train\'s velocity is dropping by about 20 m/min every minute. It is still moving east (v &gt; 0) but braking.',
+    '<b>(b) Yes.</b> v is differentiable, so it is continuous. v(5) = 40 &gt; 0 and v(8) = −120 &lt; 0, so by the Intermediate Value Theorem v(c) = 0 for some c between 5 and 8. At that moment the train is at rest, and it turns around to head west.',
+    '<b>(c) Compare signs.</b> At t = 8, v = −120 (moving west) and a = −15. Both are negative.',
+    '<b>Answer (c).</b> Same signs, so the train is <b>speeding up</b>: its speed |v| is growing. Negative acceleration does not always mean slowing down.']}],
+ ['Confusing velocity with speed: velocity has a sign, speed does not.','Saying the particle is speeding up whenever acceleration is positive. You must compare it with the sign of velocity.','Forgetting units. Always write them: m/s, m/s².','Treating v = 0 as a stop forever. It may only be a turning point.','Using the position formula to find velocity at a time without differentiating first.','With a table, estimating a derivative from readings that do not surround the time asked about.'],
  ('Reading the story',['Positive velocity means moving in the positive direction; negative means the opposite. Where velocity changes sign the particle turns around. Where acceleration is zero velocity is momentarily constant (a maximum or minimum of v). The same logic reads any rate: if V(t) is volume, V′(t) is a flow rate, and V′ &gt; 0 means filling.']),
  [('v(t) = −4 and a(t) = −2 at some instant. The particle is',['speeding up','slowing down','at rest','turning around'],0,'Velocity and acceleration have the same sign (both negative), so speed is increasing.')])
 

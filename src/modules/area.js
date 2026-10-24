@@ -3,15 +3,17 @@
   const cv=$('#ar-canvas');if(!cv)return;
   const C={a:{f:x=>x,g:x=>x*x,lo:0,hi:1,xr:[-.2,1.3],yr:[-.2,1.3],lim:'x = 0 and x = 1',nf:'y = x',ng:'y = x²'},b:{f:Math.sqrt,g:x=>x*x,lo:0,hi:1,xr:[-.2,1.3],yr:[-.2,1.3],lim:'x = 0 and x = 1',nf:'y = √x',ng:'y = x²'},
     c:{f:x=>x**3,g:x=>x,lo:-1,hi:1,xr:[-1.4,1.4],yr:[-1.4,1.4],lim:'x = −1, 0 and 1 (they cross at 0)',nf:'y = x³',ng:'y = x'},d:{f:Math.sin,g:Math.cos,lo:Math.PI/4,hi:5*Math.PI/4,xr:[0,4.2],yr:[-1.4,1.4],lim:'x = π/4 and x = 5π/4',nf:'y = sin x',ng:'y = cos x'}};
-  let k='a',n=8;
+  let k='a',n=8,xs=.5;
   const sim=glab('ar-canvas',{view:()=>({xr:C[k].xr,yr:C[k].yr}),draw(ctx,P){const A=C[k],top=x=>Math.max(A.f(x),A.g(x)),bot=x=>Math.min(A.f(x),A.g(x)),N=240;
       ctx.save();clip(ctx,P);ctx.beginPath();for(let i=0;i<=N;i++){const x=A.lo+(A.hi-A.lo)*i/N;i?ctx.lineTo(P.X(x),P.Y(top(x))):ctx.moveTo(P.X(x),P.Y(top(x)));}for(let i=N;i>=0;i--){const x=A.lo+(A.hi-A.lo)*i/N;ctx.lineTo(P.X(x),P.Y(bot(x)));}ctx.closePath();ctx.fillStyle=alpha(T.ce,.22);ctx.fill();
       if(n>0){const h=(A.hi-A.lo)/n;ctx.strokeStyle=alpha(T.ce,.95);ctx.lineWidth=n>25?.6:1.3;for(let i=0;i<n;i++){const m=A.lo+(i+.5)*h;ctx.beginPath();ctx.rect(P.X(m-h/2),P.Y(top(m)),P.X(m+h/2)-P.X(m-h/2),P.Y(bot(m))-P.Y(top(m)));ctx.stroke();}}ctx.restore();
-      curveD(ctx,P,A.f,A.xr[0],A.xr[1],T.cx,2.8,300);curveD(ctx,P,A.g,A.xr[0],A.xr[1],T.ca,2.8,300);label(ctx,A.nf,P.box.x+8,P.box.y+10,T.cx,'left','middle',LABEL);label(ctx,A.ng,P.box.x+8,P.box.y+28,T.ca,'left','middle',LABEL);}});
+      const hx=Math.min(A.f(xs),A.g(xs)),tx=Math.max(A.f(xs),A.g(xs));line(ctx,P,xs,hx,xs,tx,T.hot,4.5);dot(ctx,P.X(xs),P.Y(tx),4,T.hot);dot(ctx,P.X(xs),P.Y(hx),4,T.hot);curveD(ctx,P,A.f,A.xr[0],A.xr[1],T.cx,2.8,300);curveD(ctx,P,A.g,A.xr[0],A.xr[1],T.ca,2.8,300);label(ctx,A.nf,P.box.x+8,P.box.y+10,T.cx,'left','middle',LABEL);label(ctx,A.ng,P.box.x+8,P.box.y+28,T.ca,'left','middle',LABEL);}});
   function upd(){const A=C[k],ex=integ(x=>Math.abs(A.f(x)-A.g(x)),A.lo,A.hi,4000);let s=NaN;if(n>0){const h=(A.hi-A.lo)/n;s=0;for(let i=0;i<n;i++){const m=A.lo+(i+.5)*h;s+=Math.abs(A.f(m)-A.g(m))*h;}}
-    setText('ar-lim',A.lim);setText('ar-exact',fmt(ex,5));setText('ar-sum',n>0?fmt(s,5):'(no slices)');sim.render();}
-  bindRange('ar-n',v=>String(v),v=>{n=v;upd();});segBind('ar-fn','k',v=>{k=v;upd();});upd();drawers.area=()=>sim.render();
+    setText('ar-lim',A.lim);setText('ar-h',`${fmt(Math.abs(A.f(xs)-A.g(xs)),4)}  (top is ${A.f(xs)>=A.g(xs)?A.nf:A.ng})`);setText('ar-exact',fmt(ex,5));setText('ar-sum',n>0?fmt(s,5):'(no slices)');sim.render();}
+  bindRange('ar-n',v=>String(v),v=>{n=v;upd();});const setX=()=>{const A=C[k],el=$('#ar-x');el.min=A.lo;el.max=A.hi;xs=(A.lo+A.hi)/2;el.value=xs;$('#ar-x-out').textContent=fmt(xs,3);};
+  bindRange('ar-x',v=>fmt(v,3),v=>{xs=v;upd();});segBind('ar-fn','k',v=>{k=v;setX();upd();});setX();upd();drawers.area=()=>sim.render();
   KEYS['ar-canvas']=['Gold strips have height top − bottom. More strips → the sum approaches the exact area.',[['cx','first curve'],['ca','second curve'],['ce','the region and its slices']]];
+  TIPS['ar-x']=el=>`The orange slice at x = ${fmt(+el.value,3)} has height ${fmt(Math.abs(C[k].f(+el.value)-C[k].g(+el.value)),3)}. The area adds up all these heights times dx.`;
   TIPS['ar-n']=el=>+el.value?`${el.value} strips of width ${fmt((C[k].hi-C[k].lo)/el.value,3)}, each with height top − bottom.`:'Add strips to see the area as a sum.';
   GLOSS['top minus bottom']='The height of a vertical slice between two curves: the upper function minus the lower one.';
   TT.area='Have students decide which curve is on top before looking, and say why the sign matters when curves cross.';

@@ -1,3 +1,23 @@
+# ---- figures for Average vs instantaneous rate
+_R = Plot((-.3, 3.4), (-.8, 10), (30, 12, 215, 196))
+_sq = lambda t: t * t
+_ln = lambda P, x1, y1, x2, y2, a, b, c='tan', w=2.4, d='': P.seg(a, y1 + (y2 - y1) / (x2 - x1) * (a - x1), b, y1 + (y2 - y1) / (x2 - x1) * (b - x1), c, w, d)
+_rt = fig(_R.axes((1, 2, 3), (1, 4, 9), 't', 's') + _R.curve(_sq, 0, 3.15) + _R.dot(1, 1, '', 'ink'), [
+    (1, _R.dot(3, 9, '', 'dd') + _ln(_R, 1, 1, 3, 9, .5, 3.25) + _R.text(2.0, 7.3, 'slope 4', 'tan', 11, 'end'), 'secant slope 4', 'tan'),
+    (2, _ln(_R, 1, 1, 1.1, 1.21, .25, 3.0, 'tan', 1.6, '5 3'), '1 to 1.1: 2.1', 'tan'),
+    (3, '', '1 to 1.01: 2.01', 'tan'),
+    (4, _R.seg(.4, -.2, 3, 5, 'd', 2.2), 'tangent slope 2', 'd')],
+    'Position s = t² (blue). Each secant through t = 1 tilts less as its second point moves in; they settle on the tangent (green).', 230)
+_ot, _od = [0, .5, 1, 1.5, 2], [0, 28, 61, 85, 120]
+_O = Plot((.3, 1.72), (14, 100), (34, 12, 210, 196))
+_odo = fig(_O.axes((.5, 1, 1.5), (28, 61, 85), 't', 'D') + ''.join(_O.dot(a, b, '', 'f') for a, b in zip(_ot[1:4], _od[1:4])), [
+    (1, _O.seg(.35, 21, 1.6, 96, 'mut', 1.8, '5 4'), 'whole trip: 60 mph', 'ink'),
+    (2, _ln(_O, .5, 28, 1, 61, .38, 1.25, 'dd', 2.4), 'left: 66 mph', 'dd'),
+    (3, _ln(_O, 1, 61, 1.5, 85, .7, 1.68, 'd', 2.4), 'right: 48 mph', 'd'),
+    (4, _ln(_O, .5, 28, 1.5, 85, .36, 1.62, 'tan', 2.6), 'centered: 57 mph', 'tan'),
+    (5, '', 'best guess at t = 1', 'tan')],
+    'Zoomed in around t = 1 on the odometer readings (blue). Each line\'s slope is an average speed; the centered one straddles t = 1.', 230)
+
 mod('rates','Average vs instantaneous rate',
  'Speed over a trip is easy: distance divided by time. Speed at one instant needs a limit. Watch a secant line turn into a tangent line.',
  ['The <b>average rate of change</b> of f from x = a to x = b is the slope of the <b>secant line</b> through the two points: <span class="m">(f(b) − f(a)) / (b − a)</span>. It is what a car\'s trip computer tells you: miles per hour over the whole trip.',
@@ -8,14 +28,23 @@ mod('rates','Average vs instantaneous rate',
    seg=('rt-fn','Function',[('sq','x²'),('cu','x³ − 3x'),('sn','sin x'),('ex','eˣ')]),
    ctl=[('rt-x','Point a',-2,2,.1,1),('rt-h','Gap h',-1.5,1.5,.05,1.2)],
    out=[('rt-avg','average rate (secant slope)','a'),('rt-inst','instantaneous rate (tangent slope)','v'),('rt-diff','difference','')])],
- [('Make h smaller and smaller on x² at a = 1. What do the secant slopes approach? <button type="button" class="btn link" data-show=\'' + show(["click","#rt-fn [data-k=sq]"],["#rt-x",1],["#rt-h",0.05]) + '\'>Set it up for me</button>','' ,'Toward 2, the slope of the tangent line at x = 1. With h = 0.05 the average rate is 2.05; with h = 0.001 it would be 2.001.'),
-  ('Set h negative (second point on the left). Does the answer still approach the same number? <button type="button" class="btn link" data-show=\'' + show(["click","#rt-fn [data-k=sq]"],["#rt-x",1],["#rt-h",-0.05]) + '\'>Set it up for me</button>','' ,'Yes: 1.95 from the left, 2.05 from the right. For a smooth curve both sides squeeze toward the same tangent slope.')],
- ('A car\'s position is s(t) = t² feet after t seconds. Find the average velocity from t = 1 to t = 3 and estimate the velocity at t = 1.',[
+ [('Make h smaller and smaller on x² at a = 1. What do the secant slopes approach?',show(["click","#rt-fn [data-k=sq]"],["#rt-x",1],["#rt-h",0.05]),'Toward 2, the slope of the tangent line at x = 1. With h = 0.05 the average rate is 2.05; with h = 0.001 it would be 2.001.'),
+  ('Set h negative (second point on the left). Does the answer still approach the same number?',show(["click","#rt-fn [data-k=sq]"],["#rt-x",1],["#rt-h",-0.05]),'Yes: 1.95 from the left, 2.05 from the right. For a smooth curve both sides squeeze toward the same tangent slope.'),
+  ('Choose eˣ at a = 0 with h = 1.2, then shrink h to 0.05. What number is the secant slope heading for?',show(["click","#rt-fn [data-k=ex]"],["#rt-x",0],["#rt-h",1.2]),'About 1.93 at h = 1.2 and 1.03 at h = 0.05, heading for 1: the slope of eˣ at 0 is e⁰ = 1. The big gap overestimates because eˣ curves upward.'),
+  ('Choose sin x with a = 1.6 (near the top of the hump). Compare h = 0.5 with h = −0.5.',show(["click","#rt-fn [data-k=sn]"],["#rt-x",1.6],["#rt-h",0.5]),'About −0.27 to the right and +0.22 to the left: the two secants tilt opposite ways because they straddle the peak. The tangent slope, cos 1.6 ≈ −0.03, is nearly flat and sits between them.')],
+ [('A car\'s position is s(t) = t² feet after t seconds. Find the average velocity from t = 1 to t = 3 and estimate the velocity at t = 1.',[
   '<b>Average rate.</b> (s(3) − s(1))/(3 − 1) = (9 − 1)/2 = 4 ft/s.',
   '<b>Shrink the interval.</b> From t = 1 to t = 1.1: (1.21 − 1)/0.1 = 2.1 ft/s. From 1 to 1.01: (1.0201 − 1)/0.01 = 2.01.',
   '<b>Spot the pattern.</b> The average velocities approach 2.',
-  '<b>Answer.</b> Average velocity on [1, 3] is <b>4 ft/s</b>; the instantaneous velocity at t = 1 is <b>2 ft/s</b>.']),
- ['Dividing by the wrong thing: the denominator is b − a (change in input), not b.','Forgetting units. A rate has units of output per input, like ft/s or dollars per item.','Thinking the average rate over an interval equals the rate at its midpoint. It only does for special functions.','Using a gap h = 0 in the formula: the quotient is 0/0. A limit, not substitution.'],
+  '<b>Answer.</b> Average velocity on [1, 3] is <b>4 ft/s</b>; the instantaneous velocity at t = 1 is <b>2 ft/s</b>.'],_rt),
+  {'h':'Worked example 2: odometer readings on a road trip (AP-style table)','fig':_odo,'table':[['t (hours)','0','0.5','1','1.5','2'],['D(t) (miles)','0','28','61','85','120']],
+   'prob':'The odometer of a car on a highway trip gives the distance D(t), in miles, after t hours. (a) Find the average speed for the whole trip. (b) Estimate the car\'s speed at t = 1 using the readings just before t = 1, then just after. (c) Give the best estimate of the speed at t = 1 the table allows, and say what it means.',
+   'steps':['<b>(a) Whole trip.</b> (D(2) − D(0))/(2 − 0) = 120/2 = <b>60 mph</b>. That is the slope of the long dashed secant.',
+    '<b>(b) Just before t = 1.</b> (D(1) − D(0.5))/(1 − 0.5) = 33/0.5 = <b>66 mph</b>.',
+    '<b>Just after t = 1.</b> (D(1.5) − D(1))/(1.5 − 1) = 24/0.5 = <b>48 mph</b>. The two one-sided averages disagree a lot: the car was slowing down around t = 1.',
+    '<b>(c) Center the interval.</b> (D(1.5) − D(0.5))/(1.5 − 0.5) = 57/1 = <b>57 mph</b>. It uses readings on both sides of t = 1, so it is the average of 66 and 48 and the best estimate from this table.',
+    '<b>Meaning.</b> D′(1) ≈ 57 means that at t = 1 hour the speedometer read about 57 miles per hour. Units: miles per hour, because D is in miles and t in hours.']}],
+ ['Dividing by the wrong thing: the denominator is b − a (change in input), not b.','Forgetting units. A rate has units of output per input, like ft/s or dollars per item.','Thinking the average rate over an interval equals the rate at its midpoint. It only does for special functions.','Using a gap h = 0 in the formula: the quotient is 0/0. A limit, not substitution.','With a table, using readings that do not contain the time asked about.'],
  ('Two ways to see it',['Geometrically: secant slope → tangent slope. Numerically: a table of (f(a+h) − f(a))/h for smaller and smaller h. Algebraically: simplify the quotient, then let h → 0. The next module does that last step formally.']),
  [('The average rate of change of f over [2, 5] is',['(f(5) − f(2))/(5 − 2)','(f(5) − f(2))/5','f(5)/f(2)','(f(5) + f(2))/2'],0,'Average rate = change in output over change in input = (f(5) − f(2))/(5 − 2).')])
 
